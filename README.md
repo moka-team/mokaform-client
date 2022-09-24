@@ -13,4 +13,5 @@
 |`test`|테스트 코드 추가, 테스트 리팩토링|프로덕션 코드에 변경이 없는 경우|
 |`style`|오타 수정, 코드 포맷팅|프로더견 코드에 변경이 없는 경우|
 |`design`|css 등 사용자 ui 변경||
-- 예시: `feat: 로그인 페이지 추가`
+- `Tag: contents (Jira ticket number)`
+- 예시: `feat: 로그인 페이지 추가 (MOKA-xxxx)`
