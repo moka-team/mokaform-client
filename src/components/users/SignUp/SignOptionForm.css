@@ -1,0 +1,29 @@
+.sign_option_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f9fafb;
+}
+
+.sign_option_container2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.button {
+  width: 415px;
+  height: 50px;
+  padding: 0;
+  margin-top: 45px;
+  border-radius: 10px;
+  border: none;
+  background-color: #286bd0;
+  color: white;
+  font-weight: bold;
+}
+.button:hover {
+  background-color: #0064ff;
+}
