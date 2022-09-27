@@ -1,4 +1,3 @@
-import ReactDOM from "react-dom/client";
 import styled from "styled-components";
 import LocalLoginContainer from "./LocalLoginContainer";
 import SocialLoginContainer from "./SocialLoginContainer";

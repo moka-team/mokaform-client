@@ -1,5 +1,3 @@
-import ReactDOM from "react-dom/client";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 function LocalLoginContainer({ loginInputs, handleChange, handleSubmit }) {
