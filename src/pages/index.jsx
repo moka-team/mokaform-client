@@ -1,34 +1,22 @@
-import React, { useState } from "react";
-import Button from "@mui/material/Button";
+import React from "react";
 import CssBaseline from "@mui/material/CssBaseline";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { Grid, Box, Container } from "@mui/material";
 import Header from "../components/main/Header.jsx";
 import ChatbotFab from "../components/main/ChatbotFab.jsx";
 import Footer from "../components/main/Footer.jsx";
-import SortFab from "../components/main/SortFab.jsx";
 import CardContainer from "../components/main/CardContainer.jsx";
 import SubTitleText from "../components/main/SubTitleText.jsx";
 import DownButton from "../components/main/DownButton.jsx";
 import SortSelect from "../components/main/SortSelect";
-const loadMore = () => {};
-
-const theme = createTheme({
-  background: {
-    default: "red",
-  },
-});
+import { useSelector } from "react-redux";
 
 const backgroundStyle = {
   background: "linear-gradient(to bottom, #F5F6FA, #C4D4E6)",
 };
 
 export default function Main() {
-  const [logined, setLogined] = useState(false);
+  // 리덕스로 로그인 상태 가져오기
+  const logined = useSelector((state) => state.logined);
   return (
     <div style={backgroundStyle}>
       <CssBaseline />

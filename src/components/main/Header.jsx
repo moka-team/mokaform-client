@@ -1,18 +1,21 @@
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { styled, alpha } from "@mui/material/styles";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import InputBase from "@mui/material/InputBase";
+import {
+  Typography,
+  Box,
+  AppBar,
+  Toolbar,
+  IconButton,
+  InputBase,
+  Button,
+  Avatar,
+  Menu,
+  MenuItem,
+} from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import AccountCircle from "@mui/icons-material/AccountCircle";
 import MoreIcon from "@mui/icons-material/MoreVert";
-import Button from "@mui/material/Button";
-import Avatar from "@mui/material/Avatar";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
+import { signInClick, logoutClick } from "../../reduxModule/userSlice";
 import { useNavigate } from "react-router-dom";
 
 const Search = styled("div")(({ theme }) => ({
@@ -72,7 +75,8 @@ const onRefInput = (c) => {
 export default function Header() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-  const [logined, setLogined] = useState(true);
+  const logined = useSelector((state) => state.logined);
+  const dispatch = useDispatch();
 
   const inputEl = useRef(null);
   const isMenuOpen = Boolean(anchorEl);
@@ -101,6 +105,18 @@ export default function Header() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+  // 리덕스 동작 함수, 로그인 동작
+  const handleSignIn = (e) => {
+    dispatch(signInClick());
+  };
+
+  // 리덕스 동작 함수, 로그아웃 동작
+  const handleLogout = (e) => {
+    setAnchorEl(null);
+    handleMobileMenuClose();
+    dispatch(logoutClick());
+  };
+
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
@@ -118,7 +134,7 @@ export default function Header() {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>마이페이지</MenuItem>
-      <MenuItem onClick={handleMenuClose}>로그아웃</MenuItem>
+      <MenuItem onClick={handleLogout}>로그아웃</MenuItem>
     </Menu>
   );
 
@@ -162,6 +178,7 @@ export default function Header() {
             </Button>
             {logined === false ? (
               <Button
+                onClick={handleSignIn}
                 sx={{
                   fontSize: "15px",
                   fontWeight: "bold",
@@ -182,7 +199,7 @@ export default function Header() {
                   endIcon={
                     <Avatar
                       alt="Moka user"
-                      src="testImage.jpg"
+                      src="./testImage.jpg"
                       sx={{ width: 30, height: 30 }}
                     />
                   }

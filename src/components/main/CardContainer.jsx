@@ -7,10 +7,9 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import { CardActionArea } from "@mui/material";
-import CreateIcon from "@mui/icons-material/Create";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
-import { fontFamily } from "@mui/system";
+
 function ServeyCard({ servey }) {
   return (
     <Grid container>
@@ -18,7 +17,7 @@ function ServeyCard({ servey }) {
         <Typography
           variant="body1"
           color="#202632"
-          sx={{ fontSize: 18, fontWeight: 600, }}
+          sx={{ fontSize: 18, fontWeight: 600 }}
         >
           {servey.name}
         </Typography>
