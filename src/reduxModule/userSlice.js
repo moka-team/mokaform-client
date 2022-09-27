@@ -11,16 +11,6 @@ const userSlice = createSlice({
   name: "isLogined",
   initialState,
   reducers: {
-    // inputUser: (state, action) => {
-    //   state.user = action.payload;
-    //   console.log(state.user);
-    // },
-    // okClick: (state) => {
-    //   state.isClick = true;
-    // },
-    // resetUser: (state) => {
-    //   state.isClick = false;
-    // },
     signInClick: (state) => {
       state.logined = true;
       alert(`login state: ${state.logined}`);
@@ -29,9 +19,13 @@ const userSlice = createSlice({
       state.logined = false;
       alert(`login state: ${state.logined}`);
     },
+    changeLoginStatus: (state) => {
+      state.loginStatus = !state.loginStatus;
+    },
   },
 });
 
-export const { signInClick, logoutClick } = userSlice.actions;
+export const { signInClick, logoutClick, changeLoginStatus } =
+  userSlice.actions;
 
 export default userSlice.reducer;
