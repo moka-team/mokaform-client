@@ -17,7 +17,7 @@ function SignIn() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    alert(inputs);
+    alert("email: " + inputs.email + "\n" + "password: " + inputs.password);
   };
 
   const Container = styled.div`
