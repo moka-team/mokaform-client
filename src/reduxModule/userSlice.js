@@ -20,7 +20,7 @@ const userSlice = createSlice({
       alert(`login state: ${state.logined}`);
     },
     changeLoginStatus: (state) => {
-      state.loginStatus = !state.loginStatus;
+      state.logined = !state.logined;
     },
   },
 });

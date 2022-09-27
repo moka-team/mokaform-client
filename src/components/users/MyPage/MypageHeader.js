@@ -2,6 +2,8 @@ import styled from "styled-components";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { changeLoginStatus } from "../../../reduxModule/userSlice";
+import routes from "../../../routes";
+import { Link } from "react-router-dom";
 
 const SHeader = styled.div`
   display: flex;
@@ -10,7 +12,7 @@ const SHeader = styled.div`
   width: 100%;
 `;
 
-const Logo = styled.div`
+const StyledLink = styled(Link)`
   display: flex;
   justify-content: center;
   font-weight: 800;
@@ -19,6 +21,7 @@ const Logo = styled.div`
   text-align: center;
   color: #0064ff;
   margin-left: 1px;
+  cursor: pointer;
 `;
 
 const Button = styled.div`
@@ -40,9 +43,9 @@ const LoginBtn = styled.div`
 `;
 
 function Header() {
+  const loginStatus = useSelector((state) => state.logined);
   const [login, setLogin] = useState(false);
   const dispatch = useDispatch();
-  const loginStatus = useSelector((state) => state.logined);
 
   const setUserLogin = () => {
     setLogin(!login);
@@ -52,7 +55,9 @@ function Header() {
 
   return (
     <SHeader>
-      <Logo>MOKA FORM</Logo>
+      <StyledLink to={routes.main} style={{ textDecoration: "none" }}>
+        MOKA FORM
+      </StyledLink>
       <Button>
         <CreateBtn>설문 만들기</CreateBtn>
         <LoginBtn onClick={() => setUserLogin()}>
