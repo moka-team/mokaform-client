@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { changeLoginStatus } from "../../../reduxModule/userSlice";
 
 const SHeader = styled.div`
   display: flex;
@@ -39,13 +41,21 @@ const LoginBtn = styled.div`
 
 function Header() {
   const [login, setLogin] = useState(false);
+  const dispatch = useDispatch();
+  const loginStatus = useSelector((state) => state.logined);
+
+  const setUserLogin = () => {
+    setLogin(!login);
+    dispatch(changeLoginStatus(login));
+    alert(`loginStatus : ${loginStatus}`);
+  };
 
   return (
     <SHeader>
       <Logo>MOKA FORM</Logo>
       <Button>
         <CreateBtn>설문 만들기</CreateBtn>
-        <LoginBtn onClick={() => setLogin(!login)}>
+        <LoginBtn onClick={() => setUserLogin()}>
           {login ? "LOG OUT" : "LOG IN"}
         </LoginBtn>
         <p>{login}</p>

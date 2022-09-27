@@ -10,7 +10,7 @@ const Container = styled.div`
 const Card = styled.div`
   background-color: white;
   width: 30%;
-  height: 60%;
+  height: 100%;
   margin-right: 25px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
   &:hover {
