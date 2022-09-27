@@ -1,26 +1,14 @@
 import ReactDOM from "react-dom/client";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import LocalLoginContainer from "../../../components/users/SignIn/LocalLoginContainer";
+import LocalLoginContainer from "./LocalLoginContainer";
+import SocialLoginContainer from "./SocialLoginContainer";
 
 function LoginFormContainer({ loginInputs, handleChange, handleSubmit }) {
   const LoginFormContainer = styled.div`
     width: 461px;
     justify-content: center;
     align-items: center;
-  `;
-
-  const SocialLoginContainer = styled.div`
-    margin-top: 30px;
-  `;
-
-  const KaKaoLoginImg = styled.img`
-    width: 100%;
-    padding: 0;
-    border-radius: 10px;
-    border: none;
-
-    object-fit: scale-down;
   `;
 
   const AuthMenu = styled.div`
@@ -91,9 +79,7 @@ function LoginFormContainer({ loginInputs, handleChange, handleSubmit }) {
         </ResetPasswordLink>
         <SignUpLink to="/signup">회원가입</SignUpLink>
       </AuthMenu>
-      <SocialLoginContainer>
-        <KaKaoLoginImg src="./img/kakao_login_large_wide.png" onClick="" />
-      </SocialLoginContainer>
+      <SocialLoginContainer />
     </LoginFormContainer>
   );
 }
