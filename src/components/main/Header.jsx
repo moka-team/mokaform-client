@@ -117,6 +117,10 @@ export default function Header() {
     dispatch(logoutClick());
   };
 
+  const navigateMypage = (e) => {
+    navigate("/mypage");
+  };
+
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
@@ -133,7 +137,7 @@ export default function Header() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>마이페이지</MenuItem>
+      <MenuItem onClick={navigateMypage}>마이페이지</MenuItem>
       <MenuItem onClick={handleLogout}>로그아웃</MenuItem>
     </Menu>
   );
