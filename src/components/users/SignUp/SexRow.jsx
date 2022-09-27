@@ -36,7 +36,7 @@ export default function SexRow() {
     <div>
       {" "}
       <section>
-        <h3 class="row_title">성별</h3>
+        <h3 className="row_title">성별</h3>
         <div>
           {sex.map((sex, idx) => (
             <button
