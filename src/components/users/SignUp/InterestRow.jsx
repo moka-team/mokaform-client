@@ -47,7 +47,7 @@ export default function InterestRow() {
   return (
     <div>
       <section>
-        <h3 class="row_title">관심사</h3>
+        <h3 className="row_title">관심사</h3>
         <div>
           {interests.map((interest, idx) => (
             <button
@@ -55,7 +55,7 @@ export default function InterestRow() {
               value={interest}
               type="button"
               onClick={onClickHandler}
-              class="interest_row"
+              className="interest_row"
             >
               {interest}
             </button>
@@ -68,7 +68,7 @@ export default function InterestRow() {
               value={interest}
               type="button"
               onClick={onClickHandler}
-              class="interest_row"
+              className="interest_row"
             >
               {interest}
             </button>

@@ -1,12 +1,10 @@
 import React from "react";
-import SignEssentialForm from "../../../components/users/SignUp/SignEssentialForm";
-import SignOptionForm from "../../../components/users/SignUp/SignOptionForm";
+import SignUpForm from "../../../components/users/SignUp/SignUpForm";
 
 export default function index() {
   return (
     <div>
-      <SignEssentialForm></SignEssentialForm>
-      <SignOptionForm></SignOptionForm>
+      <SignUpForm></SignUpForm>
     </div>
   );
 }
