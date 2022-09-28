@@ -17,8 +17,8 @@ function LoginFormContainer({ loginInputs, handleChange, handleSubmit }) {
         handleChange={handleChange}
         handleSubmit={handleSubmit}
       />
-      <AuthMenu />
       <SocialLoginContainer />
+      <AuthMenu />
     </LoginFormWrapper>
   );
 }
