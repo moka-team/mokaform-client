@@ -1,16 +1,5 @@
 import React from "react";
-import styled from "styled-components";
-
-const EssentialForm = styled.input`
-  display: block;
-  width: 400px;
-  height: 45px;
-  padding-left: 10px;
-  margin: 10px;
-  border-radius: 10px;
-  border: none;
-  background-color: #edeef0;
-`;
+import { EssentialForm } from "./SignUpCSS";
 
 export default function SignEssentialForm() {
   const onIdHandler = (event) => {};

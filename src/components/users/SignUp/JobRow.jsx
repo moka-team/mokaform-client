@@ -1,15 +1,6 @@
 import React, { useState } from "react";
 import Select from "react-select";
-import styled from "styled-components";
-
-const Title = styled.h1`
-  display: flex;
-  margin: 10px;
-  margin-top: 35px;
-  margin-bottom: 25px;
-  color: #0064ff;
-  font-weight: 700;
-`;
+import { Title } from "./SignUpCSS";
 
 export default function JobRow() {
   const jobs = [

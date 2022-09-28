@@ -1,29 +1,5 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
-
-const Title = styled.h1`
-  display: flex;
-  margin: 10px;
-  margin-top: 35px;
-  margin-bottom: 25px;
-  color: #0064ff;
-  font-weight: 700;
-`;
-
-const Row = styled.button`
-  width: 100px;
-  height: 100px;
-  margin: 10px;
-  border: none;
-  border-radius: 50%;
-  background-color: white;
-
-  &:hover {
-    transform: scale(1.1);
-  }
-`;
-
-const Rows = styled.div``;
+import { Title, Row, Rows } from "./SignUpCSS";
 
 export default function SexRow() {
   const sex = ["여성", "남성"];
@@ -62,7 +38,7 @@ export default function SexRow() {
       <Title>성별</Title>
       <Rows>
         {sex.map((sex, idx) => (
-          <Row id={ids[idx]} value={sex} onClick={onClickHandler}>
+          <Row color="white" id={ids[idx]} value={sex} onClick={onClickHandler}>
             {sex}
           </Row>
         ))}
