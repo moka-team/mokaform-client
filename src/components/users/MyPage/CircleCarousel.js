@@ -6,9 +6,9 @@ const Container = styled.div`
   height: 100%;
   align-items: center;
   justify-content: space-between;
-  margin: 0px 50px;
+  margin: 20px 50px;
   grid-template-columns: repeat(8, 1fr);
-  @media screen and (max-width: 1000px) {
+  @media screen and (max-width: 1300px) {
     grid-template-columns: repeat(4, 1fr);
   }
 `;
