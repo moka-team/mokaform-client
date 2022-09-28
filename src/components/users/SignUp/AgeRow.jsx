@@ -36,7 +36,7 @@ export default function AgeRow() {
   return (
     <div>
       <section>
-        <h3 class="row_title">연령대</h3>
+        <h1 className="row_title">연령대</h1>
         <div>
           {ages.map((age, idx) => (
             <button

@@ -15,10 +15,9 @@ export default function JobRow() {
 
   return (
     <div>
-      {" "}
       <section>
-        <h3 class="row_title">직업</h3>
-        <div className>
+        <h3 className="row_title">직업</h3>
+        <div>
           <Select
             value={jobs.find((op) => {
               return op.value === selected;
