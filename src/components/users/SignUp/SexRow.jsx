@@ -1,5 +1,30 @@
 import React, { useState, useEffect } from "react";
-import "./Row.css";
+import styled from "styled-components";
+
+const Title = styled.h1`
+  display: flex;
+  margin: 10px;
+  margin-top: 35px;
+  margin-bottom: 25px;
+  color: #0064ff;
+  font-weight: 700;
+`;
+
+const Row = styled.button`
+  width: 100px;
+  height: 100px;
+  margin: 10px;
+  border: none;
+  border-radius: 50%;
+  background-color: white;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+`;
+
+const Rows = styled.div``;
+
 export default function SexRow() {
   const sex = ["여성", "남성"];
   const ids = ["sex_1", "sex_2"];
@@ -33,24 +58,15 @@ export default function SexRow() {
   );
 
   return (
-    <div>
-      {" "}
-      <section>
-        <h3 className="row_title">성별</h3>
-        <div>
-          {sex.map((sex, idx) => (
-            <button
-              id={ids[idx]}
-              value={sex}
-              type="button"
-              onClick={onClickHandler}
-              className={"row"}
-            >
-              {sex}
-            </button>
-          ))}
-        </div>
-      </section>
-    </div>
+    <>
+      <Title>성별</Title>
+      <Rows>
+        {sex.map((sex, idx) => (
+          <Row id={ids[idx]} value={sex} onClick={onClickHandler}>
+            {sex}
+          </Row>
+        ))}
+      </Rows>
+    </>
   );
 }
