@@ -1,5 +1,4 @@
 import { Box } from "@mui/material";
-import { useState } from "react";
 import styled from "styled-components";
 import LoginFormContainer from "../../../components/users/SignIn/LoginFormContainer";
 
@@ -21,33 +20,13 @@ const Logo = styled.img`
 `;
 
 function SignIn() {
-  const [inputs, setInputs] = useState({
-    email: "",
-    password: "",
-  });
-
-  const handleChange = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    setInputs((values) => ({ ...values, [name]: value }));
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    alert("email: " + inputs.email + "\n" + "password: " + inputs.password);
-  };
-
   return (
     <Container>
       <Box>
         <LogoContainer>
           <Logo src="/img/mokaform-logo.png" />
         </LogoContainer>
-        <LoginFormContainer
-          loginInputs={inputs}
-          handleChange={handleChange}
-          handleSubmit={handleSubmit}
-        />
+        <LoginFormContainer />
       </Box>
     </Container>
   );

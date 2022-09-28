@@ -9,14 +9,10 @@ const LoginFormWrapper = styled.div`
   align-items: center;
 `;
 
-function LoginFormContainer({ loginInputs, handleChange, handleSubmit }) {
+function LoginFormContainer() {
   return (
     <LoginFormWrapper>
-      <LocalLoginContainer
-        loginInputs={loginInputs}
-        handleChange={handleChange}
-        handleSubmit={handleSubmit}
-      />
+      <LocalLoginContainer />
       <SocialLoginContainer />
       <AuthMenu />
     </LoginFormWrapper>

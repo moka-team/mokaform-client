@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styled from "styled-components";
 
 const LocalLoginWrapper = styled.div`
@@ -46,7 +47,23 @@ const LoginButton = styled.button`
   }
 `;
 
-function LocalLoginContainer({ loginInputs, handleChange, handleSubmit }) {
+function LocalLoginContainer() {
+  const [inputs, setInputs] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    setInputs((values) => ({ ...values, [name]: value }));
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    alert("email: " + inputs.email + "\n" + "password: " + inputs.password);
+  };
+
   return (
     <LocalLoginWrapper>
       <form onSubmit={handleSubmit}>
@@ -56,7 +73,7 @@ function LocalLoginContainer({ loginInputs, handleChange, handleSubmit }) {
               type="text"
               name="email"
               placeholder="이메일"
-              value={loginInputs.email || ""}
+              value={inputs.email || ""}
               onChange={handleChange}
             />
           </div>
@@ -65,7 +82,7 @@ function LocalLoginContainer({ loginInputs, handleChange, handleSubmit }) {
               type="password"
               name="password"
               placeholder="비밀번호"
-              value={loginInputs.password || ""}
+              value={inputs.password || ""}
               onChange={handleChange}
             />
           </div>
