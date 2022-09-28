@@ -1,12 +1,15 @@
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-regular-svg-icons";
+import { useState } from "react";
+import { faCamera } from "@fortawesome/free-solid-svg-icons";
+
 const SProfile = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 20%;
-  height: 100%;
+  height: 90%;
   margin-top: 25px;
 `;
 
@@ -20,7 +23,7 @@ const ProfileImg = styled.div`
   }
 `;
 
-const Image = styled.div`
+const DefaultImage = styled.div`
   position: absolute;
   background-color: gray;
   border-radius: 50%;
@@ -29,6 +32,20 @@ const Image = styled.div`
   object-fit: cover;
 `;
 
+const Image = styled.img`
+  position: absolute;
+  background-color: gray;
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`;
+
+const UploadBtn = styled.label`
+  cursor: pointer;
+  margin-top: -20px;
+  z-index: 3;
+`;
 const UserInfo = styled.div`
   display: flex;
   flex-direction: column;
@@ -76,11 +93,29 @@ const UserInput = styled.div`
 `;
 
 function Profile() {
+  const [selectedImage, setSelectedImage] = useState(null);
+
   return (
     <SProfile>
+      <input
+        type="file"
+        id="profileImg"
+        onChange={(event) => {
+          setSelectedImage(event.target.files[0]);
+        }}
+        style={{ display: "none" }}
+      />
       <ProfileImg>
-        <Image />
+        {selectedImage ? (
+          <Image src={URL.createObjectURL(selectedImage)} />
+        ) : (
+          <DefaultImage />
+        )}
       </ProfileImg>
+      <UploadBtn for="profileImg">
+        <FontAwesomeIcon icon={faCamera} color="white" />
+      </UploadBtn>
+
       <UserInfo>
         <h1>모카 유저</h1>
         <h2>moka@form.com</h2>
