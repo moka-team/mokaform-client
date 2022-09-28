@@ -7,8 +7,8 @@ import CircleCarousel from "./CircleCarousel";
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
-  height: 100%;
+  width: 80%;
+  height: 90%;
 `;
 const Header = styled.div`
   display: flex;
@@ -31,18 +31,6 @@ const SortedBtn = styled(Block)`
   border-radius: 18px;
   cursor: pointer;
 `;
-const Interest = styled.div`
-  width: 100%;
-  height: 25%;
-`;
-const CreatedSurvey = styled.div`
-  width: 100%;
-  height: 35%;
-`;
-const ParticipatedSurvey = styled.div`
-  width: 100%;
-  height: 35%;
-`;
 
 function ListContainer() {
   return (
@@ -53,9 +41,7 @@ function ListContainer() {
           <FontAwesomeIcon icon={faEdit} color="gray" />
         </Block>
       </Header>
-      <Interest>
-        <CircleCarousel />
-      </Interest>
+      <CircleCarousel />
       <Header>
         <p>내가 만든 설문</p>
         <SortedBtn>
@@ -63,9 +49,7 @@ function ListContainer() {
           <FontAwesomeIcon icon={faSortAmountAsc} color="white" />
         </SortedBtn>
       </Header>
-      <CreatedSurvey>
-        <Carousel />
-      </CreatedSurvey>
+      <Carousel />
       <Header>
         <p>내가 참여한 설문</p>
         <SortedBtn>
@@ -73,9 +57,7 @@ function ListContainer() {
           <FontAwesomeIcon icon={faSortAmountAsc} color="white" />
         </SortedBtn>
       </Header>
-      <ParticipatedSurvey>
-        <Carousel />
-      </ParticipatedSurvey>
+      <Carousel />
     </Container>
   );
 }

@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
+import routes from "../../../routes";
+import { Link } from "react-router-dom";
 
 const SHeader = styled.div`
   display: flex;
@@ -8,7 +10,7 @@ const SHeader = styled.div`
   width: 100%;
 `;
 
-const Logo = styled.div`
+const StyledLink = styled(Link)`
   display: flex;
   justify-content: center;
   font-weight: 800;
@@ -17,6 +19,7 @@ const Logo = styled.div`
   text-align: center;
   color: #0064ff;
   margin-left: 1px;
+  cursor: pointer;
 `;
 
 const Button = styled.div`
@@ -42,7 +45,9 @@ function Header() {
 
   return (
     <SHeader>
-      <Logo>MOKA FORM</Logo>
+      <StyledLink to={routes.main} style={{ textDecoration: "none" }}>
+        MOKA FORM
+      </StyledLink>
       <Button>
         <CreateBtn>설문 만들기</CreateBtn>
         <LoginBtn onClick={() => setLogin(!login)}>
