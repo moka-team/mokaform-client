@@ -1,5 +1,27 @@
 import React, { useState, useEffect } from "react";
-import "./Row.css";
+import styled from "styled-components";
+
+const Title = styled.h1`
+  display: flex;
+  margin: 10px;
+  margin-top: 35px;
+  margin-bottom: 25px;
+  color: #0064ff;
+  font-weight: 700;
+`;
+
+const Row = styled.button`
+  width: 100px;
+  height: 100px;
+  margin: 10px;
+  border: none;
+  border-radius: 50%;
+  background-color: white;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+`;
 
 export default function AgeRow() {
   const ages = ["10대", "20대", "30대", "40대", "50대+"];
@@ -34,23 +56,13 @@ export default function AgeRow() {
   );
 
   return (
-    <div>
-      <section>
-        <h1 className="row_title">연령대</h1>
-        <div>
-          {ages.map((age, idx) => (
-            <button
-              id={ids[idx]}
-              value={age}
-              type="button"
-              onClick={onClickHandler}
-              className={"row"}
-            >
-              {age}
-            </button>
-          ))}
-        </div>
-      </section>
-    </div>
+    <>
+      <Title>연령대</Title>
+      {ages.map((age, idx) => (
+        <Row id={ids[idx]} value={age} type="button" onClick={onClickHandler}>
+          {age}
+        </Row>
+      ))}
+    </>
   );
 }
