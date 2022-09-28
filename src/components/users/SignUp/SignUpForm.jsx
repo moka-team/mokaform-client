@@ -3,8 +3,8 @@ import AgeRow from "./AgeRow";
 import InterestRow from "./InterestRow";
 import JobRow from "./JobRow";
 import SexRow from "./SexRow";
-import "./SignUpForm.css";
 import SignEssentialForm from "./SignEssentialForm";
+import { MainTitle, Rows, Button, Container } from "./SignUpCSS";
 
 export default function SignUpForm() {
   const signOptionRef = useRef(null);
@@ -19,46 +19,28 @@ export default function SignUpForm() {
   const onCompleteBtnClickHandler = (event) => {};
 
   return (
-    <div>
-      <>
-        <div className="sign_essential_form_container">
-          <div className="row_div">
-            <h1 className="row_title2">SIGN UP | MOKA FORM</h1>
-            <SignEssentialForm></SignEssentialForm>
-            <div>
-              <button type="button" onClick={onClickHandler} className="button">
-                다음
-              </button>
-            </div>
-          </div>
-        </div>
-        <div ref={signOptionRef} className="sign_option_container">
-          <div className="row_div">
-            <AgeRow></AgeRow>
-            <SexRow></SexRow>
-            <button
-              type="button"
-              onClick={onNextBtnClickHandler}
-              className="button"
-            >
-              다음
-            </button>
-          </div>
-        </div>
-        <div ref={signOptionRef2} className="sign_option_container2">
-          <div className="row_div">
-            <JobRow></JobRow>
-            <InterestRow></InterestRow>
-            <button
-              type="button"
-              onClick={onCompleteBtnClickHandler}
-              className="button"
-            >
-              가입 완료
-            </button>
-          </div>
-        </div>
-      </>
-    </div>
+    <>
+      <Container>
+        <Rows>
+          <MainTitle>SIGN UP | MOKA FORM</MainTitle>
+          <SignEssentialForm></SignEssentialForm>
+          <Button onClick={onClickHandler}>다음</Button>
+        </Rows>
+      </Container>
+      <Container color="#f9fafb" ref={signOptionRef}>
+        <Rows>
+          <AgeRow></AgeRow>
+          <SexRow></SexRow>
+          <Button onClick={onNextBtnClickHandler}>다음</Button>
+        </Rows>
+      </Container>
+      <Container ref={signOptionRef2}>
+        <Rows>
+          <JobRow></JobRow>
+          <InterestRow></InterestRow>
+          <Button onClick={onCompleteBtnClickHandler}>가입 완료</Button>
+        </Rows>
+      </Container>
+    </>
   );
 }

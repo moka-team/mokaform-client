@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./Row.css";
+import { Title, Row } from "./SignUpCSS";
 
 export default function AgeRow() {
   const ages = ["10대", "20대", "30대", "40대", "50대+"];
@@ -34,23 +34,19 @@ export default function AgeRow() {
   );
 
   return (
-    <div>
-      <section>
-        <h1 className="row_title">연령대</h1>
-        <div>
-          {ages.map((age, idx) => (
-            <button
-              id={ids[idx]}
-              value={age}
-              type="button"
-              onClick={onClickHandler}
-              className={"row"}
-            >
-              {age}
-            </button>
-          ))}
-        </div>
-      </section>
-    </div>
+    <>
+      <Title>연령대</Title>
+      {ages.map((age, idx) => (
+        <Row
+          color="white"
+          id={ids[idx]}
+          value={age}
+          type="button"
+          onClick={onClickHandler}
+        >
+          {age}
+        </Row>
+      ))}
+    </>
   );
 }

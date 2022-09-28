@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./Row.css";
+import { Title, Row, Rows } from "./SignUpCSS";
 
 export default function InterestRow() {
   const interests = ["일상", "IT", "취미", "학습"];
@@ -45,36 +45,34 @@ export default function InterestRow() {
   );
 
   return (
-    <div>
-      <section>
-        <h3 className="row_title">관심사</h3>
-        <div>
-          {interests.map((interest, idx) => (
-            <button
-              id={ids[idx]}
-              value={interest}
-              type="button"
-              onClick={onClickHandler}
-              className="interest_row"
-            >
-              {interest}
-            </button>
-          ))}
-        </div>
-        <div>
-          {interests2.map((interest, idx) => (
-            <button
-              id={ids[idx + 4]}
-              value={interest}
-              type="button"
-              onClick={onClickHandler}
-              className="interest_row"
-            >
-              {interest}
-            </button>
-          ))}
-        </div>
-      </section>
-    </div>
+    <>
+      <Title>관심사</Title>
+      <Rows>
+        {interests.map((interest, idx) => (
+          <Row
+            color="#f9fafb"
+            id={ids[idx]}
+            value={interest}
+            type="button"
+            onClick={onClickHandler}
+          >
+            {interest}
+          </Row>
+        ))}
+      </Rows>
+      <Rows>
+        {interests2.map((interest, idx) => (
+          <Row
+            color="#f9fafb"
+            id={ids[idx + 4]}
+            value={interest}
+            type="button"
+            onClick={onClickHandler}
+          >
+            {interest}
+          </Row>
+        ))}
+      </Rows>
+    </>
   );
 }
