@@ -3,6 +3,23 @@ import { useState } from "react";
 import styled from "styled-components";
 import LoginFormContainer from "../../../components/users/SignIn/LoginFormContainer";
 
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const LogoContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Logo = styled.img`
+  margin-top: 233px;
+  height: 144px;
+`;
+
 function SignIn() {
   const [inputs, setInputs] = useState({
     email: "",
@@ -19,23 +36,6 @@ function SignIn() {
     event.preventDefault();
     alert("email: " + inputs.email + "\n" + "password: " + inputs.password);
   };
-
-  const Container = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  `;
-
-  const LogoContainer = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  `;
-
-  const Logo = styled.img`
-    margin-top: 233px;
-    height: 144px;
-  `;
 
   return (
     <Container>

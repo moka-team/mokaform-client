@@ -3,15 +3,15 @@ import LocalLoginContainer from "./LocalLoginContainer";
 import SocialLoginContainer from "./SocialLoginContainer";
 import AuthMenu from "./AuthMenu";
 
-function LoginFormContainer({ loginInputs, handleChange, handleSubmit }) {
-  const LoginFormContainer = styled.div`
-    width: 461px;
-    justify-content: center;
-    align-items: center;
-  `;
+const LoginFormWrapper = styled.div`
+  width: 461px;
+  justify-content: center;
+  align-items: center;
+`;
 
+function LoginFormContainer({ loginInputs, handleChange, handleSubmit }) {
   return (
-    <LoginFormContainer>
+    <LoginFormWrapper>
       <LocalLoginContainer
         loginInputs={loginInputs}
         handleChange={handleChange}
@@ -19,7 +19,7 @@ function LoginFormContainer({ loginInputs, handleChange, handleSubmit }) {
       />
       <AuthMenu />
       <SocialLoginContainer />
-    </LoginFormContainer>
+    </LoginFormWrapper>
   );
 }
 
