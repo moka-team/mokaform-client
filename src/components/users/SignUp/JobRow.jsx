@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Select from "react-select";
-import "./Row.css";
+import { Title } from "./SignUpCSS";
 
 export default function JobRow() {
   const jobs = [
@@ -14,22 +14,18 @@ export default function JobRow() {
   };
 
   return (
-    <div>
-      <section>
-        <h3 className="row_title">직업</h3>
-        <div>
-          <Select
-            value={jobs.find((op) => {
-              return op.value === selected;
-            })}
-            onChange={(value) => {
-              onChangeHandler(value.value);
-            }}
-            placeholder="직업을 선택해주세요."
-            options={jobs}
-          ></Select>
-        </div>
-      </section>
-    </div>
+    <>
+      <Title>직업</Title>
+      <Select
+        value={jobs.find((op) => {
+          return op.value === selected;
+        })}
+        onChange={(value) => {
+          onChangeHandler(value.value);
+        }}
+        placeholder="직업을 선택해주세요."
+        options={jobs}
+      ></Select>
+    </>
   );
 }

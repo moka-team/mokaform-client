@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import "./Row.css";
+import { Title, Row, Rows } from "./SignUpCSS";
+
 export default function SexRow() {
   const sex = ["여성", "남성"];
   const ids = ["sex_1", "sex_2"];
@@ -33,24 +34,15 @@ export default function SexRow() {
   );
 
   return (
-    <div>
-      {" "}
-      <section>
-        <h3 className="row_title">성별</h3>
-        <div>
-          {sex.map((sex, idx) => (
-            <button
-              id={ids[idx]}
-              value={sex}
-              type="button"
-              onClick={onClickHandler}
-              className={"row"}
-            >
-              {sex}
-            </button>
-          ))}
-        </div>
-      </section>
-    </div>
+    <>
+      <Title>성별</Title>
+      <Rows>
+        {sex.map((sex, idx) => (
+          <Row color="white" id={ids[idx]} value={sex} onClick={onClickHandler}>
+            {sex}
+          </Row>
+        ))}
+      </Rows>
+    </>
   );
 }
