@@ -1,6 +1,6 @@
 import React from "react";
-import "./Logo.css";
+import { Logos } from "./styled";
 
 export default function Logo() {
-  return <h1 className="Logo">MOKA FORM</h1>;
+  return <Logos size="30px">MOKA FORM</Logos>;
 }

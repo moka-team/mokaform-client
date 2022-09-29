@@ -17,6 +17,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { signInClick, logoutClick } from "../../reduxModule/userSlice";
 import { useNavigate } from "react-router-dom";
+import { Logos } from "../users/Test/styled";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -148,7 +149,7 @@ export default function Header() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar style={appBarStyle}>
         <Toolbar>
-          <Typography
+          {/* <Typography
             variant="h6"
             noWrap
             component="div"
@@ -156,7 +157,8 @@ export default function Header() {
             onClick={onClickHandler}
           >
             MOKA FORM
-          </Typography>
+          </Typography> */}
+          <Logos size="20px">MOKA FORM</Logos>;
           <Box sx={{ flexGrow: 1 }} />
           <Search>
             <SearchIconWrapper>
