@@ -6,11 +6,12 @@ const SocialLoginWrapper = styled.div`
 
 const KaKaoLoginImg = styled.img`
   width: 100%;
+  height: 62.11px;
   padding: 0;
   border-radius: 10px;
   border: none;
 
-  object-fit: scale-down;
+  object-fit: cover;
 `;
 
 function SocialLoginContainer() {
