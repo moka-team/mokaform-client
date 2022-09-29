@@ -1,43 +1,46 @@
-import { useState } from "react";
-import ReactDOM from "react-dom/client";
-import styles from "./ResetPassword.module.css";
+import { Box } from "@mui/material";
+import styled from "styled-components";
+import EmailFormContainer from "../../../components/users/ResetPassword/EmailFormContainer";
+
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const LogoContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Logo = styled.img`
+  margin-top: 233px;
+  height: 144px;
+`;
+
+const ResetPasswordDescription = styled.div`
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  text-align: center;
+  line-height: 39px;
+`;
 
 function ResetPassword() {
-  const [inputs, setInputs] = useState({
-    email: "",
-  });
-
-  const handleChange = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    setInputs((values) => ({ ...values, [name]: value }));
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    alert(inputs);
-  };
-
   return (
-    <>
-      <img className={styles.mokaform_logo} src="/img/mokaform-logo.png" />
-      <div className={styles.enter_email_text}>
-        가입한 이메일 주소를 입력해주세요.
-      </div>
-      <form onSubmit={handleSubmit}>
-        <input
-          className={styles.email_input}
-          type="text"
-          name="email"
-          placeholder="이메일"
-          value={inputs.email || ""}
-          onChange={handleChange}
-        />
-        <button className={styles.confirm_button} type="submit">
-          확인
-        </button>
-      </form>
-    </>
+    <Container>
+      <Box>
+        <LogoContainer>
+          <Logo src="/img/mokaform-logo.png" />
+        </LogoContainer>
+        <ResetPasswordDescription>
+          가입한 이메일 주소를 입력해주세요.
+        </ResetPasswordDescription>
+        <EmailFormContainer />
+      </Box>
+    </Container>
   );
 }
 
