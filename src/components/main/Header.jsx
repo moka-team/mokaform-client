@@ -7,7 +7,6 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
-import AccountCircle from "@mui/icons-material/AccountCircle";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
@@ -63,10 +62,6 @@ const appBarStyle = {
   color: "#0064FF",
   position: "fixed",
   boxShadow: "none", // 그림자 없애기
-};
-
-const onRefInput = (c) => {
-  this.input = c;
 };
 
 export default function Header() {
