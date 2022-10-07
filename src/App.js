@@ -5,6 +5,7 @@ import Main from "./pages/index";
 import SignUp from "./pages/users/SignUpPage";
 import SignIn from "./pages/users/SignIn";
 import ResetPassword from "./pages/users/ResetPassword";
+import CreateSurvey from "./pages/surveys/create/index"
 import routes from "./routes";
 import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
@@ -23,6 +24,7 @@ function App() {
         <Route path={routes.signup} element={<SignUp />}></Route>
         <Route path={routes.signin} element={<SignIn />}></Route>
         <Route path={routes.resetPassword} element={<ResetPassword />}></Route>
+        <Route path={routes.createSurvey} element={<CreateSurvey />}></Route>
       </Routes>
     </BrowserRouter>
   );
