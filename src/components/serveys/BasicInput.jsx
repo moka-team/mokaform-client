@@ -1,6 +1,10 @@
-import * as React from "react";
+import React, { useState } from "react";
 import InputUnstyled from "@mui/base/InputUnstyled";
 import { styled } from "@mui/system";
+import { useBadge } from "@mui/base";
+import { titleState } from "./optionState";
+import { descriptionState } from "./optionState";
+import { useRecoilState } from "recoil";
 
 const blue = {
   100: "#DAECFF",
@@ -40,12 +44,8 @@ const StyledInputElement = styled("input")(
     theme.palette.mode === "dark" ? grey[900] : grey[50]
   };
 
-  &:hover {
-    border-color: ${"0064FF"};
-  }
-
   &:focus {
-    border-color: ${"0064FF"};
+    border-color: ${blue[100]};
     outline: 3px solid ${theme.palette.mode === "dark" ? blue[500] : blue[200]};
   }
 `
@@ -61,6 +61,23 @@ const CustomInput = React.forwardRef(function CustomInput(props, ref) {
   );
 });
 
-export default function BasicInput() {
-  return <CustomInput aria-label="Demo input" placeholder="Type something…" />;
+export default function BasicInput({ text, type }) {
+  const [title, setTitle] = useRecoilState(titleState);
+  const [description, setDescription] = useRecoilState(descriptionState);
+  // console.log(description);
+  // console.log(title);
+  const onChangeTitle = (e) => {
+    setTitle(e.target.value);
+  };
+
+  const onChangeDescription = (e) => {
+    setDescription(e.target.value);
+  };
+  return (
+    <CustomInput
+      aria-label="Demo input"
+      placeholder={text}
+      onChange={{ type } === "title" ? onChangeTitle : onChangeDescription}
+    />
+  );
 }

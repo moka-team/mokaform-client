@@ -5,10 +5,17 @@ import Main from "./pages/index";
 import SignUp from "./pages/users/SignUpPage";
 import SignIn from "./pages/users/SignIn";
 import ResetPassword from "./pages/users/ResetPassword";
-import CreateServey from "./pages/serveys/CreateSurveyPage"
+import CreateSurvey from "./pages/surveys/CreateSurveyPage";
 import routes from "./routes";
 import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
+import {
+  RecoilRoot,
+  atom,
+  selector,
+  useRecoilState,
+  useRecoilValue,
+} from "recoil";
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -16,17 +23,22 @@ const GlobalStyle = createGlobalStyle`
 
 function App() {
   return (
-    <BrowserRouter>
-      <GlobalStyle />
-      <Routes>
-        <Route path={routes.main} element={<Main />}></Route>
-        <Route path={routes.mypage} element={<Mypage />}></Route>
-        <Route path={routes.signup} element={<SignUp />}></Route>
-        <Route path={routes.signin} element={<SignIn />}></Route>
-        <Route path={routes.resetPassword} element={<ResetPassword />}></Route>
-        <Route path={routes.createServey} element={<CreateServey />}></Route>
-      </Routes>
-    </BrowserRouter>
+    <RecoilRoot>
+      <BrowserRouter>
+        <GlobalStyle />
+        <Routes>
+          <Route path={routes.main} element={<Main />}></Route>
+          <Route path={routes.mypage} element={<Mypage />}></Route>
+          <Route path={routes.signup} element={<SignUp />}></Route>
+          <Route path={routes.signin} element={<SignIn />}></Route>
+          <Route
+            path={routes.resetPassword}
+            element={<ResetPassword />}
+          ></Route>
+          <Route path={routes.createSurvey} element={<CreateSurvey />}></Route>
+        </Routes>
+      </BrowserRouter>
+    </RecoilRoot>
   );
 }
 
