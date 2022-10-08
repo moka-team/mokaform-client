@@ -9,6 +9,7 @@ import CreateSurvey from "./pages/surveys/create/index";
 import routes from "./routes";
 import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
+import CreateSurvey2 from "./pages/surveys/create/index2";
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -26,6 +27,7 @@ function App() {
         <Route path={routes.signin} element={<SignIn />}></Route>
         <Route path={routes.resetPassword} element={<ResetPassword />}></Route>
         <Route path={routes.createSurvey} element={<CreateSurvey />}></Route>
+        <Route path={routes.createSurvey2} element={<CreateSurvey2 />}></Route>
       </Routes>
     </BrowserRouter>
   );
