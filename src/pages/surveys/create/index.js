@@ -1,162 +1,135 @@
+import { useState, useRef } from "react";
 import styled from "styled-components";
-import { useRef, useState } from "react";
-import {
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  Button,
-} from "@mui/material";
 
-const Container = styled.div`
-  height: 100vh;
-`;
-const Wrapper = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-`;
 const Create = styled.div`
   display: flex;
-`;
-const Creation = styled.div`
-  display: flex;
   justify-content: center;
   align-items: center;
-  width: 50%;
-  flex-direction: column;
-  background-color: #202632;
-  color: white;
 `;
-const Preview = styled.div`
+const Picker = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 50%;
-  flex-direction: column;
 `;
 
 function CreateSurvey() {
-  const previewArea = useRef();
-  const questionArea = useRef();
-  const [selected, setSelected] = useState("");
+  const targets = useRef([]);
+
+  const [toDo, setToDo] = useState("");
+  const [toDos, setToDos] = useState([]);
+  const [type, setType] = useState("주관식");
+  const onChange = (event) => setToDo(event.target.value);
   const handleSelect = (event) => {
-    setSelected(event.target.value);
+    setType(event.target.value);
   };
-  const createQuestion = () => {
-    if (selected === "주관식") {
-      const questionBox = document.createElement("div");
-      const question = document.createElement("input");
-      const Q = document.createElement("p");
-      const A = document.createElement("input");
-
-      A.disabled = true;
-      question.onchange = function (e) {
-        Q.innerHTML = "Q" + e.target.value;
-      };
-
-      questionBox.appendChild(question);
-      questionArea.current.appendChild(questionBox);
-
-      previewArea.current.appendChild(Q);
-      previewArea.current.appendChild(A);
-
-      const hr = document.createElement("hr");
-      const hr1 = document.createElement("hr");
-      questionArea.current.appendChild(hr);
-      previewArea.current.appendChild(hr1);
-    } else if (selected === "찬부식") {
-      const questionBox = document.createElement("div");
-      const question = document.createElement("input");
-      const Q = document.createElement("p");
-
-      const AnswerBox = document.createElement("form");
-      const YES = document.createElement("input");
-      const NO = document.createElement("input");
-      YES.setAttribute("type", "radio");
-      YES.setAttribute("name", "answer");
-      NO.setAttribute("type", "radio");
-      NO.setAttribute("name", "answer");
-
-      AnswerBox.appendChild(YES);
-      AnswerBox.appendChild(NO);
-
-      question.onchange = function (e) {
-        Q.innerHTML = "Q" + e.target.value;
-      };
-
-      questionBox.appendChild(question);
-      questionArea.current.appendChild(questionBox);
-      previewArea.current.appendChild(Q);
-      previewArea.current.appendChild(AnswerBox);
-      const hr = document.createElement("hr");
-      const hr1 = document.createElement("hr");
-      questionArea.current.appendChild(hr);
-      previewArea.current.appendChild(hr1);
-    } else {
-      const questionBox = document.createElement("div");
-      const question = document.createElement("input");
-      const addBtn = document.createElement("button");
-      const answerList = document.createElement("div");
-
-      const answerBox = document.createElement("div");
-
-      addBtn.innerText = "ADD";
-
-      addBtn.onclick = () => {
-        const list = document.createElement("input");
-        list.setAttribute("style", "display : block");
-        answerList.appendChild(list);
-
-        list.onchange = function (e) {
-          const answerList = document.createElement("p");
-          answerList.innerHTML = e.target.value;
-          answerBox.appendChild(answerList);
-        };
-      };
-
-      const Q = document.createElement("p");
-
-      question.onchange = function (e) {
-        Q.innerHTML = "Q" + e.target.value;
-      };
-
-      questionBox.appendChild(question);
-      questionArea.current.appendChild(questionBox);
-      questionArea.current.appendChild(addBtn);
-      questionArea.current.appendChild(answerList);
-
-      previewArea.current.appendChild(Q);
-      previewArea.current.appendChild(answerBox);
-      const hr = document.createElement("hr");
-      const hr1 = document.createElement("hr");
-      questionArea.current.appendChild(hr);
-      previewArea.current.appendChild(hr1);
+  const onSubmit = (event) => {
+    event.preventDefault();
+    if (toDo === "") {
+      return;
     }
+    setToDos((currentArray) => [...currentArray, [type, toDo]]);
+    setToDo("");
+  };
+  const delToDo = (index) => {
+    setToDos(toDos.filter((item, todoIndex) => index !== todoIndex));
   };
 
   return (
-    <Container>
+    <div>
       <Create>
-        <FormControl sx={{ m: 1, minWidth: 80 }}>
-          <InputLabel id="select-label">Type</InputLabel>
-          <Select onChange={handleSelect} value={selected} label="type">
-            <MenuItem value={"주관식"}>주관식</MenuItem>
-            <MenuItem value={"객관식"}>객관식</MenuItem>
-            <MenuItem value={"찬부식"}>찬부식</MenuItem>
-          </Select>
-        </FormControl>
-        <Button onClick={createQuestion}>Create</Button>
+        <Picker>
+          <form>
+            <select onChange={handleSelect}>
+              <option value={"주관식"}>주관식</option>
+              <option value={"객관식"}>객관식</option>
+              <option value={"찬부식"}>찬부식</option>
+            </select>
+          </form>
+          <form onSubmit={onSubmit}>
+            <input
+              onChange={onChange}
+              value={toDo}
+              type="text"
+              placeholder="Write your Question"
+            />
+            <button>Create</button>
+          </form>
+        </Picker>
       </Create>
-      <Wrapper>
-        <Creation>
-          <div ref={questionArea}></div>
-        </Creation>
-        <Preview>
-          <div ref={previewArea}></div>
-        </Preview>
-      </Wrapper>
-    </Container>
+      <hr />
+      <ul>
+        {toDos.map((item, index) =>
+          item[0] === "주관식" ? (
+            <li key={index}>
+              <span>
+                질문{index + 1}. {item[1]}
+              </span>
+              <input />
+              <button
+                onClick={() => delToDo(index)}
+                style={{
+                  border: "none",
+                  backgroundColor: "white",
+                  cursor: "pointer",
+                }}
+              >
+                ❌
+              </button>
+            </li>
+          ) : item[0] === "찬부식" ? (
+            <li key={index}>
+              <span>
+                질문{index + 1}. {item[1]}
+              </span>
+              <div>
+                <label>
+                  <input type="radio" name={index} value="YES" />
+                  YES
+                </label>
+                <label>
+                  <input type="radio" name={index} value="NO" />
+                  NO
+                </label>
+              </div>
+              <button
+                onClick={() => delToDo(index)}
+                style={{
+                  border: "none",
+                  backgroundColor: "white",
+                  cursor: "pointer",
+                }}
+              >
+                ❌
+              </button>
+            </li>
+          ) : (
+            <li key={index}>
+              <span>
+                질문{index + 1}. {item[1]}
+              </span>
+              <button
+                onClick={() => {
+                  const p = document.createElement("input");
+                  p.setAttribute("style", "display:block");
+                  targets.current[index].appendChild(p);
+                }}
+              >
+                ADD Option
+              </button>
+              <button
+                onClick={() => delToDo(index)}
+                style={{
+                  border: "none",
+                  backgroundColor: "white",
+                  cursor: "pointer",
+                }}
+              >
+                ❌
+              </button>
+              <div ref={(el) => (targets.current[index] = el)}></div>
+            </li>
+          )
+        )}
+      </ul>
+    </div>
   );
 }
 
