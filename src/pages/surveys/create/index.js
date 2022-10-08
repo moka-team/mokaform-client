@@ -13,23 +13,25 @@ const Picker = styled.div`
 function CreateSurvey() {
   const targets = useRef([]);
 
-  const [toDo, setToDo] = useState("");
-  const [toDos, setToDos] = useState([]);
+  const [Question, setQuestion] = useState("");
+  const [Questions, setQuestions] = useState([]);
   const [type, setType] = useState("주관식");
-  const onChange = (event) => setToDo(event.target.value);
+  const onChange = (event) => setQuestion(event.target.value);
   const handleSelect = (event) => {
     setType(event.target.value);
   };
   const onSubmit = (event) => {
     event.preventDefault();
-    if (toDo === "") {
+    if (Question === "") {
       return;
     }
-    setToDos((currentArray) => [...currentArray, [type, toDo]]);
-    setToDo("");
+    setQuestions((currentArray) => [...currentArray, [type, Question]]);
+    setQuestion("");
   };
-  const delToDo = (index) => {
-    setToDos(toDos.filter((item, todoIndex) => index !== todoIndex));
+  const delQuestion = (index) => {
+    setQuestions(
+      Questions.filter((item, QuestionIndex) => index !== QuestionIndex)
+    );
   };
 
   return (
@@ -46,7 +48,7 @@ function CreateSurvey() {
           <form onSubmit={onSubmit}>
             <input
               onChange={onChange}
-              value={toDo}
+              value={Question}
               type="text"
               placeholder="Write your Question"
             />
@@ -56,7 +58,7 @@ function CreateSurvey() {
       </Create>
       <hr />
       <ul>
-        {toDos.map((item, index) =>
+        {Questions.map((item, index) =>
           item[0] === "주관식" ? (
             <li key={index}>
               <span>
@@ -64,7 +66,7 @@ function CreateSurvey() {
               </span>
               <input />
               <button
-                onClick={() => delToDo(index)}
+                onClick={() => delQuestion(index)}
                 style={{
                   border: "none",
                   backgroundColor: "white",
@@ -90,7 +92,7 @@ function CreateSurvey() {
                 </label>
               </div>
               <button
-                onClick={() => delToDo(index)}
+                onClick={() => delQuestion(index)}
                 style={{
                   border: "none",
                   backgroundColor: "white",
@@ -115,7 +117,7 @@ function CreateSurvey() {
                 ADD Option
               </button>
               <button
-                onClick={() => delToDo(index)}
+                onClick={() => delQuestion(index)}
                 style={{
                   border: "none",
                   backgroundColor: "white",
