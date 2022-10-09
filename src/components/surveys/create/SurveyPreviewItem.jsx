@@ -1,10 +1,9 @@
 import React from "react";
-import { detailQuestionState } from "../../../atoms";
+import { detailMCQuestionState } from "../../../atoms";
 import { useRecoilValue } from "recoil";
-import DetailSurveyItem from "./DetailSurveyItem";
 
 export default function SurveyPreviewItem({ item }) {
-  const detailQuestionList = useRecoilValue(detailQuestionState);
+  const detailQuestionList = useRecoilValue(detailMCQuestionState);
   return (
     <div>
       {" "}

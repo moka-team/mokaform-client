@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { detailQuestionState } from "../../../atoms";
+import { useRecoilState } from "recoil";
+import { detailMCQuestionState } from "../../../atoms";
 
-export default function DetailQuestionCreator({ id }) {
+export default function DetailMCQuestionCreator({ id }) {
   const [detailQuestion, setDetailQuestion] = useState("");
-  const [detailQuestionList, setDetailQuestionList] =
-    useRecoilState(detailQuestionState);
+  const [detailQuestionList, setDetailQuestionList] = useRecoilState(
+    detailMCQuestionState
+  );
 
   const detailQuestionOnChange = (event) => {
     setDetailQuestion(event.target.value);

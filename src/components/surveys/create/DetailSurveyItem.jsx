@@ -1,15 +1,16 @@
 import React from "react";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { surveyListState, detailQuestionState } from "../../../atoms";
+import { useRecoilState } from "recoil";
+import { detailMCQuestionState } from "../../../atoms";
 
 export default function DetailSurveyItem({ item }) {
-  const [detailSurveyList, setDetailSurveyList] =
-    useRecoilState(detailQuestionState);
-  const index = detailSurveyList.findIndex((listItem) => listItem === item);
+  const [detailQuestionList, setDetailQuestionList] = useRecoilState(
+    detailMCQuestionState
+  );
+  const index = detailQuestionList.findIndex((listItem) => listItem === item);
 
   const deleteItem = () => {
-    const newList = removeItemAtIndex(detailSurveyList, index);
-    setDetailSurveyList(newList);
+    const newList = removeItemAtIndex(detailQuestionList, index);
+    setDetailQuestionList(newList);
   };
 
   return (

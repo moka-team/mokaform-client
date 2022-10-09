@@ -5,7 +5,7 @@ export const surveyListState = atom({
   default: [],
 });
 
-export const detailQuestionState = atom({
-  key: "detailQuestionState",
+export const detailMCQuestionState = atom({
+  key: "detailMCQuestionState",
   default: [],
 });

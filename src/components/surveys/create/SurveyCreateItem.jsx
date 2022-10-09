@@ -1,14 +1,14 @@
-import React, { useState, useRef } from "react";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { surveyListState, detailQuestionState } from "../../../atoms";
-import DetailQuestionCreator from "./DetailQuestionCreator";
+import React from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { surveyListState, detailMCQuestionState } from "../../../atoms";
+import DetailMCQuestionCreator from "./DetailMCQuestionCreator";
 import DetailSurveyItem from "./DetailSurveyItem";
 
 export default function SurveyItem({ item }) {
   const [surveyList, setSurveyList] = useRecoilState(surveyListState);
   const index = surveyList.findIndex((listItem) => listItem === item);
 
-  const detailquestionList = useRecoilValue(detailQuestionState);
+  const detailQuestionList = useRecoilValue(detailMCQuestionState);
 
   const deleteItem = () => {
     const newList = removeItemAtIndex(surveyList, index);
@@ -34,8 +34,8 @@ export default function SurveyItem({ item }) {
           <br></br>
           질문: {item.text}
           <button onClick={deleteItem}>X</button>{" "}
-          <DetailQuestionCreator id={item.id}></DetailQuestionCreator>
-          {detailquestionList.map((detailQuestionItem) =>
+          <DetailMCQuestionCreator id={item.id}></DetailMCQuestionCreator>
+          {detailQuestionList.map((detailQuestionItem) =>
             item.id === detailQuestionItem.survey_id ? (
               <DetailSurveyItem
                 key={detailQuestionItem.id}
