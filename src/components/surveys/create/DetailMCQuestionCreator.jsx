@@ -1,5 +1,7 @@
+import { Button } from "@mui/material";
 import React, { useState } from "react";
 import { useRecoilState } from "recoil";
+import styled from "styled-components";
 import { detailMCQuestionState } from "../../../atoms";
 
 export default function DetailMCQuestionCreator({ id }) {
@@ -7,10 +9,6 @@ export default function DetailMCQuestionCreator({ id }) {
   const [detailQuestionList, setDetailQuestionList] = useRecoilState(
     detailMCQuestionState
   );
-
-  const detailQuestionOnChange = (event) => {
-    setDetailQuestion(event.target.value);
-  };
 
   const addDetailItem = () => {
     setDetailQuestionList((oldDetailQuestionList) => [
@@ -25,16 +23,9 @@ export default function DetailMCQuestionCreator({ id }) {
   };
 
   return (
-    <div>
-      <input
-        type="text"
-        defaultValue={detailQuestion}
-        onChange={detailQuestionOnChange}
-        placeholder="Write your detail Question"
-      />
-      <button onClick={addDetailItem}>저장</button>
-      <button>X</button>
-    </div>
+    <Button onClick={addDetailItem} size="small">
+      응답옵션 추가하기
+    </Button>
   );
 }
 

@@ -9,10 +9,11 @@ export default function CreateSection() {
   const surveyList = useRecoilValue(surveyListState);
   return (
     <Create>
-      <SurveyItemCreator></SurveyItemCreator>
+      <h1>설문 제목</h1>
       {surveyList.map((surveyItem) => (
         <SurveyCreateItem key={surveyItem.id} item={surveyItem} />
       ))}
+      <SurveyItemCreator></SurveyItemCreator>
     </Create>
   );
 }
