@@ -2,24 +2,17 @@ import React, { useState, useRef } from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { surveyListState, detailQuestionState } from "../../../atoms";
 import DetailQuestionCreator from "./DetailQuestionCreator";
+import DetailSurveyItem from "./DetailSurveyItem";
 
 export default function SurveyItem({ item }) {
   const [surveyList, setSurveyList] = useRecoilState(surveyListState);
   const index = surveyList.findIndex((listItem) => listItem === item);
 
-  const [countList, setCountList] = useState([0]);
+  const detailquestionList = useRecoilValue(detailQuestionState);
 
   const deleteItem = () => {
     const newList = removeItemAtIndex(surveyList, index);
     setSurveyList(newList);
-  };
-
-  const addDetailDiv = () => {
-    let countArr = [...countList];
-    let counter = countArr.slice(-1)[0];
-    counter += 1;
-    countArr.push(counter);
-    setCountList(countArr);
   };
 
   return (
@@ -40,9 +33,18 @@ export default function SurveyItem({ item }) {
         <>
           <br></br>
           질문: {item.text}
-          <button onClick={addDetailDiv}>질문 추가</button>
           <button onClick={deleteItem}>X</button>{" "}
-          <DetailQuestionCreator countList={countList} id={item.id} />
+          <DetailQuestionCreator id={item.id}></DetailQuestionCreator>
+          {detailquestionList.map((detailQuestionItem) =>
+            item.id === detailQuestionItem.survey_id ? (
+              <DetailSurveyItem
+                key={detailQuestionItem.id}
+                item={detailQuestionItem}
+              />
+            ) : (
+              <></>
+            )
+          )}
         </>
       )}
     </div>

@@ -1,9 +1,10 @@
 import React from "react";
-import { surveyListState } from "../../../atoms";
+import { detailQuestionState } from "../../../atoms";
 import { useRecoilValue } from "recoil";
+import DetailSurveyItem from "./DetailSurveyItem";
 
 export default function SurveyPreviewItem({ item }) {
-  const surveyList = useRecoilValue(surveyListState);
+  const detailQuestionList = useRecoilValue(detailQuestionState);
   return (
     <div>
       {" "}
@@ -13,7 +14,7 @@ export default function SurveyPreviewItem({ item }) {
             <br></br>
             질문: {item.text}
             <div>
-              <input type="text" defaultValue={item.type} />
+              <input type="text" placeholder="답변" />
             </div>
           </>
         ) : item.type === "찬부식" ? (
@@ -35,7 +36,13 @@ export default function SurveyPreviewItem({ item }) {
           <>
             <br></br>
             질문: {item.text}
-            <input type="text" defaultValue={item.type} />
+            {detailQuestionList.map((detailQuestionItem) =>
+              item.id === detailQuestionItem.survey_id ? (
+                <div>세부질문: {detailQuestionItem.text}</div>
+              ) : (
+                <></>
+              )
+            )}
           </>
         )}
       </div>

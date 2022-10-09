@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { detailQuestionState } from "../../../atoms";
 
-const DetailQuestionCreator = (props) => {
+export default function DetailQuestionCreator({ id }) {
   const [detailQuestion, setDetailQuestion] = useState("");
   const [detailQuestionList, setDetailQuestionList] =
     useRecoilState(detailQuestionState);
@@ -11,49 +11,33 @@ const DetailQuestionCreator = (props) => {
     setDetailQuestion(event.target.value);
   };
 
-  //   const addDetailItem = () => {
-  //     setDetailQuestionList((oldDetailQuestionList) => [
-  //       ...oldDetailQuestionList,
-  //       {
-  //         survey_id: props.id,
-  //         id: getId(),
-  //         text: detailQuestion,
-  //       },
-  //     ]);
-  //     setDetailQuestion("");
-  //   };
-
-  //   const deleteItem = (index) => {
-  //     const newList = detailQuestionList.filter(
-  //       (item, deleteIndex) => index !== deleteIndex
-  //     );
-  //     setDetailQuestionList(newList);
-  //   };
+  const addDetailItem = () => {
+    setDetailQuestionList((oldDetailQuestionList) => [
+      ...oldDetailQuestionList,
+      {
+        survey_id: id,
+        id: getId(),
+        text: detailQuestion,
+      },
+    ]);
+    setDetailQuestion("");
+  };
 
   return (
-    <>
-      {props.countList &&
-        props.countList.map((item, i) => (
-          <div key={i}>
-            <div>
-              <input
-                type="text"
-                defaultValue={detailQuestion}
-                onChange={detailQuestionOnChange}
-                placeholder="Write your detail Question"
-              />
-              <button>저장</button>
-              <button>X</button>
-            </div>
-          </div>
-        ))}
-    </>
+    <div>
+      <input
+        type="text"
+        defaultValue={detailQuestion}
+        onChange={detailQuestionOnChange}
+        placeholder="Write your detail Question"
+      />
+      <button onClick={addDetailItem}>저장</button>
+      <button>X</button>
+    </div>
   );
-};
+}
 
 let id = 0;
 function getId() {
   return id++;
 }
-
-export default DetailQuestionCreator;
