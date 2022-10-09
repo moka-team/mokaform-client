@@ -18,10 +18,71 @@ const Create = styled.div`
 
 const Preview = styled.div`
   display: flex;
-  width: 50%;
+  width: 40%;
+  height: 100%;
   flex-direction: column;
-  background-color: blue;
+  background-color: #edeef0;
   float: right;
+  padding: 0% 5%;
+  color: black;
+  h1 {
+    font-size: large;
+    font-weight: 800;
+    margin-top: 25px;
+  }
 `;
 
-export { Create, Preview };
+const QuestionWrapper = styled.div`
+  background-color: white;
+  margin-top: 25px;
+  border-radius: 10px;
+  padding: 20px 35px 20px 25px;
+`;
+
+const QuestionOption = styled.button`
+  width: 100%;
+  height: 40px;
+  margin-top: 10px;
+  border-radius: 10px;
+  padding-left: 10px;
+  background-color: #edeef0;
+  border: 0;
+  color: black;
+  text-align: left;
+
+  &:hover {
+    background-color: #0064ff;
+    opacity: 0.9;
+    color: white;
+    font-weight: 400;
+  }
+`;
+
+const QuestionText = styled.h1`
+  color: ${(props) => props.color};
+  font-weight: 500;
+`;
+
+const Answer = styled.input`
+  width: 100%;
+  height: 40px;
+  padding-left: 10px;
+  margin-top: 10px;
+  border-radius: 10px;
+  background-color: #edeef0;
+  border: none;
+  font-size: 80%;
+
+  &:focus {
+    border-color: #edeef0;
+  }
+`;
+
+export {
+  Create,
+  Preview,
+  QuestionWrapper,
+  QuestionOption,
+  QuestionText,
+  Answer,
+};

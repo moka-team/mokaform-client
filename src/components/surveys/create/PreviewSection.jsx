@@ -9,6 +9,7 @@ export default function PreviewSection() {
 
   return (
     <Preview>
+      <h1>설문 제목</h1>
       {surveyList.map((surveyItem) => (
         <SurveyPreviewItem key={surveyItem.id} item={surveyItem} />
       ))}
