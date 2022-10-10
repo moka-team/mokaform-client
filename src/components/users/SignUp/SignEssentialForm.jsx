@@ -15,7 +15,7 @@ export default function SignEssentialForm() {
       <EssentialForm
         name="id"
         type="text"
-        placeholder="아이디"
+        placeholder="이메일"
         onChange={onIdHandler}
       />
       <EssentialForm
