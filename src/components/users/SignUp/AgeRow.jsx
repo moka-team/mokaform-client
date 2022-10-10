@@ -43,6 +43,7 @@ export default function AgeRow() {
       <Title>연령대</Title>
       {ages.map((age, idx) => (
         <Row
+          key={ids[idx]}
           color="white"
           id={ids[idx]}
           value={age}

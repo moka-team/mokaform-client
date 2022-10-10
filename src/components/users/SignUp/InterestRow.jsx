@@ -56,6 +56,7 @@ export default function InterestRow() {
         {interests.map((interest, idx) => (
           <Row
             color="#f9fafb"
+            key={ids[idx]}
             id={ids[idx]}
             value={interest}
             type="button"
@@ -69,6 +70,7 @@ export default function InterestRow() {
         {interests2.map((interest, idx) => (
           <Row
             color="#f9fafb"
+            key={ids[idx + 4]}
             id={ids[idx + 4]}
             value={interest}
             type="button"

@@ -41,6 +41,17 @@ export default function SignUpForm() {
     signOptionRef2.current?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const validateEmail = (email) => {
+    const regex =
+      /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
+    return regex.test(email);
+  };
+
+  const removeWhitespace = (text) => {
+    const regex = /\s/g;
+    return text.replace(regex, "");
+  };
+
   const signUpPatch = () => {
     axios
       .post("/signup", {
@@ -88,13 +99,13 @@ export default function SignUpForm() {
         preference
     );
     if (
-      (email ||
-        nickname ||
-        password ||
-        passwordConfirm ||
-        ageGroup ||
-        gender ||
-        job) === ""
+      email === "" ||
+      nickname === "" ||
+      password === "" ||
+      passwordConfirm === "" ||
+      ageGroup === "" ||
+      gender === "" ||
+      job === ""
     ) {
       console.log("잘못된 형식");
     } else {

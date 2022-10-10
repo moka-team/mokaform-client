@@ -45,7 +45,13 @@ export default function SexRow() {
       <Title>성별</Title>
       <Rows>
         {sex.map((sex, idx) => (
-          <Row color="white" id={ids[idx]} value={sex} onClick={onClickHandler}>
+          <Row
+            color="white"
+            key={ids[idx]}
+            id={ids[idx]}
+            value={sex}
+            onClick={onClickHandler}
+          >
             {sex}
           </Row>
         ))}

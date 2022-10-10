@@ -50,6 +50,21 @@ const EssentialForm = styled.input`
   }
 `;
 
+/* EssentialForm Span */
+const Message = styled.span`
+  padding-left: 10px;
+  margin: 10px;
+  text-align: left;
+
+  &.success {
+    color: #8f8c8b;
+  }
+
+  &.error {
+    color: #ff2727;
+  }
+`;
+
 /* SignUpForm */
 const MainTitle = styled.h1`
   margin: 10px;
@@ -83,4 +98,13 @@ const Container = styled.div`
   background-color: ${(props) => props.color || "white"};
 `;
 
-export { Title, Row, Rows, EssentialForm, Button, Container, MainTitle };
+export {
+  Title,
+  Row,
+  Rows,
+  EssentialForm,
+  Message,
+  Button,
+  Container,
+  MainTitle,
+};
