@@ -37,8 +37,17 @@ const EssentialForm = styled.input`
   padding-left: 10px;
   margin: 10px;
   border-radius: 10px;
-  border: none;
+  border: 0px;
   background-color: #edeef0;
+  &:hover {
+    border-color: #3399ff;
+    outline: 1px solid #80bfff;
+  }
+
+  &:focus {
+    border-color: #3399ff;
+    outline: 3px solid #80bfff;
+  }
 `;
 
 /* SignUpForm */

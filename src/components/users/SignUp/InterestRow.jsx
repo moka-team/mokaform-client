@@ -1,20 +1,24 @@
 import React, { useState, useEffect } from "react";
+import { useRecoilState } from "recoil";
 import { Title, Row, Rows } from "./SignUpCSS";
+import { preferenceState } from "./SignUpState";
 
 export default function InterestRow() {
   const interests = ["일상", "IT", "취미", "학습"];
   const interests2 = ["심리", "사회·정치", "선호도 조사", "+"];
 
   const ids = [
-    "interest_1",
-    "interest_2",
-    "interest_3",
-    "interest_4",
-    "interest_5",
-    "interest_6",
-    "interest_7",
+    "DAILY_LIFE",
+    "IT",
+    "HOBBY",
+    "LEARNING",
+    "PSYCHOLOGY",
+    "SOCIAL_POLITICS",
+    "PREFERENCE_RESEARCH",
     "interest_8",
   ];
+
+  const [preference, setPreference] = useRecoilState(preferenceState);
 
   const [currentClick, setCurrentClick] = useState(null);
   const [prevClick, setPrevClick] = useState(null);
@@ -28,6 +32,7 @@ export default function InterestRow() {
     }
 
     setCurrentClick(event.target.id);
+    setPreference(event.target.id);
   };
 
   useEffect(
