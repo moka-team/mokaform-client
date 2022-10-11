@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import { Button } from '@mui/material';
 import {  useRecoilValue } from "recoil";
-import { surveyListState } from "../../../atoms";
+import { surveyListState,detailMCQuestionState } from "../../../atoms";
 
 const SNavBar = styled.div`
     display:flex;
@@ -20,9 +20,17 @@ const SNavBar = styled.div`
 `
 function NavBar(){
     const surveyList = useRecoilValue(surveyListState);
+    const detailList = useRecoilValue(detailMCQuestionState);
 
     const handleSubmit = ()=>{
-        surveyList.map((item)=>alert(item.text));
+        for(let i =0; i<surveyList.length;i++){
+            let question = surveyList[i].text
+
+            let newList = detailList.filter((item)=>item.survey_id === i)
+            let jsonString = JSON.stringify(newList)
+            
+            alert(question +"\n"+  jsonString)
+        }
 
     }
     return(
