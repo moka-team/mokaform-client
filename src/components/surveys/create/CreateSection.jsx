@@ -14,7 +14,6 @@ export default function CreateSection() {
         <SurveyCreateItem key={surveyItem.id} item={surveyItem} />
       ))}
       <SurveyItemCreator></SurveyItemCreator>
-      <Save>저장</Save>
     </Create>
   );
 }

@@ -8,7 +8,7 @@ const Create = styled.div`
   background-color: #202632;
   color: white;
   float: left;
-  padding: 0% 5%;
+  padding: 0% 5% 5% 5%;
   h1 {
     font-size: large;
     font-weight: 800;
@@ -23,7 +23,7 @@ const Preview = styled.div`
   flex-direction: column;
   background-color: #edeef0;
   float: right;
-  padding: 0% 5%;
+  padding: 0% 5% 5% 5%;
   color: black;
   h1 {
     font-size: large;
