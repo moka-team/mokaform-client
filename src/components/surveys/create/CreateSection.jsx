@@ -1,5 +1,5 @@
 import React from "react";
-import { Create } from "./styled";
+import { Create, Save } from "./styled";
 import SurveyItemCreator from "./SurveyItemCreator";
 import { surveyListState } from "../../../atoms";
 import { useRecoilValue } from "recoil";
@@ -14,6 +14,7 @@ export default function CreateSection() {
         <SurveyCreateItem key={surveyItem.id} item={surveyItem} />
       ))}
       <SurveyItemCreator></SurveyItemCreator>
+      <Save>저장</Save>
     </Create>
   );
 }

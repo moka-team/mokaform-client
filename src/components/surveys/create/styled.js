@@ -79,6 +79,12 @@ const Answer = styled.input`
   }
 `;
 
+const Save = styled.div`
+  color: white;
+  font-weight: 500;
+  text-align: right;
+`;
+
 export {
   Create,
   Preview,
@@ -86,4 +92,5 @@ export {
   QuestionOption,
   QuestionText,
   Answer,
+  Save,
 };
