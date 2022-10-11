@@ -3,7 +3,7 @@ import styled from "styled-components";
 const Create = styled.div`
   display: flex;
   width: 40%;
-  height: 100%;
+  min-height: 100%;
   flex-direction: column;
   background-color: #202632;
   color: white;
@@ -19,7 +19,7 @@ const Create = styled.div`
 const Preview = styled.div`
   display: flex;
   width: 40%;
-  height: 100%;
+  min-height: 100%;
   flex-direction: column;
   background-color: #edeef0;
   float: right;
@@ -35,6 +35,7 @@ const Preview = styled.div`
 const QuestionWrapper = styled.div`
   background-color: white;
   margin-top: 25px;
+  margin-bottom: 15px;
   border-radius: 10px;
   padding: 20px 35px 20px 25px;
 `;
