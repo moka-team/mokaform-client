@@ -52,6 +52,7 @@ const EssentialForm = styled.input`
 
 /* EssentialForm Span */
 const Message = styled.p`
+  font-size: small;
   width: 400px;
   padding-left: 10px;
   margin: 10px;
@@ -87,6 +88,9 @@ const Button = styled.button`
   font-weight: bold;
   &:hover {
     background-color: #0064ff;
+  }
+  &:disabled {
+    background-color: gray;
   }
 `;
 

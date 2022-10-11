@@ -6,9 +6,14 @@ import {
   nicknameState,
   passwordState,
   passwordConfirmState,
+  isNicknameState,
+  isEmailState,
+  isPasswordState,
+  isPasswordConfirmState,
 } from "./SignUpState";
+import { Box } from "@mui/material";
 
-export default function SignEssentialForm() {
+export default function SignEssentialForm({}) {
   // 이메일, 닉네임, 비밀번호, 비밀번호 확인
   const [email, setEmail] = useRecoilState(emailState);
   const [nickname, setNickname] = useRecoilState(nicknameState);
@@ -23,10 +28,12 @@ export default function SignEssentialForm() {
   const [passwordConfirmMessage, setPasswordConfirmMessage] = useState("");
 
   // 유효성 검사
-  const [isNickname, setIsNickname] = useState(false);
-  const [isEmail, setIsEmail] = useState(false);
-  const [isPassword, setIsPassword] = useState(false);
-  const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
+  const [isNickname, setIsNickname] = useRecoilState(isNicknameState);
+  const [isEmail, setIsEmail] = useRecoilState(isEmailState);
+  const [isPassword, setIsPassword] = useRecoilState(isPasswordState);
+  const [isPasswordConfirm, setIsPasswordConfirm] = useRecoilState(
+    isPasswordConfirmState
+  );
 
   const onEmailHandler = useCallback((e) => {
     const emailRegex =
@@ -100,35 +107,43 @@ export default function SignEssentialForm() {
         value={email}
         onChange={onEmailHandler}
       />
-      {email.length > 0 && (
-        <Message className={isEmail ? "success" : "error"}>
-          {emailMessage}
-        </Message>
-      )}
+      <Box sx={{ width: 400, height: 25 }}>
+        {email.length > 0 && (
+          <Message className={isEmail ? "success" : "error"}>
+            {emailMessage}
+          </Message>
+        )}
+      </Box>
       <EssentialForm
         name="nickname"
         type="text"
+        autoComplete="off"
         placeholder="닉네임"
         value={nickname}
         onChange={onNicknameHandler}
       />
-      {nickname.length > 0 && (
-        <Message className={isNickname ? "success" : "error"}>
-          {nicknameMessage}
-        </Message>
-      )}
+      <Box sx={{ width: 400, height: 25 }}>
+        {nickname.length > 0 && (
+          <Message className={isNickname ? "success" : "error"}>
+            {nicknameMessage}
+          </Message>
+        )}
+      </Box>
       <EssentialForm
+        autoComplete="off"
         name="password"
         type="password"
         placeholder="비밀번호"
         value={password}
         onChange={onPasswordHandler}
       />
-      {password.length > 0 && (
-        <Message className={isPassword ? "success" : "error"}>
-          {passwordMessage}
-        </Message>
-      )}
+      <Box sx={{ width: 400, height: 25 }}>
+        {password.length > 0 && (
+          <Message className={isPassword ? "success" : "error"}>
+            {passwordMessage}
+          </Message>
+        )}
+      </Box>
       <EssentialForm
         name="confirmPassword"
         type="password"
@@ -136,11 +151,13 @@ export default function SignEssentialForm() {
         value={passwordConfirm}
         onChange={onConfirmPasswordHandler}
       />
-      {passwordConfirm.length > 0 && (
-        <Message className={isPasswordConfirm ? "success" : "error"}>
-          {passwordConfirmMessage}
-        </Message>
-      )}
+      <Box sx={{ width: 400, height: 25 }}>
+        {passwordConfirm.length > 0 && (
+          <Message className={isPasswordConfirm ? "success" : "error"}>
+            {passwordConfirmMessage}
+          </Message>
+        )}
+      </Box>
     </>
   );
 }

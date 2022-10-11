@@ -13,6 +13,10 @@ import {
   genderState,
   jobState,
   preferenceState,
+  isEmailState,
+  isNicknameState,
+  isPasswordState,
+  isPasswordConfirmState,
 } from "./SignUpState";
 import SignEssentialForm from "./SignEssentialForm";
 import { MainTitle, Rows, Button, Container } from "./SignUpCSS";
@@ -34,12 +38,20 @@ export default function SignUpForm() {
   const [job, setJob] = useRecoilState(jobState);
   const [preference, setPreference] = useRecoilState(preferenceState);
 
+  const [isNickname, setIsNickname] = useRecoilState(isNicknameState);
+  const [isEmail, setIsEmail] = useRecoilState(isEmailState);
+  const [isPassword, setIsPassword] = useRecoilState(isPasswordState);
+  const [isPasswordConfirm, setIsPasswordConfirm] = useRecoilState(
+    isPasswordConfirmState
+  );
   const onClickHandler = (event) => {
     signOptionRef.current?.scrollIntoView({ behavior: "smooth" });
   };
   const onNextBtnClickHandler = (event) => {
     signOptionRef2.current?.scrollIntoView({ behavior: "smooth" });
   };
+
+  let ValidateInfo = false;
 
   const signUpPatch = () => {
     axios
@@ -59,6 +71,16 @@ export default function SignUpForm() {
         //   let message = response.data.message;
         //   alert("회원가입 실패 " + message);
         // }
+        if (response.data.messgae === "새로운 유저 생성이 성공하였습니다.") {
+          setEmail("");
+          setNickname("");
+          setPassword("");
+          setPasswordConfirm("");
+          setAgeGroup("");
+          setGender("");
+          setJob("");
+          setPreference("");
+        }
         window.alert(response.data.message);
       })
       .catch(function (error) {
@@ -87,28 +109,18 @@ export default function SignUpForm() {
         "관심사 = " +
         preference
     );
-    if (
-      email === "" ||
-      nickname === "" ||
-      password === "" ||
-      passwordConfirm === "" ||
-      ageGroup === "" ||
-      gender === "" ||
-      job === ""
-    ) {
+    if (ageGroup === "" || gender === "" || job === "") {
       console.log("잘못된 형식");
     } else {
       signUpPatch();
-      setEmail("");
-      setNickname("");
-      setPassword("");
-      setPasswordConfirm("");
-      setAgeGroup("");
-      setGender("");
-      setJob("");
-      setPreference("");
     }
   };
+
+  if (ageGroup === "" || gender === "" || job === "") {
+    ValidateInfo = false;
+  } else {
+    ValidateInfo = true;
+  }
 
   return (
     <>
@@ -130,7 +142,20 @@ export default function SignUpForm() {
         <Rows>
           <JobRow></JobRow>
           <InterestRow></InterestRow>
-          <Button onClick={onCompleteBtnClickHandler}>가입 완료</Button>
+          <Button
+            disabled={
+              !(
+                isNickname &&
+                isEmail &&
+                isPassword &&
+                isPasswordConfirm &&
+                ValidateInfo
+              )
+            }
+            onClick={onCompleteBtnClickHandler}
+          >
+            가입 완료
+          </Button>
         </Rows>
       </Container>
     </>

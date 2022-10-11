@@ -37,5 +37,25 @@ export const jobState = atom({
 
 export const preferenceState = atom({
   key: "preferenceState",
-  default: "",
+  default: [],
+});
+
+export const isEmailState = atom({
+  key: "isEmailState",
+  default: false,
+});
+
+export const isNicknameState = atom({
+  key: "isNicknameState",
+  default: false,
+});
+
+export const isPasswordState = atom({
+  key: "isPasswordState",
+  default: false,
+});
+
+export const isPasswordConfirmState = atom({
+  key: "isPasswordConfirmState",
+  default: false,
 });
