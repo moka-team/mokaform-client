@@ -51,7 +51,8 @@ const EssentialForm = styled.input`
 `;
 
 /* EssentialForm Span */
-const Message = styled.span`
+const Message = styled.p`
+  width: 400px;
   padding-left: 10px;
   margin: 10px;
   text-align: left;

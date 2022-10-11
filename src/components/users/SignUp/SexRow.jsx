@@ -6,7 +6,7 @@ import { genderState } from "./SignUpState";
 
 export default function SexRow() {
   const sex = ["여성", "남성"];
-  const ids = ["femail", "mail"];
+  const ids = ["FEMALE", "MALE"];
 
   const [gender, setGender] = useRecoilState(genderState);
 

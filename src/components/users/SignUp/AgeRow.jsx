@@ -5,7 +5,7 @@ import { ageGroupState } from "./SignUpState";
 
 export default function AgeRow() {
   const ages = ["10대", "20대", "30대", "40대", "50대+"];
-  const ids = ["age_1", "age_2", "age_3", "age_4", "age_5"];
+  const ids = ["TEENAGER", "TWENTIES", "THIRTIES", "FORTIES", "FIFTIES"];
 
   const [age, setAgeGroup] = useRecoilState(ageGroupState);
 
@@ -21,7 +21,7 @@ export default function AgeRow() {
     }
 
     setCurrentClick(event.target.id);
-    setAgeGroup(event.target.value.substring(0, 2));
+    setAgeGroup(event.target.id);
   };
 
   useEffect(

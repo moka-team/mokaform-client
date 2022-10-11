@@ -41,24 +41,13 @@ export default function SignUpForm() {
     signOptionRef2.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const validateEmail = (email) => {
-    const regex =
-      /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
-    return regex.test(email);
-  };
-
-  const removeWhitespace = (text) => {
-    const regex = /\s/g;
-    return text.replace(regex, "");
-  };
-
   const signUpPatch = () => {
     axios
-      .post("/signup", {
+      .post("/api/v1/users/signup", {
         email: email,
         password: password,
         nickname: nickname,
-        age_group: ageGroup,
+        ageGroup: ageGroup,
         gender: gender,
         job: job,
         // preference_category: preference,
@@ -70,7 +59,7 @@ export default function SignUpForm() {
         //   let message = response.data.message;
         //   alert("회원가입 실패 " + message);
         // }
-        window.alert(response.data.result);
+        window.alert(response.data.message);
       })
       .catch(function (error) {
         console.log(error);

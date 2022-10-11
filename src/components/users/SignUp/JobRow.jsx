@@ -15,10 +15,10 @@ export default function JobRow() {
   const onChangeHandler = (value) => {
     setSelected(value);
     if (value === "학생") {
-      setJob("student");
+      setJob("STUDENT");
     }
     if (value === "직장인") {
-      setJob("worker");
+      setJob("OFFICE_WORKERS");
     }
   };
 
