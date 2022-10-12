@@ -85,6 +85,57 @@ const Save = styled.div`
   text-align: right;
 `;
 
+const Title = styled.input`
+  margin-top: 32px;
+  font-weight: 900;
+  font-size: large;
+  border: none;
+  background-color: #202632;
+  color: white;
+
+  &:focus {
+    outline: none;
+  }
+`;
+
+const Summary = styled.input`
+  margin-top: 10px;
+  font-weight: 500;
+  font-size: small;
+  border: none;
+  background-color: #202632;
+  color: white;
+
+  &:focus {
+    outline: none;
+  }
+`;
+
+const TitleText = styled.text`
+  margin-top: 32px;
+  font-weight: 900;
+  font-size: large;
+  border: none;
+  background-color: #edeef0;
+  color: black;
+
+  &:focus {
+    outline: none;
+  }
+`;
+
+const SummaryText = styled.text`
+  margin-top: 10px;
+  font-weight: 500;
+  font-size: small;
+  border: none;
+  background-color: #edeef0;
+  color: black;
+
+  &:focus {
+    outline: none;
+  }
+`;
 export {
   Create,
   Preview,
@@ -93,4 +144,8 @@ export {
   QuestionText,
   Answer,
   Save,
+  Title,
+  Summary,
+  TitleText,
+  SummaryText,
 };
