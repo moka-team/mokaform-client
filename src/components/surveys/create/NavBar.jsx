@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import { Button } from "@mui/material";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
+import Switch from "@mui/material/Switch";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
 import {
   surveyTitle,
   surveySummary,
@@ -26,13 +29,23 @@ const SNavBar = styled.div`
   }
 `;
 function NavBar() {
+  const label = { inputProps: { "aria-label": "Switch demo" } };
+
   const surveyList = useRecoilValue(surveyListState);
   const detailList = useRecoilValue(detailMCQuestionState);
 
   const title = useRecoilValue(surveyTitle);
   const summary = useRecoilValue(surveySummary);
-  const isAnonymous = useRecoilValue(surveyIsAnonymous);
-  const isPublic = useRecoilValue(surveyIsPublic);
+  const [isAnonymous, setIsAnonymous] = useRecoilState(surveyIsAnonymous);
+  const [isPublic, setIsPublic] = useRecoilState(surveyIsPublic);
+
+  const isAnonymousOnChange = (event) => {
+    setIsAnonymous(event.target.checked);
+  };
+
+  const isPublicOnChange = (event) => {
+    setIsPublic(event.target.checked);
+  };
 
   const handleSubmit = () => {
     alert(
@@ -62,6 +75,18 @@ function NavBar() {
   };
   return (
     <SNavBar>
+      <FormGroup row="true">
+        <FormControlLabel
+          control={
+            <Switch checked={isAnonymous} onChange={isAnonymousOnChange} />
+          }
+          label="익명 답변 가능"
+        />
+        <FormControlLabel
+          control={<Switch checked={isPublic} onChange={isPublicOnChange} />}
+          label="설문 공개"
+        />
+      </FormGroup>
       <Button onClick={handleSubmit} variant="contained">
         저장
       </Button>

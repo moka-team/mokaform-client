@@ -1,13 +1,7 @@
 import { React, useState } from "react";
 import { Create, Title, Summary } from "./styled";
 import SurveyItemCreator from "./SurveyItemCreator";
-import {
-  surveyTitle,
-  surveySummary,
-  surveyIsAnonymous,
-  surveyIsPublic,
-  surveyListState,
-} from "../../../atoms";
+import { surveyTitle, surveySummary, surveyListState } from "../../../atoms";
 import { useRecoilState, useRecoilValue } from "recoil";
 import SurveyCreateItem from "./SurveyCreateItem";
 
@@ -16,8 +10,6 @@ export default function CreateSection() {
 
   const [title, setTitle] = useRecoilState(surveyTitle);
   const [summary, setSummary] = useRecoilState(surveySummary);
-  const [isAnonymous, setIsAnonymous] = useRecoilState(surveyIsAnonymous);
-  const [isPublic, setIsPublic] = useRecoilState(surveyIsPublic);
 
   const titleOnChange = (event) => {
     setTitle(event.target.value);
@@ -25,14 +17,6 @@ export default function CreateSection() {
 
   const summaryOnChange = (event) => {
     setSummary(event.target.value);
-  };
-
-  const isAnonymousOnChange = (event) => {
-    setIsAnonymous(event.target.value);
-  };
-
-  const isPublicOnChange = (event) => {
-    setIsPublic(event.target.value);
   };
 
   return (
