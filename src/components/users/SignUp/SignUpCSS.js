@@ -10,6 +10,30 @@ const Title = styled.h1`
   font-weight: 700;
 `;
 
+const PreferenceButton = styled.button`
+  width: 100px;
+  height: 100px;
+  margin: 10px;
+  border: none;
+  border-radius: 50%;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  &.unchecked {
+    color: black;
+    font-weight: 400;
+    background-color: #f9fafb;
+  }
+
+  &.checked {
+    color: white;
+    font-weight: 600;
+    background-color: #0064ff;
+  }
+`;
+
 const Row = styled.button`
   width: 100px;
   height: 100px;
@@ -112,4 +136,5 @@ export {
   Button,
   Container,
   MainTitle,
+  PreferenceButton,
 };

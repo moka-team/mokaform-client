@@ -23,6 +23,7 @@ import { MainTitle, Rows, Button, Container } from "./SignUpCSS";
 import axios from "axios";
 import { Navigate } from "react-router-dom";
 import { alertTitleClasses } from "@mui/material";
+import PreferenceRow from "./PreferenceRow";
 
 export default function SignUpForm() {
   const signOptionRef = useRef(null);
@@ -142,6 +143,7 @@ export default function SignUpForm() {
         <Rows>
           <JobRow></JobRow>
           <InterestRow></InterestRow>
+
           <Button
             disabled={
               !(
@@ -158,6 +160,7 @@ export default function SignUpForm() {
           </Button>
         </Rows>
       </Container>
+      <PreferenceRow />
     </>
   );
 }
