@@ -81,7 +81,7 @@ export default function Header() {
   const navigate = useNavigate();
 
   const onClickHandler = (event) => {
-    navigate("/signup");
+    navigate("/create-survey");
   };
 
   const handleProfileMenuOpen = (event) => {
@@ -133,7 +133,6 @@ export default function Header() {
             noWrap
             component="div"
             sx={{ display: { xs: "none", sm: "block" } }}
-            onClick={onClickHandler}
           >
             MOKA FORM
           </Typography>
@@ -157,6 +156,7 @@ export default function Header() {
                 mr: 3,
                 ml: 3,
               }}
+              onClick={onClickHandler}
             >
               설문 만들기
             </Button>
