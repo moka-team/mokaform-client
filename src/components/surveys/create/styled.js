@@ -86,7 +86,7 @@ const Save = styled.div`
 `;
 
 const Title = styled.input`
-  margin-top: 32px;
+  margin-top: 10%;
   font-weight: 900;
   font-size: large;
   border: none;
@@ -112,7 +112,7 @@ const Summary = styled.input`
 `;
 
 const TitleText = styled.text`
-  margin-top: 32px;
+  margin-top: 10%;
   font-weight: 900;
   font-size: large;
   border: none;

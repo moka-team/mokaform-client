@@ -4,6 +4,8 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import Switch from "@mui/material/Switch";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import Box from "@mui/material/Box";
+
 import {
   surveyTitle,
   surveySummary,
@@ -18,9 +20,10 @@ const SNavBar = styled.div`
   justify-content: flex-end;
   align-items: center;
   position: fixed;
-  bottom: 0;
+  top: 0;
   left: 0;
   right: 0;
+  /* background-color: #0d0e10; */
   background-color: white;
   height: 5%;
   Button {
@@ -78,13 +81,31 @@ function NavBar() {
       <FormGroup row="true">
         <FormControlLabel
           control={
-            <Switch checked={isAnonymous} onChange={isAnonymousOnChange} />
+            <Switch
+              style={{ color: "#edeef0" }}
+              checked={isAnonymous}
+              onChange={isAnonymousOnChange}
+            />
           }
-          label="익명 답변 가능"
+          label={
+            <Box fontWeight={500} color="#0d0e10">
+              익명 답변 가능
+            </Box>
+          }
         />
         <FormControlLabel
-          control={<Switch checked={isPublic} onChange={isPublicOnChange} />}
-          label="설문 공개"
+          control={
+            <Switch
+              style={{ color: "#edeef0" }}
+              checked={isPublic}
+              onChange={isPublicOnChange}
+            />
+          }
+          label={
+            <Box fontWeight={500} color="#0d0e10">
+              설문 공개
+            </Box>
+          }
         />
       </FormGroup>
       <Button onClick={handleSubmit} variant="contained">
