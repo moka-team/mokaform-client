@@ -96,26 +96,6 @@ export default function SignUpForm() {
   // 회원가입 성공 시 모든 전역 데이터 지우기
   const onCompleteBtnClickHandler = (event) => {
     event.preventDefault();
-
-    // 로그 나중에 확인 끝나면 지워도 됨
-    console.log(
-      "email=" +
-        email +
-        "nickname=" +
-        nickname +
-        "password =" +
-        password +
-        "비밀번호 확인 = " +
-        passwordConfirm +
-        "연령대 = " +
-        ageGroup +
-        "성별 = " +
-        gender +
-        "직업 = " +
-        job +
-        "관심사 = " +
-        preference
-    );
     if (ageGroup === "" || gender === "" || job === "") {
       console.log("잘못된 형식");
     } else {

@@ -1,4 +1,8 @@
 import styled from "styled-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPaw, faFaceSmile } from "@fortawesome/free-solid-svg-icons";
+const preference = ["HOBBY, PET"];
+const preferenceImage = [""];
 
 const Container = styled.div`
   display: grid;
@@ -19,7 +23,7 @@ const Card = styled.div`
   border-radius: 50%;
   margin-right: 25px;
   margin-bottom: 25px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1), 0 4px 4px rgba(0, 0, 0, 0.19);
   &:hover {
     background-color: gray;
   }
@@ -27,8 +31,20 @@ const Card = styled.div`
 function CircleCarousel() {
   return (
     <Container>
-      <Card />
-      <Card />
+      <Card>
+        <FontAwesomeIcon
+          icon={faPaw}
+          size={"4x"}
+          style={{ color: "#636870", marginTop: "16px", marginLeft: "18px" }}
+        />
+      </Card>
+      <Card>
+        <FontAwesomeIcon
+          icon={faFaceSmile}
+          size={"4x"}
+          style={{ color: "#636870", marginTop: "17px", marginLeft: "18px" }}
+        />
+      </Card>
       <Card />
       <Card />
       <Card />
