@@ -44,19 +44,11 @@ export default function SurveyItemCreator() {
       {
         id: getId(),
         text: question,
-        type: options[index],
+        type: options[index]
       },
     ]);
     setQuestion("");
     setType(options[index]);
-  };
-
-  const typeOnChange = (event) => {
-    setType(event.target.value);
-  };
-
-  const questionOnChange = (event) => {
-    setQuestion(event.target.value);
   };
 
   return (
@@ -67,6 +59,7 @@ export default function SurveyItemCreator() {
         aria-controls="lock-menu"
         aria-expanded={open ? "true" : undefined}
         onClick={handleClickListItem}
+        sx={{marginTop:"20px"}}
       >
         <AddCircle sx={{ color: "white" }} />
       </Button>
@@ -91,21 +84,6 @@ export default function SurveyItemCreator() {
         ))}
       </Menu>
 
-      {/* 
-      <select onChange={typeOnChange}>
-        <option value={"주관식"}>주관식</option>
-        <option value={"객관식"}>객관식</option>
-        <option value={"찬부식"}>찬부식</option>
-      </select>
-      <div>
-        <input
-          type="text"
-          defaultValue={question}
-          onChange={questionOnChange}
-          placeholder="Write your Question"
-        />
-        <button onClick={addItem}>Add</button>
-      </div> */}
     </Container>
   );
 }

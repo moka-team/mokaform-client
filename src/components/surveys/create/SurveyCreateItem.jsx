@@ -15,6 +15,7 @@ const Question = styled.div`
 const Input = styled.input`
   border: none;
   background-color: #202632;
+  font-size: 20px;
   color: white;
   &:focus {
     outline: none;
