@@ -14,9 +14,9 @@ export default function DetailMCQuestionCreator({ id }) {
     setDetailQuestionList((oldDetailQuestionList) => [
       ...oldDetailQuestionList,
       {
-        question_id: id,
-        id: getId(),
-        text: detailQuestion,
+        surveyIndex: id,
+        index: getId(),
+        content: detailQuestion,
       },
     ]);
     setDetailQuestion("");

@@ -30,7 +30,7 @@ export default function DetailSurveyItem({ item }) {
 
   const updateDetailItem = (e) => {
     let newList = [...detailQuestionList].map((item) => {
-      if (item.id === index) return { ...item, text: e.target.value };
+      if (item.index === index) return { ...item, content: e.target.value };
       else return item;
     });
     setDetailQuestionList(newList);

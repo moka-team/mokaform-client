@@ -88,7 +88,7 @@ const Save = styled.div`
 const Title = styled.input`
   margin-top: 10%;
   font-weight: 900;
-  font-size: 30px;
+  font-size: xx-large;
   border: none;
   background-color: #202632;
   color: white;
@@ -101,7 +101,7 @@ const Title = styled.input`
 const Summary = styled.input`
   margin-top: 10px;
   font-weight: 500;
-  font-size: small;
+  font-size: medium;
   border: none;
   background-color: #202632;
   color: white;
@@ -114,7 +114,7 @@ const Summary = styled.input`
 const TitleText = styled.text`
   margin-top: 10%;
   font-weight: 900;
-  font-size: large;
+  font-size: xx-large;
   border: none;
   background-color: #edeef0;
   color: black;
@@ -127,7 +127,7 @@ const TitleText = styled.text`
 const SummaryText = styled.text`
   margin-top: 10px;
   font-weight: 500;
-  font-size: small;
+  font-size: medium;
   border: none;
   background-color: #edeef0;
   color: black;
@@ -154,6 +154,19 @@ const SNavBar = styled.div`
   }
 `;
 
+const SaveBtn = styled.button`
+  background-color: #0064ff;
+  width: 60px;
+  border: none;
+  border-radius: 5px;
+  font-weight: 500;
+  color: white;
+  &:disabled {
+    background-color: lightgrey;
+    color: black;
+  }
+`;
+
 export {
   Create,
   Preview,
@@ -167,4 +180,5 @@ export {
   TitleText,
   SummaryText,
   SNavBar,
+  SaveBtn,
 };

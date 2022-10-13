@@ -7,7 +7,7 @@ import { AddCircle } from "@mui/icons-material";
 import { Button } from "@mui/material";
 import styled from "styled-components";
 
-const options = ["주관식", "객관식", "찬부식"];
+const options = ["ESSAY", "MULTIPLE_CHOICE", "OX"];
 
 const Container = styled.div`
   width: 100%;
@@ -17,7 +17,7 @@ const Container = styled.div`
 
 export default function SurveyItemCreator() {
   const [question, setQuestion] = useState("");
-  const [type, setType] = useState("주관식");
+  const [type, setType] = useState("ESSAY");
   const setSurveyList = useSetRecoilState(surveyListState);
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -42,9 +42,11 @@ export default function SurveyItemCreator() {
     setSurveyList((oldSurveyList) => [
       ...oldSurveyList,
       {
-        id: getId(),
-        text: question,
-        type: options[index]
+        surveyIndex: getId(),
+        title: question,
+        type: options[index],
+        index : index,
+        isMultipleAnswer : (index === 1) ? true : false
       },
     ]);
     setQuestion("");

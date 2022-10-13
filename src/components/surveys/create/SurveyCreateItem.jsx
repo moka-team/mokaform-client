@@ -15,7 +15,7 @@ const Question = styled.div`
 const Input = styled.input`
   border: none;
   background-color: #202632;
-  font-size: 20px;
+  font-size: 18px;
   color: white;
   &:focus {
     outline: none;
@@ -23,6 +23,7 @@ const Input = styled.input`
 `;
 const Num = styled.span`
   color: #0064ff;
+  font-size: 20px;
 `;
 export default function SurveyItem({ item }) {
   const [surveyList, setSurveyList] = useRecoilState(surveyListState);
@@ -37,7 +38,7 @@ export default function SurveyItem({ item }) {
 
   const updateItem = (e) => {
     let newList = [...surveyList].map((item) => {
-      if (item.id === index) return { ...item, text: e.target.value };
+      if (item.index === index) return { ...item, title: e.target.value };
       else return item;
     });
     setSurveyList(newList);
@@ -45,7 +46,7 @@ export default function SurveyItem({ item }) {
 
   return (
     <div>
-      {item.type === "주관식" ? (
+      {item.type === "ESSAY" ? (
         <Question>
           <div>
             <Num>{index + 1}</Num>{" "}
@@ -61,7 +62,7 @@ export default function SurveyItem({ item }) {
             style={{ cursor: "pointer" }}
           />
         </Question>
-      ) : item.type === "찬부식" ? (
+      ) : item.type === "OX" ? (
         <Question>
           <div>
             <Num>{index + 1}</Num>{" "}
