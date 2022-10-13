@@ -12,6 +12,7 @@ export default function SurveyPreviewItem({ item }) {
   const detailQuestionList = useRecoilValue(detailMCQuestionState);
   const surveyList = useRecoilValue(surveyListState);
   const index = surveyList.findIndex((listItem) => listItem === item);
+
   return (
     <div>
       {" "}

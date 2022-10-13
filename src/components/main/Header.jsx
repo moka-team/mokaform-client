@@ -72,7 +72,7 @@ const onRefInput = (c) => {
 export default function Header() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-  const [logined, setLogined] = useState(true);
+  const [logined, setLogined] = useState(false);
 
   const inputEl = useRef(null);
   const isMenuOpen = Boolean(anchorEl);
@@ -81,9 +81,16 @@ export default function Header() {
   const navigate = useNavigate();
 
   const onClickHandler = (event) => {
-    navigate("/signup");
+    navigate("/create-survey");
   };
 
+  const onNavigateMain = (event) => {
+    navigate("/");
+  };
+
+  const onNavigateSignIn = (event) => {
+    navigate("/signin");
+  };
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -133,7 +140,7 @@ export default function Header() {
             noWrap
             component="div"
             sx={{ display: { xs: "none", sm: "block" } }}
-            onClick={onClickHandler}
+            onClick={onNavigateMain}
           >
             MOKA FORM
           </Typography>
@@ -157,6 +164,7 @@ export default function Header() {
                 mr: 3,
                 ml: 3,
               }}
+              onClick={onClickHandler}
             >
               설문 만들기
             </Button>
@@ -167,6 +175,7 @@ export default function Header() {
                   fontWeight: "bold",
                   color: "#0064FF",
                 }}
+                onClick={onNavigateSignIn}
               >
                 SIGN IN
               </Button>

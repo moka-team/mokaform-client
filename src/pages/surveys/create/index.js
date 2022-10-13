@@ -1,19 +1,6 @@
 import React from "react";
-import styled from "styled-components";
-import CreateSection from "../../../components/surveys/create/CreateSection";
-import PreviewSection from "../../../components/surveys/create/PreviewSection";
-
-const Container = styled.div`
-  display: flex;
-  min-height: 100vh;
-  background-color: red;
-`;
+import CreateSurvey from "../../../components/surveys/create/CreateSurvey";
 
 export default function CreateSurvey2() {
-  return (
-    <Container>
-      <CreateSection></CreateSection>
-      <PreviewSection></PreviewSection>
-    </Container>
-  );
+  return <CreateSurvey></CreateSurvey>;
 }

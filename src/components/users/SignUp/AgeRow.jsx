@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react";
+import { useRecoilState } from "recoil";
 import { Title, Row } from "./SignUpCSS";
+import { ageGroupState } from "./SignUpState";
 
 export default function AgeRow() {
   const ages = ["10대", "20대", "30대", "40대", "50대+"];
-  const ids = ["age_1", "age_2", "age_3", "age_4", "age_5"];
+  const ids = ["TEENAGER", "TWENTIES", "THIRTIES", "FORTIES", "FIFTIES"];
+
+  const [age, setAgeGroup] = useRecoilState(ageGroupState);
 
   const [currentClick, setCurrentClick] = useState(null);
   const [prevClick, setPrevClick] = useState(null);
@@ -17,6 +21,7 @@ export default function AgeRow() {
     }
 
     setCurrentClick(event.target.id);
+    setAgeGroup(event.target.id);
   };
 
   useEffect(
@@ -38,6 +43,7 @@ export default function AgeRow() {
       <Title>연령대</Title>
       {ages.map((age, idx) => (
         <Row
+          key={ids[idx]}
           color="white"
           id={ids[idx]}
           value={age}

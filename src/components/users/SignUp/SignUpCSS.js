@@ -10,6 +10,30 @@ const Title = styled.h1`
   font-weight: 700;
 `;
 
+const PreferenceButton = styled.button`
+  width: 100px;
+  height: 100px;
+  margin: 10px;
+  border: none;
+  border-radius: 50%;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  &.unchecked {
+    color: black;
+    font-weight: 400;
+    background-color: #f9fafb;
+  }
+
+  &.checked {
+    color: white;
+    font-weight: 600;
+    background-color: #0064ff;
+  }
+`;
+
 const Row = styled.button`
   width: 100px;
   height: 100px;
@@ -37,8 +61,34 @@ const EssentialForm = styled.input`
   padding-left: 10px;
   margin: 10px;
   border-radius: 10px;
-  border: none;
+  border: 0px;
   background-color: #edeef0;
+  &:hover {
+    border-color: #3399ff;
+    outline: 1px solid #80bfff;
+  }
+
+  &:focus {
+    border-color: #3399ff;
+    outline: 3px solid #80bfff;
+  }
+`;
+
+/* EssentialForm Span */
+const Message = styled.p`
+  font-size: small;
+  width: 400px;
+  padding-left: 10px;
+  margin: 10px;
+  text-align: left;
+
+  &.success {
+    color: #8f8c8b;
+  }
+
+  &.error {
+    color: #ff2727;
+  }
 `;
 
 /* SignUpForm */
@@ -63,6 +113,9 @@ const Button = styled.button`
   &:hover {
     background-color: #0064ff;
   }
+  &:disabled {
+    background-color: gray;
+  }
 `;
 
 const Container = styled.div`
@@ -74,4 +127,14 @@ const Container = styled.div`
   background-color: ${(props) => props.color || "white"};
 `;
 
-export { Title, Row, Rows, EssentialForm, Button, Container, MainTitle };
+export {
+  Title,
+  Row,
+  Rows,
+  EssentialForm,
+  Message,
+  Button,
+  Container,
+  MainTitle,
+  PreferenceButton,
+};

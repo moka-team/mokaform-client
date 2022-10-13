@@ -8,7 +8,7 @@ const Create = styled.div`
   background-color: #202632;
   color: white;
   float: left;
-  padding: 0% 5%;
+  padding: 0% 5% 5% 5%;
   h1 {
     font-size: large;
     font-weight: 800;
@@ -23,7 +23,7 @@ const Preview = styled.div`
   flex-direction: column;
   background-color: #edeef0;
   float: right;
-  padding: 0% 5%;
+  padding: 0% 5% 5% 5%;
   color: black;
   h1 {
     font-size: large;
@@ -79,6 +79,81 @@ const Answer = styled.input`
   }
 `;
 
+const Save = styled.div`
+  color: white;
+  font-weight: 500;
+  text-align: right;
+`;
+
+const Title = styled.input`
+  margin-top: 10%;
+  font-weight: 900;
+  font-size: 30px;
+  border: none;
+  background-color: #202632;
+  color: white;
+
+  &:focus {
+    outline: none;
+  }
+`;
+
+const Summary = styled.input`
+  margin-top: 10px;
+  font-weight: 500;
+  font-size: small;
+  border: none;
+  background-color: #202632;
+  color: white;
+
+  &:focus {
+    outline: none;
+  }
+`;
+
+const TitleText = styled.text`
+  margin-top: 10%;
+  font-weight: 900;
+  font-size: large;
+  border: none;
+  background-color: #edeef0;
+  color: black;
+
+  &:focus {
+    outline: none;
+  }
+`;
+
+const SummaryText = styled.text`
+  margin-top: 10px;
+  font-weight: 500;
+  font-size: small;
+  border: none;
+  background-color: #edeef0;
+  color: black;
+
+  &:focus {
+    outline: none;
+  }
+`;
+
+const SNavBar = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: #0d0e10;
+  /* background-color: white; */
+  height: 5%;
+  Button {
+    margin-right: 25px;
+    height: 80%;
+  }
+`;
+
 export {
   Create,
   Preview,
@@ -86,4 +161,10 @@ export {
   QuestionOption,
   QuestionText,
   Answer,
+  Save,
+  Title,
+  Summary,
+  TitleText,
+  SummaryText,
+  SNavBar,
 };

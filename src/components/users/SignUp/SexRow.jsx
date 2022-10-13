@@ -1,9 +1,14 @@
+import { current } from "@reduxjs/toolkit";
 import React, { useState, useEffect } from "react";
+import { useRecoilState } from "recoil";
 import { Title, Row, Rows } from "./SignUpCSS";
+import { genderState } from "./SignUpState";
 
 export default function SexRow() {
   const sex = ["여성", "남성"];
-  const ids = ["sex_1", "sex_2"];
+  const ids = ["FEMALE", "MALE"];
+
+  const [gender, setGender] = useRecoilState(genderState);
 
   const [currentClick, setCurrentClick] = useState(null);
   const [prevClick, setPrevClick] = useState(null);
@@ -17,6 +22,8 @@ export default function SexRow() {
     }
 
     setCurrentClick(event.target.id);
+
+    setGender(event.target.id);
   };
 
   useEffect(
@@ -38,7 +45,13 @@ export default function SexRow() {
       <Title>성별</Title>
       <Rows>
         {sex.map((sex, idx) => (
-          <Row color="white" id={ids[idx]} value={sex} onClick={onClickHandler}>
+          <Row
+            color="white"
+            key={ids[idx]}
+            id={ids[idx]}
+            value={sex}
+            onClick={onClickHandler}
+          >
             {sex}
           </Row>
         ))}

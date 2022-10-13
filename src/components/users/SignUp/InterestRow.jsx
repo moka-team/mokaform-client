@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from "react";
+import { useRecoilState } from "recoil";
 import { Title, Row, Rows } from "./SignUpCSS";
+import { preferenceState } from "./SignUpState";
 
 export default function InterestRow() {
   const interests = ["일상", "IT", "취미", "학습"];
-  const interests2 = ["심리", "사회·정치", "선호도 조사", "+"];
+  const interests2 = ["심리", "사회·정치", "선호도 조사", "반려동물"];
 
   const ids = [
-    "interest_1",
-    "interest_2",
-    "interest_3",
-    "interest_4",
-    "interest_5",
-    "interest_6",
-    "interest_7",
+    "DAILY_LIFE",
+    "IT",
+    "HOBBY",
+    "LEARNING",
+    "PSYCHOLOGY",
+    "SOCIAL_POLITICS",
+    "PREFERENCE_RESEARCH",
     "interest_8",
   ];
 
@@ -51,6 +53,7 @@ export default function InterestRow() {
         {interests.map((interest, idx) => (
           <Row
             color="#f9fafb"
+            key={ids[idx]}
             id={ids[idx]}
             value={interest}
             type="button"
@@ -64,6 +67,7 @@ export default function InterestRow() {
         {interests2.map((interest, idx) => (
           <Row
             color="#f9fafb"
+            key={ids[idx + 4]}
             id={ids[idx + 4]}
             value={interest}
             type="button"
