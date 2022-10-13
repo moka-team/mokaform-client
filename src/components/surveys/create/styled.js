@@ -160,6 +160,11 @@ const SaveBtn = styled.button`
   border: none;
   border-radius: 5px;
   font-weight: 500;
+  color: white;
+  &:disabled {
+    background-color: lightgrey;
+    color: black;
+  }
 `;
 
 export {
