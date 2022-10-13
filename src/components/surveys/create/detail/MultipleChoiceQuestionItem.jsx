@@ -41,7 +41,7 @@ export default function MultipleChoiceQuestionItem({ item, multiquestion }) {
       {multiquestion.map((multiQuestionItem) =>
         item.questionId === multiQuestionItem.questionId ? (
           <QuestionOption
-            id={multiQuestionItem.index}
+            id={item.questionId + "" + (multiQuestionItem.index + "")}
             onClick={onClickHandler}
             value={multiQuestionItem.content}
           >

@@ -30,17 +30,17 @@ const tmpData = {
     {
       questionId: 2,
       title: "asda",
-      type: "OX",
+      type: "MULTIPLE_CHOICE",
       index: 2,
       isMultipleAnswer: false,
     },
   ],
   multiQuestions: [
     { questionId: 1, index: 0, content: "asd", type: "GENERAL" },
-    { questionId: 1, index: 1, content: "asd1", type: "GENERAL" },
-    { questionId: 1, index: 2, content: "asd2", type: "GENERAL" },
-    { questionId: 2, index: 0, content: "asd", type: "GENERAL" },
-    { questionId: 2, index: 1, content: "asd1", type: "GENERAL" },
+    { questionId: 1, index: 1, content: "asd", type: "GENERAL" },
+    { questionId: 1, index: 2, content: "asd", type: "GENERAL" },
+    { questionId: 2, index: 0, content: "asd2", type: "GENERAL" },
+    { questionId: 2, index: 1, content: "asd2", type: "GENERAL" },
     { questionId: 2, index: 2, content: "asd2", type: "GENERAL" },
   ],
 };
