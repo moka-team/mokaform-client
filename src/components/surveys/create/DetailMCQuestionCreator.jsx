@@ -1,6 +1,7 @@
 import { Button } from "@mui/material";
 import React, { useState } from "react";
 import { useRecoilState } from "recoil";
+import styled from "styled-components";
 import { detailMCQuestionState } from "../../../atoms";
 
 export default function DetailMCQuestionCreator({ id }) {
@@ -13,7 +14,7 @@ export default function DetailMCQuestionCreator({ id }) {
     setDetailQuestionList((oldDetailQuestionList) => [
       ...oldDetailQuestionList,
       {
-        question_id: id,
+        survey_id: id,
         id: getId(),
         text: detailQuestion,
       },
