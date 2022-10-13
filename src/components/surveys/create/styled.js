@@ -88,7 +88,7 @@ const Save = styled.div`
 const Title = styled.input`
   margin-top: 10%;
   font-weight: 900;
-  font-size: large;
+  font-size: 30px;
   border: none;
   background-color: #202632;
   color: white;

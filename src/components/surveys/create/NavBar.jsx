@@ -5,6 +5,7 @@ import Switch from "@mui/material/Switch";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Box from "@mui/material/Box";
+import axios from "axios"
 
 import {
   surveyTitle,
@@ -51,6 +52,7 @@ function NavBar() {
   };
 
   const handleSubmit = () => {
+
     alert(
       "설문 정보" +
         "\n" +
@@ -70,11 +72,22 @@ function NavBar() {
     for (let i = 0; i < surveyList.length; i++) {
       let question = surveyList[i].text;
 
-      let newList = detailList.filter((item) => item.survey_id === i);
+      let newList = detailList.filter((item) => item.question_id === i);
       let jsonString = JSON.stringify(newList);
 
       alert(question + "\n" + jsonString);
     }
+    axios.post(
+      "/api/v1/survey/save",
+      {
+        surveyor_id: 1,
+        title:title,
+        is_anonymous:isAnonymous,
+        is_public:isPublic,
+        startDate: "2021-11-08T11:58:20.551705",
+        endDate:"2021-11-08T11:58:20.551705"
+      },
+    ).then(res =>console.log(res.data))
   };
   return (
     <SNavBar>
