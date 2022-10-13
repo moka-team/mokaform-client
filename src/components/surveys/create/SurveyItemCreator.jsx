@@ -42,11 +42,11 @@ export default function SurveyItemCreator() {
     setSurveyList((oldSurveyList) => [
       ...oldSurveyList,
       {
-        id: getId(),
-        text: question,
+        surveyIndex: getId(),
+        title: question,
         type: options[index],
         index : index,
-        is_multi_answer : (index === 1) ? true : false
+        isMultipleAnswer : (index === 1) ? true : false
       },
     ]);
     setQuestion("");
