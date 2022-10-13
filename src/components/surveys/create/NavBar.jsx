@@ -1,9 +1,8 @@
-import { Button } from "@mui/material";
 import { useRecoilState, useRecoilValue } from "recoil";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Box from "@mui/material/Box";
-import { SNavBar } from "./styled";
+import { SNavBar, SaveBtn } from "./styled";
 
 import {
   surveyTitle,
@@ -14,11 +13,8 @@ import {
   detailMCQuestionState,
 } from "../../../atoms";
 import { CustomSwitch } from "./CustomizedSwitches";
-import { CustomButton } from "./CustomizedButton";
 
 function NavBar() {
-  const label = { inputProps: { "aria-label": "Switch demo" } };
-
   const surveyList = useRecoilValue(surveyListState);
   const detailList = useRecoilValue(detailMCQuestionState);
 
@@ -103,9 +99,7 @@ function NavBar() {
           }
         />
       </FormGroup>
-      <CustomButton onClick={handleSubmit} variant="contained">
-        저장
-      </CustomButton>
+      <SaveBtn onClick={handleSubmit}>저장</SaveBtn>
     </SNavBar>
   );
 }

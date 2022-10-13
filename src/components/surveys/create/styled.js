@@ -154,6 +154,14 @@ const SNavBar = styled.div`
   }
 `;
 
+const SaveBtn = styled.button`
+  background-color: #0064ff;
+  width: 60px;
+  border: none;
+  border-radius: 5px;
+  font-weight: 500;
+`;
+
 export {
   Create,
   Preview,
@@ -167,4 +175,5 @@ export {
   TitleText,
   SummaryText,
   SNavBar,
+  SaveBtn,
 };
