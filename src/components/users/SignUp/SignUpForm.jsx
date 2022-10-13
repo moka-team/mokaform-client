@@ -64,7 +64,7 @@ export default function SignUpForm() {
         ageGroup: ageGroup,
         gender: gender,
         job: job,
-        // preference_category: preference,
+        category: preference,
       })
       .then(function (response) {
         // if (response.data.code == 0) {
