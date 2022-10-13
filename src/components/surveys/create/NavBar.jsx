@@ -84,8 +84,8 @@ function NavBar() {
       title:title,
       isAnonymous:isAnonymous,
       isPublic:isPublic,
-      startDate:"2021-11-08T11:58:20.551705",
-      endDate:"2021-11-08T11:58:20.551705",
+      startDate:startDate,
+      endDate:endDate,
       questions:surveyList,
       multiQuestions:detailList
     }
