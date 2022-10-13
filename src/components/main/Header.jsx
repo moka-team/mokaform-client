@@ -80,6 +80,10 @@ export default function Header() {
 
   const navigate = useNavigate();
 
+  const onClickHandler = (event) => {
+    navigate("/create-survey");
+  };
+
   const onNavigateMain = (event) => {
     navigate("/");
   };
@@ -87,7 +91,6 @@ export default function Header() {
   const onNavigateSignIn = (event) => {
     navigate("/signin");
   };
-
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -161,6 +164,7 @@ export default function Header() {
                 mr: 3,
                 ml: 3,
               }}
+              onClick={onClickHandler}
             >
               설문 만들기
             </Button>
