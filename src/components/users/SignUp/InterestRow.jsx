@@ -5,7 +5,7 @@ import { preferenceState } from "./SignUpState";
 
 export default function InterestRow() {
   const interests = ["일상", "IT", "취미", "학습"];
-  const interests2 = ["심리", "사회·정치", "선호도 조사", "+"];
+  const interests2 = ["심리", "사회·정치", "선호도 조사", "반려동물"];
 
   const ids = [
     "DAILY_LIFE",
@@ -17,8 +17,6 @@ export default function InterestRow() {
     "PREFERENCE_RESEARCH",
     "interest_8",
   ];
-
-  const [preference, setPreference] = useRecoilState(preferenceState);
 
   const [currentClick, setCurrentClick] = useState(null);
   const [prevClick, setPrevClick] = useState(null);
@@ -32,7 +30,6 @@ export default function InterestRow() {
     }
 
     setCurrentClick(event.target.id);
-    setPreference(event.target.id);
   };
 
   useEffect(

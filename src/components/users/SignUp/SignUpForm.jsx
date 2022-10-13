@@ -45,6 +45,7 @@ export default function SignUpForm() {
   const [isPasswordConfirm, setIsPasswordConfirm] = useRecoilState(
     isPasswordConfirmState
   );
+
   const onClickHandler = (event) => {
     signOptionRef.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -80,6 +81,9 @@ export default function SignUpForm() {
           setAgeGroup("");
           setGender("");
           setJob("");
+          while (preference.length > 0) {
+            setPreference(preference.pop());
+          }
           setPreference("");
         }
         window.alert(response.data.message);
@@ -92,6 +96,8 @@ export default function SignUpForm() {
   // 회원가입 성공 시 모든 전역 데이터 지우기
   const onCompleteBtnClickHandler = (event) => {
     event.preventDefault();
+
+    // 로그 나중에 확인 끝나면 지워도 됨
     console.log(
       "email=" +
         email +
@@ -117,7 +123,12 @@ export default function SignUpForm() {
     }
   };
 
-  if (ageGroup === "" || gender === "" || job === "") {
+  if (
+    ageGroup === "" ||
+    gender === "" ||
+    job === "" ||
+    preference.length === 0
+  ) {
     ValidateInfo = false;
   } else {
     ValidateInfo = true;
@@ -142,8 +153,7 @@ export default function SignUpForm() {
       <Container ref={signOptionRef2}>
         <Rows>
           <JobRow></JobRow>
-          <InterestRow></InterestRow>
-
+          <PreferenceRow />
           <Button
             disabled={
               !(
@@ -160,7 +170,6 @@ export default function SignUpForm() {
           </Button>
         </Rows>
       </Container>
-      <PreferenceRow />
     </>
   );
 }

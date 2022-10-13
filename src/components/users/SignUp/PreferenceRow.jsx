@@ -34,10 +34,8 @@ export default function PreferenceRow() {
     if (!preference1Check) {
       setPreference([...preference, "DAILY_LIFE"]);
     } else {
-      const index = preference.indexOf("DAILY_LIFE");
       setPreference(
-        ...preference.slice(0, index),
-        ...preference.slice(index + 1)
+        preference.filter((preference) => preference !== "DAILY_LIFE")
       );
     }
   };
@@ -46,12 +44,7 @@ export default function PreferenceRow() {
     if (!preference2Check) {
       setPreference([...preference, "IT"]);
     } else {
-      const index = preference.indexOf("IT");
-
-      setPreference(
-        ...preference.slice(0, index),
-        ...preference.slice(index + 1)
-      );
+      setPreference(preference.filter((preference) => preference !== "IT"));
     }
   };
   const onCheckHandler3 = (e) => {
@@ -59,11 +52,8 @@ export default function PreferenceRow() {
     if (!preference3Check) {
       setPreference([...preference, "PSYCHOLOGY"]);
     } else {
-      const index = preference.indexOf("PSYCHOLOGY");
-
       setPreference(
-        ...preference.slice(0, index),
-        ...preference.slice(index + 1)
+        preference.filter((preference) => preference !== "PSYCHOLOGY")
       );
     }
   };
@@ -73,12 +63,49 @@ export default function PreferenceRow() {
     if (!preference4Check) {
       setPreference([...preference, "LEARNING"]);
     } else {
-      const index = preference.indexOf("LEARNING");
-
       setPreference(
-        ...preference.slice(0, index),
-        ...preference.slice(index + 1)
+        preference.filter((preference) => preference !== "LEARNING")
       );
+    }
+  };
+  const onCheckHandler5 = (e) => {
+    preference5CheckState(!preference5Check);
+
+    if (!preference5Check) {
+      setPreference([...preference, "HOBBY"]);
+    } else {
+      setPreference(preference.filter((preference) => preference !== "HOBBY"));
+    }
+  };
+  const onCheckHandler6 = (e) => {
+    preference6CheckState(!preference6Check);
+
+    if (!preference6Check) {
+      setPreference([...preference, "SOCIAL_POLITICS"]);
+    } else {
+      setPreference(
+        preference.filter((preference) => preference !== "SOCIAL_POLITICS")
+      );
+    }
+  };
+  const onCheckHandler7 = (e) => {
+    preference7CheckState(!preference7Check);
+
+    if (!preference7Check) {
+      setPreference([...preference, "PREFERENCE_RESEARCH"]);
+    } else {
+      setPreference(
+        preference.filter((preference) => preference !== "PREFERENCE_RESEARCH")
+      );
+    }
+  };
+  const onCheckHandler8 = (e) => {
+    preference8CheckState(!preference8Check);
+
+    if (!preference8Check) {
+      setPreference([...preference, "PET"]);
+    } else {
+      setPreference(preference.filter((preference) => preference !== "PET"));
     }
   };
 
@@ -109,7 +136,35 @@ export default function PreferenceRow() {
         <PreferenceButton
           className={preference4Check ? "checked" : "unchecked"}
           onClick={onCheckHandler4}
-        >학습</PreferenceButton>
+        >
+          학습
+        </PreferenceButton>
+      </Rows>
+      <Rows>
+        <PreferenceButton
+          className={preference5Check ? "checked" : "unchecked"}
+          onClick={onCheckHandler5}
+        >
+          취미
+        </PreferenceButton>
+        <PreferenceButton
+          className={preference6Check ? "checked" : "unchecked"}
+          onClick={onCheckHandler6}
+        >
+          사회·정치
+        </PreferenceButton>
+        <PreferenceButton
+          className={preference7Check ? "checked" : "unchecked"}
+          onClick={onCheckHandler7}
+        >
+          선호도 조사
+        </PreferenceButton>
+        <PreferenceButton
+          className={preference8Check ? "checked" : "unchecked"}
+          onClick={onCheckHandler8}
+        >
+          반려동물
+        </PreferenceButton>
       </Rows>
     </>
   );
