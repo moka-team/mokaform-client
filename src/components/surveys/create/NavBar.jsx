@@ -1,10 +1,9 @@
-import styled from "styled-components";
 import { Button } from "@mui/material";
 import { useRecoilState, useRecoilValue } from "recoil";
-import Switch from "@mui/material/Switch";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Box from "@mui/material/Box";
+import { SNavBar } from "./styled";
 
 import {
   surveyTitle,
@@ -14,23 +13,9 @@ import {
   surveyListState,
   detailMCQuestionState,
 } from "../../../atoms";
+import { CustomSwitch } from "./CustomizedSwitches";
+import { CustomButton } from "./CustomizedButton";
 
-const SNavBar = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  /* background-color: #0d0e10; */
-  background-color: white;
-  height: 5%;
-  Button {
-    margin-right: 25px;
-    height: 80%;
-  }
-`;
 function NavBar() {
   const label = { inputProps: { "aria-label": "Switch demo" } };
 
@@ -81,36 +66,46 @@ function NavBar() {
       <FormGroup row="true">
         <FormControlLabel
           control={
-            <Switch
+            <CustomSwitch
               style={{ color: "#edeef0" }}
               checked={isAnonymous}
               onChange={isAnonymousOnChange}
             />
           }
           label={
-            <Box fontWeight={500} color="#0d0e10">
+            <Box
+              fontWeight={500}
+              color="#edeef0"
+              marginLeft={1}
+              marginRight={2}
+            >
               익명 답변 가능
             </Box>
           }
         />
         <FormControlLabel
           control={
-            <Switch
+            <CustomSwitch
               style={{ color: "#edeef0" }}
               checked={isPublic}
               onChange={isPublicOnChange}
             />
           }
           label={
-            <Box fontWeight={500} color="#0d0e10">
+            <Box
+              fontWeight={500}
+              color="#edeef0"
+              marginLeft={1}
+              marginRight={2}
+            >
               설문 공개
             </Box>
           }
         />
       </FormGroup>
-      <Button onClick={handleSubmit} variant="contained">
+      <CustomButton onClick={handleSubmit} variant="contained">
         저장
-      </Button>
+      </CustomButton>
     </SNavBar>
   );
 }
