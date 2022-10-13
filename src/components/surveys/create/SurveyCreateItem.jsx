@@ -45,7 +45,7 @@ export default function SurveyItem({ item }) {
 
   return (
     <div>
-      {item.type === "주관식" ? (
+      {item.type === "ESSAY" ? (
         <Question>
           <div>
             <Num>{index + 1}</Num>{" "}
@@ -61,7 +61,7 @@ export default function SurveyItem({ item }) {
             style={{ cursor: "pointer" }}
           />
         </Question>
-      ) : item.type === "찬부식" ? (
+      ) : item.type === "OX" ? (
         <Question>
           <div>
             <Num>{index + 1}</Num>{" "}

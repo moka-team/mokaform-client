@@ -17,13 +17,13 @@ export default function SurveyPreviewItem({ item }) {
     <div>
       {" "}
       <div>
-        {item.type === "주관식" ? (
+        {item.type === "ESSAY" ? (
           <QuestionWrapper>
             <QuestionText color="#0064ff">Q{index + 1}</QuestionText>
             <QuestionText color="black">{item.text}</QuestionText>
             <Answer placeholder="의견을 적어주세요!"></Answer>
           </QuestionWrapper>
-        ) : item.type === "찬부식" ? (
+        ) : item.type === "OX" ? (
           <QuestionWrapper>
             <QuestionText color="#0064ff">Q{index + 1}</QuestionText>
             <QuestionText color="black">{item.text}</QuestionText>
