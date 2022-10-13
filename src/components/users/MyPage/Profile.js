@@ -116,7 +116,7 @@ function Profile() {
           <DefaultImage />
         )}
       </ProfileImg>
-      <UploadBtn for="profileImg">
+      <UploadBtn htmlFor="profileImg">
         <FontAwesomeIcon icon={faCamera} color="white" />
       </UploadBtn>
 
