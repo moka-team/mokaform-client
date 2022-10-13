@@ -136,6 +136,24 @@ const SummaryText = styled.text`
     outline: none;
   }
 `;
+
+const SNavBar = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: #0d0e10;
+  /* background-color: white; */
+  height: 5%;
+  Button {
+    margin-right: 25px;
+    height: 80%;
+  }
+`;
+
 export {
   Create,
   Preview,
@@ -148,4 +166,5 @@ export {
   Summary,
   TitleText,
   SummaryText,
+  SNavBar,
 };
