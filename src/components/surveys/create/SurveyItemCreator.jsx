@@ -42,7 +42,6 @@ export default function SurveyItemCreator() {
     setSurveyList((oldSurveyList) => [
       ...oldSurveyList,
       {
-        surveyIndex: getId(),
         title: question,
         type: options[index],
         index : index,
