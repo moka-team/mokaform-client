@@ -64,7 +64,7 @@ export default function ListContainer() {
         <SortSelect />
       </Header>
       <UserSurveyCard isCreated={true} />
-      <Carousel />
+
       <Header>
         <Block>
           <p>내가 참여한 설문</p>
@@ -72,7 +72,6 @@ export default function ListContainer() {
         <SortSelect />
       </Header>
       <UserSurveyCard isCreated={false} />
-      <Carousel />
     </Container>
   );
 }

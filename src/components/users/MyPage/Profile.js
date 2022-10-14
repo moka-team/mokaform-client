@@ -9,13 +9,14 @@ const SProfile = styled.div`
   flex-direction: column;
   align-items: center;
   width: 20%;
-  height: 100%;
+  height: 97.5%;
   padding-top: 25px;
   background-color: #202632;
 `;
 
 const ProfileImg = styled.div`
   position: relative;
+  margin-top: 40px;
   width: 50%;
   &::after {
     display: block;

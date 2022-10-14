@@ -9,33 +9,39 @@ import Stack from "@mui/material/Stack";
 import { CardActionArea } from "@mui/material";
 import CreateIcon from "@mui/icons-material/Create";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen } from "@fortawesome/free-solid-svg-icons";
+import { faChevronRight, faPen } from "@fortawesome/free-solid-svg-icons";
 import { fontFamily } from "@mui/system";
-function SurveyCard({ servey }) {
+import RightButton from "./RightButton";
+function SurveyCard({ survey }) {
   return (
     <Grid container>
       <Grid item xs={12} sx={{ pb: 1 }}>
         <Typography
           variant="body1"
           color="#202632"
-          sx={{ fontSize: 18, fontWeight: 600 }}
+          sx={{ fontSize: 15, fontWeight: 600 }}
         >
-          {servey.name}
+          {survey.name.length > 12
+            ? `${survey.name.slice(0, 12)}...`
+            : survey.name}
         </Typography>
       </Grid>
 
-      <Grid item xs={6} sx={{ pt: 1, mb: -1 }}>
+      <Grid item xs={5} sx={{ pt: 1, mb: -1 }}>
         <Stack direction="row" spacing={0.5}>
           <FontAwesomeIcon
             icon={faPen}
             size={"lg"}
             style={{ color: "#636870", paddingTop: "2px" }}
           />
-          <Typography color="#636870">{`${servey.responseNumber}명 응답`}</Typography>
+          <Typography
+            color="#636870"
+            sx={{ fontSize: 14 }}
+          >{`${survey.responseNumber}명`}</Typography>
         </Stack>
       </Grid>
-      <Grid item xs={6} align="right" sx={{ mt: 0.5, mb: -1 }}>
-        <Chip label={servey.category} />
+      <Grid item xs={7} align="right" sx={{ mt: 0.5, mb: -1 }}>
+        <Chip label={survey.category} />
       </Grid>
     </Grid>
   );
@@ -55,7 +61,7 @@ const createdSurveys = [
     name: "생성 설문제목2",
     responseNumber: 32,
     date: "22.09.27",
-    category: "IT",
+    category: "선호도 조사",
   },
   {
     number: 3,
@@ -66,17 +72,17 @@ const createdSurveys = [
   },
   {
     number: 4,
-    name: "생성 설문제목4",
+    name: "생성 설문제목41212121",
     responseNumber: 100,
     date: "22.09.30",
-    category: "IT",
+    category: "반려동물",
   },
   {
     number: 5,
-    name: "생성 설문제목5",
-    responseNumber: 60,
-    date: "22.10.10",
-    category: "취미",
+    name: "생성 설문제목41212121",
+    responseNumber: 100,
+    date: "22.09.30",
+    category: "반려동물",
   },
 ];
 
@@ -94,7 +100,7 @@ const writedSurvey = [
     name: "참여 설문제목2",
     responseNumber: 32,
     date: "22.09.27",
-    category: "IT",
+    category: "사회정치",
   },
   {
     number: 3,
@@ -105,25 +111,25 @@ const writedSurvey = [
   },
   {
     number: 4,
-    name: "참여 설문제목4",
+    name: "참여 설문제목43123133",
     responseNumber: 100,
     date: "22.09.30",
     category: "IT",
   },
   {
     number: 5,
-    name: "참여 설문제목5",
-    responseNumber: 60,
-    date: "22.10.10",
-    category: "취미",
+    name: "참여 설문제목43123133",
+    responseNumber: 100,
+    date: "22.09.30",
+    category: "IT",
   },
 ];
 
 export default function UserSurveyCard({ isCreated }) {
   return isCreated ? (
-    <Grid container spacing={2}>
-      {createdSurveys.map((servey) => (
-        <Grid item key={servey.number} xs={6} sm={6} md={4} lg={2.4} xl={2.4}>
+    <Grid container spacing={1} sx={{ marginLeft: 5 }}>
+      {createdSurveys.map((survey) => (
+        <Grid item key={survey.number} xs={6} sm={6} md={4} lg={2} xl={2}>
           <CardActionArea sx={{ width: 200 }}>
             <Card
               sx={{
@@ -139,17 +145,18 @@ export default function UserSurveyCard({ isCreated }) {
                 sx={{ height: 150 }}
               />
               <CardContent sx={{ flexGrow: 1 }}>
-                <SurveyCard servey={servey} />
+                <SurveyCard survey={survey} />
               </CardContent>
             </Card>
           </CardActionArea>
         </Grid>
       ))}
+      <RightButton />
     </Grid>
   ) : (
-    <Grid container spacing={2}>
-      {writedSurvey.map((servey) => (
-        <Grid item key={servey.number} xs={6} sm={6} md={4} lg={2.4} xl={2.4}>
+    <Grid container spacing={1} sx={{ marginLeft: 5 }}>
+      {writedSurvey.map((survey) => (
+        <Grid item key={survey.number} xs={6} sm={6} md={4} lg={2} xl={2}>
           <CardActionArea sx={{ width: 200 }}>
             <Card
               sx={{
@@ -165,12 +172,13 @@ export default function UserSurveyCard({ isCreated }) {
                 sx={{ height: 150 }}
               />
               <CardContent sx={{ flexGrow: 1 }}>
-                <SurveyCard servey={servey} />
+                <SurveyCard survey={survey} />
               </CardContent>
             </Card>
           </CardActionArea>
         </Grid>
       ))}
+      <RightButton />
     </Grid>
   );
 }
