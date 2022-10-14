@@ -5,6 +5,7 @@ const routes = {
   signin: "/signin",
   resetPassword: "/reset-password",
   createSurvey: "/create-survey",
+  surveyStats: "/survey-stats",
 };
 
 export default routes;
