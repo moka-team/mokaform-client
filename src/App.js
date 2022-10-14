@@ -6,10 +6,10 @@ import SignUp from "./pages/users/SignUpPage";
 import SignIn from "./pages/users/SignIn";
 import ResetPassword from "./pages/users/ResetPassword";
 import CreateSurvey from "./pages/surveys/create/index";
-import ParticipateSurvey from "./pages/surveys/detail/index";
 import routes from "./routes";
 import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
+import Participate from "./pages/surveys/detail/index";
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -29,7 +29,7 @@ function App() {
         <Route path={routes.createSurvey} element={<CreateSurvey />}></Route>
         <Route
           path={routes.participateSurvey}
-          element={<ParticipateSurvey />}
+          element={<Participate />}
         ></Route>
       </Routes>
     </BrowserRouter>
