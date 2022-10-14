@@ -31,7 +31,7 @@ export default function OXQuestionItem({ item }) {
   );
   return (
     <QuestionWrapper>
-      <QuestionText color="#0064ff">Q{item.index + 1}</QuestionText>
+      <QuestionText color="#0064ff">Q{item.index}</QuestionText>
       <QuestionText color="black">{item.title}</QuestionText>
       <QuestionOption id="yes" value={true} onClick={onClickHandler}>
         네 😀
