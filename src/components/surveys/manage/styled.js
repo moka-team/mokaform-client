@@ -3,7 +3,7 @@ import styled from "styled-components";
 const Container = styled.div`
   display: flex;
   min-height: 100vh;
-  background-color: #edeef0;
+  background-color: #f5f6fa;
 `;
 
 const Table = styled.div`
@@ -21,7 +21,6 @@ const Text = styled.text`
   font-weight: 900;
   font-size: xx-large;
   border: none;
-  background-color: #edeef0;
   color: black;
 `;
 
