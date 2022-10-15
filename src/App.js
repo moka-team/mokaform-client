@@ -10,6 +10,7 @@ import routes from "./routes";
 import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
 import SurveyAnalysis from "./pages/surveys/analysis";
+import ByItem from "./pages/surveys/analysis/ByItem";
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
