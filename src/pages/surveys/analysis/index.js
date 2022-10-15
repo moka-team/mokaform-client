@@ -3,13 +3,14 @@ import styled from "styled-components";
 import ByItem from "./ByItem";
 import Header from "../../../components/main/Header";
 import Summary from "./Summary";
+import Detail from "./Detail";
 
 const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin-top: 100px;
+  padding-top: 100px;
 `;
 
 const LinkWrapper = styled.div`
@@ -54,7 +55,7 @@ function SurveyAnalysis() {
     [type]
   );
   return (
-    <div>
+    <>
       <Header />
       <Container>
         <LinkWrapper>
@@ -74,11 +75,11 @@ function SurveyAnalysis() {
           ) : type === "case2" ? (
             <ByItem />
           ) : (
-            <></>
+            <Detail></Detail>
           )}
         </Wrapper>
       </Container>
-    </div>
+    </>
   );
 }
 
