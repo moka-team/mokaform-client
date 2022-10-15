@@ -127,7 +127,7 @@ const writedSurvey = [
 
 export default function UserSurveyCard({ isCreated }) {
   return isCreated ? (
-    <Grid container spacing={1} sx={{ marginLeft: 5 }}>
+    <Grid container spacing={1} sx={{ ml: 5, mt: 1, mb: 4, mr: -3 }}>
       {createdSurveys.map((survey) => (
         <Grid item key={survey.number} xs={6} sm={6} md={4} lg={2} xl={2}>
           <CardActionArea sx={{ width: 200 }}>
@@ -154,7 +154,7 @@ export default function UserSurveyCard({ isCreated }) {
       <RightButton />
     </Grid>
   ) : (
-    <Grid container spacing={1} sx={{ marginLeft: 5 }}>
+    <Grid container spacing={1} sx={{ ml: 5, mt: 1, mr: -3 }}>
       {writedSurvey.map((survey) => (
         <Grid item key={survey.number} xs={6} sm={6} md={4} lg={2} xl={2}>
           <CardActionArea sx={{ width: 200 }}>

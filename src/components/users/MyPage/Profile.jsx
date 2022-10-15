@@ -9,7 +9,7 @@ const SProfile = styled.div`
   flex-direction: column;
   align-items: center;
   width: 20%;
-  height: 97.5%;
+  min-height: 100vh;
   padding-top: 25px;
   background-color: #202632;
 `;
