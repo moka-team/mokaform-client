@@ -10,6 +10,7 @@ import routes from "./routes";
 import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
 import Participate from "./pages/surveys/detail/index";
+import ManageSurvey from "./pages/surveys/manage";
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -31,6 +32,7 @@ function App() {
           path={routes.participateSurvey}
           element={<Participate />}
         ></Route>
+        <Route path={routes.manageSurvey} element={<ManageSurvey />}></Route>
       </Routes>
     </BrowserRouter>
   );
