@@ -2,11 +2,10 @@ import { TagCloud } from "react-tagcloud";
 import styled from "styled-components";
 import data from "./data";
 
-import EssayComponent from "../../../components/surveys/analysis/EssayComponent";
-
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  font-family: "MonoplexKR";
 `;
 const Wrapper = styled.div`
   display: flex;

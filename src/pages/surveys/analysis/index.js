@@ -11,6 +11,7 @@ const Container = styled.div`
   align-items: center;
   flex-direction: column;
   padding-top: 100px;
+  font-family: "MonoplexKR";
 `;
 
 const LinkWrapper = styled.div`
