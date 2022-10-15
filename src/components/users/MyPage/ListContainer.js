@@ -4,6 +4,18 @@ import { faEdit } from "@fortawesome/free-regular-svg-icons";
 import { faSortAmountAsc } from "@fortawesome/free-solid-svg-icons";
 import Carousel from "./Carousel";
 import CircleCarousel from "./CircleCarousel";
+import SortSelect from "../../../components/main/SortSelect";
+import { Grid } from "@mui/material";
+import { CardActionArea } from "@mui/material";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Typography from "@mui/material/Typography";
+import Stack from "@mui/material/Stack";
+import { faPen } from "@fortawesome/free-solid-svg-icons";
+import Chip from "@mui/material/Chip";
+import PreferenceCard from "./PreferenceCard";
+import UserSurveyCard from "./UserSurveyCard";
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -21,6 +33,8 @@ const Block = styled.div`
   display: flex;
   p {
     margin-right: 10px;
+    font-size: 17px;
+    font-weight: 600;
   }
 `;
 
@@ -32,7 +46,8 @@ const SortedBtn = styled(Block)`
   cursor: pointer;
 `;
 
-function ListContainer() {
+export default function ListContainer() {
+  const preference = ["HOBBY", "PET"];
   return (
     <Container>
       <Header>
@@ -43,23 +58,20 @@ function ListContainer() {
       </Header>
       <CircleCarousel />
       <Header>
-        <p>내가 만든 설문</p>
-        <SortedBtn>
-          <p>Sorted</p>
-          <FontAwesomeIcon icon={faSortAmountAsc} color="white" />
-        </SortedBtn>
+        <Block>
+          <p>내가 만든 설문</p>
+        </Block>
+        <SortSelect />
       </Header>
-      <Carousel />
+      <UserSurveyCard isCreated={true} />
+
       <Header>
-        <p>내가 참여한 설문</p>
-        <SortedBtn>
-          <p>Sorted</p>
-          <FontAwesomeIcon icon={faSortAmountAsc} color="white" />
-        </SortedBtn>
+        <Block>
+          <p>내가 참여한 설문</p>
+        </Block>
+        <SortSelect />
       </Header>
-      <Carousel />
+      <UserSurveyCard isCreated={false} />
     </Container>
   );
 }
-
-export default ListContainer;
