@@ -4,6 +4,8 @@ import { ResponsiveBar } from "@nivo/bar";
 import styled from "styled-components";
 import data from "./data";
 
+import EssayComponent from "../../../components/surveys/analysis/EssayComponent";
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -19,10 +21,12 @@ const Title = styled.div`
 const PieChartContainer = styled.div`
   height: 500px;
   width: 500px;
+  margin-bottom: 50px;
 `;
 const BarChartContainer = styled.div`
   height: 200px;
   width: 500px;
+  margin-bottom: 50px;
 `;
 
 export default function ByItem() {
@@ -133,7 +137,7 @@ export default function ByItem() {
               />
             </BarChartContainer>
           ) : (
-            <div></div>
+            <EssayComponent data={item.data}></EssayComponent>
           )}
         </Wrapper>
       ))}

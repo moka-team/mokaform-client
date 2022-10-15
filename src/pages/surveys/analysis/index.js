@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import ByItem from "./ByItem";
 import Header from "../../../components/main/Header";
+import Summary from "./Summary";
 
 const Container = styled.div`
   display: flex;
@@ -68,7 +69,13 @@ function SurveyAnalysis() {
           </span>
         </LinkWrapper>
         <Wrapper>
-          {type === "case1" ? <></> : type === "case2" ? <ByItem /> : <></>}
+          {type === "case1" ? (
+            <Summary></Summary>
+          ) : type === "case2" ? (
+            <ByItem />
+          ) : (
+            <></>
+          )}
         </Wrapper>
       </Container>
     </div>
