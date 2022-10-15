@@ -20,7 +20,12 @@ import { styled } from "@mui/material/styles";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
-import { Button } from "@mui/material";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 
 function TablePaginationActions(props) {
   const theme = useTheme();
@@ -239,15 +244,14 @@ const tmpData = [
 
 export default function CustomPaginationActionsTable() {
   const options = ["삭제", "수정"];
-
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const open = Boolean(anchorEl);
 
-  const items = [...Array(10).keys()];
-
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -273,6 +277,18 @@ export default function CustomPaginationActionsTable() {
   const handleMenuItemClick = (event, index) => {
     setSelectedIndex(index);
     setAnchorEl(null);
+
+    if (index === 0) {
+      handleClickDialogOpen();
+    }
+  };
+
+  const handleClickDialogOpen = () => {
+    setDialogOpen(true);
+  };
+
+  const handleDialogClose = () => {
+    setDialogOpen(false);
   };
 
   return (
@@ -375,6 +391,29 @@ export default function CustomPaginationActionsTable() {
           </MenuItem>
         ))}
       </Menu>
+      <Dialog
+        open={dialogOpen}
+        onClose={handleDialogClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"설문을 삭제하시겠습니까?"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            설문 삭제 작업은 영구적이며 되돌릴 수 없습니다. 삭제하는 즉시 귀하의
+            설문에 액세스 할 수 없게 됩니다. 설문에 관련된 모든 데이터가
+            삭제됩니다.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDialogClose}>취소</Button>
+          <Button onClick={handleDialogClose} autoFocus>
+            확인
+          </Button>
+        </DialogActions>
+      </Dialog>
     </TableContainer>
   );
 }
