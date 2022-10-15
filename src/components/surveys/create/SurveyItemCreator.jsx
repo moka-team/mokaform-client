@@ -38,19 +38,18 @@ export default function SurveyItemCreator() {
     setAnchorEl(null);
   };
 
-  const addItem = (index) => {
+  const addItem = (optionIndex) => {
     setSurveyList((oldSurveyList) => [
       ...oldSurveyList,
       {
-        surveyIndex: getId(),
+        index: getId(),
         title: question,
-        type: options[index],
-        index : index,
-        isMultipleAnswer : (index === 1) ? true : false
+        type: options[optionIndex],
+        isMultipleAnswer: optionIndex === 1 ? true : false,
       },
     ]);
     setQuestion("");
-    setType(options[index]);
+    setType(options[optionIndex]);
   };
 
   return (
@@ -61,7 +60,7 @@ export default function SurveyItemCreator() {
         aria-controls="lock-menu"
         aria-expanded={open ? "true" : undefined}
         onClick={handleClickListItem}
-        sx={{marginTop:"20px"}}
+        sx={{ marginTop: "20px" }}
       >
         <AddCircle sx={{ color: "white" }} />
       </Button>
@@ -85,7 +84,6 @@ export default function SurveyItemCreator() {
           </MenuItem>
         ))}
       </Menu>
-
     </Container>
   );
 }
