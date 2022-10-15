@@ -3,14 +3,17 @@ import { Link } from "react-router-dom";
 
 const AuthMenuContainer = styled.div`
   margin-top: 30px;
-  margin-left: 20px;
-  margin-right: 20px;
+  margin-left: 80px;
+  margin-right: 80px;
   position: relative;
   font-family: "Inter";
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
+  p {
+    color: #000000cc;
+  }
 `;
 
 const ResetPasswordLink = styled(Link)`
@@ -61,8 +64,8 @@ const SignUpLink = styled(Link)`
 function AuthMenu() {
   return (
     <AuthMenuContainer>
-      <ResetPasswordLink to="/reset-password">비밀번호 찾기</ResetPasswordLink>
-      <SignUpLink to="/signup">회원가입</SignUpLink>
+      <p>아직 계정이 없으신가요?</p>
+      <SignUpLink to="/signup">회원가입하기</SignUpLink>
     </AuthMenuContainer>
   );
 }
