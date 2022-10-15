@@ -36,10 +36,10 @@ export default function SurveyItem({ item }) {
     setSurveyList(newList);
   };
 
-  const updateItem = (e) => {
-    let newList = [...surveyList].map((item) => {
-      if (item.index === index) return { ...item, title: e.target.value };
-      else return item;
+  const updateItem = ({ target: { value } }) => {
+    const newList = replaceItemAtIndex(surveyList, index, {
+      ...item,
+      title: value,
     });
     setSurveyList(newList);
   };
@@ -52,7 +52,7 @@ export default function SurveyItem({ item }) {
             <Num>{index + 1}</Num>{" "}
             <Input
               onChange={updateItem}
-              value={item.text}
+              value={item.title}
               placeholder="질문을 입력해주세요."
             />
           </div>
@@ -68,7 +68,7 @@ export default function SurveyItem({ item }) {
             <Num>{index + 1}</Num>{" "}
             <Input
               onChange={updateItem}
-              value={item.text}
+              value={item.title}
               placeholder="질문을 입력해주세요."
             />
           </div>
@@ -85,7 +85,7 @@ export default function SurveyItem({ item }) {
               <Num>{index + 1}</Num>{" "}
               <Input
                 onChange={updateItem}
-                value={item.text}
+                value={item.title}
                 placeholder="질문을 입력해주세요."
               />
             </div>
@@ -96,11 +96,11 @@ export default function SurveyItem({ item }) {
             />
           </Question>
 
-          <DetailMCQuestionCreator id={item.id}></DetailMCQuestionCreator>
+          <DetailMCQuestionCreator id={item.index}></DetailMCQuestionCreator>
           {detailQuestionList.map((detailQuestionItem) =>
-            item.id === detailQuestionItem.survey_id ? (
+            item.index === detailQuestionItem.questionIndex ? (
               <DetailSurveyItem
-                key={detailQuestionItem.id}
+                key={detailQuestionItem.index}
                 item={detailQuestionItem}
               />
             ) : (
@@ -111,6 +111,9 @@ export default function SurveyItem({ item }) {
       )}
     </div>
   );
+}
+function replaceItemAtIndex(arr, index, newValue) {
+  return [...arr.slice(0, index), newValue, ...arr.slice(index + 1)];
 }
 
 function removeItemAtIndex(arr, index) {

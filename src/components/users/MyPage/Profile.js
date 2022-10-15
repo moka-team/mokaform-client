@@ -9,12 +9,14 @@ const SProfile = styled.div`
   flex-direction: column;
   align-items: center;
   width: 20%;
-  height: 90%;
-  margin-top: 25px;
+  height: 97.5%;
+  padding-top: 25px;
+  background-color: #202632;
 `;
 
 const ProfileImg = styled.div`
   position: relative;
+  margin-top: 40px;
   width: 50%;
   &::after {
     display: block;
@@ -54,7 +56,8 @@ const UserInfo = styled.div`
   width: 100%;
   h1 {
     font-weight: 800;
-    font-size: 30px;
+    font-size: 25px;
+    color: #f9fafb;
   }
   h2 {
     color: gray;
@@ -69,6 +72,7 @@ const LineHeader = styled.div`
   margin-bottom: 25px;
   margin-top: 100px;
   p {
+    color: #f9fafb;
     font-weight: 600;
   }
 `;
@@ -89,6 +93,7 @@ const Type = styled.div`
 `;
 
 const UserInput = styled.div`
+  color: #f9fafb;
   width: 50%;
 `;
 
@@ -112,7 +117,7 @@ function Profile() {
           <DefaultImage />
         )}
       </ProfileImg>
-      <UploadBtn for="profileImg">
+      <UploadBtn htmlFor="profileImg">
         <FontAwesomeIcon icon={faCamera} color="white" />
       </UploadBtn>
 
@@ -126,15 +131,15 @@ function Profile() {
       </LineHeader>
       <LineWrapper>
         <Line>
-          <Type>Gender:</Type>
+          <Type>성별:</Type>
           <UserInput>Female</UserInput>
         </Line>
         <Line>
-          <Type>Age:</Type>
+          <Type>나이:</Type>
           <UserInput>28</UserInput>
         </Line>
         <Line>
-          <Type>Job:</Type>
+          <Type>직업:</Type>
           <UserInput>UI designer</UserInput>
         </Line>
       </LineWrapper>
