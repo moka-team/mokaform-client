@@ -4,7 +4,7 @@ import SocialLoginContainer from "./SocialLoginContainer";
 import AuthMenu from "./AuthMenu";
 
 const LoginFormWrapper = styled.div`
-  width: 461px;
+  width: 100%;
   justify-content: center;
   align-items: center;
 `;

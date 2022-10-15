@@ -2,13 +2,15 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 const AuthMenuContainer = styled.div`
+  margin-top: 30px;
+  margin-left: 20px;
+  margin-right: 20px;
   position: relative;
   font-family: "Inter";
   font-style: normal;
   font-weight: 400;
-  font-size: 20px;
+  font-size: 16px;
   line-height: 24px;
-  margin-top: 12.89px;
 `;
 
 const ResetPasswordLink = styled(Link)`
