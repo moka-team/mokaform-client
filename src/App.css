@@ -37,8 +37,3 @@
     transform: rotate(360deg);
   }
 }
-
-@font-face {
-  font-family: "MonoplexKR";
-  src: url("./fonts/MonoplexKR-Regular.ttf");
-}
