@@ -50,3 +50,18 @@ export const surveyCategory = atom({
   key: "surveyCategory",
   default: [],
 });
+
+export const EssayAnswerListState = atom({
+  key: "EssayAnswerListState",
+  default: [],
+});
+
+export const MultipleChoiceAnswerListState = atom({
+  key: "MultipleChoiceAnswerListState",
+  default: [],
+});
+
+export const oxAnswerListState = atom({
+  key: "oxAnswerListState",
+  default: [],
+});
