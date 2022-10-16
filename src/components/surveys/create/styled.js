@@ -21,7 +21,7 @@ const Preview = styled.div`
   width: 40%;
   min-height: 100%;
   flex-direction: column;
-  background-color: #edeef0;
+  background-color: #f5f6fa;
   float: right;
   padding: 0% 5% 5% 5%;
   color: black;
@@ -116,7 +116,7 @@ const TitleText = styled.h6`
   font-weight: 900;
   font-size: xx-large;
   border: none;
-  background-color: #edeef0;
+  background-color: #f5f6fa;
   color: black;
 
   &:focus {
@@ -129,7 +129,7 @@ const SummaryText = styled.h3`
   font-weight: 500;
   font-size: medium;
   border: none;
-  background-color: #edeef0;
+  background-color: #f5f6fa;
   color: black;
 
   &:focus {

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import Box from "@mui/material/Box";
 import axios from "axios";
@@ -15,6 +16,9 @@ import {
   surveyStartDate,
   surveyCategory,
   surveyImage,
+  createdQuestionCount,
+  isStartDateValidate,
+  isEndDateValidate,
 } from "../../../atoms";
 import { CustomSwitch } from "./CustomizedSwitches";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -25,6 +29,11 @@ import Modal from "@mui/material/Modal";
 import dayjs from "dayjs";
 import SurveyImg from "./SurveyImg";
 import SelectCategory from "./SelectCategory";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 
 const style = {
   position: "absolute",
@@ -38,7 +47,46 @@ const style = {
   borderRadius: 2,
 };
 
+function SurveyCreateDialog() {
+  const [dialogOpen, setDialogOpen] = useState(false);
+
+  const handleClickDialogOpen = () => {
+    setDialogOpen(true);
+  };
+
+  const handleDialogClose = () => {
+    setDialogOpen(false);
+  };
+
+  return (
+    <Dialog
+      open={dialogOpen}
+      onClose={handleDialogClose}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+    >
+      <DialogTitle id="alert-dialog-title">
+        {"설문을 삭제하시겠습니까?"}
+      </DialogTitle>
+      <DialogContent>
+        <DialogContentText id="alert-dialog-description">
+          설문 삭제 작업은 영구적이며 되돌릴 수 없습니다. 삭제하는 즉시 귀하의
+          설문에 액세스 할 수 없게 됩니다. 설문에 관련된 모든 데이터가
+          삭제됩니다.
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleDialogClose}>취소</Button>
+        <Button onClick={handleDialogClose} autoFocus>
+          확인
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
+}
+
 function NavBar() {
+  const questionCount = useRecoilValue(createdQuestionCount);
   const surveyList = useRecoilValue(surveyListState);
   const detailList = useRecoilValue(detailMCQuestionState);
   const category = useRecoilValue(surveyCategory);
@@ -49,6 +97,19 @@ function NavBar() {
   const [isPublic, setIsPublic] = useRecoilState(surveyIsPublic);
   const [startDate, setStartDate] = useRecoilState(surveyStartDate);
   const [endDate, setEndDate] = useRecoilState(surveyEndDate);
+  const [startDateValidate, setStartDateValidate] =
+    useRecoilState(isStartDateValidate);
+  const [endDateValidate, setEndDateValidate] =
+    useRecoilState(isEndDateValidate);
+  const [invalidatoinDialogOpen, setInvalidationDialogOpen] = useState(false);
+
+  const handleClickDialogOpen = () => {
+    setInvalidationDialogOpen(true);
+  };
+
+  const handleDialogClose = () => {
+    setInvalidationDialogOpen(false);
+  };
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -61,8 +122,9 @@ function NavBar() {
   const isPublicOnChange = (event) => {
     setIsPublic(event.target.checked);
   };
-  const handleSubmit = () => {
-    alert(
+
+  const createSurvey = () => {
+    console.log(
       "설문 정보" +
         "\n" +
         "title: " +
@@ -92,21 +154,28 @@ function NavBar() {
 
     const surveyInfo = {
       title: title,
+      summary: summary,
       isAnonymous: isAnonymous,
       isPublic: isPublic,
       startDate: startDate,
       endDate: endDate,
+      categories: category,
       questions: surveyList,
       multiQuestions: detailList,
-      category: category,
-      surveyImage: surveyImg,
+      // surveyImage: surveyImg,
     };
 
     console.log(JSON.stringify(surveyInfo));
 
-    axios
-      .post("/api/v1/survey/create", surveyInfo)
-      .then((res) => console.log(res.data));
+    // axios
+    //   .post("/api/v1/survey/create", surveyInfo)
+    //   .then((res) => console.log(res.data));
+  };
+
+  const handleSubmit = () => {
+    startDateValidate && endDateValidate
+      ? createSurvey()
+      : handleClickDialogOpen();
   };
   return (
     <SNavBar>
@@ -154,6 +223,7 @@ function NavBar() {
                 inputFormat={"yyyy-MM-dd"}
                 onChange={(newValue) => {
                   setStartDate(dayjs(newValue).format("YYYY-MM-DD"));
+                  setStartDateValidate(true);
                 }}
                 renderInput={({ inputRef, inputProps, InputProps }) => (
                   <Box
@@ -180,6 +250,7 @@ function NavBar() {
                 inputFormat={"yyyy-MM-dd"}
                 onChange={(newValue) => {
                   setEndDate(dayjs(newValue).format("YYYY-MM-DD"));
+                  setEndDateValidate(true);
                 }}
                 renderInput={({ inputRef, inputProps, InputProps }) => (
                   <Box
@@ -205,10 +276,37 @@ function NavBar() {
       </Modal>
       <SaveBtn
         onClick={handleSubmit}
-        disabled={!(title.length && summary.length)}
+        disabled={!(title.length && summary.length && questionCount > 0)}
       >
         저장
       </SaveBtn>
+      <Dialog
+        open={invalidatoinDialogOpen}
+        onClose={handleDialogClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        sx={{
+          "& .MuiDialog-container": {
+            "& .MuiPaper-root": {
+              width: "100%",
+              maxWidth: "500px", // Set your width here
+            },
+          },
+        }}
+      >
+        <DialogTitle id="invalidate-dialog-title">알림</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="invalidate-dialog-description">
+            설문 시작 날짜와 종료 날짜를 확인해주세요!
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDialogClose}>취소</Button>
+          <Button onClick={handleDialogClose} autoFocus>
+            확인
+          </Button>
+        </DialogActions>
+      </Dialog>
     </SNavBar>
   );
 }

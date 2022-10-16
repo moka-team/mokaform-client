@@ -1,6 +1,6 @@
 import { React, useState } from "react";
-import { useSetRecoilState } from "recoil";
-import { surveyListState } from "../../../atoms";
+import { useSetRecoilState, useRecoilState } from "recoil";
+import { surveyListState, createdQuestionCount } from "../../../atoms";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import { AddCircle } from "@mui/icons-material";
@@ -17,6 +17,8 @@ const Container = styled.div`
 `;
 
 export default function SurveyItemCreator() {
+  const [questionCount, setQuestionCount] =
+    useRecoilState(createdQuestionCount);
   const [question, setQuestion] = useState("");
   const [type, setType] = useState("ESSAY");
   const setSurveyList = useSetRecoilState(surveyListState);
@@ -51,6 +53,7 @@ export default function SurveyItemCreator() {
     ]);
     setQuestion("");
     setType(options[optionIndex]);
+    setQuestionCount(questionCount + 1);
   };
 
   return (
