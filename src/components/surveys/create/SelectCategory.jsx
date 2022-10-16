@@ -7,6 +7,8 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Chip from "@mui/material/Chip";
+import { useRecoilState } from "recoil";
+import { surveyCategory } from "../../../atoms";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -41,6 +43,8 @@ function getStyles(item, category, theme) {
 export default function SelectCategory() {
   const theme = useTheme();
   const [category, setcategory] = React.useState([]);
+  const [surveyCategoryInput, setSurveyCategory] =
+    useRecoilState(surveyCategory);
 
   const handleChange = (event) => {
     const {
@@ -50,6 +54,7 @@ export default function SelectCategory() {
       // On autofill we get a stringified value.
       typeof value === "string" ? value.split(",") : value
     );
+    setSurveyCategory(category);
   };
 
   return (

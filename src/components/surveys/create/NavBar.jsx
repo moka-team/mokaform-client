@@ -13,6 +13,8 @@ import {
   detailMCQuestionState,
   surveyEndDate,
   surveyStartDate,
+  surveyCategory,
+  surveyImage,
 } from "../../../atoms";
 import { CustomSwitch } from "./CustomizedSwitches";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -38,7 +40,8 @@ const style = {
 function NavBar() {
   const surveyList = useRecoilValue(surveyListState);
   const detailList = useRecoilValue(detailMCQuestionState);
-
+  const category = useRecoilValue(surveyCategory);
+  const surveyImg = useRecoilValue(surveyImage);
   const title = useRecoilValue(surveyTitle);
   const summary = useRecoilValue(surveySummary);
   const [isAnonymous, setIsAnonymous] = useRecoilState(surveyIsAnonymous);
@@ -78,7 +81,13 @@ function NavBar() {
         startDate +
         "\n" +
         "종료 날짜: " +
-        endDate
+        endDate +
+        "\n" +
+        "카테고리 : " +
+        category +
+        "\n" +
+        "이미지 : " +
+        surveyImg
     );
 
     const surveyInfo = {
@@ -89,6 +98,8 @@ function NavBar() {
       endDate: endDate,
       questions: surveyList,
       multiQuestions: detailList,
+      category: category,
+      surveyImage: surveyImg,
     };
 
     console.log(JSON.stringify(surveyInfo));

@@ -2,6 +2,8 @@ import { useState } from "react";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
+import { useRecoilState } from "recoil";
+import { surveyImage } from "../../../atoms";
 
 const Container = styled.div`
   display: flex;
@@ -38,6 +40,7 @@ const UploadBtn = styled.label`
 `;
 export default function SurveyImg() {
   const [selectedImage, setSelectedImage] = useState(null);
+  const [surveyImageInput, setSurveyImage] = useRecoilState(surveyImage);
 
   return (
     <Container>
@@ -46,6 +49,7 @@ export default function SurveyImg() {
         id="surveyImg"
         onChange={(event) => {
           setSelectedImage(event.target.files[0]);
+          setSurveyImage(event.target.files[0]);
         }}
         style={{ display: "none" }}
       />

@@ -40,3 +40,13 @@ export const detailMCQuestionState = atom({
   key: "detailMCQuestionState",
   default: [],
 });
+
+export const surveyImage = atom({
+  key: "surveyImage",
+  default: "",
+});
+
+export const surveyCategory = atom({
+  key: "surveyCategory",
+  default: [],
+});
