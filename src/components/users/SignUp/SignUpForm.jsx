@@ -73,7 +73,7 @@ export default function SignUpForm() {
         //   let message = response.data.message;
         //   alert("회원가입 실패 " + message);
         // }
-        if (response.data.messgae === "새로운 유저 생성이 성공하였습니다.") {
+        if (response.data.message === "새로운 유저 생성이 성공하였습니다.") {
           setEmail("");
           setNickname("");
           setPassword("");
