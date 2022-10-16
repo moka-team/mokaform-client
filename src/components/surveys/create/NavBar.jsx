@@ -22,6 +22,7 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import dayjs from "dayjs";
 import SurveyImg from "./SurveyImg";
+import SelectCategory from "./SelectCategory";
 
 const style = {
   position: "absolute",
@@ -183,6 +184,10 @@ function NavBar() {
                 )}
               />
             </LocalizationProvider>
+          </Typography>
+          <Typography>
+            설문 카테고리 설정
+            <SelectCategory />
           </Typography>
         </Box>
       </Modal>
