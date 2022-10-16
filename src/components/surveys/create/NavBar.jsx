@@ -13,6 +13,8 @@ import {
   detailMCQuestionState,
   surveyEndDate,
   surveyStartDate,
+  surveyCategory,
+  surveyImage,
 } from "../../../atoms";
 import { CustomSwitch } from "./CustomizedSwitches";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -21,6 +23,8 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import dayjs from "dayjs";
+import SurveyImg from "./SurveyImg";
+import SelectCategory from "./SelectCategory";
 
 const style = {
   position: "absolute",
@@ -32,10 +36,12 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
+
 function NavBar() {
   const surveyList = useRecoilValue(surveyListState);
   const detailList = useRecoilValue(detailMCQuestionState);
-
+  const category = useRecoilValue(surveyCategory);
+  const surveyImg = useRecoilValue(surveyImage);
   const title = useRecoilValue(surveyTitle);
   const summary = useRecoilValue(surveySummary);
   const [isAnonymous, setIsAnonymous] = useRecoilState(surveyIsAnonymous);
@@ -56,7 +62,6 @@ function NavBar() {
     setIsPublic(event.target.checked);
   };
   const handleSubmit = () => {
-
     alert(
       "설문 정보" +
         "\n" +
@@ -76,25 +81,32 @@ function NavBar() {
         startDate +
         "\n" +
         "종료 날짜: " +
-        endDate
+        endDate +
+        "\n" +
+        "카테고리 : " +
+        category +
+        "\n" +
+        "이미지 : " +
+        surveyImg
     );
 
     const surveyInfo = {
-      title:title,
-      isAnonymous:isAnonymous,
-      isPublic:isPublic,
-      startDate:startDate,
-      endDate:endDate,
-      questions:surveyList,
-      multiQuestions:detailList
-    }
+      title: title,
+      isAnonymous: isAnonymous,
+      isPublic: isPublic,
+      startDate: startDate,
+      endDate: endDate,
+      questions: surveyList,
+      multiQuestions: detailList,
+      category: category,
+      surveyImage: surveyImg,
+    };
 
-    console.log(JSON.stringify(surveyInfo))
+    console.log(JSON.stringify(surveyInfo));
 
-
-    axios.post(
-      "/api/v1/survey/create",surveyInfo
-    ).then(res =>console.log(res.data))
+    axios
+      .post("/api/v1/survey/create", surveyInfo)
+      .then((res) => console.log(res.data));
   };
   return (
     <SNavBar>
@@ -110,7 +122,11 @@ function NavBar() {
             설문 세부 설정
           </Typography>
           <Typography id="modal-modal-description">
-            설문 기간/ 설문 공개/ 설문 익명 여부를 결정해주세요.
+            설문의 세부 내용을 설정해주세요.
+          </Typography>
+          <Typography id="anp" sx={{ mt: 1 }} variant="body2">
+            설문 대표 이미지 설정
+            <SurveyImg />
           </Typography>
           <Typography id="anp" sx={{ mt: 3 }} variant="body2">
             설문 익명 가능 여부
@@ -179,6 +195,10 @@ function NavBar() {
                 )}
               />
             </LocalizationProvider>
+          </Typography>
+          <Typography>
+            설문 카테고리 설정
+            <SelectCategory />
           </Typography>
         </Box>
       </Modal>
