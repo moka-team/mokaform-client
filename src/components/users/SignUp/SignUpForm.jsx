@@ -1,6 +1,5 @@
 import React, { useRef, useState } from "react";
 import AgeRow from "./AgeRow";
-import InterestRow from "./InterestRow";
 import JobRow from "./JobRow";
 import SexRow from "./SexRow";
 import { useRecoilState } from "recoil";

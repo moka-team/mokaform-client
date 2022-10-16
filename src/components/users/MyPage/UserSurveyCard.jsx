@@ -13,6 +13,7 @@ import { faChevronRight, faPen } from "@fortawesome/free-solid-svg-icons";
 import { fontFamily } from "@mui/system";
 import RightButton from "./RightButton";
 import axios from "axios";
+
 function SurveyCard({ survey }) {
   let category = survey.surveyCategories[0];
   console.log(survey.title);
@@ -60,47 +61,6 @@ function SurveyCard({ survey }) {
   );
 }
 
-function changeCategory() {}
-
-// 임시 유저가 만든 설문 리스트 데이터
-const createdSurveys = [
-  {
-    number: 1,
-    title: "생성 설문제목1",
-    surveyeeCount: 30,
-    endDate: "22.09.25",
-    surveyCategories: "IT",
-  },
-  {
-    number: 2,
-    title: "생성 설문제목2",
-    surveyeeCount: 32,
-    endDate: "22.09.27",
-    surveyCategories: "선호도 조사",
-  },
-  {
-    number: 3,
-    title: "생성 설문제목3",
-    surveyeeCount: 20,
-    endDate: "22.09.29",
-    surveyCategories: "취미",
-  },
-  {
-    number: 4,
-    title: "생성 설문제목41212121",
-    surveyeeCount: 100,
-    endDate: "22.09.30",
-    surveyCategories: "반려동물",
-  },
-  {
-    number: 5,
-    title: "생성 설문제목41212121",
-    surveyeeCount: 100,
-    endDate: "22.09.30",
-    surveyCategories: "반려동물",
-  },
-];
-
 // 임시 유저가 참여한 설문 리스트 데이터
 const writedSurvey = [
   {
@@ -145,7 +105,7 @@ export default function UserSurveyCard({ isCreated }) {
 
   useEffect(() => {
     (async () => {
-      // TODO: userId 부분 수정 필요!
+      // TODO: 로그인 후 userId 부분 수정 필요!
       const posts = await axios.get("/api/v1/users/my/surveys", {
         params: {
           page: 0,
