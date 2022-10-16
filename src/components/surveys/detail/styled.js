@@ -1,4 +1,9 @@
 import styled from "styled-components";
+const Container = styled.div`
+  display: flex;
+  min-height: 100vh;
+  background-color: #edeef0;
+`;
 
 const SNavBar = styled.div`
   display: flex;
@@ -43,8 +48,8 @@ const Survey = styled.div`
   }
 `;
 
-const TitleText = styled.text`
-  margin-top: 10%;
+const TitleText = styled.div`
+  margin-top: 15%;
   font-weight: 900;
   font-size: xx-large;
   border: none;
@@ -56,7 +61,7 @@ const TitleText = styled.text`
   }
 `;
 
-const SummaryText = styled.text`
+const SummaryText = styled.div`
   margin-top: 10px;
   font-weight: 500;
   font-size: medium;
@@ -115,6 +120,20 @@ const Answer = styled.input`
     border-color: #edeef0;
   }
 `;
+
+const MessageText = styled.h1`
+  margin-top: 5%;
+  margin-left: 2%;
+  font-weight: 700;
+  font-size: x-large;
+  border: none;
+  color: ${(props) => props.color};
+
+  &:focus {
+    outline: none;
+  }
+`;
+
 export {
   SNavBar,
   SaveBtn,
@@ -125,4 +144,6 @@ export {
   QuestionOption,
   QuestionText,
   Answer,
+  Container,
+  MessageText,
 };
