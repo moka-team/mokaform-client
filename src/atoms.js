@@ -80,3 +80,8 @@ export const isOXAnswerValidate = atom({
   key: "isOXAnswerValidate",
   default: false,
 });
+
+export const surveyList = atom({
+  key: "surveyList",
+  default: [],
+});

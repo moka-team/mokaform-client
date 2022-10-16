@@ -6,6 +6,10 @@ const Container = styled.div`
   background-color: #f5f6fa;
 `;
 
+const TContainer = styled.div`
+  margin-bottom: 20px;
+`;
+
 const Table = styled.div`
   display: flex;
   width: 50%;
@@ -15,7 +19,7 @@ const Table = styled.div`
   color: black;
 `;
 
-const Text = styled.text`
+const Text = styled.h1`
   margin-top: 10%;
   margin-bottom: 20px;
   font-weight: 900;
@@ -24,4 +28,4 @@ const Text = styled.text`
   color: black;
 `;
 
-export { Container, Table, Text };
+export { Container, Table, Text, TContainer };
