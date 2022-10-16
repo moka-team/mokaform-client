@@ -20,7 +20,6 @@ export default function MultipleChoiceAnalysis({ item }) {
     const max = data.reduce((prev, current) =>
       prev.value > current.value ? prev : current
     );
-    console.log(max);
     return max;
   };
   return (

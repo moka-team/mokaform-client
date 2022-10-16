@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import ByItem from "./ByItem";
 import Header from "../../../components/main/Header";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPrint } from "@fortawesome/free-solid-svg-icons";
 const Container = styled.div`
   display: flex;
   justify-content: center;
@@ -16,6 +17,12 @@ const Title = styled.div`
   text-underline-offset: 10px;
 `;
 
+const ReportBtn = styled.div`
+  cursor: pointer;
+  color: #0064ff;
+  margin-top: 25px;
+`;
+
 const Wrapper = styled.div`
   margin-top: 50px;
 `;
@@ -25,6 +32,9 @@ function SurveyAnalysis() {
       <Header />
       <Container>
         <Title>설문 분석 결과 보기</Title>
+        <ReportBtn>
+          <FontAwesomeIcon icon={faPrint} onClick={window.print} />
+        </ReportBtn>
         <Wrapper>
           <ByItem />
         </Wrapper>
