@@ -50,3 +50,8 @@ export const surveyCategory = atom({
   key: "surveyCategory",
   default: [],
 });
+
+export const surveyList = atom({
+  key: "surveyList",
+  default: [],
+});
