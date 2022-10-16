@@ -159,7 +159,7 @@ export default function SortSelect() {
   };
   const fetchFamousSurvey = async () => {
     const response = await axios.get(
-      "http://localhost:8080/api/v1/survey/list?sort=createdAt,asc"
+      "http://localhost:8080/api/v1/survey/list?sort=surveyeeCount,asc"
     );
     setServeys(response.data);
   };

@@ -46,11 +46,9 @@ export default function CardContainer({ logined }) {
   const [totalSurvey, setTotalSurvey] = useState(null);
   const [surveys, setServeys] = useRecoilState(surveyList);
 
-  useEffect(() => {}, [surveys]);
-
   return logined ? (
     <Grid container spacing={2}>
-      {/* 추천 설문으로 바꿔야함 */}
+      {/* 추천 설문으로 변경 */}
       {surveys.map((servey) => (
         <Grid item key={servey.number} xs={6} sm={6} md={4} lg={3} xl={2.4}>
           <CardActionArea>
