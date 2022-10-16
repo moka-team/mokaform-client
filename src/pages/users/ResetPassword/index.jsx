@@ -1,9 +1,11 @@
 import { Box } from "@mui/material";
 import styled from "styled-components";
 import EmailFormContainer from "../../../components/users/ResetPassword/EmailFormContainer";
+import { SignInLogo } from "../../../components/common/Logo";
 
 const Container = styled.div`
   display: flex;
+  height: 100vh;
   justify-content: center;
   align-items: center;
 `;
@@ -12,6 +14,7 @@ const LogoContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 40px;
 `;
 
 const Logo = styled.img`
@@ -23,7 +26,7 @@ const ResetPasswordDescription = styled.div`
   font-family: "Inter";
   font-style: normal;
   font-weight: 400;
-  font-size: 24px;
+  font-size: 18px;
   text-align: center;
   line-height: 39px;
 `;
@@ -33,7 +36,7 @@ function ResetPassword() {
     <Container>
       <Box>
         <LogoContainer>
-          <Logo src="/img/mokaform-logo.png" />
+          <SignInLogo>MOKA FORM</SignInLogo>
         </LogoContainer>
         <ResetPasswordDescription>
           가입한 이메일 주소를 입력해주세요.
