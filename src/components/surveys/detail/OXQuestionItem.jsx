@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { QuestionWrapper, QuestionOption, QuestionText } from "./styled";
-import { oxAnswerListState } from "../../../atoms";
+import { oxAnswerListState, isOXAnswerValidate } from "../../../atoms";
 import { useRecoilState } from "recoil";
 
 export default function OXQuestionItem({ item }) {
+  const [isOXValidate, setIsOxValidate] = useRecoilState(isOXAnswerValidate);
   const [currentClick, setCurrentClick] = useState(null);
   const [prevClick, setPrevClick] = useState(null);
 
@@ -46,6 +47,8 @@ export default function OXQuestionItem({ item }) {
   useEffect(
     (event) => {
       if (currentClick !== null) {
+        setIsOxValidate(true);
+
         let current = document.getElementById(currentClick);
         current.style.color = "white";
         current.style.fontWeight = 600;

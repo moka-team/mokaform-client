@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { QuestionWrapper, QuestionText, Answer } from "./styled";
-import { EssayAnswerListState } from "../../../atoms";
+import { EssayAnswerListState, isEssayAnswerValidate } from "../../../atoms";
 import { useRecoilState } from "recoil";
 
 export default function EssayQuestionItem({ item }) {
   const [essayAnswerList, setEssayAnswerList] =
     useRecoilState(EssayAnswerListState);
+  const [isEssayValidate, setIsEssayValidate] = useRecoilState(
+    isEssayAnswerValidate
+  );
   const [essayAnswer, setEssayAnswer] = useState({
     questionId: item.questionId,
     answerContent: "",
@@ -23,6 +26,8 @@ export default function EssayQuestionItem({ item }) {
   }, []);
 
   const onChange = ({ target: { value } }) => {
+    value.length === 0 ? setIsEssayValidate(false) : setIsEssayValidate(true);
+
     setEssayAnswer({ questionId: item.questionId, answerContent: value });
 
     const newList = replaceItemAtIndex(essayAnswerList, index, {

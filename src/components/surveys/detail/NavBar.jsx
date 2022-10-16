@@ -5,6 +5,9 @@ import {
   EssayAnswerListState,
   MultipleChoiceAnswerListState,
   oxAnswerListState,
+  isEssayAnswerValidate,
+  isMultiChoiceAnswerValidate,
+  isOXAnswerValidate,
 } from "../../../atoms";
 import axios from "axios";
 import Button from "@mui/material/Button";
@@ -16,6 +19,10 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { useNavigate } from "react-router-dom";
 
 export default function NavBar() {
+  const isEssayValidate = useRecoilValue(isEssayAnswerValidate);
+  const isMultiChoiceValidate = useRecoilValue(isMultiChoiceAnswerValidate);
+  const isOXValidate = useRecoilValue(isOXAnswerValidate);
+
   const [isSubmit, setIsSubmit] = useState(false);
   const essayAnswerList = useRecoilValue(EssayAnswerListState);
   const multiChoiceAnswerList = useRecoilState(MultipleChoiceAnswerListState);
@@ -50,12 +57,25 @@ export default function NavBar() {
 
   return (
     <SNavBar>
-      <SaveBtn onClick={handleSubmit}>저장</SaveBtn>
+      <SaveBtn
+        disabled={!(isEssayValidate && isMultiChoiceValidate && isOXValidate)}
+        onClick={handleSubmit}
+      >
+        저장
+      </SaveBtn>
       <Dialog
         open={open}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
+        sx={{
+          "& .MuiDialog-container": {
+            "& .MuiPaper-root": {
+              width: "100%",
+              maxWidth: "500px", // Set your width here
+            },
+          },
+        }}
       >
         <DialogTitle id="alert-dialog-title">설문 참여 완료!</DialogTitle>
         <DialogContent>

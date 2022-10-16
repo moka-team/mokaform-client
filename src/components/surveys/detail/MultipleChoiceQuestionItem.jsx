@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { QuestionWrapper, QuestionOption, QuestionText } from "./styled";
-import { MultipleChoiceAnswerListState } from "../../../atoms";
+import {
+  MultipleChoiceAnswerListState,
+  isMultiChoiceAnswerValidate,
+} from "../../../atoms";
 import { useRecoilState } from "recoil";
 
 export default function MultipleChoiceQuestionItem({ item, multiquestion }) {
+  const [isMultiChoiceValidate, setIsMultiChoiceValidate] = useRecoilState(
+    isMultiChoiceAnswerValidate
+  );
   const [multiChoiceAnswerList, setMultiChoiceAnswerList] = useRecoilState(
     MultipleChoiceAnswerListState
   );
@@ -50,6 +56,8 @@ export default function MultipleChoiceQuestionItem({ item, multiquestion }) {
   useEffect(
     (event) => {
       if (currentClick !== null) {
+        setIsMultiChoiceValidate(true);
+
         let current = document.getElementById(currentClick);
         current.style.color = "white";
         current.style.fontWeight = 600;
