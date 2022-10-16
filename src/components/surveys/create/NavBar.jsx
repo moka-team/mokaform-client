@@ -167,6 +167,18 @@ function NavBar() {
 
     console.log(JSON.stringify(surveyInfo));
 
+    axios
+      .post("/api/v1/survey?userId=1", surveyInfo)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error.message);
+      })
+      .finally(function () {
+        // always executed
+      });
+
     // axios
     //   .post("/api/v1/survey/create", surveyInfo)
     //   .then((res) => console.log(res.data));

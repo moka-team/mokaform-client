@@ -21,7 +21,18 @@ const MenuProps = {
   },
 };
 
-const categorys = [
+const categories = [
+  "DAILY_LIFE", // 일상
+  "IT", // IT
+  "HOBBY", // 취미
+  "LEARNING", // 학습
+  "PSYCHOLOGY", // 취미
+  "SOCIAL_POLITICS", // 사회/정치
+  "PREFERENCE_RESEARCH", // 선호도 조사
+  "PET", // 반려동물
+];
+
+const kCategories = [
   "일상",
   "IT",
   "취미",
@@ -29,6 +40,7 @@ const categorys = [
   "심리",
   "사회/정치",
   "선호도 조사",
+  "반려동물",
 ];
 
 function getStyles(item, category, theme) {
@@ -77,13 +89,13 @@ export default function SelectCategory() {
           )}
           MenuProps={MenuProps}
         >
-          {categorys.map((item) => (
+          {categories.map((item, index) => (
             <MenuItem
               key={item}
               value={item}
               style={getStyles(item, category, theme)}
             >
-              {item}
+              {kCategories[index]}
             </MenuItem>
           ))}
         </Select>
