@@ -80,7 +80,6 @@ function NavBar() {
     );
 
     const surveyInfo = {
-      surveyorId :1,
       title:title,
       isAnonymous:isAnonymous,
       isPublic:isPublic,

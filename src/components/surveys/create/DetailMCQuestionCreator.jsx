@@ -17,6 +17,7 @@ export default function DetailMCQuestionCreator({ id }) {
         questionIndex: id,
         index: getId(),
         content: detailQuestion,
+        type:"GENERAL"
       },
     ]);
     setDetailQuestion("");
