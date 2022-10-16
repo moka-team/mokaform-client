@@ -18,6 +18,8 @@ const ProfileImg = styled.div`
   position: relative;
   margin-top: 40px;
   width: 50%;
+  background-color: gray;
+  border-radius: 50%;
   &::after {
     display: block;
     content: "";
@@ -25,12 +27,14 @@ const ProfileImg = styled.div`
   }
 `;
 
-const DefaultImage = styled.div`
+const DefaultImage = styled.img`
   position: absolute;
   background-color: gray;
+  margin-top: 5%;
+  margin-left: 10%;
   border-radius: 50%;
-  width: 100%;
-  height: 100%;
+  width: 80%;
+  height: 80%;
   object-fit: cover;
 `;
 
@@ -99,7 +103,8 @@ const UserInput = styled.div`
 
 function Profile() {
   const [selectedImage, setSelectedImage] = useState(null);
-
+  // 추후 삭제
+  const [userProfile, setUserProfile] = useState("");
   return (
     <SProfile>
       <input
@@ -114,7 +119,10 @@ function Profile() {
         {selectedImage ? (
           <Image src={URL.createObjectURL(selectedImage)} />
         ) : (
-          <DefaultImage />
+          // 추후 변경 예정
+          <DefaultImage
+            src={userProfile === "FEMALE" ? "/img/girl.png" : "/img/boy.png"}
+          />
         )}
       </ProfileImg>
       <UploadBtn htmlFor="profileImg">

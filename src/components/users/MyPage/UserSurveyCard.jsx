@@ -16,7 +16,6 @@ import axios from "axios";
 
 function SurveyCard({ survey }) {
   let category = survey.surveyCategories[0];
-  console.log(survey.title);
   return (
     <Grid container>
       <Grid item xs={12} sx={{ pb: 1 }}>
