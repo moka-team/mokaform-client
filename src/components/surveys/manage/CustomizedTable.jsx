@@ -1,4 +1,4 @@
-import { React, useState, Fragment } from "react";
+import { React, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
@@ -26,6 +26,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import { TContainer } from "./styled";
 
 function TablePaginationActions(props) {
   const theme = useTheme();
@@ -115,134 +116,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     border: 0,
   },
 }));
-const tmpData = [
-  {
-    surveyId: 1,
-    answerCount: 0,
-    title: "설문 제목",
-    summary: "설문 요약",
-    startDate: "2022-01-01",
-    endDate: "2022-12-31",
-    isAnonymous: false,
-    isPublic: true,
-    category: [],
-  },
-  {
-    surveyId: 2,
-    answerCount: 0,
-    title: "설문 제목2",
-    summary: "설문 요약2",
-    startDate: "2022-01-01",
-    endDate: "2022-12-31",
-    isAnonymous: false,
-    isPublic: true,
-  },
-  {
-    surveyId: 3,
-    answerCount: 0,
-    title: "설문 제목3",
-    summary: "설문 요약3",
-    startDate: "2022-01-01",
-    endDate: "2022-12-31",
-    isAnonymous: false,
-    isPublic: true,
-  },
-  {
-    surveyId: 4,
-    answerCount: 0,
-    title: "설문 제목",
-    summary: "설문 요약",
-    startDate: "2022-01-01",
-    endDate: "2022-12-31",
-    isAnonymous: false,
-    isPublic: true,
-    category: [],
-  },
-  {
-    surveyId: 5,
-    answerCount: 0,
-    title: "설문 제목2",
-    summary: "설문 요약2",
-    startDate: "2022-01-01",
-    endDate: "2022-12-31",
-    isAnonymous: false,
-    isPublic: true,
-  },
-  {
-    surveyId: 6,
-    answerCount: 0,
-    title: "설문 제목3",
-    summary: "설문 요약3",
-    startDate: "2022-01-01",
-    endDate: "2022-12-31",
-    isAnonymous: false,
-    isPublic: true,
-  },
-  {
-    surveyId: 7,
-    answerCount: 0,
-    title: "설문 제목",
-    summary: "설문 요약",
-    startDate: "2022-01-01",
-    endDate: "2022-12-31",
-    isAnonymous: false,
-    isPublic: true,
-    category: [],
-  },
-  {
-    surveyId: 8,
-    answerCount: 0,
-    title: "설문 제목2",
-    summary: "설문 요약2",
-    startDate: "2022-01-01",
-    endDate: "2022-12-31",
-    isAnonymous: false,
-    isPublic: true,
-  },
-  {
-    surveyId: 9,
-    answerCount: 0,
-    title: "설문 제목3",
-    summary: "설문 요약3",
-    startDate: "2022-01-01",
-    endDate: "2022-12-31",
-    isAnonymous: false,
-    isPublic: true,
-  },
-  {
-    surveyId: 10,
-    answerCount: 0,
-    title: "설문 제목",
-    summary: "설문 요약",
-    startDate: "2022-01-01",
-    endDate: "2022-12-31",
-    isAnonymous: false,
-    isPublic: true,
-    category: [],
-  },
-  {
-    surveyId: 11,
-    answerCount: 0,
-    title: "설문 제목2",
-    summary: "설문 요약2",
-    startDate: "2022-01-01",
-    endDate: "2022-12-31",
-    isAnonymous: false,
-    isPublic: true,
-  },
-  {
-    surveyId: 12,
-    answerCount: 0,
-    title: "설문 제목3",
-    summary: "설문 요약3",
-    startDate: "2022-01-01",
-    endDate: "2022-12-31",
-    isAnonymous: false,
-    isPublic: true,
-  },
-];
 
-export default function CustomPaginationActionsTable() {
+export default function CustomPaginationActionsTable({ survey }) {
   const options = ["삭제", "수정"];
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -255,7 +130,7 @@ export default function CustomPaginationActionsTable() {
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - tmpData.length) : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - survey.length) : 0;
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -292,128 +167,132 @@ export default function CustomPaginationActionsTable() {
   };
 
   return (
-    <TableContainer component={Paper}>
-      <Table aria-label="custom pagination table">
-        <TableHead>
-          <TableRow>
-            <StyledTableCell>설문 제목</StyledTableCell>
-            <StyledTableCell align="right">설문 요약</StyledTableCell>
-            <StyledTableCell align="right">응답 인원 수</StyledTableCell>
-            <StyledTableCell align="right">설문 시작일</StyledTableCell>
-            <StyledTableCell align="right">설문 종료일</StyledTableCell>
-            <StyledTableCell align="right">익명 가능 여부</StyledTableCell>
-            <StyledTableCell align="right">공개 여부</StyledTableCell>
-            <StyledTableCell align="right"></StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {(rowsPerPage > 0
-            ? tmpData.slice(
-                page * rowsPerPage,
-                page * rowsPerPage + rowsPerPage
-              )
-            : tmpData
-          ).map((data) => (
-            <StyledTableRow key={data.surveyId}>
-              <StyledTableCell component="th" scope="row">
-                {data.title}
-              </StyledTableCell>
-              <StyledTableCell align="right">{data.summary}</StyledTableCell>
-              <StyledTableCell align="right">
-                {data.answerCount}
-              </StyledTableCell>
-              <StyledTableCell align="right">{data.startDate}</StyledTableCell>
-              <StyledTableCell align="right">{data.endDate}</StyledTableCell>
-              <StyledTableCell align="right">
-                {data.isAnonymous ? <div>가능</div> : <div>불가능</div>}
-              </StyledTableCell>
-              <StyledTableCell align="right">
-                {data.isPublic ? <div>가능</div> : <div>불가능</div>}
-              </StyledTableCell>
-              <StyledTableCell>
-                <IconButton
-                  id="lock-button"
-                  aria-haspopup="listbox"
-                  aria-controls="lock-menu"
-                  aria-expanded={open ? "true" : undefined}
-                  onClick={handleClickListItem}
-                >
-                  <MoreVertIcon sx={{ color: "#202632" }} />
-                </IconButton>
-              </StyledTableCell>
-            </StyledTableRow>
-          ))}
-
-          {emptyRows > 0 && (
-            <TableRow style={{ height: 53 * emptyRows }}>
-              <TableCell colSpan={8} />
+    <TContainer>
+      <TableContainer component={Paper}>
+        <Table aria-label="custom pagination table">
+          <TableHead>
+            <TableRow>
+              <StyledTableCell>설문 제목</StyledTableCell>
+              <StyledTableCell align="center">설문 요약</StyledTableCell>
+              <StyledTableCell align="center">응답 수</StyledTableCell>
+              <StyledTableCell align="center">설문 시작일</StyledTableCell>
+              <StyledTableCell align="center">설문 종료일</StyledTableCell>
+              <StyledTableCell align="center">익명</StyledTableCell>
+              <StyledTableCell align="center">공개</StyledTableCell>
+              <StyledTableCell align="center"></StyledTableCell>
             </TableRow>
-          )}
-        </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
-              colSpan={8}
-              count={tmpData.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              SelectProps={{
-                inputProps: {
-                  "aria-label": "rows per page",
-                },
-                native: true,
-              }}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-              ActionsComponent={TablePaginationActions}
-            />
-          </TableRow>
-        </TableFooter>
-      </Table>
-      <Menu
-        id="lock-menu"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        MenuListProps={{
-          "aria-labelledby": "lock-button",
-          role: "listbox",
-        }}
-      >
-        {options.map((option, index) => (
-          <MenuItem
-            key={option}
-            selected={index === selectedIndex}
-            onClick={(event) => handleMenuItemClick(event, index)}
-          >
-            {option}
-          </MenuItem>
-        ))}
-      </Menu>
-      <Dialog
-        open={dialogOpen}
-        onClose={handleDialogClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          {"설문을 삭제하시겠습니까?"}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            설문 삭제 작업은 영구적이며 되돌릴 수 없습니다. 삭제하는 즉시 귀하의
-            설문에 액세스 할 수 없게 됩니다. 설문에 관련된 모든 데이터가
-            삭제됩니다.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleDialogClose}>취소</Button>
-          <Button onClick={handleDialogClose} autoFocus>
-            확인
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {(rowsPerPage > 0
+              ? survey.slice(
+                  page * rowsPerPage,
+                  page * rowsPerPage + rowsPerPage
+                )
+              : survey
+            ).map((data) => (
+              <StyledTableRow key={data.surveyId}>
+                <StyledTableCell component="th" scope="row">
+                  {data.title}
+                </StyledTableCell>
+                <StyledTableCell align="center">{data.summary}</StyledTableCell>
+                <StyledTableCell align="center">
+                  {data.surveyeeCount}
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  {data.startDate}
+                </StyledTableCell>
+                <StyledTableCell align="center">{data.endDate}</StyledTableCell>
+                <StyledTableCell align="center">
+                  {data.isAnonymous ? <div>가능</div> : <div>불가능</div>}
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  {data.isPublic ? <div>가능</div> : <div>불가능</div>}
+                </StyledTableCell>
+                <StyledTableCell>
+                  <IconButton
+                    id="lock-button"
+                    aria-haspopup="listbox"
+                    aria-controls="lock-menu"
+                    aria-expanded={open ? "true" : undefined}
+                    onClick={handleClickListItem}
+                  >
+                    <MoreVertIcon sx={{ color: "#202632" }} />
+                  </IconButton>
+                </StyledTableCell>
+              </StyledTableRow>
+            ))}
+
+            {emptyRows > 0 && (
+              <TableRow style={{ height: 53 * emptyRows }}>
+                <TableCell colSpan={8} />
+              </TableRow>
+            )}
+          </TableBody>
+          <TableFooter>
+            <TableRow>
+              <TablePagination
+                rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
+                colSpan={8}
+                count={survey.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                SelectProps={{
+                  inputProps: {
+                    "aria-label": "rows per page",
+                  },
+                  native: true,
+                }}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                ActionsComponent={TablePaginationActions}
+              />
+            </TableRow>
+          </TableFooter>
+        </Table>
+        <Menu
+          id="lock-menu"
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          MenuListProps={{
+            "aria-labelledby": "lock-button",
+            role: "listbox",
+          }}
+        >
+          {options.map((option, index) => (
+            <MenuItem
+              key={option}
+              selected={index === selectedIndex}
+              onClick={(event) => handleMenuItemClick(event, index)}
+            >
+              {option}
+            </MenuItem>
+          ))}
+        </Menu>
+        <Dialog
+          open={dialogOpen}
+          onClose={handleDialogClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"설문을 삭제하시겠습니까?"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              설문 삭제 작업은 영구적이며 되돌릴 수 없습니다. 삭제하는 즉시
+              귀하의 설문에 액세스 할 수 없게 됩니다. 설문에 관련된 모든
+              데이터가 삭제됩니다.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleDialogClose}>취소</Button>
+            <Button onClick={handleDialogClose} autoFocus>
+              확인
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </TableContainer>
+    </TContainer>
   );
 }
