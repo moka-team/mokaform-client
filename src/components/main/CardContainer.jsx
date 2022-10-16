@@ -10,6 +10,8 @@ import { CardActionArea } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+import { useRecoilState } from "recoil";
+import { surveyList } from "../../atoms";
 function ServeyCard({ servey }) {
   return (
     <Grid container>
@@ -42,21 +44,14 @@ function ServeyCard({ servey }) {
 
 export default function CardContainer({ logined }) {
   const [totalSurvey, setTotalSurvey] = useState(null);
-  const fetchSurvey = async () => {
-    const response = await axios.get(
-      "http://localhost:8080/api/v1/survey/list"
-    );
-    setTotalSurvey(response.data);
-  };
+  const [surveys, setServeys] = useRecoilState(surveyList);
 
-  useEffect(() => {
-    fetchSurvey();
-  }, []);
+  useEffect(() => {}, [surveys]);
 
   return logined ? (
     <Grid container spacing={2}>
-      //TODO : 추천 설문으로 바꿔야함
-      {totalSurvey.map((servey) => (
+      {/* 추천 설문으로 바꿔야함 */}
+      {surveys.map((servey) => (
         <Grid item key={servey.number} xs={6} sm={6} md={4} lg={3} xl={2.4}>
           <CardActionArea>
             <Card
@@ -81,7 +76,7 @@ export default function CardContainer({ logined }) {
     </Grid>
   ) : (
     <Grid container spacing={2}>
-      {totalSurvey?.data?.content.map((servey) => (
+      {surveys?.data?.content.map((servey) => (
         <Grid item key={servey.surveyId} xs={6} sm={6} md={4} lg={3} xl={2.4}>
           <CardActionArea>
             <Card
