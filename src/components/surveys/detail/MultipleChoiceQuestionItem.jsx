@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  QuestionWrapper,
-  QuestionOption,
-  QuestionText,
-  Answer,
-} from "./styled";
+import { QuestionWrapper, QuestionOption, QuestionText } from "./styled";
 
 export default function MultipleChoiceQuestionItem({ item, multiquestion }) {
   const [currentClick, setCurrentClick] = useState(null);
@@ -38,19 +33,21 @@ export default function MultipleChoiceQuestionItem({ item, multiquestion }) {
     <QuestionWrapper>
       <QuestionText color="#0064ff">Q{item.index}</QuestionText>
       <QuestionText color="black">{item.title}</QuestionText>
-      {multiquestion.map((multiQuestionItem) =>
-        item.index === multiQuestionItem.questionIndex ? (
-          <QuestionOption
-            id={item.index + "" + (multiQuestionItem.index + "")}
-            onClick={onClickHandler}
-            value={multiQuestionItem.content}
-          >
-            {multiQuestionItem.content}
-          </QuestionOption>
-        ) : (
-          <></>
+      {multiquestion
+        .filter(
+          (multiQuestionItem) =>
+            item.questionId === multiQuestionItem.questionId
         )
-      )}
+        .map((multiQuestion) => (
+          <QuestionOption
+            id={multiQuestion.multiQuestionId}
+            key={multiQuestion.multiQuestionId}
+            onClick={onClickHandler}
+            value={multiQuestion.multiQuestionContent}
+          >
+            {multiQuestion.multiQuestionContent}
+          </QuestionOption>
+        ))}
     </QuestionWrapper>
   );
 }
