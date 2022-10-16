@@ -35,6 +35,7 @@ const style = {
   bgcolor: "background.paper",
   boxShadow: 24,
   p: 4,
+  borderRadius: 2,
 };
 
 function NavBar() {
@@ -55,7 +56,6 @@ function NavBar() {
 
   const isAnonymousOnChange = (event) => {
     setIsAnonymous(event.target.checked);
-    alert(startDate);
   };
 
   const isPublicOnChange = (event) => {
@@ -124,10 +124,12 @@ function NavBar() {
           <Typography id="modal-modal-description">
             설문의 세부 내용을 설정해주세요.
           </Typography>
-          <Typography id="anp" sx={{ mt: 1 }} variant="body2">
-            설문 대표 이미지 설정
-            <SurveyImg />
-          </Typography>
+          <Box pt={3}>
+            <Typography id="anp" sx={{ mt: 1 }} variant="body2">
+              설문 대표 이미지 설정
+              <SurveyImg />
+            </Typography>
+          </Box>
           <Typography id="anp" sx={{ mt: 3 }} variant="body2">
             설문 익명 가능 여부
             <CustomSwitch
@@ -196,8 +198,7 @@ function NavBar() {
               />
             </LocalizationProvider>
           </Typography>
-          <Typography>
-            설문 카테고리 설정
+          <Typography sx={{ mt: 2 }} variant="body2">
             <SelectCategory />
           </Typography>
         </Box>

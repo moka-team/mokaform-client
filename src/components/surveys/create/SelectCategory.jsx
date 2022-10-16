@@ -10,7 +10,7 @@ import Chip from "@mui/material/Chip";
 import { useRecoilState } from "recoil";
 import { surveyCategory } from "../../../atoms";
 
-const ITEM_HEIGHT = 48;
+const ITEM_HEIGHT = 40;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
   PaperProps: {
@@ -59,8 +59,8 @@ export default function SelectCategory() {
 
   return (
     <div>
-      <FormControl sx={{ m: 1, width: 300 }}>
-        <InputLabel id="demo-multiple-chip-label">Chip</InputLabel>
+      <FormControl sx={{ width: 300 }}>
+        <InputLabel id="demo-multiple-chip-label">설문 카테고리</InputLabel>
         <Select
           labelId="demo-multiple-chip-label"
           id="demo-multiple-chip"

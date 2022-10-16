@@ -111,8 +111,8 @@ const Summary = styled.input`
   }
 `;
 
-const TitleText = styled.text`
-  margin-top: 10%;
+const TitleText = styled.h6`
+  margin-top: 12%;
   font-weight: 900;
   font-size: xx-large;
   border: none;
@@ -124,7 +124,7 @@ const TitleText = styled.text`
   }
 `;
 
-const SummaryText = styled.text`
+const SummaryText = styled.h3`
   margin-top: 10px;
   font-weight: 500;
   font-size: medium;

@@ -11,6 +11,7 @@ const DetailContainer = styled.div`
 const Input = styled.input`
   border: none;
   background-color: #202632;
+  margin-bottom: 2px;
   color: white;
   &:focus {
     outline: none;

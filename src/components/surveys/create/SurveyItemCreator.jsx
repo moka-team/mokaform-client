@@ -8,6 +8,7 @@ import { Button } from "@mui/material";
 import styled from "styled-components";
 
 const options = ["ESSAY", "MULTIPLE_CHOICE", "OX"];
+const kOtions = ["주관식", "객관식", "찬부식"];
 
 const Container = styled.div`
   width: 100%;
@@ -80,7 +81,7 @@ export default function SurveyItemCreator() {
             selected={index === selectedIndex}
             onClick={(event) => handleMenuItemClick(event, index)}
           >
-            {option}
+            {kOtions[index]}
           </MenuItem>
         ))}
       </Menu>
