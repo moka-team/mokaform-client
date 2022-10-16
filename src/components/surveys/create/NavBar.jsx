@@ -21,6 +21,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import dayjs from "dayjs";
+import SurveyImg from "./SurveyImg";
 
 const style = {
   position: "absolute",
@@ -32,6 +33,7 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
+
 function NavBar() {
   const surveyList = useRecoilValue(surveyListState);
   const detailList = useRecoilValue(detailMCQuestionState);
@@ -56,7 +58,6 @@ function NavBar() {
     setIsPublic(event.target.checked);
   };
   const handleSubmit = () => {
-
     alert(
       "설문 정보" +
         "\n" +
@@ -80,21 +81,20 @@ function NavBar() {
     );
 
     const surveyInfo = {
-      title:title,
-      isAnonymous:isAnonymous,
-      isPublic:isPublic,
-      startDate:startDate,
-      endDate:endDate,
-      questions:surveyList,
-      multiQuestions:detailList
-    }
+      title: title,
+      isAnonymous: isAnonymous,
+      isPublic: isPublic,
+      startDate: startDate,
+      endDate: endDate,
+      questions: surveyList,
+      multiQuestions: detailList,
+    };
 
-    console.log(JSON.stringify(surveyInfo))
+    console.log(JSON.stringify(surveyInfo));
 
-
-    axios.post(
-      "/api/v1/survey/create",surveyInfo
-    ).then(res =>console.log(res.data))
+    axios
+      .post("/api/v1/survey/create", surveyInfo)
+      .then((res) => console.log(res.data));
   };
   return (
     <SNavBar>
@@ -110,7 +110,11 @@ function NavBar() {
             설문 세부 설정
           </Typography>
           <Typography id="modal-modal-description">
-            설문 기간/ 설문 공개/ 설문 익명 여부를 결정해주세요.
+            설문의 세부 내용을 설정해주세요.
+          </Typography>
+          <Typography id="anp" sx={{ mt: 1 }} variant="body2">
+            설문 대표 이미지 설정
+            <SurveyImg />
           </Typography>
           <Typography id="anp" sx={{ mt: 3 }} variant="body2">
             설문 익명 가능 여부
