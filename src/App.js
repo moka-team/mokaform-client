@@ -10,9 +10,9 @@ import routes from "./routes";
 import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
 import SurveyAnalysis from "./pages/surveys/analysis";
-import ByItem from "./pages/surveys/analysis/ByItem";
 import Participate from "./pages/surveys/participate/index";
 import ManageSurvey from "./pages/surveys/manage";
+import Show from "./pages/surveys/show";
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -36,6 +36,7 @@ function App() {
           element={<Participate />}
         ></Route>
         <Route path={routes.manageSurvey} element={<ManageSurvey />}></Route>
+        <Route path={routes.createdSurvey} element={<Show />}></Route>
       </Routes>
     </BrowserRouter>
   );

@@ -28,7 +28,6 @@ const Block = styled.div`
 `;
 
 export default function ListContainer() {
-  const preference = ["HOBBY", "PET"];
   return (
     <Container>
       <Header>
