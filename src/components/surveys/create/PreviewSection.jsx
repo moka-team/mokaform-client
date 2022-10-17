@@ -1,6 +1,6 @@
 import React from "react";
 import { Preview, TitleText, SummaryText } from "./styled";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useResetRecoilState } from "recoil";
 import { surveyTitle, surveySummary, surveyListState } from "../../../atoms";
 
 import SurveyPreviewItem from "./SurveyPreviewItem";

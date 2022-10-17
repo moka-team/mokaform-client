@@ -16,6 +16,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { userState } from "../../authentication/userState";
+import { Logo } from "./Logo";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -110,7 +111,7 @@ export default function Header() {
   const handleNavigateMypage = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
-    navigate("/mypage");
+    navigate(`/mypage/${user.id}`);
   };
 
   const handleLogout = () => {
@@ -119,6 +120,7 @@ export default function Header() {
 
     // local storage에 user 정보 삭제
     window.location.replace("http://localhost:3000/");
+    localStorage.clear();
     setUser(null);
   };
 
@@ -149,27 +151,11 @@ export default function Header() {
 
   const mobileMenuId = "primary-search-account-menu-mobile";
 
-  useEffect(() => {
-    if (user === null) {
-      setLogined(false);
-    } else {
-      setLogined(true);
-    }
-  }, [user]);
-
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar style={appBarStyle}>
         <Toolbar>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: { xs: "none", sm: "block" } }}
-            onClick={onNavigateMain}
-          >
-            MOKA FORM
-          </Typography>
+          <Logo onClick={onNavigateMain}>MOKA FORM</Logo>
           <Box sx={{ flexGrow: 1 }} />
           {/* <Search>
             <SearchIconWrapper>
@@ -194,7 +180,7 @@ export default function Header() {
             >
               설문 만들기
             </Button>
-            {logined === false ? (
+            {user === null ? (
               <Button
                 sx={{
                   fontSize: "15px",
@@ -222,7 +208,7 @@ export default function Header() {
                     />
                   }
                 >
-                  모카 유저
+                  {user.nickname}
                 </Button>
               </>
             )}
