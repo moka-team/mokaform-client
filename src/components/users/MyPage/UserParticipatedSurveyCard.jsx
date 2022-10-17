@@ -17,6 +17,12 @@ import { useRecoilState } from "recoil";
 import { userState } from "../../../authentication/userState";
 import Loading from "../../surveys/participate/Loading";
 import Error from "../../surveys/participate/Error";
+import styled from "styled-components";
+
+const ButtonContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
 
 function SurveyCard({ survey }) {
   let category = survey.surveyCategories[0];
@@ -124,9 +130,11 @@ export default function UserParticipatedSurveyCard() {
           </CardActionArea>
         </Grid>
       ))}
-      <Link to={`/survey/${user.id}/manage`} surveyId={1}>
-        <RightButton />
-      </Link>
+      <ButtonContainer>
+        <Link to={`/survey/${user.id}/manage`} surveyId={1}>
+          <RightButton />
+        </Link>
+      </ButtonContainer>
     </Grid>
   );
 }

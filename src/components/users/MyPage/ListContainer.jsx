@@ -12,6 +12,7 @@ const Container = styled.div`
   width: 80%;
   height: 90%;
 `;
+
 const Header = styled.div`
   display: flex;
   justify-content: space-between;
