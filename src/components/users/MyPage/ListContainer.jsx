@@ -14,6 +14,7 @@ const Container = styled.div`
   width: 80%;
   height: 90%;
 `;
+
 const Header = styled.div`
   display: flex;
   justify-content: space-between;
@@ -47,15 +48,14 @@ export default function ListContainer() {
         </Block>
         <MyCreatedSortSelect userId={user.id} />
       </Header>
-      <UserSurveyCard isCreated={true} />
-
+      <UserSurveyCard />
       <Header>
         <Block>
           <p>내가 참여한 설문</p>
         </Block>
         <MySubmittedSortSelect userId={user.id} />
       </Header>
-      <UserSurveyCard isCreated={false} />
+      <UserParticipatedSurveyCard></UserParticipatedSurveyCard>
     </Container>
   );
 }
