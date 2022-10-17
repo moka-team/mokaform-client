@@ -36,7 +36,18 @@ function ServeyCard({ servey }) {
         </Stack>
       </Grid>
       <Grid item xs={6} align="right" sx={{ mt: 0.5, mb: -1 }}>
-        <Chip label={servey.surveyCategories} />
+        {
+          {
+            HOBBY: <Chip label="취미" />,
+            DAILY_LIFE: <Chip label="일상" />,
+            IT: <Chip label="IT" />,
+            LEARNING: <Chip label="학습" />,
+            PSYCHOLOGY: <Chip label="심리" />,
+            SOCIAL_POLITICS: <Chip label="사회·정치" />,
+            PREFERENCE_RESEARCH: <Chip label="선호도 조사" />,
+            PET: <Chip label="반려동물" />,
+          }[servey.surveyCategories[0]]
+        }
       </Grid>
     </Grid>
   );
@@ -46,6 +57,7 @@ export default function CardContainer({ logined }) {
   const [totalSurvey, setTotalSurvey] = useState(null);
   const [surveys, setServeys] = useRecoilState(surveyList);
 
+  console.log(surveys);
   return logined ? (
     <Grid container spacing={2}>
       {/* 추천 설문으로 변경 */}
@@ -74,7 +86,7 @@ export default function CardContainer({ logined }) {
     </Grid>
   ) : (
     <Grid container spacing={2}>
-      {surveys?.data?.content.map((servey) => (
+      {surveys.map((servey) => (
         <Grid item key={servey.surveyId} xs={6} sm={6} md={4} lg={3} xl={2.4}>
           <CardActionArea>
             <Card

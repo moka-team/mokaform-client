@@ -8,7 +8,7 @@ import OptionUnstyled, {
 import PopperUnstyled from "@mui/base/PopperUnstyled";
 import { styled } from "@mui/system";
 import { useRecoilState } from "recoil";
-import { surveyList } from "../../atoms";
+import { surveyList, surveySortState } from "../../atoms";
 import axios from "axios";
 
 const blue = {
@@ -151,17 +151,28 @@ const CustomSelect = React.forwardRef(function CustomSelect(props, ref) {
 
 export default function SortSelect() {
   const [surveys, setServeys] = useRecoilState(surveyList);
+  const [surveySort, setSurveySort] = useRecoilState(surveySortState);
   const fetchRecentSurvey = async () => {
-    const response = await axios.get(
-      "http://localhost:8080/api/v1/survey/list?sort=createdAt,asc"
-    );
-    setServeys(response.data);
+    const response = await axios.get("/api/v1/survey/list", {
+      params: {
+        page: 0,
+        size: 10,
+        sort: "createdAt,desc",
+      },
+    });
+    setServeys(response.data.data.content);
+    setSurveySort("new");
   };
   const fetchFamousSurvey = async () => {
-    const response = await axios.get(
-      "http://localhost:8080/api/v1/survey/list?sort=surveyeeCount,asc"
-    );
-    setServeys(response.data);
+    const response = await axios.get("/api/v1/survey/list", {
+      params: {
+        page: 0,
+        size: 10,
+        sort: "surveyeeCount,desc",
+      },
+    });
+    setServeys(response.data.data.content);
+    setSurveySort("hot");
   };
   const handleChange = (e) => {
     if (e.target.innerHTML === "최신순") {
