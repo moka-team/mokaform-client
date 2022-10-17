@@ -10,7 +10,6 @@ import { styled } from "@mui/system";
 import { useRecoilState } from "recoil";
 import { createdSurvey } from "../../../atoms";
 import axios from "axios";
-
 const blue = {
   100: "#DAECFF",
   200: "#99CCF3",
@@ -37,10 +36,10 @@ const StyledButton = styled("button")(
   ({ theme }) => `
   font-family: IBM Plex Sans, sans-serif;
   font-size: 0.875rem;
+  margin-right: 14.5%;
   box-sizing: border-box;
   min-height: calc(1.5em + 22px);
   min-width: 130px;
-  margin-top: 20px;
   padding: 12px;
   border-radius: 12px;
   text-align: left;
@@ -149,7 +148,7 @@ const CustomSelect = React.forwardRef(function CustomSelect(props, ref) {
   return <SelectUnstyled {...props} ref={ref} components={components} />;
 });
 
-export default function SortSelect({ userId }) {
+export default function MyCreatedSortSelect({ userId }) {
   const [surveys, setServeys] = useRecoilState(createdSurvey);
   const fetchRecentSurvey = async () => {
     const response = await axios.get("/api/v1/users/my/surveys", {
@@ -163,14 +162,14 @@ export default function SortSelect({ userId }) {
     setServeys(response.data.data.content);
   };
   const fetchFamousSurvey = async () => {
-    const response = await axios.get(
-      "/api/v1/users/my/surveys?sort=surveyeeCount,desc",
-      {
-        params: {
-          userId: userId,
-        },
-      }
-    );
+    const response = await axios.get("/api/v1/users/my/surveys", {
+      params: {
+        page: 0,
+        size: 5,
+        sort: "surveyeeCount,desc",
+        userId: 1,
+      },
+    });
     setServeys(response.data.data.content);
   };
   const handleChange = (e) => {
@@ -184,6 +183,7 @@ export default function SortSelect({ userId }) {
   React.useEffect(() => {
     fetchRecentSurvey();
   }, []);
+
   return (
     <CustomSelect defaultValue={"new"} onChange={handleChange}>
       <StyledOption value={"new"}>최신순</StyledOption>
