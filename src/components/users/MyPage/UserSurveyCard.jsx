@@ -15,8 +15,8 @@ import routes from "../../../routes";
 import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { userState } from "../../../authentication/userState";
-import {createdMySurvey} from "../../../atoms"
-import {submittedMySurvey} from "../../../atoms"
+import { createdMySurvey } from "../../../atoms";
+import { submittedMySurvey } from "../../../atoms";
 
 function SurveyCard({ survey }) {
   // let category = survey.surveyCategories[0];
@@ -109,7 +109,8 @@ export default function UserSurveyCard({ isCreated }) {
   const [user, setUser] = useRecoilState(userState);
 
   const [createdSurvey, setCreatedSurvey] = useRecoilState(createdMySurvey);
-  const [submittedSurvey, setSubmittedSurvey] = useRecoilState(submittedMySurvey);
+  const [submittedSurvey, setSubmittedSurvey] =
+    useRecoilState(submittedMySurvey);
   console.log(user);
   // useEffect(() => {
   //   (async () => {
@@ -126,7 +127,7 @@ export default function UserSurveyCard({ isCreated }) {
   //   })();
   // }, []);
 
-  return isCreated && ? (
+  return isCreated ? (
     <Grid container spacing={1} sx={{ ml: 5, mt: 1, mb: 4, mr: -3 }}>
       {createdSurvey.map((survey) => (
         <Grid item key={survey.surveyId} xs={6} sm={6} md={4} lg={2} xl={2}>

@@ -81,34 +81,6 @@ export default function UserParticipatedSurveyCard() {
   const [submittedSurvey, setSubmittedSurvey] =
     useRecoilState(submittedMySurvey);
 
-  console.log(user);
-  // useEffect(() => {
-  //   axios
-  //     .get("/api/v1/users/my/submitted-surveys", {
-  //       params: {
-  //         page: 0,
-  //         size: 4,
-  //         sort: "surveyeeCount,desc",
-  //         userId: 1,
-  //       },
-  //     })
-  //     .then(function (response) {
-  //       console.log(response);
-  //       setParticipatedSurvey(response.data.data.content);
-  //       setLoading(false);
-  //     })
-  //     .catch(function (error) {
-  //       console.log(error.message);
-  //       setError(true);
-  //     })
-  //     .finally(function () {
-  //       // always executed
-  //     });
-  // }, []);
-
-  // if (error) return <Error></Error>;
-  // if (loading) return <Loading></Loading>;
-
   return (
     <Grid container spacing={1} sx={{ ml: 5, mt: 1, mb: 4, mr: -3 }}>
       {submittedSurvey.map((survey) => (

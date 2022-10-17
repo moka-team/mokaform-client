@@ -19,6 +19,7 @@ import Loading from "../../surveys/participate/Loading";
 import Error from "../../surveys/participate/Error";
 import styled from "styled-components";
 import { createdMySurvey } from "../../../atoms";
+
 const ButtonContainer = styled.div`
   display: flex;
   align-items: center;
@@ -76,47 +77,16 @@ export default function UserSurveyCard() {
   const [user, setUser] = useRecoilState(userState);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
   const [createdSurvey, setCreatedSurvey] = useRecoilState(createdMySurvey);
-  console.log(user);
-  // useEffect(() => {
-  //   axios
-  //     .get("/api/v1/users/my/surveys", {
-  //       params: {
-  //         page: 0,
-  //         size: 4,
-  //         sort: "surveyeeCount,desc",
-  //         userId: user.id,
-  //       },
-  //     })
-  //     .then(function (response) {
-  //       console.log(response);
-  //       setCreatedMySurvey(response.data.data.content);
-  //       setLoading(false);
-  //     })
-  //     .catch(function (error) {
-  //       console.log(error.message);
-  //       setError(true);
-  //     })
-  //     .finally(function () {
-  //       // always executed
-  //     });
-  // }, []);
 
-  // if (error) return <Error></Error>;
-  // if (loading) return <Loading></Loading>;
-
-
-  // console.log(createdMySurvey);
-  // console.log(submittedMySurvey);
   return (
     <Grid container spacing={1} sx={{ ml: 5, mt: 1, mb: 4, mr: -3 }}>
       {createdSurvey.map((survey) => (
-        <Link
-          to={`/my/survey/${survey.sharingKey}`}
-          style={{ textDecoration: "none" }}
-        >
-          <Grid item key={survey.surveyId} xs={6} sm={6} md={4} lg={2} xl={2}>
+        <Grid item key={survey.surveyId} xs={6} sm={6} md={4} lg={2} xl={2}>
+          <Link
+            to={`/my/survey/${survey.sharingKey}`}
+            style={{ textDecoration: "none" }}
+          >
             <CardActionArea sx={{ width: 200 }}>
               <Card
                 sx={{
@@ -136,14 +106,14 @@ export default function UserSurveyCard() {
                 </CardContent>
               </Card>
             </CardActionArea>
-          </Grid>
-        </Link>
+          </Link>
+        </Grid>
       ))}
       <ButtonContainer>
-      <Link to={`/survey/${user.id}/manage`} surveyId={1}>
-        <RightButton />
-      </Link>
+        <Link to={`/survey/${user.id}/manage`} surveyId={1}>
+          <RightButton />
+        </Link>
       </ButtonContainer>
     </Grid>
-  ) 
+  );
 }
