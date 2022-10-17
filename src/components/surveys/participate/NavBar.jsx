@@ -58,6 +58,10 @@ export default function NavBar() {
     setMultiChoiceAnswerList([]);
     setOXAnswerList([]);
 
+    console.log(essayAnswerList);
+    console.log(multiChoiceAnswerList);
+    console.log(oxAnswerList);
+
     console.log("모두삭제!");
   };
 
@@ -102,13 +106,6 @@ export default function NavBar() {
       .finally(function () {
         // always executed
       });
-
-    // console.log(JSON.stringify(answerInfo));
-    // axios.post("/api/v1/answer?userId=" + user.id, answerInfo).then((res) => {
-    //   console.log(res.data);
-    //   handleClickOpen();
-    //   resetRecoilValue();
-    // });
   };
 
   return (

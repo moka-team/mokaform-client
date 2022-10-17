@@ -12,8 +12,11 @@ import {
   isEssayAnswerValidate,
   isMultiChoiceAnswerValidate,
   isOXAnswerValidate,
+  EssayAnswerListState,
+  MultipleChoiceAnswerListState,
+  oxAnswerListState,
 } from "../../../atoms";
-import { useSetRecoilState, useRecoilValue } from "recoil";
+import { useSetRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 import { userState } from "../../../authentication/userState";
 
 export default function SurveyDetail({ sharingKey }) {
@@ -23,11 +26,21 @@ export default function SurveyDetail({ sharingKey }) {
   const [errorMessage, setErrorMessage] = useState(null);
   const [isDeleted, setIsDeleted] = useState(false);
 
+  const setEssayAnswerList = useResetRecoilState(EssayAnswerListState);
+  const setMultiChoiceAnswerList = useResetRecoilState(
+    MultipleChoiceAnswerListState
+  );
+  const setOXAnswerList = useResetRecoilState(oxAnswerListState);
+
   const setIsEssayValidate = useSetRecoilState(isEssayAnswerValidate);
   const setIsMultiChoiceValidate = useSetRecoilState(
     isMultiChoiceAnswerValidate
   );
   const setIsOXValidate = useSetRecoilState(isOXAnswerValidate);
+
+  console.log(setEssayAnswerList);
+  console.log(setMultiChoiceAnswerList);
+  console.log(setOXAnswerList);
 
   // 로그인 상태 검사
   const user = useRecoilValue(userState);
