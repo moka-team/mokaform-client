@@ -3,6 +3,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-regular-svg-icons";
 import { useState } from "react";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
+import { useRecoilValue } from "recoil";
+import { userState } from "../../../authentication/userState";
 
 const SProfile = styled.div`
   display: flex;
@@ -104,7 +106,7 @@ const UserInput = styled.div`
 function Profile() {
   const [selectedImage, setSelectedImage] = useState(null);
   // 추후 삭제
-  const [userProfile, setUserProfile] = useState("");
+  const user = useRecoilValue(userState);
   return (
     <SProfile>
       <input
@@ -121,7 +123,7 @@ function Profile() {
         ) : (
           // 추후 변경 예정
           <DefaultImage
-            src={userProfile === "FEMALE" ? "/img/girl.png" : "/img/boy.png"}
+            src={user.gender === "FEMALE" ? "/img/girl.png" : "/img/boy.png"}
           />
         )}
       </ProfileImg>
@@ -130,8 +132,8 @@ function Profile() {
       </UploadBtn>
 
       <UserInfo>
-        <h1>모카 유저</h1>
-        <h2>moka@form.com</h2>
+        <h1>{user.nickname}</h1>
+        <h2>{user.email}</h2>
       </UserInfo>
       <LineHeader>
         <p>PROFILE</p>
@@ -140,15 +142,34 @@ function Profile() {
       <LineWrapper>
         <Line>
           <Type>성별:</Type>
-          <UserInput>Female</UserInput>
+          <UserInput>{user.gender === "FEMALE" ? "여성" : "남성"}</UserInput>
         </Line>
         <Line>
-          <Type>나이:</Type>
-          <UserInput>28</UserInput>
+          <Type>연령대:</Type>
+          {
+            {
+              TEENAGER: <UserInput>10대</UserInput>,
+              TWENTIES: <UserInput>20대</UserInput>,
+              THIRTIES: <UserInput>30대</UserInput>,
+              FORTIES: <UserInput>40대</UserInput>,
+              FIFTIES: <UserInput>50대</UserInput>,
+            }[user.ageGroup]
+          }
         </Line>
         <Line>
           <Type>직업:</Type>
-          <UserInput>UI designer</UserInput>
+          {
+            {
+              STUDENT: <UserInput>학생</UserInput>,
+              OFFICE_WORKERS: <UserInput>직장인</UserInput>,
+              PUBLIC_OFFICIAL: <UserInput>공무원</UserInput>,
+              SELF_EMPLOYED: <UserInput>자영업</UserInput>,
+              HOUSEWIFE: <UserInput>주부</UserInput>,
+              FREELANCER:<UserInput>프리랜서</UserInput>,
+              JOB_SEEKER:<UserInput>취업준비생</UserInput>,
+              JOBLESS:<UserInput>무직</UserInput>
+            }[user.job]
+          }
         </Line>
       </LineWrapper>
     </SProfile>
