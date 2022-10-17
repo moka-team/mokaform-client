@@ -7,7 +7,7 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import Header from "../components/main/Header.jsx";
+import Header from "../components/common/Header.jsx";
 import ChatbotFab from "../components/main/ChatbotFab.jsx";
 import Footer from "../components/main/Footer.jsx";
 import SortFab from "../components/main/SortFab.jsx";

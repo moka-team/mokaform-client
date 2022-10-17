@@ -1,6 +1,5 @@
 import React, { useRef, useState } from "react";
 import AgeRow from "./AgeRow";
-import InterestRow from "./InterestRow";
 import JobRow from "./JobRow";
 import SexRow from "./SexRow";
 import { useRecoilState } from "recoil";
@@ -21,7 +20,7 @@ import {
 import SignEssentialForm from "./SignEssentialForm";
 import { MainTitle, Rows, Button, Container } from "./SignUpCSS";
 import axios from "axios";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { alertTitleClasses } from "@mui/material";
 import PreferenceRow from "./PreferenceRow";
 
@@ -46,6 +45,7 @@ export default function SignUpForm() {
     isPasswordConfirmState
   );
 
+  const navigate = useNavigate();
   const onClickHandler = (event) => {
     signOptionRef.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -67,13 +67,8 @@ export default function SignUpForm() {
         category: preference,
       })
       .then(function (response) {
-        // if (response.data.code == 0) {
-        //   alert("회원가입 성공");
-        // } else {
-        //   let message = response.data.message;
-        //   alert("회원가입 실패 " + message);
-        // }
-        if (response.data.messgae === "새로운 유저 생성이 성공하였습니다.") {
+        if (response.data.message === "새로운 유저 생성이 성공하였습니다.") {
+          // 회원가입 성공 시 모든 전역 데이터 지우기
           setEmail("");
           setNickname("");
           setPassword("");
@@ -81,26 +76,21 @@ export default function SignUpForm() {
           setAgeGroup("");
           setGender("");
           setJob("");
-          while (preference.length > 0) {
-            setPreference(preference.pop());
-          }
-          setPreference("");
+          setPreference([]);
+          window.alert("회원가입이 완료되었습니다.");
+          navigate("/");
+        } else {
+          window.alert("회원가입 에러 발생");
         }
-        window.alert(response.data.message);
       })
       .catch(function (error) {
         console.log(error);
       });
   };
 
-  // 회원가입 성공 시 모든 전역 데이터 지우기
   const onCompleteBtnClickHandler = (event) => {
     event.preventDefault();
-    if (ageGroup === "" || gender === "" || job === "") {
-      console.log("잘못된 형식");
-    } else {
-      signUpPatch();
-    }
+    signUpPatch();
   };
 
   if (

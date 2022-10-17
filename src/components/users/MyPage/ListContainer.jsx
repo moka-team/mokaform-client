@@ -2,8 +2,8 @@ import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-regular-svg-icons";
 import CircleCarousel from "./CircleCarousel";
-import SortSelect from "./SortSelect";
 import UserSurveyCard from "./UserSurveyCard";
+import MySortSelect from "./MySortSelect";
 
 const Container = styled.div`
   display: flex;
@@ -41,7 +41,7 @@ export default function ListContainer() {
         <Block>
           <p>내가 만든 설문</p>
         </Block>
-        <SortSelect userId={1} />
+        <MySortSelect />
       </Header>
       <UserSurveyCard isCreated={true} />
 
@@ -49,7 +49,7 @@ export default function ListContainer() {
         <Block>
           <p>내가 참여한 설문</p>
         </Block>
-        <SortSelect userId={1} />
+        <MySortSelect />
       </Header>
       <UserSurveyCard isCreated={false} />
     </Container>
