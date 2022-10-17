@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 import Box from "@mui/material/Box";
 import axios from "axios";
 import { SNavBar, SaveBtn } from "./styled";
@@ -35,6 +35,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useNavigate } from "react-router-dom";
+import { userState } from "../../../authentication/userState";
 
 const style = {
   position: "absolute",
@@ -48,52 +49,15 @@ const style = {
   borderRadius: 2,
 };
 
-function SurveyCreateDialog() {
-  const [dialogOpen, setDialogOpen] = useState(false);
-
-  const handleClickDialogOpen = () => {
-    setDialogOpen(true);
-  };
-
-  const handleDialogClose = () => {
-    setDialogOpen(false);
-  };
-
-  return (
-    <Dialog
-      open={dialogOpen}
-      onClose={handleDialogClose}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
-    >
-      <DialogTitle id="alert-dialog-title">
-        {"설문을 삭제하시겠습니까?"}
-      </DialogTitle>
-      <DialogContent>
-        <DialogContentText id="alert-dialog-description">
-          설문 삭제 작업은 영구적이며 되돌릴 수 없습니다. 삭제하는 즉시 귀하의
-          설문에 액세스 할 수 없게 됩니다. 설문에 관련된 모든 데이터가
-          삭제됩니다.
-        </DialogContentText>
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={handleDialogClose}>취소</Button>
-        <Button onClick={handleDialogClose} autoFocus>
-          확인
-        </Button>
-      </DialogActions>
-    </Dialog>
-  );
-}
-
 function NavBar() {
+  const user = useRecoilValue(userState);
   const questionCount = useRecoilValue(createdQuestionCount);
-  const surveyList = useRecoilValue(surveyListState);
-  const detailList = useRecoilValue(detailMCQuestionState);
-  const category = useRecoilValue(surveyCategory);
-  const surveyImg = useRecoilValue(surveyImage);
-  const title = useRecoilValue(surveyTitle);
-  const summary = useRecoilValue(surveySummary);
+  const [surveyList, setSurveyList] = useRecoilState(surveyListState);
+  const [detailList, setDetailList] = useRecoilState(detailMCQuestionState);
+  const [category, setCategory] = useRecoilState(surveyCategory);
+  const [surveyImg, setSurveyImage] = useRecoilState(surveyImage);
+  const [title, setTitle] = useRecoilState(surveyTitle);
+  const [summary, setSummary] = useRecoilState(surveySummary);
   const [isAnonymous, setIsAnonymous] = useRecoilState(surveyIsAnonymous);
   const [isPublic, setIsPublic] = useRecoilState(surveyIsPublic);
   const [startDate, setStartDate] = useRecoilState(surveyStartDate);
@@ -149,6 +113,21 @@ function NavBar() {
     setIsPublic(event.target.checked);
   };
 
+  const resetRecoilValue = () => {
+    setTitle("");
+    setSummary("");
+    setIsAnonymous(false);
+    setIsPublic(false);
+    setStartDate(dayjs(""));
+    setEndDate(dayjs(""));
+    setCategory([]);
+    setSurveyImage("");
+    setSurveyList([]);
+    setDetailList([]);
+    setStartDateValidate(false);
+    setEndDateValidate(false);
+  };
+
   const createSurvey = () => {
     console.log(
       "설문 정보" +
@@ -192,14 +171,14 @@ function NavBar() {
     };
 
     console.log(JSON.stringify(surveyInfo));
-
     axios
-      .post("/api/v1/survey?userId=1", surveyInfo)
+      .post("/api/v1/survey?userId=" + user.id, surveyInfo)
       .then(function (response) {
         console.log(response);
         setSharingUrl(
           "http://localhost:3000/survey/" + response.data.data.sharingKey
         );
+        resetRecoilValue();
         handleClickSuccessDialogOpen();
       })
       .catch(function (error) {
