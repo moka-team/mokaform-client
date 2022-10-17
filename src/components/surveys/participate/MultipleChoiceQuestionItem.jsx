@@ -1,9 +1,35 @@
 import React, { useState, useEffect } from "react";
 import { QuestionWrapper, QuestionOption, QuestionText } from "./styled";
+import {
+  MultipleChoiceAnswerListState,
+  isMultiChoiceAnswerValidate,
+} from "../../../atoms";
+import { useRecoilState } from "recoil";
 
 export default function MultipleChoiceQuestionItem({ item, multiquestion }) {
+  const [isMultiChoiceValidate, setIsMultiChoiceValidate] = useRecoilState(
+    isMultiChoiceAnswerValidate
+  );
+  const [multiChoiceAnswerList, setMultiChoiceAnswerList] = useRecoilState(
+    MultipleChoiceAnswerListState
+  );
+  const [multiChoiceAnswer, setMultiChoiceAnswer] = useState({
+    questionId: item.questionId,
+    multiQuestionId: -1,
+  });
+  const index = multiChoiceAnswerList.findIndex(
+    (listItem) => listItem.questionId === multiChoiceAnswer.questionId
+  );
+
   const [currentClick, setCurrentClick] = useState(null);
   const [prevClick, setPrevClick] = useState(null);
+
+  useEffect(() => {
+    setMultiChoiceAnswerList((oldMultiChoiceAnswerList) => [
+      ...oldMultiChoiceAnswerList,
+      multiChoiceAnswer,
+    ]);
+  }, []);
 
   const onClickHandler = (event) => {
     if (prevClick !== null && prevClick !== event.target.id) {
@@ -14,11 +40,24 @@ export default function MultipleChoiceQuestionItem({ item, multiquestion }) {
     }
 
     setCurrentClick(event.target.id);
+
+    setMultiChoiceAnswer({
+      questionId: item.questionId,
+      multiQuestionId: event.target.id,
+    });
+
+    const newList = replaceItemAtIndex(multiChoiceAnswerList, index, {
+      ...multiChoiceAnswer,
+      multiQuestionId: event.target.id,
+    });
+    setMultiChoiceAnswerList(newList);
   };
 
   useEffect(
     (event) => {
       if (currentClick !== null) {
+        setIsMultiChoiceValidate(true);
+
         let current = document.getElementById(currentClick);
         current.style.color = "white";
         current.style.fontWeight = 600;
@@ -50,4 +89,7 @@ export default function MultipleChoiceQuestionItem({ item, multiquestion }) {
         ))}
     </QuestionWrapper>
   );
+}
+function replaceItemAtIndex(arr, index, newValue) {
+  return [...arr.slice(0, index), newValue, ...arr.slice(index + 1)];
 }

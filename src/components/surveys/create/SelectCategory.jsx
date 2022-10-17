@@ -10,7 +10,7 @@ import Chip from "@mui/material/Chip";
 import { useRecoilState } from "recoil";
 import { surveyCategory } from "../../../atoms";
 
-const ITEM_HEIGHT = 48;
+const ITEM_HEIGHT = 40;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
   PaperProps: {
@@ -21,7 +21,18 @@ const MenuProps = {
   },
 };
 
-const categorys = [
+const categories = [
+  "DAILY_LIFE", // 일상
+  "IT", // IT
+  "HOBBY", // 취미
+  "LEARNING", // 학습
+  "PSYCHOLOGY", // 취미
+  "SOCIAL_POLITICS", // 사회/정치
+  "PREFERENCE_RESEARCH", // 선호도 조사
+  "PET", // 반려동물
+];
+
+const kCategories = [
   "일상",
   "IT",
   "취미",
@@ -29,6 +40,7 @@ const categorys = [
   "심리",
   "사회/정치",
   "선호도 조사",
+  "반려동물",
 ];
 
 function getStyles(item, category, theme) {
@@ -42,32 +54,31 @@ function getStyles(item, category, theme) {
 
 export default function SelectCategory() {
   const theme = useTheme();
-  const [category, setcategory] = React.useState([]);
-  const [surveyCategoryInput, setSurveyCategory] =
-    useRecoilState(surveyCategory);
+  const [category, setCategory] = React.useState([]);
+  const [categoryState, setCatergoryState] = useRecoilState(surveyCategory);
 
   const handleChange = (event) => {
     const {
       target: { value },
     } = event;
-    setcategory(
+    setCategory(
       // On autofill we get a stringified value.
       typeof value === "string" ? value.split(",") : value
     );
-    setSurveyCategory(category);
+    setCatergoryState(typeof value === "string" ? value.split(",") : value);
   };
 
   return (
     <div>
-      <FormControl sx={{ m: 1, width: 300 }}>
-        <InputLabel id="demo-multiple-chip-label">Chip</InputLabel>
+      <FormControl sx={{ y: 2, width: 300 }}>
+        <InputLabel id="demo-multiple-chip-label">카테고리</InputLabel>
         <Select
           labelId="demo-multiple-chip-label"
           id="demo-multiple-chip"
           multiple
-          value={category}
+          value={categoryState}
           onChange={handleChange}
-          input={<OutlinedInput id="select-multiple-chip" label="Category" />}
+          input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
           renderValue={(selected) => (
             <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
               {selected.map((value) => (
@@ -77,7 +88,7 @@ export default function SelectCategory() {
           )}
           MenuProps={MenuProps}
         >
-          {categorys.map((item) => (
+          {categories.map((item, index) => (
             <MenuItem
               key={item}
               value={item}

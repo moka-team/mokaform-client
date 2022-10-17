@@ -7,23 +7,26 @@ import { Container, SummaryText, Survey, TitleText } from "./styled";
 import axios from "axios";
 import Loading from "./Loading";
 import Error from "./Error";
+import DeleteSurvey from "./DeleteSurvey";
 
-export default function SurveyDetail({ surveyId }) {
+export default function SurveyDetail({ sharingKey }) {
   const [survey, setSurvey] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
+  const [isDeleted, setIsDeleted] = useState(false);
 
   useEffect(() => {
     axios
       .get("/api/v1/survey", {
         params: {
-          surveyId: surveyId,
+          sharingKey: sharingKey,
         },
       })
       .then(function (response) {
         console.log(response);
         setSurvey(response.data);
+        setIsDeleted(response.data.data.isDeleted);
         setLoading(false);
       })
       .catch(function (error) {
@@ -34,9 +37,10 @@ export default function SurveyDetail({ surveyId }) {
       .finally(function () {
         // always executed
       });
-  }, [surveyId]);
+  }, [sharingKey]);
 
   if (error) return <Error errorMessage={errorMessage}></Error>;
+  if (isDeleted) return <DeleteSurvey></DeleteSurvey>;
   if (loading) return <Loading></Loading>;
 
   return (
