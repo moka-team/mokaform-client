@@ -13,7 +13,8 @@ import {
   isMultiChoiceAnswerValidate,
   isOXAnswerValidate,
 } from "../../../atoms";
-import { useSetRecoilState } from "recoil";
+import { useSetRecoilState, useRecoilValue } from "recoil";
+import { userState } from "../../../authentication/userState";
 
 export default function SurveyDetail({ sharingKey }) {
   const [survey, setSurvey] = useState(null);
@@ -27,6 +28,15 @@ export default function SurveyDetail({ sharingKey }) {
     isMultiChoiceAnswerValidate
   );
   const setIsOXValidate = useSetRecoilState(isOXAnswerValidate);
+
+  // 로그인 상태 검사
+  const user = useRecoilValue(userState);
+  useEffect(() => {
+    if (user === null) {
+      alert("로그인이 필요한 서비스입니다.");
+      window.location.replace("http://localhost:3000/");
+    }
+  }, []);
 
   useEffect(() => {
     axios

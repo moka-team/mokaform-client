@@ -17,8 +17,11 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useNavigate } from "react-router-dom";
+import { userState } from "../../../authentication/userState";
 
 export default function NavBar() {
+  const user = useRecoilValue(userState);
+
   const isEssayValidate = useRecoilValue(isEssayAnswerValidate);
   const isMultiChoiceValidate = useRecoilValue(isMultiChoiceAnswerValidate);
   const isOXValidate = useRecoilValue(isOXAnswerValidate);
@@ -45,13 +48,13 @@ export default function NavBar() {
 
   const handleClose = () => {
     setOpen(false);
-    navigate("/");
+    window.location.replace("http://localhost:3000/");
   };
 
   const handleSubmit = () => {
     console.log(answerInfo);
     console.log(JSON.stringify(answerInfo));
-    axios.post("/api/v1/answer?userId=1", answerInfo).then((res) => {
+    axios.post("/api/v1/answer?userId=" + user.id, answerInfo).then((res) => {
       console.log(res.data);
       handleClickOpen();
     });

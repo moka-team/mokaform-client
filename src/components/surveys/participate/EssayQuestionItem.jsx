@@ -39,7 +39,7 @@ export default function EssayQuestionItem({ item }) {
 
   return (
     <QuestionWrapper>
-      <QuestionText color="#0064ff">Q{item.index}</QuestionText>
+      <QuestionText color="#0064ff">Q{item.index + 1}</QuestionText>
       <QuestionText color="black">{item.title}</QuestionText>
       <Answer
         onChange={onChange}
