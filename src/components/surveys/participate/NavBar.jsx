@@ -72,21 +72,21 @@ export default function NavBar() {
           ? []
           : essayAnswerList.length === 1
           ? [essayAnswerList[0]]
-          : essayAnswerList[0],
+          : essayAnswerList,
 
       multipleChoiceAnswers:
         multiChoiceAnswerList.length === 0
           ? []
           : multiChoiceAnswerList.length === 1
           ? [multiChoiceAnswerList[0]]
-          : multiChoiceAnswerList[0],
+          : multiChoiceAnswerList,
 
       oxAnswers:
         oxAnswerList.length === 0
           ? []
           : oxAnswerList.length === 1
           ? [oxAnswerList[0]]
-          : oxAnswerList[0],
+          : oxAnswerList,
     };
 
     console.log(JSON.stringify(answerInfo));
