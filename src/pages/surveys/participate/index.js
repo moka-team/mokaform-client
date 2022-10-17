@@ -10,7 +10,7 @@ export default function Participate() {
   useEffect(() => {
     if (user === null) {
       alert("로그인이 필요한 서비스입니다.");
-      window.location.replace("http://localhost:3000/");
+      window.location.replace("https://mokaform-client-q6w1.vercel.app/");
     }
   }, []);
   return <SurveyDetail sharingKey={sharingKey}></SurveyDetail>;

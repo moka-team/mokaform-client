@@ -48,7 +48,7 @@ export default function Header() {
 
   const handleLogout = () => {
     // local storage에 user 정보 삭제
-    window.location.replace("http://localhost:3000/");
+    window.location.replace("https://mokaform-client-q6w1.vercel.app/");
     localStorage.clear();
     setUser(null);
   };
