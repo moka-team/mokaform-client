@@ -55,3 +55,13 @@ export const surveyList = atom({
   key: "surveyList",
   default: [],
 });
+
+export const createdSurvey = atom({
+  key: "createdSurvey",
+  default: [],
+});
+
+export const submittedSurvey = atom({
+  key: "submittedSurvey",
+  default: [],
+});

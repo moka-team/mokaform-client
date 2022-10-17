@@ -7,11 +7,13 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import { CardActionArea } from "@mui/material";
-import CreateIcon from "@mui/icons-material/Create";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronRight, faPen } from "@fortawesome/free-solid-svg-icons";
-import { fontFamily } from "@mui/system";
+import { faPen } from "@fortawesome/free-solid-svg-icons";
 import RightButton from "./RightButton";
+import { Link } from "react-router-dom";
+import routes from "../../../routes";
+import { useRecoilValue } from "recoil";
+import { createdSurvey } from "../../../atoms";
 function SurveyCard({ survey }) {
   return (
     <Grid container>
@@ -21,9 +23,9 @@ function SurveyCard({ survey }) {
           color="#202632"
           sx={{ fontSize: 15, fontWeight: 600 }}
         >
-          {survey.name.length > 12
-            ? `${survey.name.slice(0, 12)}...`
-            : survey.name}
+          {survey?.title?.length > 12
+            ? `${survey.title.slice(0, 12)}...`
+            : survey.title}
         </Typography>
       </Grid>
 
@@ -37,54 +39,15 @@ function SurveyCard({ survey }) {
           <Typography
             color="#636870"
             sx={{ fontSize: 14 }}
-          >{`${survey.responseNumber}명`}</Typography>
+          >{`${survey.surveyeeCount}명`}</Typography>
         </Stack>
       </Grid>
       <Grid item xs={7} align="right" sx={{ mt: 0.5, mb: -1 }}>
-        <Chip label={survey.category} />
+        <Chip label={survey.surveyCategories} />
       </Grid>
     </Grid>
   );
 }
-
-// 임시 유저가 만든 설문 리스트 데이터
-const createdSurveys = [
-  {
-    number: 1,
-    name: "생성 설문제목1",
-    responseNumber: 30,
-    date: "22.09.25",
-    category: "IT",
-  },
-  {
-    number: 2,
-    name: "생성 설문제목2",
-    responseNumber: 32,
-    date: "22.09.27",
-    category: "선호도 조사",
-  },
-  {
-    number: 3,
-    name: "생성 설문제목3",
-    responseNumber: 20,
-    date: "22.09.29",
-    category: "취미",
-  },
-  {
-    number: 4,
-    name: "생성 설문제목41212121",
-    responseNumber: 100,
-    date: "22.09.30",
-    category: "반려동물",
-  },
-  {
-    number: 5,
-    name: "생성 설문제목41212121",
-    responseNumber: 100,
-    date: "22.09.30",
-    category: "반려동물",
-  },
-];
 
 // 임시 유저가 참여한 설문 리스트 데이터
 const writedSurvey = [
@@ -126,10 +89,11 @@ const writedSurvey = [
 ];
 
 export default function UserSurveyCard({ isCreated }) {
+  const createdSurveys = useRecoilValue(createdSurvey);
   return isCreated ? (
     <Grid container spacing={1} sx={{ marginLeft: 5 }}>
       {createdSurveys.map((survey) => (
-        <Grid item key={survey.number} xs={6} sm={6} md={4} lg={2} xl={2}>
+        <Grid item key={survey.surveyId} xs={6} sm={6} md={4} lg={2} xl={2}>
           <CardActionArea sx={{ width: 200 }}>
             <Card
               sx={{
@@ -151,7 +115,9 @@ export default function UserSurveyCard({ isCreated }) {
           </CardActionArea>
         </Grid>
       ))}
-      <RightButton />
+      <Link to={routes.manageSurvey}>
+        <RightButton />
+      </Link>
     </Grid>
   ) : (
     <Grid container spacing={1} sx={{ marginLeft: 5 }}>
