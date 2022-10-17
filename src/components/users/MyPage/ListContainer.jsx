@@ -48,14 +48,14 @@ export default function ListContainer() {
         </Block>
         <MyCreatedSortSelect userId={user.id} />
       </Header>
-      <UserSurveyCard />
+      <UserSurveyCard isCreated={true} />
       <Header>
         <Block>
           <p>내가 참여한 설문</p>
         </Block>
         <MySubmittedSortSelect userId={user.id} />
       </Header>
-      <UserParticipatedSurveyCard></UserParticipatedSurveyCard>
+      <UserSurveyCard isCreated={false} />
     </Container>
   );
 }
