@@ -2,8 +2,9 @@ import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-regular-svg-icons";
 import CircleCarousel from "./CircleCarousel";
-import UserSurveyCard from "./UserSurveyCard";
+import UserSurveyCard from "./UserCreatedSurveyCard";
 import MySortSelect from "./MySortSelect";
+import UserParticipatedSurveyCard from "./UserParticipatedSurveyCard";
 
 const Container = styled.div`
   display: flex;
@@ -11,6 +12,7 @@ const Container = styled.div`
   width: 80%;
   height: 90%;
 `;
+
 const Header = styled.div`
   display: flex;
   justify-content: space-between;
@@ -43,15 +45,14 @@ export default function ListContainer() {
         </Block>
         <MySortSelect />
       </Header>
-      <UserSurveyCard isCreated={true} />
-
+      <UserSurveyCard />
       <Header>
         <Block>
           <p>내가 참여한 설문</p>
         </Block>
         <MySortSelect />
       </Header>
-      <UserSurveyCard isCreated={false} />
+      <UserParticipatedSurveyCard></UserParticipatedSurveyCard>
     </Container>
   );
 }
