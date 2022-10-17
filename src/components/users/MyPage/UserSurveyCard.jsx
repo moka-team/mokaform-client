@@ -19,6 +19,7 @@ import { createdSurvey } from "../../../atoms";
 import { submittedSurvey } from "../../../atoms";
 function SurveyCard({ survey }) {
   // let category = survey.surveyCategories[0];
+
   return (
     <Grid container>
       <Grid item xs={12} sx={{ pb: 1 }}>

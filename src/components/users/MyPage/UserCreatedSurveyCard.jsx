@@ -68,23 +68,37 @@ export default function UserSurveyCard() {
   const [createdMySurvey, setCreatedMySurvey] = useState(null);
   const [submittedMySurvey, setSubmittedMySurvey] = useState(null);
   const [user, setUser] = useRecoilState(userState);
-  const [surveys, setServeys] = useRecoilState(createdSurvey);
-  const [submitSurvey, setSubmitSurvey] = useRecoilState(submittedSurvey);
-  // useEffect(() => {
-  //   (async () => {
-  //     // TODO: 로그인 후 userId 부분 수정 필요!
-  //     const posts1 = await axios.get("/api/v1/users/my/surveys", {
-  //       params: {
-  //         page: 0,
-  //         size: 5,
-  //         sort: "createdAt,desc",
-  //         userId: 1,
-  //       },
-  //     });
-  //     console.log(posts1.data.data.content);
-  //     setCreatedMySurvey(posts1.data.data.content);
-  //   })();
-  // }, []);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  console.log(user);
+  useEffect(() => {
+    axios
+      .get("/api/v1/users/my/surveys", {
+        params: {
+          page: 0,
+          size: 4,
+          sort: "surveyeeCount,desc",
+          userId: user.id,
+        },
+      })
+      .then(function (response) {
+        console.log(response);
+        setCreatedMySurvey(response.data.data.content);
+        setLoading(false);
+      })
+      .catch(function (error) {
+        console.log(error.message);
+        setError(true);
+      })
+      .finally(function () {
+        // always executed
+      });
+  }, []);
+
+  if (error) return <Error></Error>;
+  if (loading) return <Loading></Loading>;
+
 
   // console.log(createdMySurvey);
   // console.log(submittedMySurvey);
