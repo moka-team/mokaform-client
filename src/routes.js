@@ -9,6 +9,7 @@ const routes = {
   participateSurvey: "/survey/:sharingKey",
   manageSurvey: "/survey/:userId/manage",
   createdSurvey: "/my/survey/:sharingKey",
+  inquireSubmittedSurvey: "/my/survey/submitted/:sharingKey",
 };
 
 export default routes;

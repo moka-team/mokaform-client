@@ -85,31 +85,34 @@ export default function UserParticipatedSurveyCard() {
     <Grid container spacing={1} sx={{ ml: 5, mt: 1, mb: 4, mr: -3 }}>
       {submittedSurvey.map((survey) => (
         <Grid item key={survey.surveyId} xs={6} sm={6} md={4} lg={2} xl={2}>
-          <CardActionArea sx={{ width: 200 }}>
-            <Card
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                width: 200,
-              }}
-            >
-              <CardMedia
-                component="img"
-                image="https://source.unsplash.com/random"
-                alt="random"
-                sx={{ height: 150 }}
-              />
-              <CardContent sx={{ flexGrow: 1 }}>
-                <SurveyCard survey={survey} />
-              </CardContent>
-            </Card>
-          </CardActionArea>
+          <Link
+            to={`/my/survey/submitted/${survey.sharingKey}`}
+            style={{ textDecoration: "none" }}
+          >
+            <CardActionArea sx={{ width: 200 }}>
+              <Card
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  width: 200,
+                }}
+              >
+                <CardMedia
+                  component="img"
+                  image="https://source.unsplash.com/random"
+                  alt="random"
+                  sx={{ height: 150 }}
+                />
+                <CardContent sx={{ flexGrow: 1 }}>
+                  <SurveyCard survey={survey} />
+                </CardContent>
+              </Card>
+            </CardActionArea>
+          </Link>
         </Grid>
       ))}
       <ButtonContainer>
-        <Link to={`/survey/${user.id}/manage`} surveyId={1}>
-          <RightButton />
-        </Link>
+        <RightButton />
       </ButtonContainer>
     </Grid>
   );

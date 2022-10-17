@@ -13,6 +13,7 @@ import SurveyAnalysis from "./pages/surveys/analysis";
 import Participate from "./pages/surveys/participate/index";
 import ManageSurvey from "./pages/surveys/manage";
 import Show from "./pages/surveys/show";
+import InquireSubmittedSurvey from "./pages/surveys/inquireSubmittedSurvey";
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -37,6 +38,10 @@ function App() {
         ></Route>
         <Route path={routes.manageSurvey} element={<ManageSurvey />}></Route>
         <Route path={routes.createdSurvey} element={<Show />}></Route>
+        <Route
+          path={routes.inquireSubmittedSurvey}
+          element={<InquireSubmittedSurvey />}
+        ></Route>
       </Routes>
     </BrowserRouter>
   );
