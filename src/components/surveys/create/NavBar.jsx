@@ -178,10 +178,6 @@ function NavBar() {
       .finally(function () {
         // always executed
       });
-
-    // axios
-    //   .post("/api/v1/survey/create", surveyInfo)
-    //   .then((res) => console.log(res.data));
   };
 
   const handleSubmit = () => {

@@ -54,32 +54,31 @@ function getStyles(item, category, theme) {
 
 export default function SelectCategory() {
   const theme = useTheme();
-  const [category, setcategory] = React.useState([]);
-  const [surveyCategoryInput, setSurveyCategory] =
-    useRecoilState(surveyCategory);
+  const [category, setCategory] = React.useState([]);
+  const [categoryState, setCatergoryState] = useRecoilState(surveyCategory);
 
   const handleChange = (event) => {
     const {
       target: { value },
     } = event;
-    setcategory(
+    setCategory(
       // On autofill we get a stringified value.
       typeof value === "string" ? value.split(",") : value
     );
-    setSurveyCategory(category);
+    setCatergoryState(typeof value === "string" ? value.split(",") : value);
   };
 
   return (
     <div>
-      <FormControl sx={{ width: 300 }}>
-        <InputLabel id="demo-multiple-chip-label">설문 카테고리</InputLabel>
+      <FormControl sx={{ y: 2, width: 300 }}>
+        <InputLabel id="demo-multiple-chip-label">카테고리</InputLabel>
         <Select
           labelId="demo-multiple-chip-label"
           id="demo-multiple-chip"
           multiple
-          value={category}
+          value={categoryState}
           onChange={handleChange}
-          input={<OutlinedInput id="select-multiple-chip" label="Category" />}
+          input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
           renderValue={(selected) => (
             <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
               {selected.map((value) => (
@@ -95,7 +94,7 @@ export default function SelectCategory() {
               value={item}
               style={getStyles(item, category, theme)}
             >
-              {kCategories[index]}
+              {item}
             </MenuItem>
           ))}
         </Select>
