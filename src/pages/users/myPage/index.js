@@ -5,6 +5,8 @@ import ListContainer from "../../../components/users/MyPage/ListContainer";
 import { useEffect } from "react";
 import { useRecoilValue } from "recoil";
 import { userState } from "../../../authentication/userState";
+import { useParams } from "react-router-dom";
+
 const Container = styled.div`
   padding-top: 65px;
   display: flex;
@@ -20,6 +22,7 @@ const Wrapper = styled.div`
 `;
 
 function Mypage() {
+  const { userId } = useParams;
   // 로그인 상태 검사
   const user = useRecoilValue(userState);
   useEffect(() => {

@@ -111,7 +111,7 @@ export default function Header() {
   const handleNavigateMypage = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
-    navigate("/mypage");
+    navigate(`/mypage/${user.id}`);
   };
 
   const handleLogout = () => {
