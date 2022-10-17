@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Header from "../../../components/common/Header";
+import Header from "../../../components/users/MyPage/MyHeader";
 import Profile from "../../../components/users/MyPage/Profile";
 import ListContainer from "../../../components/users/MyPage/ListContainer";
 import { useEffect } from "react";

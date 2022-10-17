@@ -11,6 +11,7 @@ import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router-dom";
+import { Logo } from "../../common/Logo";
 
 const appBarStyle = {
   backgroundColor: "#F5F6FA",
@@ -40,6 +41,13 @@ export default function Header() {
 
   const onNavigateMain = (event) => {
     navigate("/");
+  };
+
+  const handleLogout = () => {
+    // local storage에 user 정보 삭제
+    window.location.replace("http://localhost:3000/");
+    localStorage.clear();
+    setUser(null);
   };
 
   const handleMobileMenuClose = () => {
@@ -87,10 +95,10 @@ export default function Header() {
             noWrap
             component="div"
             sx={{ display: { xs: "none", sm: "block" } }}
-            onClick={onNavigateMain}
           >
             MOKA FORM
           </Typography>
+          <Logo onClick={onNavigateMain}>MOKA FORM</Logo>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <Button
@@ -112,7 +120,7 @@ export default function Header() {
                 fontWeight: "bold",
                 color: "#0064FF",
               }}
-              onClick={onNavigateMain}
+              onClick={handleLogout}
             >
               LOGOUT
             </Button>
