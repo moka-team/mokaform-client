@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Header from "../../../components/main/Header";
+import Header from "../../../components/common/Header";
 import Profile from "../../../components/users/MyPage/Profile";
 import Separator from "../../../components/users/MyPage/Separator";
 import ListContainer from "../../../components/users/MyPage/ListContainer";
