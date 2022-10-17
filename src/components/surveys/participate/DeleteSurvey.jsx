@@ -7,8 +7,11 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useNavigate } from "react-router-dom";
+import { userState } from "../../../authentication/userState";
+import { useRecoilValue } from "recoil";
 
-export default function DeleteSurvey() {
+export default function DeleteSurvey({ request }) {
+  const user = useRecoilValue(userState);
   const [dialogOpen, setDialogOpen] = useState(true);
   const navigate = useNavigate();
 
@@ -22,7 +25,8 @@ export default function DeleteSurvey() {
 
   const handleConfirm = () => {
     setDialogOpen(false);
-    navigate("/");
+
+    request === "mypage" ? navigate("/mypage/" + user.id) : navigate("/");
   };
 
   return (

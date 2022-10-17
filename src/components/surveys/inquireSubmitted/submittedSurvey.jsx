@@ -14,6 +14,7 @@ import { SNavBar } from "../participate/styled";
 import InquireEssayQuestionItem from "./EssayQuestionItem";
 import InquireMultipleChoiceQuestionItem from "./MultipleChoiceQuestionItem";
 import InquireOXQuestionItem from "./OXQuestionItem";
+import DeleteSurvey from "../participate/DeleteSurvey";
 
 export default function SubmittedSurvey({ sharingKey }) {
   const user = useRecoilValue(userState);
@@ -23,6 +24,8 @@ export default function SubmittedSurvey({ sharingKey }) {
 
   const [error, setError] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
+
+  const [isDeleted, setIsDeleted] = useState(false);
 
   useEffect(() => {
     if (user === null) {
@@ -41,6 +44,7 @@ export default function SubmittedSurvey({ sharingKey }) {
       .then(function (response) {
         console.log(response);
         setSurvey(response.data);
+        setIsDeleted(response.data.data.isDeleted);
         setLoading(false);
       })
       .catch(function (error) {
@@ -54,6 +58,7 @@ export default function SubmittedSurvey({ sharingKey }) {
   }, []);
 
   if (error) return <Error errorMessage={errorMessage}></Error>;
+  if (isDeleted) return <DeleteSurvey request={"mypage"}></DeleteSurvey>;
   if (loading) return <Loading></Loading>;
 
   return (
