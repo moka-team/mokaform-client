@@ -7,12 +7,14 @@ import { Container, SummaryText, Survey, TitleText } from "./styled";
 import axios from "axios";
 import Loading from "./Loading";
 import Error from "./Error";
+import DeleteSurvey from "./DeleteSurvey";
 
 export default function SurveyDetail({ sharingKey }) {
   const [survey, setSurvey] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
+  const isDeleted = true;
 
   useEffect(() => {
     axios
@@ -37,6 +39,7 @@ export default function SurveyDetail({ sharingKey }) {
   }, [sharingKey]);
 
   if (error) return <Error errorMessage={errorMessage}></Error>;
+  if (isDeleted) return <DeleteSurvey></DeleteSurvey>;
   if (loading) return <Loading></Loading>;
 
   return (
