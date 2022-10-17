@@ -90,7 +90,7 @@ function NavBar() {
 
   const handleSuccessDialogConfirmClose = () => {
     setSuccessDialogOpen(false);
-    navigate("/");
+    window.location.replace("http://localhost:3000/");
   };
 
   const handleClickFailDialogOpen = () => {
