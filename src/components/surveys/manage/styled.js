@@ -10,7 +10,7 @@ const TContainer = styled.div`
   margin-bottom: 20px;
 `;
 
-const Table = styled.div`
+const TableSection = styled.div`
   display: flex;
   width: 50%;
   min-height: 100%;
@@ -28,4 +28,4 @@ const Text = styled.h1`
   color: black;
 `;
 
-export { Container, Table, Text, TContainer };
+export { Container, TableSection, Text, TContainer };
