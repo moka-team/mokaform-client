@@ -105,7 +105,7 @@ function NavBar() {
   const [invalidatoinDialogOpen, setInvalidationDialogOpen] = useState(false);
   const [successDialogOpen, setSuccessDialogOpen] = useState(false);
   const [failDialogOpen, setFailDialogOpen] = useState(false);
-  const [sharingUrl, setSharingUrl] = useState("http://localhost:3000/");
+  const [sharingUrl, setSharingUrl] = useState("");
   const navigate = useNavigate();
 
   const handleClickDialogOpen = () => {
@@ -197,6 +197,9 @@ function NavBar() {
       .post("/api/v1/survey?userId=1", surveyInfo)
       .then(function (response) {
         console.log(response);
+        setSharingUrl(
+          "http://localhost:3000/survey/" + response.data.data.sharingKey
+        );
         handleClickSuccessDialogOpen();
       })
       .catch(function (error) {

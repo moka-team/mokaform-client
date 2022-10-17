@@ -8,6 +8,12 @@ import axios from "axios";
 import Loading from "./Loading";
 import Error from "./Error";
 import DeleteSurvey from "./DeleteSurvey";
+import {
+  isEssayAnswerValidate,
+  isMultiChoiceAnswerValidate,
+  isOXAnswerValidate,
+} from "../../../atoms";
+import { useSetRecoilState } from "recoil";
 
 export default function SurveyDetail({ sharingKey }) {
   const [survey, setSurvey] = useState(null);
@@ -15,6 +21,12 @@ export default function SurveyDetail({ sharingKey }) {
   const [error, setError] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
   const [isDeleted, setIsDeleted] = useState(false);
+
+  const setIsEssayValidate = useSetRecoilState(isEssayAnswerValidate);
+  const setIsMultiChoiceValidate = useSetRecoilState(
+    isMultiChoiceAnswerValidate
+  );
+  const setIsOXValidate = useSetRecoilState(isOXAnswerValidate);
 
   useEffect(() => {
     axios
@@ -27,6 +39,24 @@ export default function SurveyDetail({ sharingKey }) {
         console.log(response);
         setSurvey(response.data);
         setIsDeleted(response.data.data.isDeleted);
+
+        response.data.data.questions.filter(
+          (question) => question.type == "ESSAY"
+        ).length === 0
+          ? setIsEssayValidate(true)
+          : setIsEssayValidate(false);
+
+        response.data.data.questions.filter(
+          (question) => question.type == "MULTIPLE_CHOICE"
+        ).length === 0
+          ? setIsMultiChoiceValidate(true)
+          : setIsMultiChoiceValidate(false);
+
+        response.data.data.questions.filter((question) => question.type == "OX")
+          .length === 0
+          ? setIsOXValidate(true)
+          : setIsOXValidate(false);
+
         setLoading(false);
       })
       .catch(function (error) {
