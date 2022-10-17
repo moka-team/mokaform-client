@@ -7,13 +7,12 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import { CardActionArea } from "@mui/material";
-import CreateIcon from "@mui/icons-material/Create";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronRight, faPen } from "@fortawesome/free-solid-svg-icons";
-import { fontFamily } from "@mui/system";
+import { faPen } from "@fortawesome/free-solid-svg-icons";
 import RightButton from "./RightButton";
 import axios from "axios";
-
+import routes from "../../../routes";
+import { Link } from "react-router-dom";
 function SurveyCard({ survey }) {
   let category = survey.surveyCategories[0];
   return (
@@ -24,8 +23,9 @@ function SurveyCard({ survey }) {
           color="#202632"
           sx={{ fontSize: 15, fontWeight: 600 }}
         >
-          {/* 설문 제목 길이 제한 필요 예상합니다 . . */}
-          {survey.title}
+          {survey?.title?.length > 12
+            ? `${survey.title.slice(0, 12)}...`
+            : survey.title}
         </Typography>
       </Grid>
 
@@ -142,7 +142,9 @@ export default function UserSurveyCard({ isCreated }) {
           </CardActionArea>
         </Grid>
       ))}
-      <RightButton />
+      <Link to={routes.manageSurvey}>
+        <RightButton />
+      </Link>
     </Grid>
   ) : (
     <Grid container spacing={1} sx={{ ml: 5, mt: 1, mr: -3 }}>

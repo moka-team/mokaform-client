@@ -86,6 +86,16 @@ export const surveyList = atom({
   default: [],
 });
 
+export const createdSurvey = atom({
+  key: "createdSurvey",
+  default: [],
+});
+
+export const submittedSurvey = atom({
+  key: "submittedSurvey",
+  default: [],
+});
+
 export const createdQuestionCount = atom({
   key: "createdQuestionCount",
   default: 0,
