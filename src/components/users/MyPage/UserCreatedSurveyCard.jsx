@@ -109,7 +109,7 @@ export default function UserSurveyCard() {
     <Grid container spacing={1} sx={{ ml: 5, mt: 1, mb: 4, mr: -3 }}>
       {createdMySurvey.map((survey) => (
         <Link
-          to={`/my/survey/${survey.surveyId}`}
+          to={`/my/survey/${survey.sharingKey}`}
           style={{ textDecoration: "none" }}
         >
           <Grid item key={survey.surveyId} xs={6} sm={6} md={4} lg={2} xl={2}>

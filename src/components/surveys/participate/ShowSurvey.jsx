@@ -8,7 +8,7 @@ import Error from "./Error";
 import OXQuestionItemDisabled from "./OXQuestionItemDisabled";
 import MultipleChoiceQuestionItemDisabled from "./MultipleChoiceQuestionItemDisabled";
 
-export default function ShowSurvey({ surveyId }) {
+export default function ShowSurvey({ sharingKey }) {
   const [survey, setSurvey] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -18,7 +18,7 @@ export default function ShowSurvey({ surveyId }) {
     axios
       .get("/api/v1/survey", {
         params: {
-          surveyId: surveyId,
+          sharingKey: sharingKey,
         },
       })
       .then(function (response) {
@@ -34,7 +34,7 @@ export default function ShowSurvey({ surveyId }) {
       .finally(function () {
         // always executed
       });
-  }, [surveyId]);
+  }, [sharingKey]);
 
   if (error) return <Error errorMessage={errorMessage}></Error>;
   if (loading) return <Loading></Loading>;
