@@ -14,7 +14,7 @@ export default function SurveyDetail({ sharingKey }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
-  const isDeleted = true;
+  const [isDeleted, setIsDeleted] = useState(false);
 
   useEffect(() => {
     axios
@@ -26,6 +26,7 @@ export default function SurveyDetail({ sharingKey }) {
       .then(function (response) {
         console.log(response);
         setSurvey(response.data);
+        setIsDeleted(response.data.data.isDeleted);
         setLoading(false);
       })
       .catch(function (error) {

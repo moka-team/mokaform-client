@@ -6,9 +6,11 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import { useNavigate } from "react-router-dom";
 
 export default function DeleteSurvey() {
   const [dialogOpen, setDialogOpen] = useState(true);
+  const navigate = useNavigate();
 
   const handleClickDialogOpen = () => {
     setDialogOpen(true);
@@ -18,6 +20,11 @@ export default function DeleteSurvey() {
     setDialogOpen(false);
   };
 
+  const handleConfirm = () => {
+    setDialogOpen(false);
+    navigate("/");
+  };
+
   return (
     <Container>
       <Dialog
@@ -25,20 +32,23 @@ export default function DeleteSurvey() {
         onClose={handleDialogClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
+        sx={{
+          "& .MuiDialog-container": {
+            "& .MuiPaper-root": {
+              width: "100%",
+              maxWidth: "500px", // Set your width here
+            },
+          },
+        }}
       >
-        <DialogTitle id="alert-dialog-title">
-          {"설문을 삭제하시겠습니까?"}
-        </DialogTitle>
+        <DialogTitle id="alert-dialog-title">{"알림"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            설문 삭제 작업은 영구적이며 되돌릴 수 없습니다. 삭제하는 즉시 귀하의
-            설문에 액세스 할 수 없게 됩니다. 설문에 관련된 모든 데이터가
-            삭제됩니다.
+            이미 삭제된 설문입니다!
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleDialogClose}>취소</Button>
-          <Button onClick={handleDialogClose} autoFocus>
+          <Button onClick={handleConfirm} autoFocus>
             확인
           </Button>
         </DialogActions>
