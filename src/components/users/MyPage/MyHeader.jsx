@@ -12,8 +12,8 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router-dom";
 import { Logo } from "../../common/Logo";
-import { useRecoilState } from "recoil";
 import { userState } from "../../../authentication/userState";
+import { useRecoilState } from "recoil";
 
 const appBarStyle = {
   backgroundColor: "#F5F6FA",
@@ -93,15 +93,7 @@ export default function Header() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar style={appBarStyle}>
         <Toolbar>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: { xs: "none", sm: "block" } }}
-          >
-            MOKA FORM
-          </Typography>
-          <Logo onClick={onNavigateMain}>MOKA FORM</Logo>
+          <Logo to="/">MOKAFORM</Logo>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <Button

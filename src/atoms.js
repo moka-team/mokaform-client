@@ -86,6 +86,11 @@ export const surveyList = atom({
   default: [],
 });
 
+export const surveySortState = atom({
+  key: "surveySortState",
+  default: "new",
+});
+
 export const createdSurvey = atom({
   key: "createdSurvey",
   default: [],

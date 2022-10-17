@@ -155,7 +155,7 @@ export default function Header() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar style={appBarStyle}>
         <Toolbar>
-          <Logo onClick={onNavigateMain}>MOKA FORM</Logo>
+          <Logo to="/">MOKAFORM</Logo>
           <Box sx={{ flexGrow: 1 }} />
           {/* <Search>
             <SearchIconWrapper>
@@ -202,7 +202,7 @@ export default function Header() {
                   }}
                   endIcon={
                     <Avatar
-                      alt="Moka user"
+                      alt={user.nickname}
                       src="testImage.jpg"
                       sx={{ width: 30, height: 30 }}
                     />
