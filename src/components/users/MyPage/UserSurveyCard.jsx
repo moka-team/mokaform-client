@@ -104,6 +104,7 @@ const writedSurvey = [
 export default function UserSurveyCard({ isCreated }) {
   const [createdMySurvey, setCreatedMySurvey] = useState(null);
   const [user, setUser] = useRecoilState(userState);
+  console.log(user);
   useEffect(() => {
     (async () => {
       // TODO: 로그인 후 userId 부분 수정 필요!
@@ -144,7 +145,7 @@ export default function UserSurveyCard({ isCreated }) {
           </CardActionArea>
         </Grid>
       ))}
-      <Link to={`/survey/${user.userId}/manage`} surveyId={1}>
+      <Link to={`/survey/${user.id}/manage`} surveyId={1}>
         <RightButton />
       </Link>
     </Grid>

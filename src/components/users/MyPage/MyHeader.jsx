@@ -12,6 +12,8 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router-dom";
 import { Logo } from "../../common/Logo";
+import { useRecoilState } from "recoil";
+import { userState } from "../../../authentication/userState";
 
 const appBarStyle = {
   backgroundColor: "#F5F6FA",
@@ -28,6 +30,7 @@ export default function Header() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const [logined, setLogined] = useState(false);
+  const [user, setUser] = useRecoilState(userState);
 
   const inputEl = useRef(null);
   const isMenuOpen = Boolean(anchorEl);
