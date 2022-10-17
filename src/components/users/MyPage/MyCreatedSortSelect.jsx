@@ -7,8 +7,9 @@ import OptionUnstyled, {
 } from "@mui/base/OptionUnstyled";
 import PopperUnstyled from "@mui/base/PopperUnstyled";
 import { styled } from "@mui/system";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { createdMySurvey } from "../../../atoms";
+import { userState } from "../../../authentication/userState";
 import axios from "axios";
 const blue = {
   100: "#DAECFF",
@@ -148,15 +149,17 @@ const CustomSelect = React.forwardRef(function CustomSelect(props, ref) {
   return <SelectUnstyled {...props} ref={ref} components={components} />;
 });
 
-export default function MyCreatedSortSelect({ userId }) {
+export default function MyCreatedSortSelect() {
   const [surveys, setServeys] = useRecoilState(createdMySurvey);
+  const user = useRecoilValue(userState);
+
   const fetchRecentSurvey = async () => {
     const response = await axios.get("/api/v1/users/my/surveys", {
       params: {
         page: 0,
         size: 5,
         sort: "createdAt,desc",
-        userId: 1,
+        userId: user.id,
       },
     });
     setServeys(response.data.data.content);
@@ -167,7 +170,7 @@ export default function MyCreatedSortSelect({ userId }) {
         page: 0,
         size: 5,
         sort: "surveyeeCount,desc",
-        userId: 1,
+        userId: user.id,
       },
     });
     setServeys(response.data.data.content);

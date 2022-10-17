@@ -34,7 +34,6 @@ const Block = styled.div`
 `;
 
 export default function ListContainer() {
-  const user = useRecoilState(userState);
   return (
     <Container>
       <Header>
@@ -48,14 +47,14 @@ export default function ListContainer() {
         <Block>
           <p>내가 만든 설문</p>
         </Block>
-        <MyCreatedSortSelect userId={user.id} />
+        <MyCreatedSortSelect />
       </Header>
       <UserCreatedSurveyCard />
       <Header>
         <Block>
           <p>내가 참여한 설문</p>
         </Block>
-        <MySubmittedSortSelect userId={user.id} />
+        <MySubmittedSortSelect />
       </Header>
       <UserParticipatedSurveyCard />
     </Container>
