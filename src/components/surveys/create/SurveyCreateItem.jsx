@@ -1,6 +1,10 @@
 import React from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { surveyListState, detailMCQuestionState } from "../../../atoms";
+import {
+  surveyListState,
+  detailMCQuestionState,
+  createdQuestionCount,
+} from "../../../atoms";
 import DetailMCQuestionCreator from "./DetailMCQuestionCreator";
 import DetailSurveyItem from "./DetailSurveyItem";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -26,6 +30,8 @@ const Num = styled.span`
   font-size: 20px;
 `;
 export default function SurveyItem({ item }) {
+  const [questionCount, setQuestionCount] =
+    useRecoilState(createdQuestionCount);
   const [surveyList, setSurveyList] = useRecoilState(surveyListState);
   const index = surveyList.findIndex((listItem) => listItem === item);
 
@@ -34,6 +40,7 @@ export default function SurveyItem({ item }) {
   const deleteItem = () => {
     const newList = removeItemAtIndex(surveyList, index);
     setSurveyList(newList);
+    setQuestionCount(questionCount - 1);
   };
 
   const updateItem = ({ target: { value } }) => {

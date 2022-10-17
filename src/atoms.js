@@ -85,3 +85,18 @@ export const surveyList = atom({
   key: "surveyList",
   default: [],
 });
+
+export const createdQuestionCount = atom({
+  key: "createdQuestionCount",
+  default: 0,
+});
+
+export const isStartDateValidate = atom({
+  key: "isStartDateValidate",
+  default: false,
+});
+
+export const isEndDateValidate = atom({
+  key: "isEndDateValidate",
+  default: false,
+});
