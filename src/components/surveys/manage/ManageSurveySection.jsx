@@ -31,7 +31,9 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { TContainer } from "./styled";
 import DeleteIcon from "@mui/icons-material/Delete";
-
+import EqualizerIcon from "@mui/icons-material/Equalizer";
+import { Link } from "react-router-dom";
+import routes from "../../../routes";
 function TablePaginationActions(props) {
   const theme = useTheme();
   const { count, page, rowsPerPage, onPageChange } = props;
@@ -224,7 +226,8 @@ export default function ManageSurveySection({ userId }) {
                   <StyledTableCell align="center">설문 종료일</StyledTableCell>
                   <StyledTableCell align="center">익명</StyledTableCell>
                   <StyledTableCell align="center">공개</StyledTableCell>
-                  <StyledTableCell align="center"></StyledTableCell>
+                  <StyledTableCell align="center">통계</StyledTableCell>
+                  <StyledTableCell align="center">삭제</StyledTableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -256,6 +259,13 @@ export default function ManageSurveySection({ userId }) {
                     </StyledTableCell>
                     <StyledTableCell align="center">
                       {data.isPublic ? <div>가능</div> : <div>불가능</div>}
+                    </StyledTableCell>
+                    <StyledTableCell>
+                      <IconButton>
+                        <Link to={routes.surveyStats}>
+                          <EqualizerIcon />
+                        </Link>
+                      </IconButton>
                     </StyledTableCell>
                     <StyledTableCell>
                       <IconButton

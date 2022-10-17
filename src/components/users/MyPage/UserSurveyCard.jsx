@@ -13,6 +13,8 @@ import RightButton from "./RightButton";
 import axios from "axios";
 import routes from "../../../routes";
 import { Link } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { userState } from "../../../authentication/userState";
 function SurveyCard({ survey }) {
   let category = survey.surveyCategories[0];
   return (
@@ -101,7 +103,7 @@ const writedSurvey = [
 
 export default function UserSurveyCard({ isCreated }) {
   const [createdMySurvey, setCreatedMySurvey] = useState(null);
-
+  const [user, setUser] = useRecoilState(userState);
   useEffect(() => {
     (async () => {
       // TODO: 로그인 후 userId 부분 수정 필요!
@@ -142,7 +144,7 @@ export default function UserSurveyCard({ isCreated }) {
           </CardActionArea>
         </Grid>
       ))}
-      <Link to={routes.manageSurvey}>
+      <Link to={`/survey/${user.userId}/manage`} surveyId={1}>
         <RightButton />
       </Link>
     </Grid>
