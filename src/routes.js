@@ -8,6 +8,7 @@ const routes = {
   surveyStats: "/survey-stats",
   participateSurvey: "/survey/:surveyId/detail",
   manageSurvey: "/survey/manage",
+  createdSurvey: "my/survey/:surveyId",
 };
 
 export default routes;
