@@ -85,7 +85,7 @@ export default function UserSurveyCard() {
           page: 0,
           size: 4,
           sort: "surveyeeCount,desc",
-          userId: 1,
+          userId: user.id,
         },
       })
       .then(function (response) {
@@ -108,27 +108,32 @@ export default function UserSurveyCard() {
   return (
     <Grid container spacing={1} sx={{ ml: 5, mt: 1, mb: 4, mr: -3 }}>
       {createdMySurvey.map((survey) => (
-        <Grid item key={survey.surveyId} xs={6} sm={6} md={4} lg={2} xl={2}>
-          <CardActionArea sx={{ width: 200 }}>
-            <Card
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                width: 200,
-              }}
-            >
-              <CardMedia
-                component="img"
-                image="https://source.unsplash.com/random"
-                alt="random"
-                sx={{ height: 150 }}
-              />
-              <CardContent sx={{ flexGrow: 1 }}>
-                <SurveyCard survey={survey} />
-              </CardContent>
-            </Card>
-          </CardActionArea>
-        </Grid>
+        <Link
+          to={`/my/survey/${survey.surveyId}`}
+          style={{ textDecoration: "none" }}
+        >
+          <Grid item key={survey.surveyId} xs={6} sm={6} md={4} lg={2} xl={2}>
+            <CardActionArea sx={{ width: 200 }}>
+              <Card
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  width: 200,
+                }}
+              >
+                <CardMedia
+                  component="img"
+                  image="https://source.unsplash.com/random"
+                  alt="random"
+                  sx={{ height: 150 }}
+                />
+                <CardContent sx={{ flexGrow: 1 }}>
+                  <SurveyCard survey={survey} />
+                </CardContent>
+              </Card>
+            </CardActionArea>
+          </Grid>
+        </Link>
       ))}
       <ButtonContainer>
         <Link to={`/survey/${user.id}/manage`} surveyId={1}>
