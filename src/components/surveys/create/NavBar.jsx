@@ -34,6 +34,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import { useNavigate } from "react-router-dom";
 
 const style = {
   position: "absolute",
@@ -102,6 +103,10 @@ function NavBar() {
   const [endDateValidate, setEndDateValidate] =
     useRecoilState(isEndDateValidate);
   const [invalidatoinDialogOpen, setInvalidationDialogOpen] = useState(false);
+  const [successDialogOpen, setSuccessDialogOpen] = useState(false);
+  const [failDialogOpen, setFailDialogOpen] = useState(false);
+  const [sharingUrl, setSharingUrl] = useState("http://localhost:3000/");
+  const navigate = useNavigate();
 
   const handleClickDialogOpen = () => {
     setInvalidationDialogOpen(true);
@@ -109,6 +114,27 @@ function NavBar() {
 
   const handleDialogClose = () => {
     setInvalidationDialogOpen(false);
+  };
+
+  const handleClickSuccessDialogOpen = () => {
+    setSuccessDialogOpen(true);
+  };
+
+  const handleSuccessDialogClose = () => {
+    setSuccessDialogOpen(false);
+  };
+
+  const handleSuccessDialogConfirmClose = () => {
+    setSuccessDialogOpen(false);
+    navigate("/");
+  };
+
+  const handleClickFailDialogOpen = () => {
+    setFailDialogOpen(true);
+  };
+
+  const handleFailDialogClose = () => {
+    setFailDialogOpen(false);
   };
 
   const [open, setOpen] = React.useState(false);
@@ -171,9 +197,11 @@ function NavBar() {
       .post("/api/v1/survey?userId=1", surveyInfo)
       .then(function (response) {
         console.log(response);
+        handleClickSuccessDialogOpen();
       })
       .catch(function (error) {
         console.log(error.message);
+        handleClickFailDialogOpen();
       })
       .finally(function () {
         // always executed
@@ -311,6 +339,66 @@ function NavBar() {
         <DialogActions>
           <Button onClick={handleDialogClose}>취소</Button>
           <Button onClick={handleDialogClose} autoFocus>
+            확인
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog
+        open={successDialogOpen}
+        onClose={handleSuccessDialogClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        sx={{
+          "& .MuiDialog-container": {
+            "& .MuiPaper-root": {
+              width: "100%",
+              maxWidth: "500px", // Set your width here
+            },
+          },
+        }}
+      >
+        <DialogTitle id="success-dialog-title">알림</DialogTitle>
+        <DialogContent>
+          <DialogContentText
+            id="success-dialog-description"
+            sx={{ color: "#202632" }}
+          >
+            설문 생성이 완료되었습니다!
+          </DialogContentText>
+          <DialogContentText sx={{ color: "#202632" }}>
+            공유 링크 : {sharingUrl}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleSuccessDialogConfirmClose} autoFocus>
+            확인
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog
+        open={failDialogOpen}
+        onClose={handleFailDialogClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        sx={{
+          "& .MuiDialog-container": {
+            "& .MuiPaper-root": {
+              width: "100%",
+              maxWidth: "500px", // Set your width here
+            },
+          },
+        }}
+      >
+        <DialogTitle id="success-dialog-title">알림</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="success-dialog-description">
+            설문 생성이 실패했습니다! 잠시 후, 다시 시도해주세요!
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleFailDialogClose} autoFocus>
             확인
           </Button>
         </DialogActions>
