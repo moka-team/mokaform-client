@@ -2,8 +2,8 @@ import { React, useState, useEffect } from "react";
 import Header from "../../main/Header";
 import { Container, TableSection, Text } from "./styled";
 import axios from "axios";
-import Error from "../detail/Error";
-import Loading from "../detail/Loading";
+import Error from "../participate/Error";
+import Loading from "../participate/Loading";
 
 import PropTypes from "prop-types";
 import { useTheme } from "@mui/material/styles";

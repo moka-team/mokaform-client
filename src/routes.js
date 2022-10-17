@@ -6,7 +6,7 @@ const routes = {
   resetPassword: "/reset-password",
   createSurvey: "/create-survey",
   surveyStats: "/survey-stats",
-  participateSurvey: "/survey/:surveyId/detail",
+  participateSurvey: "/survey/:sharingKey",
   manageSurvey: "/survey/:userId/manage",
 };
 
