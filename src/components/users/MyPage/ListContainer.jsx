@@ -1,21 +1,10 @@
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-regular-svg-icons";
-import { faSortAmountAsc } from "@fortawesome/free-solid-svg-icons";
-import Carousel from "./Carousel";
 import CircleCarousel from "./CircleCarousel";
-import SortSelect from "../../../components/main/SortSelect";
-import { Grid } from "@mui/material";
-import { CardActionArea } from "@mui/material";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
-import Stack from "@mui/material/Stack";
-import { faPen } from "@fortawesome/free-solid-svg-icons";
-import Chip from "@mui/material/Chip";
-import PreferenceCard from "./PreferenceCard";
 import UserSurveyCard from "./UserSurveyCard";
+import MySortSelect from "./MySortSelect";
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -38,14 +27,6 @@ const Block = styled.div`
   }
 `;
 
-const SortedBtn = styled(Block)`
-  background-color: #202632;
-  color: white;
-  padding: 10px;
-  border-radius: 18px;
-  cursor: pointer;
-`;
-
 export default function ListContainer() {
   const preference = ["HOBBY", "PET"];
   return (
@@ -61,7 +42,7 @@ export default function ListContainer() {
         <Block>
           <p>내가 만든 설문</p>
         </Block>
-        <SortSelect />
+        <MySortSelect />
       </Header>
       <UserSurveyCard isCreated={true} />
 
@@ -69,7 +50,7 @@ export default function ListContainer() {
         <Block>
           <p>내가 참여한 설문</p>
         </Block>
-        <SortSelect />
+        <MySortSelect />
       </Header>
       <UserSurveyCard isCreated={false} />
     </Container>
