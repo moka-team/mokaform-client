@@ -17,26 +17,26 @@ export default function SurveyPreviewItem({ item }) {
     <div>
       {" "}
       <div>
-        {item.type === "주관식" ? (
+        {item.type === "ESSAY" ? (
           <QuestionWrapper>
             <QuestionText color="#0064ff">Q{index + 1}</QuestionText>
-            <QuestionText color="black">{item.text}</QuestionText>
+            <QuestionText color="black">{item.title}</QuestionText>
             <Answer placeholder="의견을 적어주세요!"></Answer>
           </QuestionWrapper>
-        ) : item.type === "찬부식" ? (
+        ) : item.type === "OX" ? (
           <QuestionWrapper>
             <QuestionText color="#0064ff">Q{index + 1}</QuestionText>
-            <QuestionText color="black">{item.text}</QuestionText>
-            <QuestionOption name={item.id}>네 😀</QuestionOption>
-            <QuestionOption name={item.id}>아니오 🥲</QuestionOption>
+            <QuestionText color="black">{item.title}</QuestionText>
+            <QuestionOption>네 😀</QuestionOption>
+            <QuestionOption>아니오 🥲</QuestionOption>
           </QuestionWrapper>
         ) : (
           <QuestionWrapper>
             <QuestionText color="#0064ff">Q{index + 1}</QuestionText>
-            <QuestionText color="black">{item.text}</QuestionText>
+            <QuestionText color="black">{item.title}</QuestionText>
             {detailQuestionList.map((detailQuestionItem) =>
-              item.id === detailQuestionItem.survey_id ? (
-                <QuestionOption>{detailQuestionItem.text}</QuestionOption>
+              item.index === detailQuestionItem.questionIndex ? (
+                <QuestionOption>{detailQuestionItem.content}</QuestionOption>
               ) : (
                 <></>
               )

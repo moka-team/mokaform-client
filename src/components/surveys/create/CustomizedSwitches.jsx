@@ -8,6 +8,7 @@ export const CustomSwitch = styled((props) => (
   width: 36,
   height: 20,
   padding: 0,
+  marginLeft: 10,
   "& .MuiSwitch-switchBase": {
     padding: 0,
     margin: 2,

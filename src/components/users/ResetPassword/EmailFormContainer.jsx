@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
-
+import { TextField } from "@mui/material";
 const EmailFormWrapper = styled.div`
   width: 461px;
   margin-top: 25px;
@@ -40,6 +40,31 @@ const ConfirmButton = styled.button`
     background-color: #0064ff;
   }
 `;
+
+const CustomTextField = styled((props) => (
+  <TextField InputProps={{ disableUnderline: true }} {...props} />
+))(({ theme }) => ({
+  "& .MuiFilledInput-root": {
+    border: "none",
+    width: "400px",
+    overflow: "hidden",
+    marginBottom: "15px",
+    borderRadius: 8,
+    backgroundColor: "#edeef0",
+    transition: theme.transitions.create([
+      "border-color",
+      "background-color",
+      "box-shadow",
+    ]),
+    "&:hover": {
+      backgroundColor: "transparent",
+    },
+    "&.Mui-focused": {
+      borderColor: "#3399ff",
+      outline: "2px solid#80bfff",
+    },
+  },
+}));
 
 function EmailFormContainer() {
   const [inputs, setInputs] = useState({
