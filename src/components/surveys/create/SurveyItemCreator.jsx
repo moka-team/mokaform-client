@@ -1,6 +1,6 @@
 import { React, useState } from "react";
-import { useSetRecoilState } from "recoil";
-import { surveyListState } from "../../../atoms";
+import { useSetRecoilState, useRecoilState } from "recoil";
+import { surveyListState, createdQuestionCount } from "../../../atoms";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import { AddCircle } from "@mui/icons-material";
@@ -8,6 +8,7 @@ import { Button } from "@mui/material";
 import styled from "styled-components";
 
 const options = ["ESSAY", "MULTIPLE_CHOICE", "OX"];
+const kOtions = ["주관식", "객관식", "찬부식"];
 
 const Container = styled.div`
   width: 100%;
@@ -16,6 +17,8 @@ const Container = styled.div`
 `;
 
 export default function SurveyItemCreator() {
+  const [questionCount, setQuestionCount] =
+    useRecoilState(createdQuestionCount);
   const [question, setQuestion] = useState("");
   const [type, setType] = useState("ESSAY");
   const setSurveyList = useSetRecoilState(surveyListState);
@@ -38,19 +41,19 @@ export default function SurveyItemCreator() {
     setAnchorEl(null);
   };
 
-  const addItem = (index) => {
+  const addItem = (optionIndex) => {
     setSurveyList((oldSurveyList) => [
       ...oldSurveyList,
       {
-        surveyIndex: getId(),
+        index: getId(),
         title: question,
-        type: options[index],
-        index : index,
-        isMultipleAnswer : (index === 1) ? true : false
+        type: options[optionIndex],
+        isMultipleAnswer: optionIndex === 1 ? true : false,
       },
     ]);
     setQuestion("");
-    setType(options[index]);
+    setType(options[optionIndex]);
+    setQuestionCount(questionCount + 1);
   };
 
   return (
@@ -61,7 +64,7 @@ export default function SurveyItemCreator() {
         aria-controls="lock-menu"
         aria-expanded={open ? "true" : undefined}
         onClick={handleClickListItem}
-        sx={{marginTop:"20px"}}
+        sx={{ marginTop: "20px" }}
       >
         <AddCircle sx={{ color: "white" }} />
       </Button>
@@ -81,11 +84,10 @@ export default function SurveyItemCreator() {
             selected={index === selectedIndex}
             onClick={(event) => handleMenuItemClick(event, index)}
           >
-            {option}
+            {kOtions[index]}
           </MenuItem>
         ))}
       </Menu>
-
     </Container>
   );
 }

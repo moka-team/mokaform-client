@@ -30,7 +30,7 @@ export default function CreateSection() {
         onChange={summaryOnChange}
       ></Summary>
       {surveyList.map((surveyItem) => (
-        <SurveyCreateItem key={surveyItem.id} item={surveyItem} />
+        <SurveyCreateItem key={surveyItem.index} item={surveyItem} />
       ))}
       <SurveyItemCreator></SurveyItemCreator>
     </Create>

@@ -4,9 +4,6 @@ import { Title, Row, Rows, PreferenceButton } from "./SignUpCSS";
 import { preferenceState } from "./SignUpState";
 
 export default function PreferenceRow() {
-  const interests = ["일상", "IT", "취미", "학습"];
-  const interests2 = ["심리", "사회·정치", "선호도 조사", "+"];
-
   const [preference1Check, preference1CheckState] = useState(false);
   const [preference2Check, preference2CheckState] = useState(false);
   const [preference3Check, preference3CheckState] = useState(false);
@@ -15,17 +12,6 @@ export default function PreferenceRow() {
   const [preference6Check, preference6CheckState] = useState(false);
   const [preference7Check, preference7CheckState] = useState(false);
   const [preference8Check, preference8CheckState] = useState(false);
-
-  const ids = [
-    "DAILY_LIFE",
-    "IT",
-    "HOBBY",
-    "LEARNING",
-    "PSYCHOLOGY",
-    "SOCIAL_POLITICS",
-    "PREFERENCE_RESEARCH",
-    "interest_8",
-  ];
 
   const [preference, setPreference] = useRecoilState(preferenceState);
 

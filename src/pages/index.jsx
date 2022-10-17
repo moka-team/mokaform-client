@@ -67,13 +67,6 @@ export default function Main() {
         </Container>
         <ChatbotFab />
         <Box textAlign="center">
-          {/* <Button
-            variant="contained"
-            sx={{ mt: 3, fontWeight: "bold" }}
-            onClick={loadMore}
-          >
-            더보기
-          </Button> */}
           <DownButton />
         </Box>
       </main>

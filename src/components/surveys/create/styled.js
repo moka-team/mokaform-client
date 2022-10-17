@@ -21,7 +21,7 @@ const Preview = styled.div`
   width: 40%;
   min-height: 100%;
   flex-direction: column;
-  background-color: #edeef0;
+  background-color: #f5f6fa;
   float: right;
   padding: 0% 5% 5% 5%;
   color: black;
@@ -111,12 +111,12 @@ const Summary = styled.input`
   }
 `;
 
-const TitleText = styled.text`
-  margin-top: 10%;
+const TitleText = styled.h6`
+  margin-top: 12%;
   font-weight: 900;
   font-size: xx-large;
   border: none;
-  background-color: #edeef0;
+  background-color: #f5f6fa;
   color: black;
 
   &:focus {
@@ -124,12 +124,12 @@ const TitleText = styled.text`
   }
 `;
 
-const SummaryText = styled.text`
+const SummaryText = styled.h3`
   margin-top: 10px;
   font-weight: 500;
   font-size: medium;
   border: none;
-  background-color: #edeef0;
+  background-color: #f5f6fa;
   color: black;
 
   &:focus {

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import Box from "@mui/material/Box";
 import axios from "axios";
@@ -13,6 +14,11 @@ import {
   detailMCQuestionState,
   surveyEndDate,
   surveyStartDate,
+  surveyCategory,
+  surveyImage,
+  createdQuestionCount,
+  isStartDateValidate,
+  isEndDateValidate,
 } from "../../../atoms";
 import { CustomSwitch } from "./CustomizedSwitches";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -21,6 +27,14 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import dayjs from "dayjs";
+import SurveyImg from "./SurveyImg";
+import SelectCategory from "./SelectCategory";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import { useNavigate } from "react-router-dom";
 
 const style = {
   position: "absolute",
@@ -31,17 +45,97 @@ const style = {
   bgcolor: "background.paper",
   boxShadow: 24,
   p: 4,
+  borderRadius: 2,
 };
+
+function SurveyCreateDialog() {
+  const [dialogOpen, setDialogOpen] = useState(false);
+
+  const handleClickDialogOpen = () => {
+    setDialogOpen(true);
+  };
+
+  const handleDialogClose = () => {
+    setDialogOpen(false);
+  };
+
+  return (
+    <Dialog
+      open={dialogOpen}
+      onClose={handleDialogClose}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+    >
+      <DialogTitle id="alert-dialog-title">
+        {"설문을 삭제하시겠습니까?"}
+      </DialogTitle>
+      <DialogContent>
+        <DialogContentText id="alert-dialog-description">
+          설문 삭제 작업은 영구적이며 되돌릴 수 없습니다. 삭제하는 즉시 귀하의
+          설문에 액세스 할 수 없게 됩니다. 설문에 관련된 모든 데이터가
+          삭제됩니다.
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleDialogClose}>취소</Button>
+        <Button onClick={handleDialogClose} autoFocus>
+          확인
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
+}
+
 function NavBar() {
+  const questionCount = useRecoilValue(createdQuestionCount);
   const surveyList = useRecoilValue(surveyListState);
   const detailList = useRecoilValue(detailMCQuestionState);
-
+  const category = useRecoilValue(surveyCategory);
+  const surveyImg = useRecoilValue(surveyImage);
   const title = useRecoilValue(surveyTitle);
   const summary = useRecoilValue(surveySummary);
   const [isAnonymous, setIsAnonymous] = useRecoilState(surveyIsAnonymous);
   const [isPublic, setIsPublic] = useRecoilState(surveyIsPublic);
   const [startDate, setStartDate] = useRecoilState(surveyStartDate);
   const [endDate, setEndDate] = useRecoilState(surveyEndDate);
+  const [startDateValidate, setStartDateValidate] =
+    useRecoilState(isStartDateValidate);
+  const [endDateValidate, setEndDateValidate] =
+    useRecoilState(isEndDateValidate);
+  const [invalidatoinDialogOpen, setInvalidationDialogOpen] = useState(false);
+  const [successDialogOpen, setSuccessDialogOpen] = useState(false);
+  const [failDialogOpen, setFailDialogOpen] = useState(false);
+  const [sharingUrl, setSharingUrl] = useState("http://localhost:3000/");
+  const navigate = useNavigate();
+
+  const handleClickDialogOpen = () => {
+    setInvalidationDialogOpen(true);
+  };
+
+  const handleDialogClose = () => {
+    setInvalidationDialogOpen(false);
+  };
+
+  const handleClickSuccessDialogOpen = () => {
+    setSuccessDialogOpen(true);
+  };
+
+  const handleSuccessDialogClose = () => {
+    setSuccessDialogOpen(false);
+  };
+
+  const handleSuccessDialogConfirmClose = () => {
+    setSuccessDialogOpen(false);
+    navigate("/");
+  };
+
+  const handleClickFailDialogOpen = () => {
+    setFailDialogOpen(true);
+  };
+
+  const handleFailDialogClose = () => {
+    setFailDialogOpen(false);
+  };
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -49,15 +143,14 @@ function NavBar() {
 
   const isAnonymousOnChange = (event) => {
     setIsAnonymous(event.target.checked);
-    alert(startDate);
   };
 
   const isPublicOnChange = (event) => {
     setIsPublic(event.target.checked);
   };
-  const handleSubmit = () => {
 
-    alert(
+  const createSurvey = () => {
+    console.log(
       "설문 정보" +
         "\n" +
         "title: " +
@@ -76,26 +169,49 @@ function NavBar() {
         startDate +
         "\n" +
         "종료 날짜: " +
-        endDate
+        endDate +
+        "\n" +
+        "카테고리 : " +
+        category +
+        "\n" +
+        "이미지 : " +
+        surveyImg
     );
 
     const surveyInfo = {
-      surveyorId :1,
-      title:title,
-      isAnonymous:isAnonymous,
-      isPublic:isPublic,
-      startDate:startDate,
-      endDate:endDate,
-      questions:surveyList,
-      multiQuestions:detailList
-    }
+      title: title,
+      summary: summary,
+      isAnonymous: isAnonymous,
+      isPublic: isPublic,
+      startDate: startDate,
+      endDate: endDate,
+      categories: category,
+      questions: surveyList,
+      multiQuestions: detailList,
+      // surveyImage: surveyImg,
+    };
 
-    console.log(JSON.stringify(surveyInfo))
+    console.log(JSON.stringify(surveyInfo));
 
+    axios
+      .post("/api/v1/survey?userId=1", surveyInfo)
+      .then(function (response) {
+        console.log(response);
+        handleClickSuccessDialogOpen();
+      })
+      .catch(function (error) {
+        console.log(error.message);
+        handleClickFailDialogOpen();
+      })
+      .finally(function () {
+        // always executed
+      });
+  };
 
-    axios.post(
-      "/api/v1/survey/create",surveyInfo
-    ).then(res =>console.log(res.data))
+  const handleSubmit = () => {
+    startDateValidate && endDateValidate
+      ? createSurvey()
+      : handleClickDialogOpen();
   };
   return (
     <SNavBar>
@@ -111,8 +227,14 @@ function NavBar() {
             설문 세부 설정
           </Typography>
           <Typography id="modal-modal-description">
-            설문 기간/ 설문 공개/ 설문 익명 여부를 결정해주세요.
+            설문의 세부 내용을 설정해주세요.
           </Typography>
+          <Box pt={3}>
+            <Typography id="anp" sx={{ mt: 1 }} variant="body2">
+              설문 대표 이미지 설정
+              <SurveyImg />
+            </Typography>
+          </Box>
           <Typography id="anp" sx={{ mt: 3 }} variant="body2">
             설문 익명 가능 여부
             <CustomSwitch
@@ -137,6 +259,7 @@ function NavBar() {
                 inputFormat={"yyyy-MM-dd"}
                 onChange={(newValue) => {
                   setStartDate(dayjs(newValue).format("YYYY-MM-DD"));
+                  setStartDateValidate(true);
                 }}
                 renderInput={({ inputRef, inputProps, InputProps }) => (
                   <Box
@@ -163,6 +286,7 @@ function NavBar() {
                 inputFormat={"yyyy-MM-dd"}
                 onChange={(newValue) => {
                   setEndDate(dayjs(newValue).format("YYYY-MM-DD"));
+                  setEndDateValidate(true);
                 }}
                 renderInput={({ inputRef, inputProps, InputProps }) => (
                   <Box
@@ -181,14 +305,104 @@ function NavBar() {
               />
             </LocalizationProvider>
           </Typography>
+          <Typography sx={{ mt: 2 }} variant="body2">
+            <SelectCategory />
+          </Typography>
         </Box>
       </Modal>
       <SaveBtn
         onClick={handleSubmit}
-        disabled={!(title.length && summary.length)}
+        disabled={!(title.length && summary.length && questionCount > 0)}
       >
         저장
       </SaveBtn>
+      <Dialog
+        open={invalidatoinDialogOpen}
+        onClose={handleDialogClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        sx={{
+          "& .MuiDialog-container": {
+            "& .MuiPaper-root": {
+              width: "100%",
+              maxWidth: "500px", // Set your width here
+            },
+          },
+        }}
+      >
+        <DialogTitle id="invalidate-dialog-title">알림</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="invalidate-dialog-description">
+            설문 시작 날짜와 종료 날짜를 확인해주세요!
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDialogClose}>취소</Button>
+          <Button onClick={handleDialogClose} autoFocus>
+            확인
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog
+        open={successDialogOpen}
+        onClose={handleSuccessDialogClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        sx={{
+          "& .MuiDialog-container": {
+            "& .MuiPaper-root": {
+              width: "100%",
+              maxWidth: "500px", // Set your width here
+            },
+          },
+        }}
+      >
+        <DialogTitle id="success-dialog-title">알림</DialogTitle>
+        <DialogContent>
+          <DialogContentText
+            id="success-dialog-description"
+            sx={{ color: "#202632" }}
+          >
+            설문 생성이 완료되었습니다!
+          </DialogContentText>
+          <DialogContentText sx={{ color: "#202632" }}>
+            공유 링크 : {sharingUrl}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleSuccessDialogConfirmClose} autoFocus>
+            확인
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog
+        open={failDialogOpen}
+        onClose={handleFailDialogClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        sx={{
+          "& .MuiDialog-container": {
+            "& .MuiPaper-root": {
+              width: "100%",
+              maxWidth: "500px", // Set your width here
+            },
+          },
+        }}
+      >
+        <DialogTitle id="success-dialog-title">알림</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="success-dialog-description">
+            설문 생성이 실패했습니다! 잠시 후, 다시 시도해주세요!
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleFailDialogClose} autoFocus>
+            확인
+          </Button>
+        </DialogActions>
+      </Dialog>
     </SNavBar>
   );
 }

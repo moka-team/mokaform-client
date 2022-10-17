@@ -11,6 +11,7 @@ const DetailContainer = styled.div`
 const Input = styled.input`
   border: none;
   background-color: #202632;
+  margin-bottom: 2px;
   color: white;
   &:focus {
     outline: none;
@@ -28,10 +29,10 @@ export default function DetailSurveyItem({ item }) {
     setDetailQuestionList(newList);
   };
 
-  const updateDetailItem = (e) => {
-    let newList = [...detailQuestionList].map((item) => {
-      if (item.index === index) return { ...item, content: e.target.value };
-      else return item;
+  const updateDetailItem = ({ target: { value } }) => {
+    const newList = replaceItemAtIndex(detailQuestionList, index, {
+      ...item,
+      content: value,
     });
     setDetailQuestionList(newList);
   };
@@ -40,7 +41,7 @@ export default function DetailSurveyItem({ item }) {
     <DetailContainer>
       <Input
         onChange={updateDetailItem}
-        value={item.text}
+        value={item.content}
         placeholder="응답옵션"
       />
       <DeleteIcon
@@ -50,6 +51,9 @@ export default function DetailSurveyItem({ item }) {
       />
     </DetailContainer>
   );
+}
+function replaceItemAtIndex(arr, index, newValue) {
+  return [...arr.slice(0, index), newValue, ...arr.slice(index + 1)];
 }
 function removeItemAtIndex(arr, index) {
   return [...arr.slice(0, index), ...arr.slice(index + 1)];

@@ -171,7 +171,7 @@ export default function Header() {
             MOKA FORM
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
-          <Search>
+          {/* <Search>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
@@ -180,7 +180,7 @@ export default function Header() {
               placeholder="Search"
               inputProps={{ "aria-label": "search" }}
             />
-          </Search>
+          </Search> */}
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <Button
               sx={{
