@@ -49,6 +49,8 @@ export default function NavBar() {
   };
 
   const handleSubmit = () => {
+    console.log(answerInfo);
+    console.log(JSON.stringify(answerInfo));
     axios.post("/api/v1/answer?userId=1", answerInfo).then((res) => {
       console.log(res.data);
       handleClickOpen();
