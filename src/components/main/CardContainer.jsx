@@ -12,6 +12,7 @@ import { faPen } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { useRecoilState } from "recoil";
 import { surveyList } from "../../atoms";
+import { Link } from "react-router-dom";
 function ServeyCard({ servey }) {
   return (
     <Grid container>
@@ -24,7 +25,6 @@ function ServeyCard({ servey }) {
           {servey.title}
         </Typography>
       </Grid>
-
       <Grid item xs={6} sx={{ pt: 1, mb: -1 }}>
         <Stack direction="row" spacing={0.5}>
           <FontAwesomeIcon
@@ -88,24 +88,29 @@ export default function CardContainer({ logined }) {
     <Grid container spacing={2}>
       {surveys.map((servey) => (
         <Grid item key={servey.surveyId} xs={6} sm={6} md={4} lg={3} xl={2.4}>
-          <CardActionArea>
-            <Card
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-              }}
-            >
-              <CardMedia
-                component="img"
-                image="https://source.unsplash.com/random"
-                alt="random"
-                sx={{ height: 256 }}
-              />
-              <CardContent sx={{ flexGrow: 1 }}>
-                <ServeyCard servey={servey} />
-              </CardContent>
-            </Card>
-          </CardActionArea>
+          <Link
+            to={`/survey/${servey.sharingKey}`}
+            style={{ textDecoration: "none" }}
+          >
+            <CardActionArea>
+              <Card
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                <CardMedia
+                  component="img"
+                  image="https://source.unsplash.com/random"
+                  alt="random"
+                  sx={{ height: 256 }}
+                />
+                <CardContent sx={{ flexGrow: 1 }}>
+                  <ServeyCard servey={servey} />
+                </CardContent>
+              </Card>
+            </CardActionArea>
+          </Link>
         </Grid>
       ))}
     </Grid>
