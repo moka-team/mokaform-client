@@ -101,6 +101,16 @@ export const submittedSurvey = atom({
   default: [],
 });
 
+export const createdMySurvey = atom({
+  key: "createdMySurvey",
+  default: [],
+});
+
+export const submittedMySurvey = atom({
+  key: "submittedMySurvey",
+  default: [],
+});
+
 export const createdQuestionCount = atom({
   key: "createdQuestionCount",
   default: 0,

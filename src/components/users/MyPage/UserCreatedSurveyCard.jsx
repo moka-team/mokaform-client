@@ -18,7 +18,7 @@ import { userState } from "../../../authentication/userState";
 import Loading from "../../surveys/participate/Loading";
 import Error from "../../surveys/participate/Error";
 import styled from "styled-components";
-
+import { createdMySurvey } from "../../../atoms";
 const ButtonContainer = styled.div`
   display: flex;
   align-items: center;
@@ -72,42 +72,43 @@ function SurveyCard({ survey }) {
 }
 
 export default function UserSurveyCard() {
-  const [createdMySurvey, setCreatedMySurvey] = useState(null);
+  // const [createdMySurvey, setCreatedMySurvey] = useState(null);
   const [user, setUser] = useRecoilState(userState);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const [createdSurvey, setCreatedSurvey] = useRecoilState(createdMySurvey);
   console.log(user);
-  useEffect(() => {
-    axios
-      .get("/api/v1/users/my/surveys", {
-        params: {
-          page: 0,
-          size: 4,
-          sort: "surveyeeCount,desc",
-          userId: user.id,
-        },
-      })
-      .then(function (response) {
-        console.log(response);
-        setCreatedMySurvey(response.data.data.content);
-        setLoading(false);
-      })
-      .catch(function (error) {
-        console.log(error.message);
-        setError(true);
-      })
-      .finally(function () {
-        // always executed
-      });
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get("/api/v1/users/my/surveys", {
+  //       params: {
+  //         page: 0,
+  //         size: 4,
+  //         sort: "surveyeeCount,desc",
+  //         userId: user.id,
+  //       },
+  //     })
+  //     .then(function (response) {
+  //       console.log(response);
+  //       setCreatedMySurvey(response.data.data.content);
+  //       setLoading(false);
+  //     })
+  //     .catch(function (error) {
+  //       console.log(error.message);
+  //       setError(true);
+  //     })
+  //     .finally(function () {
+  //       // always executed
+  //     });
+  // }, []);
 
-  if (error) return <Error></Error>;
-  if (loading) return <Loading></Loading>;
+  // if (error) return <Error></Error>;
+  // if (loading) return <Loading></Loading>;
 
   return (
     <Grid container spacing={1} sx={{ ml: 5, mt: 1, mb: 4, mr: -3 }}>
-      {createdMySurvey.map((survey) => (
+      {createdSurvey.map((survey) => (
         <Link
           to={`/my/survey/${survey.sharingKey}`}
           style={{ textDecoration: "none" }}

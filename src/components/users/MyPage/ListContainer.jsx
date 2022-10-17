@@ -3,8 +3,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-regular-svg-icons";
 import CircleCarousel from "./CircleCarousel";
 import UserSurveyCard from "./UserCreatedSurveyCard";
-import MySortSelect from "./MySortSelect";
+import MyCreatedSortSelect from "./MyCreatedSortSelect";
+import MySubmittedSortSelect from "./MySubmittedSortSelect";
+import UserCreatedSurveyCard from "./UserCreatedSurveyCard";
 import UserParticipatedSurveyCard from "./UserParticipatedSurveyCard";
+import { useRecoilState } from "recoil";
+import { userState } from "../../../authentication/userState";
 
 const Container = styled.div`
   display: flex;
@@ -30,6 +34,7 @@ const Block = styled.div`
 `;
 
 export default function ListContainer() {
+  const user = useRecoilState(userState);
   return (
     <Container>
       <Header>
@@ -43,16 +48,16 @@ export default function ListContainer() {
         <Block>
           <p>내가 만든 설문</p>
         </Block>
-        <MySortSelect />
+        <MyCreatedSortSelect userId={user.id} />
       </Header>
-      <UserSurveyCard />
+      <UserCreatedSurveyCard />
       <Header>
         <Block>
           <p>내가 참여한 설문</p>
         </Block>
-        <MySortSelect />
+        <MySubmittedSortSelect userId={user.id} />
       </Header>
-      <UserParticipatedSurveyCard></UserParticipatedSurveyCard>
+      <UserParticipatedSurveyCard />
     </Container>
   );
 }

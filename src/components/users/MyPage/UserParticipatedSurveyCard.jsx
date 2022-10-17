@@ -18,6 +18,7 @@ import { userState } from "../../../authentication/userState";
 import Loading from "../../surveys/participate/Loading";
 import Error from "../../surveys/participate/Error";
 import styled from "styled-components";
+import { submittedMySurvey } from "../../../atoms";
 
 const ButtonContainer = styled.div`
   display: flex;
@@ -25,7 +26,7 @@ const ButtonContainer = styled.div`
 `;
 
 function SurveyCard({ survey }) {
-  let category = survey.surveyCategories[0];
+  // let category = survey.surveyCategories[0];
   return (
     <Grid container>
       <Grid item xs={12} sx={{ pb: 1 }}>
@@ -54,7 +55,7 @@ function SurveyCard({ survey }) {
         </Stack>
       </Grid>
       <Grid item xs={7} align="right" sx={{ mt: 0.5, mb: -1 }}>
-        {
+        {/* {
           {
             HOBBY: <Chip label="취미" />,
             DAILY_LIFE: <Chip label="일상" />,
@@ -65,7 +66,7 @@ function SurveyCard({ survey }) {
             PREFERENCE_RESEARCH: <Chip label="선호도 조사" />,
             PET: <Chip label="반려동물" />,
           }[category]
-        }
+        } */}
       </Grid>
     </Grid>
   );
@@ -77,37 +78,40 @@ export default function UserParticipatedSurveyCard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  console.log(user);
-  useEffect(() => {
-    axios
-      .get("/api/v1/users/my/submitted-surveys", {
-        params: {
-          page: 0,
-          size: 4,
-          sort: "surveyeeCount,desc",
-          userId: 1,
-        },
-      })
-      .then(function (response) {
-        console.log(response);
-        setParticipatedSurvey(response.data.data.content);
-        setLoading(false);
-      })
-      .catch(function (error) {
-        console.log(error.message);
-        setError(true);
-      })
-      .finally(function () {
-        // always executed
-      });
-  }, []);
+  const [submittedSurvey, setSubmittedSurvey] =
+    useRecoilState(submittedMySurvey);
 
-  if (error) return <Error></Error>;
-  if (loading) return <Loading></Loading>;
+  console.log(user);
+  // useEffect(() => {
+  //   axios
+  //     .get("/api/v1/users/my/submitted-surveys", {
+  //       params: {
+  //         page: 0,
+  //         size: 4,
+  //         sort: "surveyeeCount,desc",
+  //         userId: 1,
+  //       },
+  //     })
+  //     .then(function (response) {
+  //       console.log(response);
+  //       setParticipatedSurvey(response.data.data.content);
+  //       setLoading(false);
+  //     })
+  //     .catch(function (error) {
+  //       console.log(error.message);
+  //       setError(true);
+  //     })
+  //     .finally(function () {
+  //       // always executed
+  //     });
+  // }, []);
+
+  // if (error) return <Error></Error>;
+  // if (loading) return <Loading></Loading>;
 
   return (
     <Grid container spacing={1} sx={{ ml: 5, mt: 1, mb: 4, mr: -3 }}>
-      {participatedSurvey.map((survey) => (
+      {submittedSurvey.map((survey) => (
         <Grid item key={survey.surveyId} xs={6} sm={6} md={4} lg={2} xl={2}>
           <CardActionArea sx={{ width: 200 }}>
             <Card
