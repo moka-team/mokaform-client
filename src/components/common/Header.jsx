@@ -16,6 +16,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { userState } from "../../authentication/userState";
+import { Logo } from "./Logo";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -161,15 +162,7 @@ export default function Header() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar style={appBarStyle}>
         <Toolbar>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: { xs: "none", sm: "block" } }}
-            onClick={onNavigateMain}
-          >
-            MOKA FORM
-          </Typography>
+          <Logo onClick={onNavigateMain}>MOKA FORM</Logo>
           <Box sx={{ flexGrow: 1 }} />
           {/* <Search>
             <SearchIconWrapper>
@@ -222,7 +215,7 @@ export default function Header() {
                     />
                   }
                 >
-                  모카 유저
+                  {user.nickname}
                 </Button>
               </>
             )}
