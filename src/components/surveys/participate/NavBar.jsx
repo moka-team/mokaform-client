@@ -64,15 +64,25 @@ export default function NavBar() {
   const handleSubmit = () => {
     const answerInfo = {
       essayAnswers:
-        essayAnswerList.length === 1
+        essayAnswerList.length === 0
+          ? []
+          : essayAnswerList.length === 1
           ? [essayAnswerList[0]]
           : essayAnswerList[0],
+
       multipleChoiceAnswers:
-        multiChoiceAnswerList.length === 1
+        multiChoiceAnswerList.length === 0
+          ? []
+          : multiChoiceAnswerList.length === 1
           ? [multiChoiceAnswerList[0]]
           : multiChoiceAnswerList[0],
+
       oxAnswers:
-        oxAnswerList.length === 1 ? [oxAnswerList[0]] : oxAnswerList[0],
+        oxAnswerList.length === 0
+          ? []
+          : oxAnswerList.length === 1
+          ? [oxAnswerList[0]]
+          : oxAnswerList[0],
     };
 
     console.log(JSON.stringify(answerInfo));
