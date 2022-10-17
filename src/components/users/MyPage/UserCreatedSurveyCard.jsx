@@ -106,6 +106,9 @@ export default function UserSurveyCard() {
   // if (error) return <Error></Error>;
   // if (loading) return <Loading></Loading>;
 
+
+  // console.log(createdMySurvey);
+  // console.log(submittedMySurvey);
   return (
     <Grid container spacing={1} sx={{ ml: 5, mt: 1, mb: 4, mr: -3 }}>
       {createdSurvey.map((survey) => (
@@ -137,10 +140,10 @@ export default function UserSurveyCard() {
         </Link>
       ))}
       <ButtonContainer>
-        <Link to={`/survey/${user.id}/manage`} surveyId={1}>
-          <RightButton />
-        </Link>
+      <Link to={`/survey/${user.id}/manage`} surveyId={1}>
+        <RightButton />
+      </Link>
       </ButtonContainer>
     </Grid>
-  );
+  ) 
 }

@@ -152,19 +152,19 @@ const CustomSelect = React.forwardRef(function CustomSelect(props, ref) {
 export default function SortSelect({ userId }) {
   const [surveys, setServeys] = useRecoilState(createdSurvey);
   const fetchRecentSurvey = async () => {
-    const response = await axios.get(
-      "/api/v1/users/my/surveys?sort=createdAt,asc",
-      {
-        params: {
-          userId: userId,
-        },
-      }
-    );
+    const response = await axios.get("/api/v1/users/my/surveys", {
+      params: {
+        page: 0,
+        size: 5,
+        sort: "createdAt,desc",
+        userId: 1,
+      },
+    });
     setServeys(response.data.data.content);
   };
   const fetchFamousSurvey = async () => {
     const response = await axios.get(
-      "/api/v1/users/my/surveys?sort=surveyeeCount,asc",
+      "/api/v1/users/my/surveys?sort=surveyeeCount,desc",
       {
         params: {
           userId: userId,
