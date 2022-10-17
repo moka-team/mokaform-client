@@ -120,6 +120,7 @@ export default function Header() {
 
     // local storage에 user 정보 삭제
     window.location.replace("http://localhost:3000/");
+    localStorage.clear();
     setUser(null);
   };
 
@@ -150,14 +151,6 @@ export default function Header() {
 
   const mobileMenuId = "primary-search-account-menu-mobile";
 
-  useEffect(() => {
-    if (user === null) {
-      setLogined(false);
-    } else {
-      setLogined(true);
-    }
-  }, [user]);
-
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar style={appBarStyle}>
@@ -187,7 +180,7 @@ export default function Header() {
             >
               설문 만들기
             </Button>
-            {logined === false ? (
+            {user === null ? (
               <Button
                 sx={{
                   fontSize: "15px",
