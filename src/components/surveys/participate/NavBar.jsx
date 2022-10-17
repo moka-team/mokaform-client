@@ -22,23 +22,21 @@ import { userState } from "../../../authentication/userState";
 export default function NavBar() {
   const user = useRecoilValue(userState);
 
-  const isEssayValidate = useRecoilValue(isEssayAnswerValidate);
-  const isMultiChoiceValidate = useRecoilValue(isMultiChoiceAnswerValidate);
-  const isOXValidate = useRecoilValue(isOXAnswerValidate);
+  const [isEssayValidate, setIsEssayValidate] = useRecoilState(
+    isEssayAnswerValidate
+  );
+  const [isMultiChoiceValidate, setIsMultiChoiceValidate] = useRecoilState(
+    isMultiChoiceAnswerValidate
+  );
+  const [isOXValidate, setIsOXValidate] = useRecoilState(isOXAnswerValidate);
 
   const [isSubmit, setIsSubmit] = useState(false);
-  const essayAnswerList = useRecoilValue(EssayAnswerListState);
-  const multiChoiceAnswerList = useRecoilState(MultipleChoiceAnswerListState);
-  const oxAnswerList = useRecoilState(oxAnswerListState);
-  const answerInfo = {
-    essayAnswers:
-      essayAnswerList.length === 1 ? [essayAnswerList[0]] : essayAnswerList[0],
-    multipleChoiceAnswers:
-      multiChoiceAnswerList.length === 1
-        ? [multiChoiceAnswerList[0]]
-        : multiChoiceAnswerList[0],
-    oxAnswers: oxAnswerList.length === 1 ? [oxAnswerList[0]] : oxAnswerList[0],
-  };
+  const [essayAnswerList, setEssayAnswerList] =
+    useRecoilState(EssayAnswerListState);
+  const [multiChoiceAnswerList, setMultiChoiceAnswerList] = useRecoilState(
+    MultipleChoiceAnswerListState
+  );
+  const [oxAnswerList, setOXAnswerList] = useRecoilState(oxAnswerListState);
   const [open, setOpen] = React.useState(false);
   const navigate = useNavigate();
 
@@ -51,13 +49,56 @@ export default function NavBar() {
     window.location.replace("http://localhost:3000/");
   };
 
+  const resetRecoilValue = () => {
+    setIsEssayValidate(false);
+    setIsMultiChoiceValidate(false);
+    setIsOXValidate(false);
+
+    setEssayAnswerList([]);
+    setMultiChoiceAnswerList([]);
+    setOXAnswerList([]);
+
+    console.log("모두삭제!");
+  };
+
   const handleSubmit = () => {
-    console.log(answerInfo);
+    const answerInfo = {
+      essayAnswers:
+        essayAnswerList.length === 1
+          ? [essayAnswerList[0]]
+          : essayAnswerList[0],
+      multipleChoiceAnswers:
+        multiChoiceAnswerList.length === 1
+          ? [multiChoiceAnswerList[0]]
+          : multiChoiceAnswerList[0],
+      oxAnswers:
+        oxAnswerList.length === 1 ? [oxAnswerList[0]] : oxAnswerList[0],
+    };
+
     console.log(JSON.stringify(answerInfo));
-    axios.post("/api/v1/answer?userId=" + user.id, answerInfo).then((res) => {
-      console.log(res.data);
-      handleClickOpen();
-    });
+
+    axios
+      .post("/api/v1/answer?userId=" + user.id, answerInfo)
+      .then(function (response) {
+        console.log(response);
+        resetRecoilValue();
+        handleClickOpen();
+      })
+      .catch(function (error) {
+        console.log(error.message);
+        resetRecoilValue();
+        // handleClickFailDialogOpen();
+      })
+      .finally(function () {
+        // always executed
+      });
+
+    // console.log(JSON.stringify(answerInfo));
+    // axios.post("/api/v1/answer?userId=" + user.id, answerInfo).then((res) => {
+    //   console.log(res.data);
+    //   handleClickOpen();
+    //   resetRecoilValue();
+    // });
   };
 
   return (
