@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import ByItem from "./ByItem";
-import Header from "../../../components/main/Header";
+import Header from "../../../components/common/Header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPrint } from "@fortawesome/free-solid-svg-icons";
 const Container = styled.div`

@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from "react";
-import Header from "../../main/Header";
+import Header from "../../common/Header";
 import { Container, TableSection, Text } from "./styled";
 import axios from "axios";
 import Error from "../participate/Error";

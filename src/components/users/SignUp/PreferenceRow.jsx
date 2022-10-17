@@ -95,8 +95,6 @@ export default function PreferenceRow() {
     }
   };
 
-  console.log(preference);
-
   return (
     <>
       <Title>관심사</Title>

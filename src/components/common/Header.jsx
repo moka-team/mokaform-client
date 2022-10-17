@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -14,6 +14,8 @@ import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { userState } from "../../authentication/userState";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -73,6 +75,7 @@ export default function Header() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const [logined, setLogined] = useState(false);
+  const [user, setUser] = useRecoilState(userState);
 
   const inputEl = useRef(null);
   const isMenuOpen = Boolean(anchorEl);
@@ -104,6 +107,21 @@ export default function Header() {
     handleMobileMenuClose();
   };
 
+  const handleNavigateMypage = () => {
+    setAnchorEl(null);
+    handleMobileMenuClose();
+    navigate("/mypage");
+  };
+
+  const handleLogout = () => {
+    setAnchorEl(null);
+    handleMobileMenuClose();
+
+    // local storage에 user 정보 삭제
+    window.location.replace("http://localhost:3000/");
+    setUser(null);
+  };
+
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
@@ -124,12 +142,20 @@ export default function Header() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>마이페이지</MenuItem>
-      <MenuItem onClick={handleMenuClose}>로그아웃</MenuItem>
+      <MenuItem onClick={handleNavigateMypage}>마이페이지</MenuItem>
+      <MenuItem onClick={handleLogout}>로그아웃</MenuItem>
     </Menu>
   );
 
   const mobileMenuId = "primary-search-account-menu-mobile";
+
+  useEffect(() => {
+    if (user === null) {
+      setLogined(false);
+    } else {
+      setLogined(true);
+    }
+  }, [user]);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
