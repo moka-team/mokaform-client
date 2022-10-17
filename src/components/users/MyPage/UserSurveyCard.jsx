@@ -15,8 +15,11 @@ import routes from "../../../routes";
 import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { userState } from "../../../authentication/userState";
+import { createdSurvey } from "../../../atoms";
+import { submittedSurvey } from "../../../atoms";
 function SurveyCard({ survey }) {
-  let category = survey.surveyCategories[0];
+  // let category = survey.surveyCategories[0];
+
   return (
     <Grid container>
       <Grid item xs={12} sx={{ pb: 1 }}>
@@ -45,7 +48,7 @@ function SurveyCard({ survey }) {
         </Stack>
       </Grid>
       <Grid item xs={7} align="right" sx={{ mt: 0.5, mb: -1 }}>
-        {
+        {/* {
           {
             HOBBY: <Chip label="취미" />,
             DAILY_LIFE: <Chip label="일상" />,
@@ -56,7 +59,7 @@ function SurveyCard({ survey }) {
             PREFERENCE_RESEARCH: <Chip label="선호도 조사" />,
             PET: <Chip label="반려동물" />,
           }[category]
-        }
+        } */}
       </Grid>
     </Grid>
   );
@@ -103,26 +106,33 @@ const writedSurvey = [
 
 export default function UserSurveyCard({ isCreated }) {
   const [createdMySurvey, setCreatedMySurvey] = useState(null);
+  const [submittedMySurvey, setSubmittedMySurvey] = useState(null);
   const [user, setUser] = useRecoilState(userState);
-  console.log(user);
-  useEffect(() => {
-    (async () => {
-      // TODO: 로그인 후 userId 부분 수정 필요!
-      const posts = await axios.get("/api/v1/users/my/surveys", {
-        params: {
-          page: 0,
-          size: 4,
-          sort: "surveyeeCount,desc",
-          userId: 1,
-        },
-      });
-      setCreatedMySurvey(posts.data.data.content);
-    })();
-  }, []);
+  const [surveys, setServeys] = useRecoilState(createdSurvey);
+  const [submitSurvey, setSubmitSurvey] = useRecoilState(submittedSurvey);
+  // useEffect(() => {
+  //   (async () => {
+  //     // TODO: 로그인 후 userId 부분 수정 필요!
+  //     const posts1 = await axios.get("/api/v1/users/my/surveys", {
+  //       params: {
+  //         page: 0,
+  //         size: 5,
+  //         sort: "createdAt,desc",
+  //         userId: 1,
+  //       },
+  //     });
+  //     console.log(posts1.data.data.content);
+  //     setCreatedMySurvey(posts1.data.data.content);
+  //   })();
+  // }, []);
 
-  return isCreated && createdMySurvey !== null ? (
+  // console.log(createdMySurvey);
+  // console.log(submittedMySurvey);
+  console.log(submitSurvey);
+  console.log(surveys);
+  return isCreated ? (
     <Grid container spacing={1} sx={{ ml: 5, mt: 1, mb: 4, mr: -3 }}>
-      {createdMySurvey.map((survey) => (
+      {surveys.map((survey) => (
         <Grid item key={survey.surveyId} xs={6} sm={6} md={4} lg={2} xl={2}>
           <CardActionArea sx={{ width: 200 }}>
             <Card
@@ -151,7 +161,7 @@ export default function UserSurveyCard({ isCreated }) {
     </Grid>
   ) : (
     <Grid container spacing={1} sx={{ ml: 5, mt: 1, mr: -3 }}>
-      {writedSurvey.map((survey) => (
+      {submitSurvey.map((survey) => (
         <Grid item key={survey.number} xs={6} sm={6} md={4} lg={2} xl={2}>
           <CardActionArea sx={{ width: 200 }}>
             <Card

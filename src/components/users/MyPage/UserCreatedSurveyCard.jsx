@@ -15,17 +15,10 @@ import routes from "../../../routes";
 import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { userState } from "../../../authentication/userState";
-import Loading from "../../surveys/participate/Loading";
-import Error from "../../surveys/participate/Error";
-import styled from "styled-components";
-
-const ButtonContainer = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
+import { createdSurvey } from "../../../atoms";
+import { submittedSurvey } from "../../../atoms";
 function SurveyCard({ survey }) {
-  let category = survey.surveyCategories[0];
+  // let category = survey.surveyCategories[0];
   return (
     <Grid container>
       <Grid item xs={12} sx={{ pb: 1 }}>
@@ -54,7 +47,7 @@ function SurveyCard({ survey }) {
         </Stack>
       </Grid>
       <Grid item xs={7} align="right" sx={{ mt: 0.5, mb: -1 }}>
-        {
+        {/* {
           {
             HOBBY: <Chip label="취미" />,
             DAILY_LIFE: <Chip label="일상" />,
@@ -65,7 +58,7 @@ function SurveyCard({ survey }) {
             PREFERENCE_RESEARCH: <Chip label="선호도 조사" />,
             PET: <Chip label="반려동물" />,
           }[category]
-        }
+        } */}
       </Grid>
     </Grid>
   );
@@ -73,6 +66,7 @@ function SurveyCard({ survey }) {
 
 export default function UserSurveyCard() {
   const [createdMySurvey, setCreatedMySurvey] = useState(null);
+  const [submittedMySurvey, setSubmittedMySurvey] = useState(null);
   const [user, setUser] = useRecoilState(userState);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -105,41 +99,66 @@ export default function UserSurveyCard() {
   if (error) return <Error></Error>;
   if (loading) return <Loading></Loading>;
 
-  return (
+
+  // console.log(createdMySurvey);
+  // console.log(submittedMySurvey);
+  console.log(submitSurvey);
+  console.log(surveys);
+  return isCreated ? (
     <Grid container spacing={1} sx={{ ml: 5, mt: 1, mb: 4, mr: -3 }}>
-      {createdMySurvey.map((survey) => (
-        <Link
-          to={`/my/survey/${survey.sharingKey}`}
-          style={{ textDecoration: "none" }}
-        >
-          <Grid item key={survey.surveyId} xs={6} sm={6} md={4} lg={2} xl={2}>
-            <CardActionArea sx={{ width: 200 }}>
-              <Card
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  width: 200,
-                }}
-              >
-                <CardMedia
-                  component="img"
-                  image="https://source.unsplash.com/random"
-                  alt="random"
-                  sx={{ height: 150 }}
-                />
-                <CardContent sx={{ flexGrow: 1 }}>
-                  <SurveyCard survey={survey} />
-                </CardContent>
-              </Card>
-            </CardActionArea>
-          </Grid>
-        </Link>
+      {surveys.map((survey) => (
+        <Grid item key={survey.surveyId} xs={6} sm={6} md={4} lg={2} xl={2}>
+          <CardActionArea sx={{ width: 200 }}>
+            <Card
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                width: 200,
+              }}
+            >
+              <CardMedia
+                component="img"
+                image="https://source.unsplash.com/random"
+                alt="random"
+                sx={{ height: 150 }}
+              />
+              <CardContent sx={{ flexGrow: 1 }}>
+                <SurveyCard survey={survey} />
+              </CardContent>
+            </Card>
+          </CardActionArea>
+        </Grid>
       ))}
-      <ButtonContainer>
-        <Link to={`/survey/${user.id}/manage`} surveyId={1}>
-          <RightButton />
-        </Link>
-      </ButtonContainer>
+      <Link to={`/survey/${user.id}/manage`} surveyId={1}>
+        <RightButton />
+      </Link>
+    </Grid>
+  ) : (
+    <Grid container spacing={1} sx={{ ml: 5, mt: 1, mr: -3 }}>
+      {submitSurvey.map((survey) => (
+        <Grid item key={survey.number} xs={6} sm={6} md={4} lg={2} xl={2}>
+          <CardActionArea sx={{ width: 200 }}>
+            <Card
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                width: 200,
+              }}
+            >
+              <CardMedia
+                component="img"
+                image="https://source.unsplash.com/random"
+                alt="random"
+                sx={{ height: 150 }}
+              />
+              <CardContent sx={{ flexGrow: 1 }}>
+                <SurveyCard survey={survey} />
+              </CardContent>
+            </Card>
+          </CardActionArea>
+        </Grid>
+      ))}
+      <RightButton />
     </Grid>
   );
 }

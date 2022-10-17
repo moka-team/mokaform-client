@@ -7,7 +7,9 @@ import OptionUnstyled, {
 } from "@mui/base/OptionUnstyled";
 import PopperUnstyled from "@mui/base/PopperUnstyled";
 import { styled } from "@mui/system";
-
+import { useRecoilState } from "recoil";
+import { submittedSurvey } from "../../../atoms";
+import axios from "axios";
 const blue = {
   100: "#DAECFF",
   200: "#99CCF3",
@@ -146,9 +148,44 @@ const CustomSelect = React.forwardRef(function CustomSelect(props, ref) {
   return <SelectUnstyled {...props} ref={ref} components={components} />;
 });
 
-export default function MySortSelect() {
+export default function MyCreatedSortSelect({ userId }) {
+  const [surveys, setServeys] = useRecoilState(submittedSurvey);
+  const fetchRecentSurvey = async () => {
+    const response = await axios.get("/api/v1/users/my/submitted-surveys", {
+      params: {
+        page: 0,
+        size: 5,
+        sort: "createdAt,desc",
+        userId: 1,
+      },
+    });
+    setServeys(response.data.data.content);
+  };
+  const fetchFamousSurvey = async () => {
+    const response = await axios.get("/api/v1/users/my/submitted-surveys", {
+      params: {
+        page: 0,
+        size: 5,
+        sort: "surveyeeCount,desc",
+        userId: 1,
+      },
+    });
+    setServeys(response.data.data.content);
+  };
+  const handleChange = (e) => {
+    if (e.target.innerHTML === "최신순") {
+      fetchRecentSurvey();
+    } else {
+      fetchFamousSurvey();
+    }
+  };
+
+  React.useEffect(() => {
+    fetchRecentSurvey();
+  }, []);
+
   return (
-    <CustomSelect defaultValue={"new"}>
+    <CustomSelect defaultValue={"new"} onChange={handleChange}>
       <StyledOption value={"new"}>최신순</StyledOption>
       <StyledOption value={"hot"}>참여자 많은순</StyledOption>
     </CustomSelect>
