@@ -26,7 +26,7 @@ const ButtonContainer = styled.div`
 `;
 
 function SurveyCard({ survey }) {
-  // let category = survey.surveyCategories[0];
+  let category = survey.surveyCategories[0];
   return (
     <Grid container>
       <Grid item xs={12} sx={{ pb: 1 }}>
@@ -55,7 +55,7 @@ function SurveyCard({ survey }) {
         </Stack>
       </Grid>
       <Grid item xs={7} align="right" sx={{ mt: 0.5, mb: -1 }}>
-        {/* {
+        {
           {
             HOBBY: <Chip label="취미" />,
             DAILY_LIFE: <Chip label="일상" />,
@@ -66,7 +66,7 @@ function SurveyCard({ survey }) {
             PREFERENCE_RESEARCH: <Chip label="선호도 조사" />,
             PET: <Chip label="반려동물" />,
           }[category]
-        } */}
+        }
       </Grid>
     </Grid>
   );
