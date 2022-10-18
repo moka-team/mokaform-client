@@ -90,7 +90,7 @@ function NavBar() {
 
   const handleSuccessDialogConfirmClose = () => {
     setSuccessDialogOpen(false);
-    window.location.replace("https://mokaform-client-q6w1.vercel.app/");
+    window.location.replace("http://localhost:3000/");
   };
 
   const handleClickFailDialogOpen = () => {
@@ -176,8 +176,7 @@ function NavBar() {
       .then(function (response) {
         console.log(response);
         setSharingUrl(
-          "https://mokaform-client-q6w1.vercel.app/survey/" +
-            response.data.data.sharingKey
+          "http://localhost:3000/survey/" + response.data.data.sharingKey
         );
         resetRecoilValue();
         handleClickSuccessDialogOpen();

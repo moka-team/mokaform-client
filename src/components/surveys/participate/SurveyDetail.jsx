@@ -47,7 +47,7 @@ export default function SurveyDetail({ sharingKey }) {
   useEffect(() => {
     if (user === null) {
       alert("로그인이 필요한 서비스입니다.");
-      window.location.replace("https://mokaform-client-q6w1.vercel.app/");
+      window.location.replace("http://localhost:3000/");
     }
   }, []);
 

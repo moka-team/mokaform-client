@@ -119,7 +119,7 @@ export default function Header() {
     handleMobileMenuClose();
 
     // local storage에 user 정보 삭제
-    window.location.replace("https://mokaform-client-q6w1.vercel.app/");
+    window.location.replace("http://localhost:3000/");
     localStorage.clear();
     setUser(null);
   };
