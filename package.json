@@ -52,11 +52,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "vercel": "vercel dev",
-    "dev": "concurrently npm:watch-*",
-    "watch-dev": "vite",
-    "watch-vercel": "vercel dev --listen 2999"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
