@@ -64,18 +64,10 @@ export default function OXQuestionItem({ item }) {
     <QuestionWrapper>
       <QuestionText color="#0064ff">Q{item.index + 1}</QuestionText>
       <QuestionText color="black">{item.title}</QuestionText>
-      <QuestionOption
-        id={item.questionId + "yes"}
-        value={true}
-        onClick={onClickHandler}
-      >
+      <QuestionOption id="yes" value={true} onClick={onClickHandler}>
         네 😀
       </QuestionOption>
-      <QuestionOption
-        id={item.questionId + "no"}
-        value={false}
-        onClick={onClickHandler}
-      >
+      <QuestionOption id="no" value={false} onClick={onClickHandler}>
         아니오 🥲
       </QuestionOption>
     </QuestionWrapper>
