@@ -1,0 +1,5 @@
+[[redirects]]
+  from = "/proxy/*"
+  to = "http://210.109.60.220:8080"
+  status = 200
+  force = true
