@@ -54,7 +54,7 @@ export default function SignUpForm() {
   };
 
   let ValidateInfo = false;
-  const URL = `http://210.109.60.220:8080/api/v1/users/signup`;
+  const URL = `http://ip-210-109-60-220.c.kr-central-1.kakaokic.com./api/v1/users/signup`;
 
   const signUpPatch = () => {
     axios
