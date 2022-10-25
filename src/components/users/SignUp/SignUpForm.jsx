@@ -58,6 +58,7 @@ export default function SignUpForm() {
   const URL = `${PROXY}/api/v1/users/signup`;
 
   const signUpPatch = () => {
+    console.log(URL);
     axios
       .post(URL, {
         email: email,
