@@ -29,6 +29,7 @@
     "concurrently": "^7.4.0",
     "date-fns": "^2.29.3",
     "dayjs": "^1.11.5",
+    "http-proxy-middleware": "^2.0.6",
     "luxon": "^2.5.0",
     "moment": "^2.29.4",
     "react": "^18.2.0",
@@ -77,6 +78,5 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
     "prettier": "^2.7.1"
-  },
-  "proxy": "http://210.109.60.220:8080"
+  }
 }
