@@ -54,7 +54,8 @@ export default function SignUpForm() {
   };
 
   let ValidateInfo = false;
-  const URL = `/api/v1/users/signup`;
+  const PROXY = window.location.hostname === "localhost" ? "" : "/proxy";
+  const URL = `${PROXY}/api/v1/users/signup`;
 
   const signUpPatch = () => {
     axios
