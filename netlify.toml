@@ -1,5 +1,5 @@
 [[redirects]]
-  from = "*/proxy/*"
+  from = "/proxy/*"
   to = "http://210.109.60.220:8080/:splat"
   status = 200
   force = true
