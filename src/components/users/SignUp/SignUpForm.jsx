@@ -55,13 +55,9 @@ export default function SignUpForm() {
 
   let ValidateInfo = false;
 
-  const PROXY = window.location.hostname === "localhost" ? "" : "http://210.109.60.220:8080";
-  const URL = `${PROXY}/api/v1/users/signup`;
-
-  console.log("http://210.109.60.220:8080/api/v1/users/signup")
   const signUpPatch = () => {
     axios
-      .post(URL, {
+      .post("http://210.109.60.220:8080/api/v1/users/signup", {
         email: email,
         password: password,
         nickname: nickname,
