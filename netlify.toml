@@ -1,6 +1,6 @@
 [[redirects]]
-  from = "https://feat-deploy--papaya-horse-fada9b.netlify.app/"
-  to = "http://210.109.60.220:8080/:aplat"
+  from = "/api/*"
+  to = "http://210.109.60.220:8080/api/:splat"
   status = 200
   force = true
 
