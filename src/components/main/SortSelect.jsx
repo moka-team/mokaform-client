@@ -161,6 +161,7 @@ export default function SortSelect() {
       },
     });
     setServeys(response.data.data.content);
+    console.log(response.data.data.content);
     setSurveySort("new");
   };
   const fetchFamousSurvey = async () => {
@@ -172,6 +173,7 @@ export default function SortSelect() {
       },
     });
     setServeys(response.data.data.content);
+    console.log(response.data.data.content);
     setSurveySort("hot");
   };
   const handleChange = (e) => {
