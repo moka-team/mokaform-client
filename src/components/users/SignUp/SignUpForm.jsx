@@ -84,12 +84,10 @@ export default function SignUpForm() {
           window.alert("회원가입이 완료되었습니다.");
           navigate("/");
         } else {
-          console.log(response)
           window.alert("회원가입 에러 발생");
         }
       })
       .catch(function (error) {
-        console.log(response)
         console.log(error);
       });
   };
