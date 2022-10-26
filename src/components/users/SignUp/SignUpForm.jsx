@@ -55,7 +55,7 @@ export default function SignUpForm() {
 
   let ValidateInfo = false;
 
-  const PROXY = window.location.hostname === "localhost" ? "" : "/proxy";
+  const PROXY = window.location.hostname === "localhost" ? "" : "http://210.109.60.220:8080";
   const URL = `${PROXY}/api/v1/users/signup`;
 
   console.log(URL)
@@ -89,6 +89,7 @@ export default function SignUpForm() {
         }
       })
       .catch(function (error) {
+        console.log(response)
         console.log(error);
       });
   };
