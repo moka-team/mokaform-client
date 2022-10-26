@@ -79,5 +79,5 @@
     "eslint-plugin-prettier": "^4.2.1",
     "prettier": "^2.7.1"
   },
-  "proxy": "http://http://ip-210-109-60-220.c.kr-central-1.kakaokic.com."
+  "proxy": "http://210.109.60.220:8080"
 }
