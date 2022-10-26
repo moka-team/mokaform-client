@@ -4,6 +4,12 @@
   status = 200
   force = true
 
+[[redirects]]
+  from = "/*"
+  to = "https://papaya-horse-fada9b.netlify.app/:splat"
+  status = 200
+  force = true
+
 [[headers]]
  for = "/*"
     [headers.values]
