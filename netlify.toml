@@ -1,9 +1,9 @@
 [[redirects]]
-  from = "/api"
+  from = "/proxy/*"
   to = "http://210.109.60.220:8080"
   status = 200
   force = true
-
+  headers = {X-From = "Netlify"}
 [[headers]]
  for = "/*"
     [headers.values]
