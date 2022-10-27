@@ -12,6 +12,7 @@ import {
   isPasswordConfirmState,
 } from "./SignUpState";
 import { Box } from "@mui/material";
+import axios from "axios";
 
 export default function SignEssentialForm({}) {
   // 이메일, 닉네임, 비밀번호, 비밀번호 확인
@@ -45,8 +46,34 @@ export default function SignEssentialForm({}) {
       setEmailMessage("이메일 형식으로 입력해주세요.");
       setIsEmail(false);
     } else {
-      setEmailMessage("올바른 이메일 형식입니다.");
-      setIsEmail(true);
+      axios
+        .get("/api/v1/users/check-email-duplication", {
+          params: {
+            email: emailCurrent,
+          },
+        })
+        .then(function (response) {
+          if (response.data.message.includes("성공")) {
+            if (response.data.data.isDuplicated === false) {
+              setEmailMessage("사용 가능한 이메일입니다.");
+              setIsEmail(true);
+            } else {
+              setEmailMessage(
+                "중복 이메일이 있습니다. 다른 이메일을 입력해주세요."
+              );
+              setIsEmail(false);
+            }
+          } else {
+            console.log("에러발생");
+            setEmailMessage(
+              "중복 이메일이 있습니다. 다른 이메일을 입력해주세요."
+            );
+            setIsEmail(false);
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     }
   }, []);
 
@@ -54,11 +81,38 @@ export default function SignEssentialForm({}) {
     (e) => {
       setNickname(e.target.value);
       if (e.target.value.length < 2 || e.target.value.length > 5) {
-        setNicknameMessage("2글자 이상 5글자 미만으로 입력해주세요.");
+        setNicknameMessage("2글자 이상 5글자 이하로 입력해주세요.");
         setIsNickname(false);
       } else {
-        setNicknameMessage("올바른 닉네임 형식입니다.");
-        setIsNickname(true);
+        axios
+          .get("/api/v1/users/check-nickname-duplication", {
+            params: {
+              nickname: e.target.value,
+            },
+          })
+          .then(function (response) {
+            if (response.data.message.includes("성공")) {
+              console.log(response.data.data.isDuplicated);
+              if (response.data.data.isDuplicated === false) {
+                setNicknameMessage("사용 가능한 닉네임입니다.");
+                setIsNickname(true);
+              } else {
+                setNicknameMessage(
+                  "중복 닉네임이 있습니다. 다른 닉네임을 입력해주세요."
+                );
+                setIsNickname(false);
+              }
+            } else {
+              console.log("에러발생");
+              setNicknameMessage(
+                "중복 닉네임이 있습니다. 다른 닉네임을 입력해주세요."
+              );
+              setIsNickname(false);
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
       }
     },
     [setNickname]
