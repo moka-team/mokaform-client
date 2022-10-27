@@ -93,13 +93,17 @@ export const surveyForSubmit = atom({
   default: [],
 });
 
-//
 export const surveyList = atom({
   key: "surveyList",
   default: [],
 });
 
 // 마이페이지
+export const surveyForSubmitted = atom({
+  key: "surveyForSubmitted",
+  default: [],
+});
+
 export const surveySortState = atom({
   key: "surveySortState",
   default: "new",

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { userState } from "../../../authentication/userState";
 import axios from "axios";
 import {
@@ -15,11 +15,12 @@ import InquireEssayQuestionItem from "./EssayQuestionItem";
 import InquireMultipleChoiceQuestionItem from "./MultipleChoiceQuestionItem";
 import InquireOXQuestionItem from "./OXQuestionItem";
 import DeleteSurvey from "../participate/DeleteSurvey";
+import { surveyForSubmitted } from "../../../atoms";
 
 export default function SubmittedSurvey({ sharingKey }) {
   const user = useRecoilValue(userState);
 
-  const [survey, setSurvey] = useState(null);
+  const [survey, setSurvey] = useRecoilState(surveyForSubmitted);
   const [loading, setLoading] = useState(true);
 
   const [error, setError] = useState(null);
@@ -43,7 +44,7 @@ export default function SubmittedSurvey({ sharingKey }) {
       })
       .then(function (response) {
         console.log(response);
-        setSurvey(response.data);
+        setSurvey(response.data.data);
         setIsDeleted(response.data.data.isDeleted);
         setLoading(false);
       })
@@ -65,9 +66,9 @@ export default function SubmittedSurvey({ sharingKey }) {
     <Container>
       <SNavBar></SNavBar>
       <Survey>
-        <TitleText>{survey.data.title}</TitleText>
-        <SummaryText>{survey.data.summary}</SummaryText>
-        {survey.data.questions.map((question) =>
+        <TitleText>{survey.title}</TitleText>
+        <SummaryText>{survey.summary}</SummaryText>
+        {survey.questions.map((question) =>
           question.type === "ESSAY" ? (
             <InquireEssayQuestionItem
               key={question.questionId}
@@ -84,7 +85,7 @@ export default function SubmittedSurvey({ sharingKey }) {
             <InquireMultipleChoiceQuestionItem
               key={question.questionId}
               item={question}
-              multiquestion={survey.data.multiQuestions}
+              multiquestion={survey.multiQuestions}
               sharingKey={sharingKey}
             ></InquireMultipleChoiceQuestionItem>
           )
