@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { QuestionWrapper, QuestionOption, QuestionText } from "./styled";
-import { oxAnswerListState, oxAnswerValidateCount } from "../../../atoms";
-import { useRecoilState } from "recoil";
+import {
+  oxAnswerListState,
+  oxAnswerValidateCount,
+  surveyForSubmit,
+} from "../../../atoms";
+import { useRecoilState, useRecoilValue } from "recoil";
 
 export default function OXQuestionItem({ item }) {
   const [currentClick, setCurrentClick] = useState(null);
@@ -16,9 +20,11 @@ export default function OXQuestionItem({ item }) {
     isYes: null,
   });
 
-  const index = oxAnswerList.findIndex(
-    (listItem) => listItem.questionId === oxAnswer.questionId
+  const survey = useRecoilValue(surveyForSubmit);
+  const index = survey.questions.findIndex(
+    (listItem) => listItem.questionId === item.questionId
   );
+
   const yes = `${item.questionId} yes`;
   const no = `${item.questionId} no`;
 
@@ -68,7 +74,7 @@ export default function OXQuestionItem({ item }) {
 
   return (
     <QuestionWrapper>
-      <QuestionText color="#0064ff">Q{item.index + 1}</QuestionText>
+      <QuestionText color="#0064ff">Q{index + 1}</QuestionText>
       <QuestionText color="black">{item.title}</QuestionText>
       <QuestionOption id={yes} value={true} onClick={onClickHandler}>
         네 😀

@@ -170,7 +170,10 @@ function NavBar() {
       // surveyImage: surveyImg,
     };
 
+    console.log("===================================");
     console.log(JSON.stringify(surveyInfo));
+    console.log("===================================");
+
     axios
       .post("/api/v1/survey?userId=" + user.id, surveyInfo)
       .then(function (response) {
