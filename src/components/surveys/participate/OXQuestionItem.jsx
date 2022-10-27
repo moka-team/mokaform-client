@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { QuestionWrapper, QuestionOption, QuestionText } from "./styled";
-import { oxAnswerListState, isOXAnswerValidate } from "../../../atoms";
+import {
+  oxAnswerListState,
+  isOXAnswerValidate,
+  oxAnswerValidateCount,
+} from "../../../atoms";
 import { useRecoilState } from "recoil";
 
 export default function OXQuestionItem({ item }) {
@@ -9,6 +13,9 @@ export default function OXQuestionItem({ item }) {
   const [prevClick, setPrevClick] = useState(null);
 
   const [oxAnswerList, setOXAnswerList] = useRecoilState(oxAnswerListState);
+  const [oxValidateCount, setOXValidateCount] = useRecoilState(
+    oxAnswerValidateCount
+  );
   const [oxAnswer, setOXAnswer] = useState({
     questionId: item.questionId,
     isYes: null,
@@ -23,6 +30,10 @@ export default function OXQuestionItem({ item }) {
   }, []);
 
   const onClickHandler = (event) => {
+    prevClick === null
+      ? setOXValidateCount(oxValidateCount + 1)
+      : setOXValidateCount(oxValidateCount);
+
     if (prevClick !== null && prevClick !== event.target.id) {
       let prev = document.getElementById(prevClick);
       prev.style.color = "black";
