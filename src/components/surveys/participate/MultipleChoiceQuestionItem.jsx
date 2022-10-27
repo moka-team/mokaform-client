@@ -3,8 +3,9 @@ import { QuestionWrapper, QuestionOption, QuestionText } from "./styled";
 import {
   MultipleChoiceAnswerListState,
   multiChoiceAnswerValidateCount,
+  surveyForSubmit,
 } from "../../../atoms";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 
 export default function MultipleChoiceQuestionItem({ item, multiquestion }) {
   const [multiChoiceAnswerList, setMultiChoiceAnswerList] = useRecoilState(
@@ -18,6 +19,11 @@ export default function MultipleChoiceQuestionItem({ item, multiquestion }) {
     useRecoilState(multiChoiceAnswerValidateCount);
   const index = multiChoiceAnswerList.findIndex(
     (listItem) => listItem.questionId === multiChoiceAnswer.questionId
+  );
+
+  const survey = useRecoilValue(surveyForSubmit);
+  const qIndex = survey.data.questions.findIndex(
+    (listItem) => listItem.questionId === item.questionId
   );
 
   const [currentClick, setCurrentClick] = useState(null);
@@ -71,7 +77,7 @@ export default function MultipleChoiceQuestionItem({ item, multiquestion }) {
   );
   return (
     <QuestionWrapper>
-      <QuestionText color="#0064ff">Q{item.index + 1}</QuestionText>
+      <QuestionText color="#0064ff">Q{qIndex + 1}</QuestionText>
       <QuestionText color="black">{item.title}</QuestionText>
       {multiquestion
         .filter(
