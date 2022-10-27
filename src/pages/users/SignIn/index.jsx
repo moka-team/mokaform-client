@@ -2,6 +2,7 @@ import { Box, StyledEngineProvider } from "@mui/material";
 import styled from "styled-components";
 import LoginFormContainer from "../../../components/users/SignIn/LoginFormContainer";
 import { SignInLogo } from "../../../components/common/Logo";
+import { useEffect } from "react";
 const Container = styled.div`
   display: flex;
   align-items: center;
@@ -30,7 +31,13 @@ const Logo = styled.img`
   height: 144px;
 `;
 
-function SignIn() {
+function SignIn({ signInAlert }) {
+  console.log(signInAlert);
+  useEffect(() => {
+    if (signInAlert === true) {
+      alert("로그인이 필요한 서비스입니다.");
+    }
+  }, []);
   return (
     <Container>
       <StyledEngineProvider injectFirst>

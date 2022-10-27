@@ -7,3 +7,8 @@ export const userState = atom({
   default: null,
   effects_UNSTABLE: [persistAtom],
 });
+
+export const loginCallback = atom({
+  key: "loginCallback",
+  default: false,
+});

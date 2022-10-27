@@ -90,7 +90,7 @@ function NavBar() {
 
   const handleSuccessDialogConfirmClose = () => {
     setSuccessDialogOpen(false);
-    window.location.replace("http://localhost:3000/");
+    window.location.replace("/");
   };
 
   const handleClickFailDialogOpen = () => {
@@ -179,7 +179,7 @@ function NavBar() {
       .then(function (response) {
         console.log(response);
         setSharingUrl(
-          "http://localhost:3000/survey/" + response.data.data.sharingKey
+          "https://mokaform.netlify.app/survey/" + response.data.data.sharingKey
         );
         resetRecoilValue();
         handleClickSuccessDialogOpen();

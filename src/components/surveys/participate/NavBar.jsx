@@ -54,7 +54,7 @@ export default function NavBar() {
 
   const handleClose = () => {
     setOpen(false);
-    window.location.replace("http://localhost:3000/");
+    window.location.replace("/");
   };
 
   const resetRecoilValue = () => {

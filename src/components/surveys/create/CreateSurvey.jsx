@@ -60,11 +60,6 @@ export default function CreateSurvey() {
 
   useEffect(() => {
     resetRecoilValue();
-
-    if (user === null) {
-      alert("로그인이 필요한 서비스입니다.");
-      window.location.replace("http://localhost:3000/");
-    }
   }, []);
 
   return (
