@@ -1,6 +1,7 @@
 import { atom } from "recoil";
 import dayjs from "dayjs";
 
+// 설문 생성
 export const surveyTitle = atom({
   key: "surveyTitle",
   default: "",
@@ -66,6 +67,7 @@ export const oxAnswerListState = atom({
   default: [],
 });
 
+// 설문 답변 생성
 export const essayAnswerValidateCount = atom({
   key: "essayAnswerValidateCount",
   default: 0,
@@ -86,8 +88,24 @@ export const surveyQuestionCount = atom({
   default: 0,
 });
 
+export const surveyForSubmit = atom({
+  key: "surveyForSubmit",
+  default: [],
+});
+
 export const surveyList = atom({
   key: "surveyList",
+  default: [],
+});
+
+// 마이페이지
+export const surveyForSubmitted = atom({
+  key: "surveyForSubmitted",
+  default: [],
+});
+
+export const surveyForCreated = atom({
+  key: "surveyForCreated",
   default: [],
 });
 
