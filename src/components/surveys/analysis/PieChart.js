@@ -34,13 +34,13 @@ export default function PieChart({ data }) {
         padAngle={0.7}
         cornerRadius={3}
         activeOuterRadiusOffset={8}
-        colors={{ scheme: "blues" }}
+        colors={{ scheme: "paired" }}
         borderWidth={1}
         borderColor={{
           from: "color",
           modifiers: [["darker", 0.2]],
         }}
-        enableArcLinkLabels={false}
+        
         arcLinkLabelsSkipAngle={10}
         arcLinkLabelsTextColor="#333333"
         arcLinkLabelsThickness={2}
