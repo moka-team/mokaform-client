@@ -16,11 +16,12 @@ import {
   essayAnswerValidateCount,
   oxAnswerValidateCount,
   multiChoiceAnswerValidateCount,
+  surveyForSubmit,
 } from "../../../atoms";
-import { useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 
 export default function SurveyDetail({ sharingKey }) {
-  const [survey, setSurvey] = useState(null);
+  const [survey, setSurvey] = useRecoilState(surveyForSubmit);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
