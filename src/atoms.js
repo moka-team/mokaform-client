@@ -66,21 +66,6 @@ export const oxAnswerListState = atom({
   default: [],
 });
 
-export const isEssayAnswerValidate = atom({
-  key: "isEssayAnswerValidate",
-  default: false,
-});
-
-export const isMultiChoiceAnswerValidate = atom({
-  key: "isMultiChoiceAnswerValidate",
-  default: false,
-});
-
-export const isOXAnswerValidate = atom({
-  key: "isOXAnswerValidate",
-  default: false,
-});
-
 export const essayAnswerValidateCount = atom({
   key: "essayAnswerValidateCount",
   default: 0,

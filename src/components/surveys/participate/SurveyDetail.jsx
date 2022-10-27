@@ -9,9 +9,6 @@ import Loading from "./Loading";
 import Error from "./Error";
 import DeleteSurvey from "./DeleteSurvey";
 import {
-  isEssayAnswerValidate,
-  isMultiChoiceAnswerValidate,
-  isOXAnswerValidate,
   EssayAnswerListState,
   MultipleChoiceAnswerListState,
   oxAnswerListState,
@@ -31,11 +28,6 @@ export default function SurveyDetail({ sharingKey }) {
   const [isDeleted, setIsDeleted] = useState(false);
 
   const setSurveyQuestionCount = useSetRecoilState(surveyQuestionCount);
-  const setIsEssayValidate = useSetRecoilState(isEssayAnswerValidate);
-  const setIsMultiChoiceValidate = useSetRecoilState(
-    isMultiChoiceAnswerValidate
-  );
-  const setIsOXValidate = useSetRecoilState(isOXAnswerValidate);
 
   // 답변 저장 관련 변수
   const setEssayValidateCount = useSetRecoilState(essayAnswerValidateCount);
@@ -78,24 +70,6 @@ export default function SurveyDetail({ sharingKey }) {
         setSurvey(response.data);
         setIsDeleted(response.data.data.isDeleted);
         setSurveyQuestionCount(response.data.data.questionCount);
-
-        response.data.data.questions.filter(
-          (question) => question.type == "ESSAY"
-        ).length === 0
-          ? setIsEssayValidate(true)
-          : setIsEssayValidate(false);
-
-        response.data.data.questions.filter(
-          (question) => question.type == "MULTIPLE_CHOICE"
-        ).length === 0
-          ? setIsMultiChoiceValidate(true)
-          : setIsMultiChoiceValidate(false);
-
-        response.data.data.questions.filter((question) => question.type == "OX")
-          .length === 0
-          ? setIsOXValidate(true)
-          : setIsOXValidate(false);
-
         setLoading(false);
       })
       .catch(function (error) {

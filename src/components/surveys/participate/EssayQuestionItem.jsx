@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { QuestionWrapper, QuestionText, Answer } from "./styled";
-import {
-  EssayAnswerListState,
-  isEssayAnswerValidate,
-  essayAnswerValidateCount,
-} from "../../../atoms";
+import { EssayAnswerListState, essayAnswerValidateCount } from "../../../atoms";
 import { useRecoilState } from "recoil";
 
 export default function EssayQuestionItem({ item }) {
@@ -12,9 +8,6 @@ export default function EssayQuestionItem({ item }) {
     useRecoilState(EssayAnswerListState);
   const [essayValidateCount, setEssayValidateCount] = useRecoilState(
     essayAnswerValidateCount
-  );
-  const [isEssayValidate, setIsEssayValidate] = useRecoilState(
-    isEssayAnswerValidate
   );
   const [essayAnswer, setEssayAnswer] = useState({
     questionId: item.questionId,
@@ -35,8 +28,6 @@ export default function EssayQuestionItem({ item }) {
   }, []);
 
   const onChange = ({ target: { value } }) => {
-    value.length === 0 ? setIsEssayValidate(false) : setIsEssayValidate(true);
-
     value.length === 0 && prevAnswer.length === 1
       ? setEssayValidateCount(essayValidateCount - 1)
       : value.length === 1 && prevAnswer.length === 0
