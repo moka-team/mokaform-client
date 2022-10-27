@@ -43,7 +43,6 @@ export default function ShowSurvey({ sharingKey }) {
 
   return (
     <Container>
-      <NavBar></NavBar>
       <Survey>
         <TitleText>{survey.title}</TitleText>
         <SummaryText>{survey.summary}</SummaryText>
