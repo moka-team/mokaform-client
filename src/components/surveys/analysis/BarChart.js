@@ -2,7 +2,7 @@ import { ResponsiveBar } from "@nivo/bar";
 import styled from "styled-components";
 
 const BarChartContainer = styled.div`
-  height: 200px;
+  height: 100px;
   width: 500px;
   margin-bottom: 50px;
 `;
@@ -14,7 +14,7 @@ export default function BarChart({ data }) {
         data={data}
         keys={["Yes", "No"]}
         indexBy="count"
-        margin={{ top: 50, right: 50, bottom: 50, left: 50 }}
+        margin={{ top: 0, right: 50, bottom: 0, left: 50 }}
         padding={0.3}
         layout="horizontal"
         valueScale={{ type: "linear" }}
