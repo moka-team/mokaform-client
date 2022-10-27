@@ -8,11 +8,27 @@ const PieChartContainer = styled.div`
   margin-bottom: 50px;
 `;
 
+const formatting = (data) => {
+  const result = [];
+  data.forEach((ele, idx) => {
+    const tmp = {};
+    tmp.id = idx;
+    tmp.label = idx;
+    tmp.content = ele.multiQuestionContent;
+    tmp.value = ele.multiQuestionContentCount;
+
+    result.push(tmp);
+  });
+  return result;
+};
+
 export default function PieChart({ data }) {
+  const result = formatting(data);
+
   return (
     <PieChartContainer>
       <ResponsivePie
-        data={data}
+        data={result}
         margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
         innerRadius={0.5}
         padAngle={0.7}

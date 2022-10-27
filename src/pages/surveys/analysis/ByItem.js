@@ -33,6 +33,7 @@ export default function ByItem({ result }) {
         {/* 찬부식 */}
         {result["oxStats"].map((item) => (
           <>
+            <Title>{item.title}</Title>
             <OXAnalysis item={item} />
             <BarChart data={[{ Yes: item.yes, No: item.no }]} />
           </>
@@ -41,8 +42,18 @@ export default function ByItem({ result }) {
         {/* 주관식 */}
         {result["essayStats"].map((item) => (
           <>
+            <Title>{item.title}</Title>
             <WordCloud item={item.answerContents} />
             <EssayComponent data={item.answerContents}></EssayComponent>
+          </>
+        ))}
+
+        {/* 객관식 */}
+        {result["multipleChoiceStats"].map((item) => (
+          <>
+            <Title>{item.title}</Title>
+            <PieChart data={item.results} />
+            <MultipleChoiceAnalysis item={item.results} />
           </>
         ))}
       </Wrapper>

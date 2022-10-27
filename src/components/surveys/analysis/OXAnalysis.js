@@ -17,7 +17,6 @@ export default function OXAnalysis({ item }) {
     <OXResult>
       {item.yes >= item.no ? (
         <>
-          <p>{item.title} 문제에 대해</p>
           <p>
             <span>예</span>라고 답한 사람이 <span>{item.yes}</span>
             명으로
