@@ -7,14 +7,19 @@ import MyCreatedSortSelect from "./MyCreatedSortSelect";
 import MySubmittedSortSelect from "./MySubmittedSortSelect";
 import UserCreatedSurveyCard from "./UserCreatedSurveyCard";
 import UserParticipatedSurveyCard from "./UserParticipatedSurveyCard";
-import { useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { userState } from "../../../authentication/userState";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 80%;
   height: 90%;
+`;
+
+const Box = styled.div`
+  display: flex;
 `;
 
 const Header = styled.div`
@@ -34,6 +39,7 @@ const Block = styled.div`
 `;
 
 export default function ListContainer() {
+  const user = useRecoilValue(userState);
   return (
     <Container>
       <Header>
@@ -44,16 +50,24 @@ export default function ListContainer() {
       </Header>
       <CircleCarousel />
       <Header>
-        <Block>
-          <p>내가 만든 설문</p>
-        </Block>
+        <Box>
+          <Block>
+            <p>내가 만든 설문</p>
+          </Block>
+          <Link to={`/survey/${user.id}/manage`} surveyId={1}>
+            <FontAwesomeIcon icon={faEdit} color="gray" />
+          </Link>
+        </Box>
         <MyCreatedSortSelect />
       </Header>
       <UserCreatedSurveyCard />
       <Header>
-        <Block>
-          <p>내가 참여한 설문</p>
-        </Block>
+        <Box>
+          <Block>
+            <p>내가 참여한 설문</p>
+          </Block>
+          <FontAwesomeIcon icon={faEdit} color="gray" />
+        </Box>
         <MySubmittedSortSelect />
       </Header>
       <UserParticipatedSurveyCard />
