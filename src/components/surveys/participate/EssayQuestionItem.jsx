@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { QuestionWrapper, QuestionText, Answer } from "./styled";
-import {
-  EssayAnswerListState,
-  essayAnswerValidateCount,
-  surveyForSubmit,
-} from "../../../atoms";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { EssayAnswerListState, essayAnswerValidateCount } from "../../../atoms";
+import { useRecoilState } from "recoil";
 
 export default function EssayQuestionItem({ item }) {
   const [essayAnswerList, setEssayAnswerList] =
@@ -19,10 +15,9 @@ export default function EssayQuestionItem({ item }) {
   });
   const [prevAnswer, setPrevAnswer] = useState("");
   const [currentAnswer, setCurrentAnswer] = useState("");
-  const survey = useRecoilValue(surveyForSubmit);
 
-  const index = survey.questions.findIndex(
-    (listItem) => listItem.questionId === item.questionId
+  const index = essayAnswerList.findIndex(
+    (listItem) => listItem.questionId === essayAnswer.questionId
   );
 
   useEffect(() => {
@@ -59,7 +54,7 @@ export default function EssayQuestionItem({ item }) {
 
   return (
     <QuestionWrapper>
-      <QuestionText color="#0064ff">Q{index + 1}</QuestionText>
+      <QuestionText color="#0064ff">Q{item.index + 1}</QuestionText>
       <QuestionText color="black">{item.title}</QuestionText>
       <Answer
         onChange={onChange}
