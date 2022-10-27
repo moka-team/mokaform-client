@@ -55,10 +55,19 @@ function LocalLoginContainer() {
     event.preventDefault();
 
     axios
-      .post("/api/v1/users/login", {
-        email: inputs.email,
-        password: inputs.password,
-      })
+      .post(
+        "/api/v1/users/login",
+        {
+          email: inputs.email,
+          password: inputs.password,
+        },
+        {
+          headers: {
+            accessToken: getAccessToken(),
+            refreshToken: getRefreshToken(),
+          },
+        }
+      )
       .then(function (response) {
         if (response.data.message.includes("성공")) {
           // 로그인 성공 시 로컬 스토리지에 저장

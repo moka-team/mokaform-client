@@ -159,6 +159,10 @@ export default function SortSelect({ userId }) {
         sort: "createdAt,desc",
         userId: 1,
       },
+      headers: {
+        accessToken: getAccessToken(),
+        refreshToken: getRefreshToken(),
+      },
     });
     setServeys(response.data.data.content);
   };
@@ -168,6 +172,10 @@ export default function SortSelect({ userId }) {
       {
         params: {
           userId: userId,
+        },
+        headers: {
+          accessToken: getAccessToken(),
+          refreshToken: getRefreshToken(),
         },
       }
     );

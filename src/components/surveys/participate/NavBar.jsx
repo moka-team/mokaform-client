@@ -99,7 +99,12 @@ export default function NavBar() {
     console.log(JSON.stringify(answerInfo));
 
     axios
-      .post("/api/v1/answer?userId=" + user.id, answerInfo)
+      .post("/api/v1/answer?userId=" + user.id, answerInfo, {
+        headers: {
+          accessToken: getAccessToken(),
+          refreshToken: getRefreshToken(),
+        },
+      })
       .then(function (response) {
         console.log(response);
         resetRecoilValue();

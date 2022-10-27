@@ -22,6 +22,10 @@ export default function InquireEssayQuestionItem({ item, sharingKey }) {
         params: {
           userId: user.id,
         },
+        headers: {
+          accessToken: getAccessToken(),
+          refreshToken: getRefreshToken(),
+        },
       })
       .then(function (response) {
         console.log(response);

@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { userState } from "../../authentication/userState";
 import { Logo } from "./Logo";
+import { logout } from "../../authentication/auth";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -118,9 +119,8 @@ export default function Header() {
     setAnchorEl(null);
     handleMobileMenuClose();
 
-    // local storage에 user 정보 삭제
-    window.location.replace("http://localhost:3000/");
-    localStorage.clear();
+    //토큰 날리기
+    logout();
     setUser(null);
   };
 

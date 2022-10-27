@@ -6,6 +6,7 @@ import axios from "axios";
 import { useRecoilState } from "recoil";
 import { surveyList, surveySortState } from "../../atoms";
 import { useEffect } from "react";
+import { getAccessToken, getRefreshToken } from "../../authentication/auth";
 const StyledDownButton = styled.button`
   background: none;
   width: 100;
@@ -33,6 +34,10 @@ export default function DownButton() {
         size: 10,
         sort: "createdAt,desc",
       },
+      headers: {
+        accessToken: getAccessToken(),
+        refreshToken: getRefreshToken(),
+      },
     });
     setCount((count) => count + 1);
     console.log(response.data.data.content);
@@ -44,6 +49,10 @@ export default function DownButton() {
         page: 1 + count,
         size: 10,
         sort: "surveyeeCount,desc",
+      },
+      headers: {
+        accessToken: getAccessToken(),
+        refreshToken: getRefreshToken(),
       },
     });
     setCount((count) => count + 1);

@@ -112,21 +112,6 @@ export default function UserSurveyCard({ isCreated }) {
   const [submittedSurvey, setSubmittedSurvey] =
     useRecoilState(submittedMySurvey);
   console.log(user);
-  // useEffect(() => {
-  //   (async () => {
-  //     // TODO: 로그인 후 userId 부분 수정 필요!
-  //     const posts = await axios.get("/api/v1/users/my/surveys", {
-  //       params: {
-  //         page: 0,
-  //         size: 4,
-  //         sort: "surveyeeCount,desc",
-  //         userId: 1,
-  //       },
-  //     });
-  //     setCreatedMySurvey(posts.data.data.content);
-  //   })();
-  // }, []);
-
   return isCreated ? (
     <Grid container spacing={1} sx={{ ml: 5, mt: 1, mb: 4, mr: -3 }}>
       {createdSurvey.map((survey) => (

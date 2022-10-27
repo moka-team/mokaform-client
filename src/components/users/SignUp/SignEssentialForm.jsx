@@ -51,6 +51,10 @@ export default function SignEssentialForm({}) {
           params: {
             email: emailCurrent,
           },
+          headers: {
+            accessToken: getAccessToken(),
+            refreshToken: getRefreshToken(),
+          },
         })
         .then(function (response) {
           if (response.data.message.includes("성공")) {
@@ -88,6 +92,10 @@ export default function SignEssentialForm({}) {
           .get("/api/v1/users/check-nickname-duplication", {
             params: {
               nickname: e.target.value,
+            },
+            headers: {
+              accessToken: getAccessToken(),
+              refreshToken: getRefreshToken(),
             },
           })
           .then(function (response) {

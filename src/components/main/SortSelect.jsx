@@ -159,6 +159,10 @@ export default function SortSelect() {
         size: 10,
         sort: "createdAt,desc",
       },
+      headers: {
+        accessToken: getAccessToken(),
+        refreshToken: getRefreshToken(),
+      },
     });
     setServeys(response.data.data.content);
     console.log(response.data.data.content);
@@ -171,6 +175,10 @@ export default function SortSelect() {
         page: 0,
         size: 10,
         sort: "surveyeeCount,desc",
+      },
+      headers: {
+        accessToken: getAccessToken(),
+        refreshToken: getRefreshToken(),
       },
     });
     setServeys(response.data.data.content);

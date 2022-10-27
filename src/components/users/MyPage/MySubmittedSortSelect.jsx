@@ -160,6 +160,10 @@ export default function MyCreatedSortSelect() {
         sort: "createdAt,desc",
         userId: user.id,
       },
+      headers: {
+        accessToken: getAccessToken(),
+        refreshToken: getRefreshToken(),
+      },
     });
     setServeys(response.data.data.content);
   };
@@ -170,6 +174,10 @@ export default function MyCreatedSortSelect() {
         size: 5,
         sort: "surveyeeCount,desc",
         userId: user.id,
+      },
+      headers: {
+        accessToken: getAccessToken(),
+        refreshToken: getRefreshToken(),
       },
     });
     setServeys(response.data.data.content);
