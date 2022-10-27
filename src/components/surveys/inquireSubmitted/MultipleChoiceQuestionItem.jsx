@@ -61,6 +61,7 @@ export default function InquireMultipleChoiceQuestionItem({
         )
         .map((multiQuestion) => (
           <QuestionOption2
+            key={multiQuestion.multiQuestionId}
             bcolor={
               multiQuestion.multiQuestionId === answer ? "#0064ff" : "#edeef0"
             }
