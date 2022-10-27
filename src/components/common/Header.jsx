@@ -75,6 +75,7 @@ const onRefInput = (c) => {
 export default function Header() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const [surveyAnchorEl, setSurveyAnchorEl] = React.useState(null);
   const [logined, setLogined] = useState(false);
   const [user, setUser] = useRecoilState(userState);
 
@@ -82,10 +83,18 @@ export default function Header() {
   const isMenuOpen = Boolean(anchorEl);
   const menuId = "primary-search-account-menu";
 
+  const isSurveyOpen = Boolean(surveyAnchorEl);
+
   const navigate = useNavigate();
 
-  const onClickHandler = (event) => {
+  const handleNavigateGeneralSurvey = (event) => {
+    setSurveyAnchorEl(null);
     navigate("/create-survey");
+  };
+
+  const handleNavigateCardSurvey = (event) => {
+    setSurveyAnchorEl(null);
+    navigate("/create-card-survey");
   };
 
   const onNavigateMain = (event) => {
@@ -127,6 +136,35 @@ export default function Header() {
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
+
+  const handleCreateSurveyMenuOpen = (event) => {
+    setSurveyAnchorEl(event.currentTarget);
+  };
+
+  const handleCreateSurveyMenuClose = () => {
+    setSurveyAnchorEl(null);
+  };
+
+  const renderSurvey = (
+    <Menu
+      anchorEl={surveyAnchorEl}
+      anchorOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      // id={menuId}
+      keepMounted
+      transformOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      open={isSurveyOpen}
+      onClose={handleCreateSurveyMenuClose}
+    >
+      <MenuItem onClick={handleNavigateGeneralSurvey}>일반형</MenuItem>
+      <MenuItem onClick={handleNavigateCardSurvey}>카드형</MenuItem>
+    </Menu>
+  );
 
   const renderMenu = (
     <Menu
@@ -176,7 +214,7 @@ export default function Header() {
                 mr: 3,
                 ml: 3,
               }}
-              onClick={onClickHandler}
+              onClick={handleCreateSurveyMenuOpen}
             >
               설문 만들기
             </Button>
@@ -226,6 +264,7 @@ export default function Header() {
           </Box>
         </Toolbar>
       </AppBar>
+      {renderSurvey}
       {renderMenu}
     </Box>
   );

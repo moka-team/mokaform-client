@@ -14,6 +14,7 @@ import Participate from "./pages/surveys/participate/index";
 import ManageSurvey from "./pages/surveys/manage";
 import Show from "./pages/surveys/show";
 import InquireSubmittedSurvey from "./pages/surveys/inquireSubmittedSurvey";
+import CreateCardSurvey from "./pages/surveys/create-card/index";
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -41,6 +42,10 @@ function App() {
         <Route
           path={routes.inquireSubmittedSurvey}
           element={<InquireSubmittedSurvey />}
+        ></Route>
+        <Route
+          path={routes.createCardSurvey}
+          element={<CreateCardSurvey />}
         ></Route>
       </Routes>
     </BrowserRouter>
