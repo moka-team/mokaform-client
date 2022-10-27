@@ -37,7 +37,6 @@ const StyledButton = styled("button")(
   ({ theme }) => `
   font-family: IBM Plex Sans, sans-serif;
   font-size: 0.875rem;
-  margin-right: 14.5%;
   box-sizing: border-box;
   min-height: calc(1.5em + 22px);
   min-width: 130px;

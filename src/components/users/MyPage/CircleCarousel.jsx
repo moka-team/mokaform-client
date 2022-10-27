@@ -77,7 +77,7 @@ function CircleCarousel() {
       >
         <FontAwesomeIcon
           icon={faPaw}
-          size={"4x"}
+          size={"2x"}
           style={{
             display: ishover1 ? "none" : "flex",
             color: "#636870",
@@ -92,7 +92,7 @@ function CircleCarousel() {
       >
         <FontAwesomeIcon
           icon={faFaceSmile}
-          size={"4x"}
+          size={"2x"}
           style={{ display: ishover2 ? "none" : "flex", color: "#636870" }}
         />
         <p style={{ display: ishover2 ? "flex" : "none" }}>일상</p>
@@ -106,7 +106,7 @@ function CircleCarousel() {
       >
         <FontAwesomeIcon
           icon={faHashtag}
-          size={"4x"}
+          size={"2x"}
           style={{ display: ishover3 ? "none" : "flex", color: "#636870" }}
         />
         <p style={{ display: ishover3 ? "flex" : "none" }}>사회·정치</p>
@@ -120,7 +120,7 @@ function CircleCarousel() {
       >
         <FontAwesomeIcon
           icon={faBook}
-          size={"4x"}
+          size={"2x"}
           style={{ display: ishover4 ? "none" : "flex", color: "#636870" }}
         />
         <p style={{ display: ishover4 ? "flex" : "none" }}>학습</p>
@@ -132,7 +132,7 @@ function CircleCarousel() {
       >
         <FontAwesomeIcon
           icon={faLaptopCode}
-          size={"4x"}
+          size={"2x"}
           style={{ display: ishover5 ? "none" : "flex", color: "#636870" }}
         />
         <p style={{ display: ishover5 ? "flex" : "none" }}>IT</p>
@@ -144,7 +144,7 @@ function CircleCarousel() {
       >
         <FontAwesomeIcon
           icon={faGuitar}
-          size={"4x"}
+          size={"2x"}
           style={{ display: ishover6 ? "none" : "flex", color: "#636870" }}
         />
         <p style={{ display: ishover6 ? "flex" : "none" }}>취미</p>
@@ -160,7 +160,7 @@ function CircleCarousel() {
       >
         <FontAwesomeIcon
           icon={faMagnifyingGlass}
-          size={"4x"}
+          size={"2x"}
           style={{ display: ishover7 ? "none" : "flex", color: "#636870" }}
         />
         <p style={{ display: ishover7 ? "flex" : "none" }}>선호도 조사</p>
@@ -174,7 +174,7 @@ function CircleCarousel() {
       >
         <FontAwesomeIcon
           icon={faPersonCircleQuestion}
-          size={"4x"}
+          size={"2x"}
           style={{ display: ishover8 ? "none" : "flex", color: "#636870" }}
         />
         <p style={{ display: ishover8 ? "flex" : "none" }}>심리</p>

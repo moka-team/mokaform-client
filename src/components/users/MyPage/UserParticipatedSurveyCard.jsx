@@ -84,7 +84,15 @@ export default function UserParticipatedSurveyCard() {
   return (
     <Grid container spacing={1} sx={{ ml: 5, mt: 1, mb: 4, mr: -3 }}>
       {submittedSurvey.map((survey) => (
-        <Grid item key={survey.surveyId} xs={6} sm={6} md={4} lg={2} xl={2}>
+        <Grid
+          item
+          key={survey.surveyId}
+          xs={6}
+          sm={6}
+          md={4}
+          lg={2.25}
+          xl={2.25}
+        >
           <Link
             to={`/my/survey/submitted/${survey.sharingKey}`}
             style={{ textDecoration: "none" }}
@@ -111,9 +119,6 @@ export default function UserParticipatedSurveyCard() {
           </Link>
         </Grid>
       ))}
-      <ButtonContainer>
-        <RightButton />
-      </ButtonContainer>
     </Grid>
   );
 }

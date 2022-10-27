@@ -22,7 +22,9 @@ function ServeyCard({ servey }) {
           color="#202632"
           sx={{ fontSize: 18, fontWeight: 600 }}
         >
-          {servey.title}
+          {servey.title.length > 16
+            ? servey.title.slice(0, 14) + `...`
+            : servey.title}
         </Typography>
       </Grid>
       <Grid item xs={6} sx={{ pt: 1, mb: -1 }}>
@@ -87,7 +89,7 @@ export default function CardContainer({ logined }) {
   ) : (
     <Grid container spacing={2}>
       {surveys.map((servey) => (
-        <Grid item key={servey.surveyId} xs={6} sm={6} md={4} lg={3} xl={2.4}>
+        <Grid item key={servey.surveyId} xs={6} sm={6} md={4} lg={2.4} xl={2.4}>
           <Link
             to={`/survey/${servey.sharingKey}`}
             style={{ textDecoration: "none" }}
