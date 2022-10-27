@@ -1,10 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { QuestionWrapper, QuestionOption, QuestionText } from "./styled";
+import { surveyForCreated } from "../../../atoms";
+import { useRecoilValue } from "recoil";
 
 export default function MultipleChoiceQuestionItemDisabled({
   item,
   multiquestion,
 }) {
+  const survey = useRecoilValue(surveyForCreated);
+  const index = survey.questions.findIndex(
+    (listItem) => listItem.questionId === item.questionId
+  );
+
   const [currentClick, setCurrentClick] = useState(null);
   const [prevClick, setPrevClick] = useState(null);
 
@@ -34,7 +41,7 @@ export default function MultipleChoiceQuestionItemDisabled({
   );
   return (
     <QuestionWrapper>
-      <QuestionText color="#0064ff">Q{item.index + 1}</QuestionText>
+      <QuestionText color="#0064ff">Q{index + 1}</QuestionText>
       <QuestionText color="black">{item.title}</QuestionText>
       {multiquestion
         .filter(

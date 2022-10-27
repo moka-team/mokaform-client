@@ -7,9 +7,11 @@ import Loading from "./Loading";
 import Error from "./Error";
 import OXQuestionItemDisabled from "./OXQuestionItemDisabled";
 import MultipleChoiceQuestionItemDisabled from "./MultipleChoiceQuestionItemDisabled";
+import { surveyForCreated } from "../../../atoms";
+import { useRecoilState } from "recoil";
 
 export default function ShowSurvey({ sharingKey }) {
-  const [survey, setSurvey] = useState(null);
+  const [survey, setSurvey] = useRecoilState(surveyForCreated);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
@@ -23,7 +25,7 @@ export default function ShowSurvey({ sharingKey }) {
       })
       .then(function (response) {
         console.log(response);
-        setSurvey(response.data);
+        setSurvey(response.data.data);
         setLoading(false);
       })
       .catch(function (error) {
@@ -43,9 +45,9 @@ export default function ShowSurvey({ sharingKey }) {
     <Container>
       <NavBar></NavBar>
       <Survey>
-        <TitleText>{survey.data.title}</TitleText>
-        <SummaryText>{survey.data.summary}</SummaryText>
-        {survey.data.questions.map((question) =>
+        <TitleText>{survey.title}</TitleText>
+        <SummaryText>{survey.summary}</SummaryText>
+        {survey.questions.map((question) =>
           question.type === "ESSAY" ? (
             <EssayQuestionItemDisabled
               key={question.questionId}
@@ -60,7 +62,7 @@ export default function ShowSurvey({ sharingKey }) {
             <MultipleChoiceQuestionItemDisabled
               key={question.questionId}
               item={question}
-              multiquestion={survey.data.multiQuestions}
+              multiquestion={survey.multiQuestions}
             ></MultipleChoiceQuestionItemDisabled>
           )
         )}

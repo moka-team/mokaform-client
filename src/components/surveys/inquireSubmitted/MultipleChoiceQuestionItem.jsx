@@ -5,13 +5,18 @@ import Error from "../participate/Error";
 import Loading from "../participate/Loading";
 import axios from "axios";
 import { useRecoilValue } from "recoil";
-
+import { surveyForSubmitted } from "../../../atoms";
 export default function InquireMultipleChoiceQuestionItem({
   item,
   multiquestion,
   sharingKey,
 }) {
   const user = useRecoilValue(userState);
+  const survey = useRecoilValue(surveyForSubmitted);
+  const index = survey.questions.findIndex(
+    (listItem) => listItem.questionId === item.questionId
+  );
+
   const [multiChoiceAnswer, setMultiChoiceAnswer] = useState([]);
   const [answer, setAnswer] = useState(-1);
 
@@ -52,7 +57,7 @@ export default function InquireMultipleChoiceQuestionItem({
 
   return (
     <QuestionWrapper2>
-      <QuestionText2 color="#0064ff">Q{item.index + 1}</QuestionText2>
+      <QuestionText2 color="#0064ff">Q{index + 1}</QuestionText2>
       <QuestionText2 color="black">{item.title}</QuestionText2>
       {multiquestion
         .filter(
