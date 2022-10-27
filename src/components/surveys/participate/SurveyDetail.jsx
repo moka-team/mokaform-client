@@ -44,12 +44,6 @@ export default function SurveyDetail({ sharingKey }) {
 
   // 로그인 상태 검사
   const user = useRecoilValue(userState);
-  useEffect(() => {
-    if (user === null) {
-      alert("로그인이 필요한 서비스입니다.");
-      window.location.replace("http://localhost:3000/");
-    }
-  }, []);
 
   useEffect(() => {
     setEssayAnswerList([]);
