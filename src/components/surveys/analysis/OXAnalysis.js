@@ -13,7 +13,6 @@ const OXResult = styled.div`
   }
 `;
 export default function OXAnalysis({ item }) {
-  console.log(item);
   return (
     <OXResult>
       {item.yes >= item.no ? (

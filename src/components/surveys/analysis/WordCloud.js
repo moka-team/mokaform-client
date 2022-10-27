@@ -12,12 +12,13 @@ const options = {
 
 export default function WordCloud({ item }) {
   const countNum = (data) => {
+    console.log(data);
     const obj = {};
 
     const json = [];
 
     data.forEach((element) => {
-      element.content.split(" ").map((word) => {
+      element.split(" ").map((word) => {
         if (word in obj) {
           obj[word] += 1;
         } else {
@@ -36,7 +37,7 @@ export default function WordCloud({ item }) {
       <TagCloud
         minSize={15}
         maxSize={50}
-        tags={countNum(item.data)}
+        tags={countNum(item)}
         colorOptions={options}
       />
     </WordCloudContainer>

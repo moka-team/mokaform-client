@@ -29,13 +29,24 @@ export default function ByItem({ result }) {
   console.log(result);
   return (
     <Container>
-      {/* 찬부식 */}
-      {result["oxStats"].map((item) => (
-        <>
-          <OXAnalysis item={item} />
-          <BarChart data={[{ Yes: item.yes, No: item.no }]} />
-        </>
-      ))}
+      <Wrapper>
+        {/* 찬부식 */}
+        {result["oxStats"].map((item) => (
+          <>
+            <OXAnalysis item={item} />
+            <BarChart data={[{ Yes: item.yes, No: item.no }]} />
+          </>
+        ))}
+
+        {/* 주관식 */}
+        {result["essayStats"].map((item) => (
+          <>
+            <WordCloud item={item.answerContents} />
+            <EssayComponent data={item.answerContents}></EssayComponent>
+          </>
+        ))}
+      </Wrapper>
+
       {/* {data.map((item, idx) => (
         <Wrapper key={idx}>
           <Title>{idx + 1}번 문항에 대한 분석결과</Title>
