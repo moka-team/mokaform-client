@@ -26,27 +26,31 @@ import { userState } from "../../../authentication/userState";
 export default function NavBar() {
   const user = useRecoilValue(userState);
 
-  const essayValidateCount = useRecoilValue(essayAnswerValidateCount);
-  const multiValidateCount = useRecoilValue(multiChoiceAnswerValidateCount);
-  const oxValidateCount = useRecoilValue(oxAnswerValidateCount);
-
-  const [isEssayValidate, setIsEssayValidate] = useRecoilState(
-    isEssayAnswerValidate
+  // 답변 저장 활성화 관련 변수
+  const [essayValidateCount, setEssayValidateCount] = useRecoilState(
+    essayAnswerValidateCount
   );
-  const [isMultiChoiceValidate, setIsMultiChoiceValidate] = useRecoilState(
-    isMultiChoiceAnswerValidate
+  const [multiValidateCount, setMultiValidateCount] = useRecoilState(
+    multiChoiceAnswerValidateCount
   );
-  const [isOXValidate, setIsOXValidate] = useRecoilState(isOXAnswerValidate);
+  const [oxValidateCount, setOXValidateCount] = useRecoilState(
+    oxAnswerValidateCount
+  );
+  const questionCount = useRecoilValue(surveyQuestionCount);
 
-  const [isSubmit, setIsSubmit] = useState(false);
+  // 답변 저장 POST 관련 변수
   const [essayAnswerList, setEssayAnswerList] =
     useRecoilState(EssayAnswerListState);
   const [multiChoiceAnswerList, setMultiChoiceAnswerList] = useRecoilState(
     MultipleChoiceAnswerListState
   );
   const [oxAnswerList, setOXAnswerList] = useRecoilState(oxAnswerListState);
+
   const [open, setOpen] = React.useState(false);
-  const questionCount = useRecoilValue(surveyQuestionCount);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
 
   const handleClose = () => {
     setOpen(false);
@@ -54,19 +58,13 @@ export default function NavBar() {
   };
 
   const resetRecoilValue = () => {
-    setIsEssayValidate(false);
-    setIsMultiChoiceValidate(false);
-    setIsOXValidate(false);
-
     setEssayAnswerList([]);
     setMultiChoiceAnswerList([]);
     setOXAnswerList([]);
 
-    console.log(essayAnswerList);
-    console.log(multiChoiceAnswerList);
-    console.log(oxAnswerList);
-
-    console.log("모두삭제!");
+    setEssayValidateCount(0);
+    setMultiValidateCount(0);
+    setOXValidateCount(0);
   };
 
   const handleSubmit = () => {
@@ -100,27 +98,30 @@ export default function NavBar() {
 
     console.log(JSON.stringify(answerInfo));
 
-    // axios
-    //   .post("/api/v1/answer?userId=" + user.id, answerInfo)
-    //   .then(function (response) {
-    //     console.log(response);
-    //     resetRecoilValue();
-    //     handleClickOpen();
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error.message);
-    //     resetRecoilValue();
-    //     // handleClickFailDialogOpen();
-    //   })
-    //   .finally(function () {
-    //     // always executed
-    //   });
+    axios
+      .post("/api/v1/answer?userId=" + user.id, answerInfo)
+      .then(function (response) {
+        console.log(response);
+        resetRecoilValue();
+        handleClickOpen();
+      })
+      .catch(function (error) {
+        console.log(error.message);
+        resetRecoilValue();
+        // handleClickFailDialogOpen();
+      })
+      .finally(function () {
+        // always executed
+      });
   };
 
   return (
     <SNavBar>
       <SaveBtn
-        // disabled={!(isEssayValidate && isMultiChoiceValidate && isOXValidate)}
+        disabled={
+          essayValidateCount + multiValidateCount + oxValidateCount !==
+          questionCount
+        }
         onClick={handleSubmit}
       >
         저장

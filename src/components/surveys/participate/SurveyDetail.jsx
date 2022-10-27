@@ -16,6 +16,9 @@ import {
   MultipleChoiceAnswerListState,
   oxAnswerListState,
   surveyQuestionCount,
+  essayAnswerValidateCount,
+  oxAnswerValidateCount,
+  multiChoiceAnswerValidateCount,
 } from "../../../atoms";
 import { useSetRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 import { userState } from "../../../authentication/userState";
@@ -34,6 +37,18 @@ export default function SurveyDetail({ sharingKey }) {
   );
   const setIsOXValidate = useSetRecoilState(isOXAnswerValidate);
 
+  // 답변 저장 관련 변수
+  const setEssayValidateCount = useSetRecoilState(essayAnswerValidateCount);
+  const setMultiValidateCount = useSetRecoilState(
+    multiChoiceAnswerValidateCount
+  );
+  const setOXValidateCount = useSetRecoilState(oxAnswerValidateCount);
+  const setEssayAnswerList = useSetRecoilState(EssayAnswerListState);
+  const setMultiChoiceAnswerList = useSetRecoilState(
+    MultipleChoiceAnswerListState
+  );
+  const setOXAnswerList = useSetRecoilState(oxAnswerListState);
+
   // 로그인 상태 검사
   const user = useRecoilValue(userState);
   useEffect(() => {
@@ -44,6 +59,14 @@ export default function SurveyDetail({ sharingKey }) {
   }, []);
 
   useEffect(() => {
+    setEssayAnswerList([]);
+    setMultiChoiceAnswerList([]);
+    setOXAnswerList([]);
+
+    setEssayValidateCount(0);
+    setMultiValidateCount(0);
+    setOXValidateCount(0);
+
     axios
       .get("/api/v1/survey", {
         params: {
