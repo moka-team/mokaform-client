@@ -128,7 +128,7 @@ export default function Header() {
     handleMobileMenuClose();
 
     // local storage에 user 정보 삭제
-    window.location.replace("http://localhost:3000/");
+    window.location.replace("/");
     localStorage.clear();
     setUser(null);
   };

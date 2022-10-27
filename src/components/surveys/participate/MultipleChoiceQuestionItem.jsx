@@ -17,8 +17,12 @@ export default function MultipleChoiceQuestionItem({ item, multiquestion }) {
   });
   const [multiChoiceValidateCount, setMultiChocieValidateCount] =
     useRecoilState(multiChoiceAnswerValidateCount);
+  const index = multiChoiceAnswerList.findIndex(
+    (listItem) => listItem.questionId === multiChoiceAnswer.questionId
+  );
+
   const survey = useRecoilValue(surveyForSubmit);
-  const index = survey.questions.findIndex(
+  const qIndex = survey.data.questions.findIndex(
     (listItem) => listItem.questionId === item.questionId
   );
 
@@ -73,7 +77,7 @@ export default function MultipleChoiceQuestionItem({ item, multiquestion }) {
   );
   return (
     <QuestionWrapper>
-      <QuestionText color="#0064ff">Q{index + 1}</QuestionText>
+      <QuestionText color="#0064ff">Q{qIndex + 1}</QuestionText>
       <QuestionText color="black">{item.title}</QuestionText>
       {multiquestion
         .filter(

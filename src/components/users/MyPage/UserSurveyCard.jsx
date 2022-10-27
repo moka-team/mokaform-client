@@ -17,6 +17,7 @@ import { useRecoilState } from "recoil";
 import { userState } from "../../../authentication/userState";
 import { createdMySurvey } from "../../../atoms";
 import { submittedMySurvey } from "../../../atoms";
+import defaultImage from "../../common/default_image.png";
 
 function SurveyCard({ survey }) {
   // let category = survey.surveyCategories[0];
@@ -141,8 +142,7 @@ export default function UserSurveyCard({ isCreated }) {
             >
               <CardMedia
                 component="img"
-                image="https://source.unsplash.com/random"
-                alt="random"
+                image={defaultImage}
                 sx={{ height: 150 }}
               />
               <CardContent sx={{ flexGrow: 1 }}>
@@ -170,8 +170,7 @@ export default function UserSurveyCard({ isCreated }) {
             >
               <CardMedia
                 component="img"
-                image="https://source.unsplash.com/random"
-                alt="random"
+                image={defaultImage}
                 sx={{ height: 150 }}
               />
               <CardContent sx={{ flexGrow: 1 }}>

@@ -14,6 +14,8 @@ import Participate from "./pages/surveys/participate/index";
 import ManageSurvey from "./pages/surveys/manage";
 import Show from "./pages/surveys/show";
 import InquireSubmittedSurvey from "./pages/surveys/inquireSubmittedSurvey";
+import { useRecoilValue } from "recoil";
+import { userState } from "./authentication/userState";
 import CreateCardSurvey from "./pages/surveys/create-card/index";
 
 const GlobalStyle = createGlobalStyle`
@@ -22,30 +24,63 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 function App() {
+  // 로그인 확인 수정 필요
+  const user = useRecoilValue(userState);
   return (
     <BrowserRouter>
       <GlobalStyle />
       <Routes>
         <Route path={routes.main} element={<Main />}></Route>
-        <Route path={routes.mypage} element={<Mypage />}></Route>
+        <Route
+          path={routes.mypage}
+          element={user !== null ? <Mypage /> : <SignIn signInAlert={true} />}
+        ></Route>
         <Route path={routes.signup} element={<SignUp />}></Route>
         <Route path={routes.signin} element={<SignIn />}></Route>
         <Route path={routes.resetPassword} element={<ResetPassword />}></Route>
-        <Route path={routes.createSurvey} element={<CreateSurvey />}></Route>
-        <Route path={routes.surveyStats} element={<SurveyAnalysis />}></Route>
+        <Route
+          path={routes.createSurvey}
+          element={
+            user !== null ? <CreateSurvey /> : <SignIn signInAlert={true} />
+          }
+        ></Route>
+        <Route
+          path={routes.surveyStats}
+          element={
+            user !== null ? <SurveyAnalysis /> : <SignIn signInAlert={true} />
+          }
+        ></Route>
         <Route
           path={routes.participateSurvey}
-          element={<Participate />}
+          element={
+            user != null ? <Participate /> : <SignIn signInAlert={true} />
+          }
         ></Route>
-        <Route path={routes.manageSurvey} element={<ManageSurvey />}></Route>
-        <Route path={routes.createdSurvey} element={<Show />}></Route>
+        <Route
+          path={routes.manageSurvey}
+          element={
+            user !== null ? <ManageSurvey /> : <SignIn signInAlert={true} />
+          }
+        ></Route>
+        <Route
+          path={routes.createdSurvey}
+          element={user !== null ? <Show /> : <SignIn signInAlert={true} />}
+        ></Route>
         <Route
           path={routes.inquireSubmittedSurvey}
-          element={<InquireSubmittedSurvey />}
+          element={
+            user !== null ? (
+              <InquireSubmittedSurvey />
+            ) : (
+              <SignIn signInAlert={true} />
+            )
+          }
         ></Route>
         <Route
           path={routes.createCardSurvey}
-          element={<CreateCardSurvey />}
+          element={
+            user !== null ? <CreateCardSurvey /> : <SignIn signInAlert={true} />
+          }
         ></Route>
       </Routes>
     </BrowserRouter>

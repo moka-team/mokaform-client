@@ -12,10 +12,10 @@ const TContainer = styled.div`
 
 const TableSection = styled.div`
   display: flex;
-  width: 50%;
+  width: 60%;
   min-height: 100%;
   flex-direction: column;
-  margin: 0% 25%;
+  margin: 0% 20%;
   color: black;
 `;
 

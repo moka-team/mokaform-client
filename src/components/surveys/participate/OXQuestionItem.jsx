@@ -20,8 +20,11 @@ export default function OXQuestionItem({ item }) {
     isYes: null,
   });
 
+  const index = oxAnswerList.findIndex(
+    (listItem) => listItem.questionId === oxAnswer.questionId
+  );
   const survey = useRecoilValue(surveyForSubmit);
-  const index = survey.questions.findIndex(
+  const qIndex = survey.data.questions.findIndex(
     (listItem) => listItem.questionId === item.questionId
   );
 
@@ -74,7 +77,7 @@ export default function OXQuestionItem({ item }) {
 
   return (
     <QuestionWrapper>
-      <QuestionText color="#0064ff">Q{index + 1}</QuestionText>
+      <QuestionText color="#0064ff">Q{qIndex + 1}</QuestionText>
       <QuestionText color="black">{item.title}</QuestionText>
       <QuestionOption id={yes} value={true} onClick={onClickHandler}>
         네 😀

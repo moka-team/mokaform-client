@@ -19,9 +19,13 @@ export default function EssayQuestionItem({ item }) {
   });
   const [prevAnswer, setPrevAnswer] = useState("");
   const [currentAnswer, setCurrentAnswer] = useState("");
-  const survey = useRecoilValue(surveyForSubmit);
 
-  const index = survey.questions.findIndex(
+  const index = essayAnswerList.findIndex(
+    (listItem) => listItem.questionId === essayAnswer.questionId
+  );
+
+  const survey = useRecoilValue(surveyForSubmit);
+  const qIndex = survey.data.questions.findIndex(
     (listItem) => listItem.questionId === item.questionId
   );
 
@@ -59,7 +63,7 @@ export default function EssayQuestionItem({ item }) {
 
   return (
     <QuestionWrapper>
-      <QuestionText color="#0064ff">Q{index + 1}</QuestionText>
+      <QuestionText color="#0064ff">Q{qIndex + 1}</QuestionText>
       <QuestionText color="black">{item.title}</QuestionText>
       <Answer
         onChange={onChange}

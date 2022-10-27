@@ -19,6 +19,7 @@ import Loading from "../../surveys/participate/Loading";
 import Error from "../../surveys/participate/Error";
 import styled from "styled-components";
 import { createdMySurvey } from "../../../atoms";
+import defaultImage from "../../common/default_image.png";
 
 const ButtonContainer = styled.div`
   display: flex;
@@ -105,8 +106,7 @@ export default function UserSurveyCard() {
               >
                 <CardMedia
                   component="img"
-                  image="https://source.unsplash.com/random"
-                  alt="random"
+                  src={defaultImage}
                   sx={{ height: 150 }}
                 />
                 <CardContent sx={{ flexGrow: 1 }}>

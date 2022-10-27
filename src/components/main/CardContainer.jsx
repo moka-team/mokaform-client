@@ -13,6 +13,8 @@ import axios from "axios";
 import { useRecoilState } from "recoil";
 import { surveyList } from "../../atoms";
 import { Link } from "react-router-dom";
+import defaultImage from "../common/default_image.png";
+
 function ServeyCard({ servey }) {
   return (
     <Grid container>
@@ -74,8 +76,7 @@ export default function CardContainer({ logined }) {
             >
               <CardMedia
                 component="img"
-                image="https://source.unsplash.com/random"
-                alt="random"
+                src={defaultImage}
                 sx={{ height: 256 }}
               />
               <CardContent sx={{ flexGrow: 1 }}>
@@ -103,8 +104,7 @@ export default function CardContainer({ logined }) {
               >
                 <CardMedia
                   component="img"
-                  image="https://source.unsplash.com/random"
-                  alt="random"
+                  src={defaultImage}
                   sx={{ height: 256 }}
                 />
                 <CardContent sx={{ flexGrow: 1 }}>
