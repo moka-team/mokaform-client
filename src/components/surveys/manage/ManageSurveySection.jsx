@@ -262,7 +262,10 @@ export default function ManageSurveySection({ userId }) {
                     </StyledTableCell>
                     <StyledTableCell align="center">
                       <IconButton>
-                        <Link to={routes.surveyStats}>
+                        <Link
+                          to={routes.surveyStats}
+                          state={{ surveyId: data.surveyId }}
+                        >
                           <EqualizerIcon sx={{ color: "#202632" }} />
                         </Link>
                       </IconButton>

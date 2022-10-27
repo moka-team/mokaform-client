@@ -23,7 +23,7 @@ const Title = styled.div`
   text-align: center;
 `;
 
-export default function ByItem() {
+export default function ByItem({ result }) {
   return (
     <Container>
       {data.map((item, idx) => (
