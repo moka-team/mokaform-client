@@ -32,7 +32,6 @@ export default function InquireOXQuestionItem({ item, sharingKey }) {
       .then(function (response) {
         console.log(response.data.data.oxAnswers);
         setOXAnswer(response.data.data.oxAnswers);
-        console.log(oxAnswer);
         setAnswer(
           response.data.data.oxAnswers.filter(
             (oxAnswerItem) => oxAnswerItem.questionId === item.questionId

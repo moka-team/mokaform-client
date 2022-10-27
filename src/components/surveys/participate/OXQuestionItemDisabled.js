@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { QuestionWrapper, QuestionOption, QuestionText } from "./styled";
+import { useRecoilValue } from "recoil";
+import { surveyForCreated } from "../../../atoms";
 
 export default function OXQuestionItemDisabled({ item }) {
+  const survey = useRecoilValue(surveyForCreated);
+  const index = survey.questions.findIndex(
+    (listItem) => listItem.questionId === item.questionId
+  );
+
   const [currentClick, setCurrentClick] = useState(null);
   const [prevClick, setPrevClick] = useState(null);
 
@@ -31,7 +38,7 @@ export default function OXQuestionItemDisabled({ item }) {
   );
   return (
     <QuestionWrapper>
-      <QuestionText color="#0064ff">Q{item.index + 1}</QuestionText>
+      <QuestionText color="#0064ff">Q{index + 1}</QuestionText>
       <QuestionText color="black">{item.title}</QuestionText>
       <QuestionOption
         disabled
