@@ -24,6 +24,8 @@ export default function OXQuestionItem({ item }) {
   const index = oxAnswerList.findIndex(
     (listItem) => listItem.questionId === oxAnswer.questionId
   );
+  const yes = `${item.questionId} yes`;
+  const no = `${item.questionId} no`;
 
   useEffect(() => {
     setOXAnswerList((oldOXAnswerList) => [...oldOXAnswerList, oxAnswer]);
@@ -75,10 +77,10 @@ export default function OXQuestionItem({ item }) {
     <QuestionWrapper>
       <QuestionText color="#0064ff">Q{item.index + 1}</QuestionText>
       <QuestionText color="black">{item.title}</QuestionText>
-      <QuestionOption id="yes" value={true} onClick={onClickHandler}>
+      <QuestionOption id={yes} value={true} onClick={onClickHandler}>
         네 😀
       </QuestionOption>
-      <QuestionOption id="no" value={false} onClick={onClickHandler}>
+      <QuestionOption id={no} value={false} onClick={onClickHandler}>
         아니오 🥲
       </QuestionOption>
     </QuestionWrapper>
