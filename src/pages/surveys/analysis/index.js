@@ -5,10 +5,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPrint } from "@fortawesome/free-solid-svg-icons";
 import { useRecoilValue } from "recoil";
 import { userState } from "../../../authentication/userState";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import axios from "axios";
-import { set } from "date-fns";
 
 const Container = styled.div`
   display: flex;
@@ -36,23 +34,13 @@ const Wrapper = styled.div`
 function SurveyAnalysis() {
   const user = useRecoilValue(userState);
   const navigate = useNavigate();
-  const location = useLocation();
-  const surveyId = location.state?.surveyId;
-
-  const [result, setResult] = useState([]);
-
-  const fetchData = async () => {
-    const res = await axios.get(`/api/v1/users/my/surveys/${surveyId}/stats`);
-
-    setResult(res.data.data);
-  };
+  const { state } = useLocation();
 
   useEffect(() => {
     if (user === null) {
       alert("로그인이 필요한 서비스입니다.");
       navigate("/");
     }
-    fetchData();
   }, []);
   return (
     <>
@@ -63,7 +51,7 @@ function SurveyAnalysis() {
           <FontAwesomeIcon icon={faPrint} onClick={window.print} />
         </ReportBtn>
         <Wrapper>
-          <ByItem result={result} />
+          <ByItem result={state} />
         </Wrapper>
       </Container>
     </>

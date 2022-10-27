@@ -32,7 +32,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { TContainer } from "./styled";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EqualizerIcon from "@mui/icons-material/Equalizer";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import routes from "../../../routes";
 function TablePaginationActions(props) {
   const theme = useTheme();
@@ -135,6 +135,7 @@ export default function ManageSurveySection({ userId }) {
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const [requireRerender, setRequireRerender] = useState(true);
+  const navigate = useNavigate();
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -202,6 +203,12 @@ export default function ManageSurveySection({ userId }) {
       });
   };
 
+  const handleOnClick = async (surveyId) => {
+    await axios
+      .get(`/api/v1/users/my/surveys/${surveyId}/stats`)
+      .then((res) => navigate(routes.surveyStats, { state: res.data.data }));
+  };
+
   useEffect(() => {
     fetchData();
   }, [requireRerender]);
@@ -261,13 +268,8 @@ export default function ManageSurveySection({ userId }) {
                       {data.isPublic ? <div>가능</div> : <div>불가능</div>}
                     </StyledTableCell>
                     <StyledTableCell align="center">
-                      <IconButton>
-                        <Link
-                          to={routes.surveyStats}
-                          state={{ surveyId: data.surveyId }}
-                        >
-                          <EqualizerIcon sx={{ color: "#202632" }} />
-                        </Link>
+                      <IconButton onClick={() => handleOnClick(data.surveyId)}>
+                        <EqualizerIcon sx={{ color: "#202632" }} />
                       </IconButton>
                     </StyledTableCell>
                     <StyledTableCell align="center">

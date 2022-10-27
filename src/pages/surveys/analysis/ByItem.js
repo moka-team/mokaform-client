@@ -23,10 +23,20 @@ const Title = styled.div`
   text-align: center;
 `;
 
+//index에 따라서 Sorting 하기
+
 export default function ByItem({ result }) {
+  console.log(result);
   return (
     <Container>
-      {data.map((item, idx) => (
+      {/* 찬부식 */}
+      {result["oxStats"].map((item) => (
+        <>
+          <OXAnalysis item={item} />
+          <BarChart data={[{ Yes: item.yes, No: item.no }]} />
+        </>
+      ))}
+      {/* {data.map((item, idx) => (
         <Wrapper key={idx}>
           <Title>{idx + 1}번 문항에 대한 분석결과</Title>
           {item.question_type === "MULTIPLE_CHOICE" ? (
@@ -46,7 +56,7 @@ export default function ByItem({ result }) {
             </>
           )}
         </Wrapper>
-      ))}
+      ))} */}
     </Container>
   );
 }
