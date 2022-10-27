@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import data from "./data";
 
 import EssayComponent from "../../../components/surveys/analysis/EssayComponent";
 import BarChart from "../../../components/surveys/analysis/BarChart";

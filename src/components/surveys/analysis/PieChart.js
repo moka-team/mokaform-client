@@ -12,8 +12,8 @@ const formatting = (data) => {
   const result = [];
   data.forEach((ele, idx) => {
     const tmp = {};
-    tmp.id = idx;
-    tmp.label = idx;
+    tmp.id = idx+1;
+    tmp.label = idx+1;
     tmp.content = ele.multiQuestionContent;
     tmp.value = ele.multiQuestionContentCount;
 
