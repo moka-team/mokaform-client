@@ -8,6 +8,10 @@ import {
   isEssayAnswerValidate,
   isMultiChoiceAnswerValidate,
   isOXAnswerValidate,
+  surveyQuestionCount,
+  essayAnswerValidateCount,
+  oxAnswerValidateCount,
+  multiChoiceAnswerValidateCount,
 } from "../../../atoms";
 import axios from "axios";
 import Button from "@mui/material/Button";
@@ -21,6 +25,10 @@ import { userState } from "../../../authentication/userState";
 
 export default function NavBar() {
   const user = useRecoilValue(userState);
+
+  const essayValidateCount = useRecoilValue(essayAnswerValidateCount);
+  const multiValidateCount = useRecoilValue(multiChoiceAnswerValidateCount);
+  const oxValidateCount = useRecoilValue(oxAnswerValidateCount);
 
   const [isEssayValidate, setIsEssayValidate] = useRecoilState(
     isEssayAnswerValidate
@@ -38,11 +46,7 @@ export default function NavBar() {
   );
   const [oxAnswerList, setOXAnswerList] = useRecoilState(oxAnswerListState);
   const [open, setOpen] = React.useState(false);
-  const navigate = useNavigate();
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  const questionCount = useRecoilValue(surveyQuestionCount);
 
   const handleClose = () => {
     setOpen(false);
@@ -66,6 +70,11 @@ export default function NavBar() {
   };
 
   const handleSubmit = () => {
+    console.log("총 질문: " + questionCount);
+    console.log("주관식: " + essayValidateCount);
+    console.log("객관식: " + multiValidateCount);
+    console.log("찬부식: " + oxValidateCount);
+
     const answerInfo = {
       essayAnswers:
         essayAnswerList.length === 0
@@ -91,27 +100,27 @@ export default function NavBar() {
 
     console.log(JSON.stringify(answerInfo));
 
-    axios
-      .post("/api/v1/answer?userId=" + user.id, answerInfo)
-      .then(function (response) {
-        console.log(response);
-        resetRecoilValue();
-        handleClickOpen();
-      })
-      .catch(function (error) {
-        console.log(error.message);
-        resetRecoilValue();
-        // handleClickFailDialogOpen();
-      })
-      .finally(function () {
-        // always executed
-      });
+    // axios
+    //   .post("/api/v1/answer?userId=" + user.id, answerInfo)
+    //   .then(function (response) {
+    //     console.log(response);
+    //     resetRecoilValue();
+    //     handleClickOpen();
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error.message);
+    //     resetRecoilValue();
+    //     // handleClickFailDialogOpen();
+    //   })
+    //   .finally(function () {
+    //     // always executed
+    //   });
   };
 
   return (
     <SNavBar>
       <SaveBtn
-        disabled={!(isEssayValidate && isMultiChoiceValidate && isOXValidate)}
+        // disabled={!(isEssayValidate && isMultiChoiceValidate && isOXValidate)}
         onClick={handleSubmit}
       >
         저장

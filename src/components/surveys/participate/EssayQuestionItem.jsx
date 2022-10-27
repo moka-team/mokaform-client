@@ -1,11 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { QuestionWrapper, QuestionText, Answer } from "./styled";
-import { EssayAnswerListState, isEssayAnswerValidate } from "../../../atoms";
+import {
+  EssayAnswerListState,
+  isEssayAnswerValidate,
+  essayAnswerValidateCount,
+} from "../../../atoms";
 import { useRecoilState } from "recoil";
 
 export default function EssayQuestionItem({ item }) {
   const [essayAnswerList, setEssayAnswerList] =
     useRecoilState(EssayAnswerListState);
+  const [essayValidateCount, setEssayValidateCount] = useRecoilState(
+    essayAnswerValidateCount
+  );
   const [isEssayValidate, setIsEssayValidate] = useRecoilState(
     isEssayAnswerValidate
   );
@@ -13,6 +20,8 @@ export default function EssayQuestionItem({ item }) {
     questionId: item.questionId,
     answerContent: "",
   });
+  const [prevAnswer, setPrevAnswer] = useState("");
+  const [currentAnswer, setCurrentAnswer] = useState("");
 
   const index = essayAnswerList.findIndex(
     (listItem) => listItem.questionId === essayAnswer.questionId
@@ -28,6 +37,14 @@ export default function EssayQuestionItem({ item }) {
   const onChange = ({ target: { value } }) => {
     value.length === 0 ? setIsEssayValidate(false) : setIsEssayValidate(true);
 
+    value.length === 0 && prevAnswer.length === 1
+      ? setEssayValidateCount(essayValidateCount - 1)
+      : value.length === 1 && prevAnswer.length === 0
+      ? setEssayValidateCount(essayValidateCount + 1)
+      : setEssayValidateCount(essayValidateCount);
+
+    setCurrentAnswer(value);
+
     setEssayAnswer({ questionId: item.questionId, answerContent: value });
 
     const newList = replaceItemAtIndex(essayAnswerList, index, {
@@ -36,6 +53,13 @@ export default function EssayQuestionItem({ item }) {
     });
     setEssayAnswerList(newList);
   };
+
+  useEffect(
+    (event) => {
+      setPrevAnswer(currentAnswer);
+    },
+    [currentAnswer]
+  );
 
   return (
     <QuestionWrapper>

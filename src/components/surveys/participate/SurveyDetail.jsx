@@ -15,6 +15,7 @@ import {
   EssayAnswerListState,
   MultipleChoiceAnswerListState,
   oxAnswerListState,
+  surveyQuestionCount,
 } from "../../../atoms";
 import { useSetRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 import { userState } from "../../../authentication/userState";
@@ -26,21 +27,12 @@ export default function SurveyDetail({ sharingKey }) {
   const [errorMessage, setErrorMessage] = useState(null);
   const [isDeleted, setIsDeleted] = useState(false);
 
-  const setEssayAnswerList = useResetRecoilState(EssayAnswerListState);
-  const setMultiChoiceAnswerList = useResetRecoilState(
-    MultipleChoiceAnswerListState
-  );
-  const setOXAnswerList = useResetRecoilState(oxAnswerListState);
-
+  const setSurveyQuestionCount = useSetRecoilState(surveyQuestionCount);
   const setIsEssayValidate = useSetRecoilState(isEssayAnswerValidate);
   const setIsMultiChoiceValidate = useSetRecoilState(
     isMultiChoiceAnswerValidate
   );
   const setIsOXValidate = useSetRecoilState(isOXAnswerValidate);
-
-  console.log(setEssayAnswerList);
-  console.log(setMultiChoiceAnswerList);
-  console.log(setOXAnswerList);
 
   // 로그인 상태 검사
   const user = useRecoilValue(userState);
@@ -62,6 +54,7 @@ export default function SurveyDetail({ sharingKey }) {
         console.log(response);
         setSurvey(response.data);
         setIsDeleted(response.data.data.isDeleted);
+        setSurveyQuestionCount(response.data.data.questionCount);
 
         response.data.data.questions.filter(
           (question) => question.type == "ESSAY"

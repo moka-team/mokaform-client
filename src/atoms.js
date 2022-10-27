@@ -81,6 +81,26 @@ export const isOXAnswerValidate = atom({
   default: false,
 });
 
+export const essayAnswerValidateCount = atom({
+  key: "essayAnswerValidateCount",
+  default: 0,
+});
+
+export const multiChoiceAnswerValidateCount = atom({
+  key: "multiChoiceAnswerValidateCount",
+  default: 0,
+});
+
+export const oxAnswerValidateCount = atom({
+  key: "oxAnswerValidateCount",
+  default: 0,
+});
+
+export const surveyQuestionCount = atom({
+  key: "surveyQuestionCount",
+  default: 0,
+});
+
 export const surveyList = atom({
   key: "surveyList",
   default: [],
