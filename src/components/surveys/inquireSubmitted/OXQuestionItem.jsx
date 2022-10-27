@@ -51,6 +51,7 @@ export default function InquireOXQuestionItem({ item, sharingKey }) {
       <QuestionText2 color="#0064ff">Q{item.index + 1}</QuestionText2>
       <QuestionText2 color="black">{item.title}</QuestionText2>
       <QuestionOption2
+        key={item.questionId}
         bcolor={answer ? "#0064ff" : "#edeef0"}
         color={answer ? "white" : "black"}
         weight={answer ? 600 : 400}

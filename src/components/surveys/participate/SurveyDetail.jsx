@@ -9,12 +9,13 @@ import Loading from "./Loading";
 import Error from "./Error";
 import DeleteSurvey from "./DeleteSurvey";
 import {
-  isEssayAnswerValidate,
-  isMultiChoiceAnswerValidate,
-  isOXAnswerValidate,
   EssayAnswerListState,
   MultipleChoiceAnswerListState,
   oxAnswerListState,
+  surveyQuestionCount,
+  essayAnswerValidateCount,
+  oxAnswerValidateCount,
+  multiChoiceAnswerValidateCount,
 } from "../../../atoms";
 import { useSetRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 import { userState } from "../../../authentication/userState";
@@ -26,21 +27,19 @@ export default function SurveyDetail({ sharingKey }) {
   const [errorMessage, setErrorMessage] = useState(null);
   const [isDeleted, setIsDeleted] = useState(false);
 
-  const setEssayAnswerList = useResetRecoilState(EssayAnswerListState);
-  const setMultiChoiceAnswerList = useResetRecoilState(
+  const setSurveyQuestionCount = useSetRecoilState(surveyQuestionCount);
+
+  // 답변 저장 관련 변수
+  const setEssayValidateCount = useSetRecoilState(essayAnswerValidateCount);
+  const setMultiValidateCount = useSetRecoilState(
+    multiChoiceAnswerValidateCount
+  );
+  const setOXValidateCount = useSetRecoilState(oxAnswerValidateCount);
+  const setEssayAnswerList = useSetRecoilState(EssayAnswerListState);
+  const setMultiChoiceAnswerList = useSetRecoilState(
     MultipleChoiceAnswerListState
   );
-  const setOXAnswerList = useResetRecoilState(oxAnswerListState);
-
-  const setIsEssayValidate = useSetRecoilState(isEssayAnswerValidate);
-  const setIsMultiChoiceValidate = useSetRecoilState(
-    isMultiChoiceAnswerValidate
-  );
-  const setIsOXValidate = useSetRecoilState(isOXAnswerValidate);
-
-  console.log(setEssayAnswerList);
-  console.log(setMultiChoiceAnswerList);
-  console.log(setOXAnswerList);
+  const setOXAnswerList = useSetRecoilState(oxAnswerListState);
 
   // 로그인 상태 검사
   const user = useRecoilValue(userState);
@@ -52,6 +51,14 @@ export default function SurveyDetail({ sharingKey }) {
   }, []);
 
   useEffect(() => {
+    setEssayAnswerList([]);
+    setMultiChoiceAnswerList([]);
+    setOXAnswerList([]);
+
+    setEssayValidateCount(0);
+    setMultiValidateCount(0);
+    setOXValidateCount(0);
+
     axios
       .get("/api/v1/survey", {
         params: {
@@ -62,24 +69,7 @@ export default function SurveyDetail({ sharingKey }) {
         console.log(response);
         setSurvey(response.data);
         setIsDeleted(response.data.data.isDeleted);
-
-        response.data.data.questions.filter(
-          (question) => question.type == "ESSAY"
-        ).length === 0
-          ? setIsEssayValidate(true)
-          : setIsEssayValidate(false);
-
-        response.data.data.questions.filter(
-          (question) => question.type == "MULTIPLE_CHOICE"
-        ).length === 0
-          ? setIsMultiChoiceValidate(true)
-          : setIsMultiChoiceValidate(false);
-
-        response.data.data.questions.filter((question) => question.type == "OX")
-          .length === 0
-          ? setIsOXValidate(true)
-          : setIsOXValidate(false);
-
+        setSurveyQuestionCount(response.data.data.questionCount);
         setLoading(false);
       })
       .catch(function (error) {

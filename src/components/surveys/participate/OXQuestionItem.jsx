@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { QuestionWrapper, QuestionOption, QuestionText } from "./styled";
-import { oxAnswerListState, isOXAnswerValidate } from "../../../atoms";
+import { oxAnswerListState, oxAnswerValidateCount } from "../../../atoms";
 import { useRecoilState } from "recoil";
 
 export default function OXQuestionItem({ item }) {
-  const [isOXValidate, setIsOxValidate] = useRecoilState(isOXAnswerValidate);
   const [currentClick, setCurrentClick] = useState(null);
   const [prevClick, setPrevClick] = useState(null);
 
   const [oxAnswerList, setOXAnswerList] = useRecoilState(oxAnswerListState);
+  const [oxValidateCount, setOXValidateCount] = useRecoilState(
+    oxAnswerValidateCount
+  );
   const [oxAnswer, setOXAnswer] = useState({
     questionId: item.questionId,
     isYes: null,
@@ -17,12 +19,18 @@ export default function OXQuestionItem({ item }) {
   const index = oxAnswerList.findIndex(
     (listItem) => listItem.questionId === oxAnswer.questionId
   );
+  const yes = `${item.questionId} yes`;
+  const no = `${item.questionId} no`;
 
   useEffect(() => {
     setOXAnswerList((oldOXAnswerList) => [...oldOXAnswerList, oxAnswer]);
   }, []);
 
   const onClickHandler = (event) => {
+    prevClick === null
+      ? setOXValidateCount(oxValidateCount + 1)
+      : setOXValidateCount(oxValidateCount);
+
     if (prevClick !== null && prevClick !== event.target.id) {
       let prev = document.getElementById(prevClick);
       prev.style.color = "black";
@@ -47,8 +55,6 @@ export default function OXQuestionItem({ item }) {
   useEffect(
     (event) => {
       if (currentClick !== null) {
-        setIsOxValidate(true);
-
         let current = document.getElementById(currentClick);
         current.style.color = "white";
         current.style.fontWeight = 600;
@@ -64,10 +70,10 @@ export default function OXQuestionItem({ item }) {
     <QuestionWrapper>
       <QuestionText color="#0064ff">Q{item.index + 1}</QuestionText>
       <QuestionText color="black">{item.title}</QuestionText>
-      <QuestionOption id="yes" value={true} onClick={onClickHandler}>
+      <QuestionOption id={yes} value={true} onClick={onClickHandler}>
         네 😀
       </QuestionOption>
-      <QuestionOption id="no" value={false} onClick={onClickHandler}>
+      <QuestionOption id={no} value={false} onClick={onClickHandler}>
         아니오 🥲
       </QuestionOption>
     </QuestionWrapper>

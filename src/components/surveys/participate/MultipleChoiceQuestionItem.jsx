@@ -2,14 +2,11 @@ import React, { useState, useEffect } from "react";
 import { QuestionWrapper, QuestionOption, QuestionText } from "./styled";
 import {
   MultipleChoiceAnswerListState,
-  isMultiChoiceAnswerValidate,
+  multiChoiceAnswerValidateCount,
 } from "../../../atoms";
 import { useRecoilState } from "recoil";
 
 export default function MultipleChoiceQuestionItem({ item, multiquestion }) {
-  const [isMultiChoiceValidate, setIsMultiChoiceValidate] = useRecoilState(
-    isMultiChoiceAnswerValidate
-  );
   const [multiChoiceAnswerList, setMultiChoiceAnswerList] = useRecoilState(
     MultipleChoiceAnswerListState
   );
@@ -17,6 +14,8 @@ export default function MultipleChoiceQuestionItem({ item, multiquestion }) {
     questionId: item.questionId,
     multiQuestionId: -1,
   });
+  const [multiChoiceValidateCount, setMultiChocieValidateCount] =
+    useRecoilState(multiChoiceAnswerValidateCount);
   const index = multiChoiceAnswerList.findIndex(
     (listItem) => listItem.questionId === multiChoiceAnswer.questionId
   );
@@ -32,6 +31,10 @@ export default function MultipleChoiceQuestionItem({ item, multiquestion }) {
   }, []);
 
   const onClickHandler = (event) => {
+    prevClick === null
+      ? setMultiChocieValidateCount(multiChoiceValidateCount + 1)
+      : setMultiChocieValidateCount(multiChoiceValidateCount);
+
     if (prevClick !== null && prevClick !== event.target.id) {
       let prev = document.getElementById(prevClick);
       prev.style.color = "black";
@@ -56,8 +59,6 @@ export default function MultipleChoiceQuestionItem({ item, multiquestion }) {
   useEffect(
     (event) => {
       if (currentClick !== null) {
-        setIsMultiChoiceValidate(true);
-
         let current = document.getElementById(currentClick);
         current.style.color = "white";
         current.style.fontWeight = 600;
