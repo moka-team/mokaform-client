@@ -5,7 +5,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPrint } from "@fortawesome/free-solid-svg-icons";
 import { useRecoilValue } from "recoil";
 import { userState } from "../../../authentication/userState";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 const Container = styled.div`
   display: flex;
@@ -32,12 +34,8 @@ const Wrapper = styled.div`
 `;
 function SurveyAnalysis() {
   const user = useRecoilValue(userState);
-  useEffect(() => {
-    if (user === null) {
-      alert("로그인이 필요한 서비스입니다.");
-      window.location.replace("http://localhost:3000/");
-    }
-  }, []);
+  const { surveyId } = useParams();
+  
   return (
     <>
       <Header />
@@ -47,7 +45,7 @@ function SurveyAnalysis() {
           <FontAwesomeIcon icon={faPrint} onClick={window.print} />
         </ReportBtn>
         <Wrapper>
-          <ByItem />
+          <ByItem surveyId={surveyId} />
         </Wrapper>
       </Container>
     </>

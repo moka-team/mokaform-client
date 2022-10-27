@@ -11,6 +11,7 @@ const options = {
 };
 
 export default function WordCloud({ item }) {
+  // const data = item.
   const countNum = (data) => {
     const obj = {};
 
@@ -36,7 +37,7 @@ export default function WordCloud({ item }) {
       <TagCloud
         minSize={15}
         maxSize={50}
-        tags={countNum(item.data)}
+        tags={countNum(item.essayStats[0].answerContents)}
         colorOptions={options}
       />
     </WordCloudContainer>

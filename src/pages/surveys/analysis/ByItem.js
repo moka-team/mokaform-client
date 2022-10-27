@@ -8,6 +8,9 @@ import MultipleChoiceAnalysis from "../../../components/surveys/analysis/Multipl
 import WordCloud from "../../../components/surveys/analysis/WordCloud";
 import OXAnalysis from "../../../components/surveys/analysis/OXAnalysis";
 
+import { useEffect, useState } from "react";
+import axios from "axios";
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -23,10 +26,22 @@ const Title = styled.div`
   text-align: center;
 `;
 
-export default function ByItem() {
+export default function ByItem({ surveyId }) {
+  const [stat, setStat] = useState(null);
+  const fetchAnalysis = async () => {
+    const response = await axios.get(
+      `/api/v1/users/my/surveys/${surveyId}/stats`
+    );
+    setStat(response.data.data);
+  };
+
+  useEffect(() => {
+    fetchAnalysis();
+  }, []);
+  console.log(stat.essayStats[0]);
   return (
     <Container>
-      {data.map((item, idx) => (
+      {/* {data.map((item, idx) => (
         <Wrapper key={idx}>
           <Title>{idx + 1}번 문항에 대한 분석결과</Title>
           {item.question_type === "MULTIPLE_CHOICE" ? (
@@ -46,7 +61,8 @@ export default function ByItem() {
             </>
           )}
         </Wrapper>
-      ))}
+      ))} */}
+      {/* <WordCloud item={stat} /> */}
     </Container>
   );
 }

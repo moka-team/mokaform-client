@@ -34,6 +34,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EqualizerIcon from "@mui/icons-material/Equalizer";
 import { Link } from "react-router-dom";
 import routes from "../../../routes";
+
 function TablePaginationActions(props) {
   const theme = useTheme();
   const { count, page, rowsPerPage, onPageChange } = props;
@@ -135,7 +136,6 @@ export default function ManageSurveySection({ userId }) {
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const [requireRerender, setRequireRerender] = useState(true);
-
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - survey.length) : 0;
@@ -262,7 +262,7 @@ export default function ManageSurveySection({ userId }) {
                     </StyledTableCell>
                     <StyledTableCell align="center">
                       <IconButton>
-                        <Link to={routes.surveyStats}>
+                        <Link to={`survey-stats/${data.surveyId}`}>
                           <EqualizerIcon sx={{ color: "#202632" }} />
                         </Link>
                       </IconButton>
