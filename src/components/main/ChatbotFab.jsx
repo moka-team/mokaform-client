@@ -4,7 +4,7 @@ import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
 
 const style = {
   backgroundColor: "#0064FF",
-  color: "#202632",
+  color: "#F5F6FA",
   margin: 0,
   top: "auto",
   right: 25,
