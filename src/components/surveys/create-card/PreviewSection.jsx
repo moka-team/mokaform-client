@@ -4,13 +4,15 @@ import { useRecoilValue } from "recoil";
 import { surveyTitle, surveySummary, surveyListState } from "../../../atoms";
 import SurveyPreviewItem from "./SurveyPreviewItem";
 import styled from "styled-components";
+import { Wrapper } from "./styled";
 
 const Section = styled.div`
-  height: 100vh;
-  border-radius: 10px;
-  padding: 20px 35px 20px 25px;
+  height: calc(var(--vh, 1vh) * 100);
+  background-color: #202632;
   align-items: center;
   justify-content: center;
+  text-align: center;
+  padding: -5%;
   display: flex;
   flex-direction: column;
 `;
@@ -39,19 +41,13 @@ export default function PreviewSection() {
   const surveyList = useRecoilValue(surveyListState);
 
   return (
-    <Preview width="70%" bgColor="#202632">
-      {/* <TitleText bgColor="#202632" tcolor="white" mTop="9%">
-        {title}
-      </TitleText>
-      <SummaryText bgColor="#202632" tcolor="white">
-        {summary}
-      </SummaryText> */}
+    <Wrapper>
       {surveyList.map((surveyItem) => (
         <Section>
           <SurveyPreviewItem key={surveyItem.index} item={surveyItem} />
           <Button>다음</Button>
         </Section>
       ))}
-    </Preview>
+    </Wrapper>
   );
 }

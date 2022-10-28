@@ -17,15 +17,28 @@ import InquireSubmittedSurvey from "./pages/surveys/inquireSubmittedSurvey";
 import { useRecoilValue } from "recoil";
 import { userState } from "./authentication/userState";
 import CreateCardSurvey from "./pages/surveys/create-card/index";
+import { useEffect } from "react";
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
   font-family: 'Inter', sans-serif;
 `;
 
+function setScreenSize() {
+  let vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty("--vh", `${vh}px`); //"--vh"라는 속성으로 정의해준다.
+}
+
 function App() {
   // 로그인 확인 수정 필요
   const user = useRecoilValue(userState);
+
+  window.addEventListener("resize", () => setScreenSize());
+
+  useEffect(() => {
+    setScreenSize();
+  });
+
   return (
     <BrowserRouter>
       <GlobalStyle />

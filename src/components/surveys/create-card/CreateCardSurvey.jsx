@@ -23,7 +23,7 @@ import dayjs from "dayjs";
 
 const Container = styled.div`
   display: flex;
-  min-height: 100vh;
+  min-height: calc(var(--vh, 1vh) * 100);
 `;
 
 export default function CreateCardSurvey() {
