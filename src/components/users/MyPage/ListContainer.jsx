@@ -59,7 +59,7 @@ export default function ListContainer() {
         </Box>
         <SortSelect page={"myCreate"} />
       </Header>
-      <UserCreatedSurveyCard />
+      <UserSurveyCard isCreated={true} />
       <Header>
         <Box>
           <Block>
@@ -69,7 +69,7 @@ export default function ListContainer() {
         </Box>
         <SortSelect page={"mySubmit"} />
       </Header>
-      <UserParticipatedSurveyCard />
+      <UserSurveyCard isCreated={false} />
     </Container>
   );
 }

@@ -9,9 +9,6 @@ import Stack from "@mui/material/Stack";
 import { CardActionArea } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
-import RightButton from "./RightButton";
-import axios from "axios";
-import routes from "../../../routes";
 import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { userState } from "../../../authentication/userState";
@@ -67,120 +64,89 @@ function SurveyCard({ survey }) {
   );
 }
 
-// 임시 유저가 참여한 설문 리스트 데이터
-const writedSurvey = [
-  {
-    number: 1,
-    title: "참여 설문제목1",
-    surveyeeCount: 30,
-    endDate: "22.09.25",
-    surveyCategories: "IT",
-  },
-  {
-    number: 2,
-    title: "참여 설문제목2",
-    surveyeeCount: 32,
-    endDate: "22.09.27",
-    surveyCategories: "사회정치",
-  },
-  {
-    number: 3,
-    title: "참여 설문제목3",
-    surveyeeCount: 20,
-    endDate: "22.09.29",
-    surveyCategories: "IT",
-  },
-  {
-    number: 4,
-    title: "참여 설문제목43123133",
-    surveyeeCount: 100,
-    endDate: "22.09.30",
-    surveyCategories: "IT",
-  },
-  {
-    number: 5,
-    title: "참여 설문제목43",
-    surveyeeCount: 100,
-    date: "22.09.30",
-    surveyCategories: "IT",
-  },
-];
-
 export default function UserSurveyCard({ isCreated }) {
   const [user, setUser] = useRecoilState(userState);
 
   const [createdSurvey, setCreatedSurvey] = useRecoilState(createdMySurvey);
   const [submittedSurvey, setSubmittedSurvey] =
     useRecoilState(submittedMySurvey);
-  console.log(user);
-  // useEffect(() => {
-  //   (async () => {
-  //     // TODO: 로그인 후 userId 부분 수정 필요!
-  //     const posts = await axios.get("/api/v1/users/my/surveys", {
-  //       params: {
-  //         page: 0,
-  //         size: 4,
-  //         sort: "surveyeeCount,desc",
-  //         userId: 1,
-  //       },
-  //     });
-  //     setCreatedMySurvey(posts.data.data.content);
-  //   })();
-  // }, []);
+  console.log(isCreated);
 
-  return isCreated ? (
+  return isCreated === true ? (
     <Grid container spacing={1} sx={{ ml: 5, mt: 1, mb: 4, mr: -3 }}>
       {createdSurvey.map((survey) => (
-        <Grid item key={survey.surveyId} xs={6} sm={6} md={4} lg={2} xl={2}>
-          <CardActionArea sx={{ width: 200 }}>
-            <Card
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                width: 200,
-              }}
-            >
-              <CardMedia
-                component="img"
-                image={defaultImage}
-                sx={{ height: 150 }}
-              />
-              <CardContent sx={{ flexGrow: 1 }}>
-                <SurveyCard survey={survey} />
-              </CardContent>
-            </Card>
-          </CardActionArea>
+        <Grid
+          item
+          key={survey.surveyId}
+          xs={6}
+          sm={6}
+          md={4}
+          lg={2.25}
+          xl={2.25}
+        >
+          <Link
+            to={`/my/survey/${survey.sharingKey}`}
+            style={{ textDecoration: "none" }}
+          >
+            <CardActionArea sx={{ width: 200 }}>
+              <Card
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  width: 200,
+                }}
+              >
+                <CardMedia
+                  component="img"
+                  image={defaultImage}
+                  sx={{ height: 150 }}
+                />
+                <CardContent sx={{ flexGrow: 1 }}>
+                  <SurveyCard survey={survey} />
+                </CardContent>
+              </Card>
+            </CardActionArea>
+          </Link>
         </Grid>
       ))}
-      <Link to={`/survey/${user.id}/manage`} surveyId={1}>
-        <RightButton />
-      </Link>
     </Grid>
   ) : (
     <Grid container spacing={1} sx={{ ml: 5, mt: 1, mr: -3 }}>
       {submittedSurvey.map((survey) => (
-        <Grid item key={survey.number} xs={6} sm={6} md={4} lg={2} xl={2}>
-          <CardActionArea sx={{ width: 200 }}>
-            <Card
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                width: 200,
-              }}
-            >
-              <CardMedia
-                component="img"
-                image={defaultImage}
-                sx={{ height: 150 }}
-              />
-              <CardContent sx={{ flexGrow: 1 }}>
-                <SurveyCard survey={survey} />
-              </CardContent>
-            </Card>
-          </CardActionArea>
+        <Grid
+          item
+          key={survey.surveyId}
+          xs={6}
+          sm={6}
+          md={4}
+          lg={2.25}
+          xl={2.25}
+        >
+          <Link
+            to={`/my/survey/submitted/${survey.sharingKey}`}
+            style={{ textDecoration: "none" }}
+          >
+            <CardActionArea sx={{ width: 200 }}>
+              <Card
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  width: 200,
+                }}
+              >
+                <CardMedia
+                  component="img"
+                  image={defaultImage}
+                  sx={{ height: 150 }}
+                />
+                <CardContent sx={{ flexGrow: 1 }}>
+                  <SurveyCard survey={survey} />
+                </CardContent>
+              </Card>
+            </CardActionArea>
+          </Link>
         </Grid>
       ))}
-      <RightButton />
     </Grid>
   );
 }
