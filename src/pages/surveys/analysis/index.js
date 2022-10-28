@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import ByItem from '../../../components/surveys/analysis/ByItem';
+import ByItem from "../../../components/surveys/analysis/ByItem";
 import Header from "../../../components/common/Header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPrint } from "@fortawesome/free-solid-svg-icons";
@@ -35,6 +35,7 @@ function SurveyAnalysis() {
   const user = useRecoilValue(userState);
   const navigate = useNavigate();
   const { state } = useLocation();
+  console.log(state);
 
   useEffect(() => {
     if (user === null) {
