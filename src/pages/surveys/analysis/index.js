@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import ByItem from "./ByItem";
+import ByItem from '../../../components/surveys/analysis/ByItem';
 import Header from "../../../components/common/Header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPrint } from "@fortawesome/free-solid-svg-icons";
