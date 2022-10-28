@@ -3,10 +3,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-regular-svg-icons";
 import CircleCarousel from "./CircleCarousel";
 import UserSurveyCard from "./UserCreatedSurveyCard";
-import MyCreatedSortSelect from "./MyCreatedSortSelect";
-import MySubmittedSortSelect from "./MySubmittedSortSelect";
 import UserCreatedSurveyCard from "./UserCreatedSurveyCard";
 import UserParticipatedSurveyCard from "./UserParticipatedSurveyCard";
+import SortSelect from "../../common/SortSelect";
 import { useRecoilValue } from "recoil";
 import { userState } from "../../../authentication/userState";
 import { Link } from "react-router-dom";
@@ -58,7 +57,7 @@ export default function ListContainer() {
             <FontAwesomeIcon icon={faEdit} color="gray" />
           </Link>
         </Box>
-        <MyCreatedSortSelect />
+        <SortSelect page={"myCreate"} />
       </Header>
       <UserCreatedSurveyCard />
       <Header>
@@ -68,7 +67,7 @@ export default function ListContainer() {
           </Block>
           <FontAwesomeIcon icon={faEdit} color="gray" />
         </Box>
-        <MySubmittedSortSelect />
+        <SortSelect page={"mySubmit"} />
       </Header>
       <UserParticipatedSurveyCard />
     </Container>
