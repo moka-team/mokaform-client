@@ -18,6 +18,8 @@ import DeleteSurvey from "../participate/DeleteSurvey";
 import { surveyForSubmitted } from "../../../atoms";
 import * as Sentry from "@sentry/react";
 import { getAccessToken, getRefreshToken } from "../../../authentication/auth";
+import CardParticipate from "../participate/CardParticipate";
+import CardSubmitted from "./CardSubmitted";
 
 export default function SubmittedSurvey({ sharingKey }) {
   const user = useRecoilValue(userState);
@@ -29,6 +31,15 @@ export default function SubmittedSurvey({ sharingKey }) {
   const [errorMessage, setErrorMessage] = useState(null);
 
   const [isDeleted, setIsDeleted] = useState(false);
+
+  function checkingCard() {
+    if (survey.questions[0].type === "MULTIPLE_CHOICE") {
+      if (survey.multiQuestions[0].multiQuestionType === "CARD") {
+        return true;
+      }
+    }
+    return false;
+  }
 
   useEffect(() => {
     axios
@@ -66,30 +77,39 @@ export default function SubmittedSurvey({ sharingKey }) {
   return (
     <Container>
       <SNavBar></SNavBar>
+
       <Survey>
         <TitleText>{survey.title}</TitleText>
         <SummaryText>{survey.summary}</SummaryText>
-        {survey.questions.map((question) =>
-          question.type === "ESSAY" ? (
-            <InquireEssayQuestionItem
-              key={question.questionId}
-              item={question}
-              sharingKey={sharingKey}
-            ></InquireEssayQuestionItem>
-          ) : question.type === "OX" ? (
-            <InquireOXQuestionItem
-              key={question.questionId}
-              item={question}
-              sharingKey={sharingKey}
-            ></InquireOXQuestionItem>
-          ) : (
-            <InquireMultipleChoiceQuestionItem
-              key={question.questionId}
-              item={question}
-              multiquestion={survey.multiQuestions}
-              sharingKey={sharingKey}
-            ></InquireMultipleChoiceQuestionItem>
-          )
+
+        {/* 카드 형식 보여주기 */}
+        {checkingCard() ? (
+          <CardSubmitted />
+        ) : (
+          <>
+            {survey.questions.map((question) =>
+              question.type === "ESSAY" ? (
+                <InquireEssayQuestionItem
+                  key={question.questionId}
+                  item={question}
+                  sharingKey={sharingKey}
+                ></InquireEssayQuestionItem>
+              ) : question.type === "OX" ? (
+                <InquireOXQuestionItem
+                  key={question.questionId}
+                  item={question}
+                  sharingKey={sharingKey}
+                ></InquireOXQuestionItem>
+              ) : (
+                <InquireMultipleChoiceQuestionItem
+                  key={question.questionId}
+                  item={question}
+                  multiquestion={survey.multiQuestions}
+                  sharingKey={sharingKey}
+                ></InquireMultipleChoiceQuestionItem>
+              )
+            )}
+          </>
         )}
       </Survey>
     </Container>
