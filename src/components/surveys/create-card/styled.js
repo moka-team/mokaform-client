@@ -44,4 +44,11 @@ export const QuestionText = styled.h1`
   text-align: center;
 `;
 
-
+export const Wrapper = styled.div`
+  width: 70%;
+  min-height: calc(var(--vh, 1vh) * 100);
+  float: right;
+  display: flex;
+  flex-direction: column;
+  background-color: #202632;
+`;
