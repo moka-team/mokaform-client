@@ -55,6 +55,10 @@ export default function SurveyDetail({ sharingKey }) {
         params: {
           sharingKey: sharingKey,
         },
+        headers: {
+          accessToken: getAccessToken(),
+          refreshToken: getRefreshToken(),
+        },
       })
       .then(function (response) {
         console.log(response);

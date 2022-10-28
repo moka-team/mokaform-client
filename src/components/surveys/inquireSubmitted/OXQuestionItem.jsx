@@ -28,6 +28,10 @@ export default function InquireOXQuestionItem({ item, sharingKey }) {
         params: {
           userId: user.id,
         },
+        headers: {
+          accessToken: getAccessToken(),
+          refreshToken: getRefreshToken(),
+        },
       })
       .then(function (response) {
         console.log(response.data.data.oxAnswers);

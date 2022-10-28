@@ -175,7 +175,12 @@ function NavBar() {
     console.log("===================================");
 
     axios
-      .post("/api/v1/survey?userId=" + user.id, surveyInfo)
+      .post("/api/v1/survey?userId=" + user.id, surveyInfo, {
+        headers: {
+          accessToken: getAccessToken(),
+          refreshToken: getRefreshToken(),
+        },
+      })
       .then(function (response) {
         console.log(response);
         setSharingUrl(

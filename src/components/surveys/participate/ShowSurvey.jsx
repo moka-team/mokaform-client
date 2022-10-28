@@ -22,6 +22,10 @@ export default function ShowSurvey({ sharingKey }) {
         params: {
           sharingKey: sharingKey,
         },
+        headers: {
+          accessToken: getAccessToken(),
+          refreshToken: getRefreshToken(),
+        },
       })
       .then(function (response) {
         console.log(response);

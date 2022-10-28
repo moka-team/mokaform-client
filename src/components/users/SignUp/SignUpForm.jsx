@@ -57,15 +57,24 @@ export default function SignUpForm() {
 
   const signUpPatch = () => {
     axios
-      .post("/api/v1/users/signup", {
-        email: email,
-        password: password,
-        nickname: nickname,
-        ageGroup: ageGroup,
-        gender: gender,
-        job: job,
-        category: preference,
-      })
+      .post(
+        "/api/v1/users/signup",
+        {
+          email: email,
+          password: password,
+          nickname: nickname,
+          ageGroup: ageGroup,
+          gender: gender,
+          job: job,
+          category: preference,
+        },
+        {
+          headers: {
+            accessToken: getAccessToken(),
+            refreshToken: getRefreshToken(),
+          },
+        }
+      )
       .then(function (response) {
         if (response.data.message === "새로운 유저 생성이 성공하였습니다.") {
           // 회원가입 성공 시 모든 전역 데이터 지우기

@@ -167,7 +167,12 @@ export default function ManageSurveySection({ userId }) {
     setDialogOpen(false);
 
     axios
-      .delete("/api/v1/survey/" + selectedSurveyId)
+      .delete("/api/v1/survey/" + selectedSurveyId, {
+        headers: {
+          accessToken: getAccessToken(),
+          refreshToken: getRefreshToken(),
+        },
+      })
       .then(function (response) {
         console.log(response);
       })
@@ -186,6 +191,10 @@ export default function ManageSurveySection({ userId }) {
       .get("/api/v1/users/my/surveys", {
         params: {
           userId: userId,
+        },
+        headers: {
+          accessToken: getAccessToken(),
+          refreshToken: getRefreshToken(),
         },
       })
       .then(function (response) {
