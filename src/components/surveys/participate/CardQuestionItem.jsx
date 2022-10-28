@@ -14,7 +14,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 
 const QWrapper = styled.div`
-  width: 65%;
+  width: 50%;
   margin-top: 25px;
   margin-bottom: 15px;
   border-radius: 10px;
