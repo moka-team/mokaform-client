@@ -17,7 +17,7 @@ import { submittedMySurvey } from "../../../atoms";
 import defaultImage from "../../common/default_image.png";
 
 function SurveyCard({ survey }) {
-  // let category = survey.surveyCategories[0];
+  let category = survey.surveyCategories[0];
 
   return (
     <Grid container>
@@ -27,8 +27,8 @@ function SurveyCard({ survey }) {
           color="#202632"
           sx={{ fontSize: 15, fontWeight: 600 }}
         >
-          {survey?.title?.length > 12
-            ? `${survey.title.slice(0, 12)}...`
+          {survey?.title?.length > 11
+            ? `${survey.title.slice(0, 11)}...`
             : survey.title}
         </Typography>
       </Grid>
@@ -47,7 +47,7 @@ function SurveyCard({ survey }) {
         </Stack>
       </Grid>
       <Grid item xs={7} align="right" sx={{ mt: 0.5, mb: -1 }}>
-        {/* {
+        {
           {
             HOBBY: <Chip label="취미" />,
             DAILY_LIFE: <Chip label="일상" />,
@@ -58,7 +58,7 @@ function SurveyCard({ survey }) {
             PREFERENCE_RESEARCH: <Chip label="선호도 조사" />,
             PET: <Chip label="반려동물" />,
           }[category]
-        } */}
+        }
       </Grid>
     </Grid>
   );
@@ -70,8 +70,7 @@ export default function UserSurveyCard({ isCreated }) {
   const [createdSurvey, setCreatedSurvey] = useRecoilState(createdMySurvey);
   const [submittedSurvey, setSubmittedSurvey] =
     useRecoilState(submittedMySurvey);
-  console.log(isCreated);
-
+  console.log("create" + isCreated);
   return isCreated === true ? (
     <Grid container spacing={1} sx={{ ml: 5, mt: 1, mb: 4, mr: -3 }}>
       {createdSurvey.map((survey) => (
