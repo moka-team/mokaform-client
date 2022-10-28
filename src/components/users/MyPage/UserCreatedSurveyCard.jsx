@@ -9,14 +9,8 @@ import Stack from "@mui/material/Stack";
 import { CardActionArea } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
-import RightButton from "./RightButton";
-import axios from "axios";
-import routes from "../../../routes";
 import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { userState } from "../../../authentication/userState";
-import Loading from "../../surveys/participate/Loading";
-import Error from "../../surveys/participate/Error";
 import styled from "styled-components";
 import { createdMySurvey } from "../../../atoms";
 import defaultImage from "../../common/default_image.png";
@@ -74,10 +68,6 @@ function SurveyCard({ survey }) {
 }
 
 export default function UserSurveyCard() {
-  // const [createdMySurvey, setCreatedMySurvey] = useState(null);
-  const [user, setUser] = useRecoilState(userState);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [createdSurvey, setCreatedSurvey] = useRecoilState(createdMySurvey);
 
   return (
