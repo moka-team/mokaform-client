@@ -109,13 +109,17 @@ export default function CardParticipate() {
       </Dialog>
       <Wrapper>
         {survey.data.questions.map((question, index) => (
-          <Section ref={el => (cardRef.current[index] = el)}>
+          <Section ref={(el) => (cardRef.current[index] = el)}>
             <CardQuestionItem
               key={question.questionId}
               item={question}
               multiquestion={survey.data.multiQuestions}
             ></CardQuestionItem>
-            <NextButton onClick={() => onClickHandler(index)}>다음</NextButton>
+            {index !== survey.data.questions.length - 1 && (
+              <NextButton onClick={() => onClickHandler(index)}>
+                다음
+              </NextButton>
+            )}
           </Section>
         ))}
       </Wrapper>
