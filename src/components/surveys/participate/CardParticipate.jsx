@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useRecoilState } from "recoil";
 import { surveyForSubmit } from "../../../atoms";
 import Dialog from "@mui/material/Dialog";
@@ -52,6 +52,7 @@ const Wrapper = styled.div`
 `;
 
 export default function CardParticipate() {
+  const cardRef = useRef([]);
   const [survey, setSurvey] = useRecoilState(surveyForSubmit);
   const [successDialogOpen, setSuccessDialogOpen] = useState(true);
 
@@ -61,6 +62,10 @@ export default function CardParticipate() {
 
   const handleSuccessDialogConfirmClose = () => {
     setSuccessDialogOpen(false);
+  };
+
+  const onClickHandler = (index) => {
+    cardRef.current[index + 1]?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -103,14 +108,14 @@ export default function CardParticipate() {
         </DialogActions>
       </Dialog>
       <Wrapper>
-        {survey.data.questions.map((question) => (
-          <Section>
+        {survey.data.questions.map((question, index) => (
+          <Section ref={el => (cardRef.current[index] = el)}>
             <CardQuestionItem
               key={question.questionId}
               item={question}
               multiquestion={survey.data.multiQuestions}
             ></CardQuestionItem>
-            <NextButton>다음</NextButton>
+            <NextButton onClick={() => onClickHandler(index)}>다음</NextButton>
           </Section>
         ))}
       </Wrapper>
