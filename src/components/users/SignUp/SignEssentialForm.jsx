@@ -13,7 +13,8 @@ import {
 } from "./SignUpState";
 import { Box } from "@mui/material";
 import axios from "axios";
-
+import * as Sentry from "@sentry/react";
+import { getAccessToken, getRefreshToken } from "../../../authentication/auth";
 export default function SignEssentialForm({}) {
   // 이메일, 닉네임, 비밀번호, 비밀번호 확인
   const [email, setEmail] = useRecoilState(emailState);
@@ -76,6 +77,8 @@ export default function SignEssentialForm({}) {
           }
         })
         .catch(function (error) {
+          Sentry.captureException(error);
+
           console.log(error);
         });
     }
@@ -120,6 +123,7 @@ export default function SignEssentialForm({}) {
           })
           .catch(function (error) {
             console.log(error);
+            Sentry.captureException(error);
           });
       }
     },

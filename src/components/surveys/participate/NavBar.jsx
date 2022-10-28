@@ -1,28 +1,25 @@
-import React, { useEffect, useState } from "react";
-import { SNavBar, SaveBtn } from "./styled";
-import { useRecoilState, useRecoilValue } from "recoil";
-import {
-  EssayAnswerListState,
-  MultipleChoiceAnswerListState,
-  oxAnswerListState,
-  isEssayAnswerValidate,
-  isMultiChoiceAnswerValidate,
-  isOXAnswerValidate,
-  surveyQuestionCount,
-  essayAnswerValidateCount,
-  oxAnswerValidateCount,
-  multiChoiceAnswerValidateCount,
-} from "../../../atoms";
-import axios from "axios";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import React from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
+import {
+  EssayAnswerListState,
+  essayAnswerValidateCount,
+  multiChoiceAnswerValidateCount,
+  MultipleChoiceAnswerListState,
+  oxAnswerListState,
+  oxAnswerValidateCount,
+  surveyQuestionCount,
+} from "../../../atoms";
 import { userState } from "../../../authentication/userState";
-
+import { SaveBtn, SNavBar } from "./styled";
+import * as Sentry from "@sentry/react";
+import { getAccessToken, getRefreshToken } from "../../../authentication/auth";
 export default function NavBar() {
   const user = useRecoilValue(userState);
 
@@ -113,6 +110,8 @@ export default function NavBar() {
       .catch(function (error) {
         console.log(error.message);
         resetRecoilValue();
+        Sentry.captureException(error);
+
         // handleClickFailDialogOpen();
       })
       .finally(function () {

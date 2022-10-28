@@ -6,6 +6,8 @@ import Loading from "../participate/Loading";
 import axios from "axios";
 import { useRecoilValue } from "recoil";
 import { surveyForSubmitted } from "../../../atoms";
+import * as Sentry from "@sentry/react";
+import { getAccessToken, getRefreshToken } from "../../../authentication/auth";
 
 export default function InquireOXQuestionItem({ item, sharingKey }) {
   const user = useRecoilValue(userState);
@@ -46,6 +48,7 @@ export default function InquireOXQuestionItem({ item, sharingKey }) {
       .catch(function (error) {
         console.log(error.message);
         setErrorMessage(error.message);
+        Sentry.captureException(error);
       })
       .finally(function () {
         // always executed

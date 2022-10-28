@@ -10,7 +10,8 @@ import {
 } from "./SigninStyle";
 import { useRecoilState } from "recoil";
 import { userState } from "../../../authentication/userState";
-
+import * as Sentry from "@sentry/react";
+import { getAccessToken, getRefreshToken } from "../../../authentication/auth";
 const CustomTextField = styled((props) => (
   <TextField InputProps={{ disableUnderline: true }} {...props} />
 ))(({ theme }) => ({
@@ -85,6 +86,7 @@ function LocalLoginContainer() {
       })
       .catch(function (error) {
         window.alert("이메일 또는 비밀번호가 일치하지 않습니다.");
+        Sentry.captureException(error);
       });
   };
 
