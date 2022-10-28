@@ -5,30 +5,10 @@ import {
   detailMCQuestionState,
   createdQuestionCount,
 } from "../../../atoms";
-import DetailMCQuestionCreator from "../create/DetailMCQuestionCreator";
-import DetailSurveyItem from "../create/DetailSurveyItem";
+import DetailMCQuestionCreator from "./DetailMCQuestionCreator";
+import DetailSurveyItem from "./DetailSurveyItem";
 import DeleteIcon from "@mui/icons-material/Delete";
-import styled from "styled-components";
-
-const Question = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 25px;
-`;
-const Input = styled.input`
-  border: none;
-  background-color: #202632;
-  font-size: 18px;
-  color: white;
-  &:focus {
-    outline: none;
-  }
-`;
-const Num = styled.span`
-  color: #0064ff;
-  font-size: 20px;
-`;
+import { Question, MInput, Num } from "../create/styled";
 
 export default function SurveyCreateItem({ item }) {
   const [questionCount, setQuestionCount] =
@@ -55,16 +35,19 @@ export default function SurveyCreateItem({ item }) {
       <Question>
         <div>
           <Num>{index + 1}</Num>{" "}
-          <Input
+          <MInput
             onChange={updateItem}
             value={item.title}
             placeholder="질문을 입력해주세요."
+            bgColor="#f5f6fa"
+            tColor="#202632"
           />
         </div>
         <DeleteIcon
           onClick={deleteItem}
           fontSize="10px"
           style={{ cursor: "pointer" }}
+          sx={{ color: "#202632" }}
         />
       </Question>
 

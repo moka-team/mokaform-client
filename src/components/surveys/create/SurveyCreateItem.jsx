@@ -8,27 +8,8 @@ import {
 import DetailMCQuestionCreator from "./DetailMCQuestionCreator";
 import DetailSurveyItem from "./DetailSurveyItem";
 import DeleteIcon from "@mui/icons-material/Delete";
-import styled from "styled-components";
+import { Question, MInput, Num } from "./styled";
 
-const Question = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 25px;
-`;
-const Input = styled.input`
-  border: none;
-  background-color: #202632;
-  font-size: 18px;
-  color: white;
-  &:focus {
-    outline: none;
-  }
-`;
-const Num = styled.span`
-  color: #0064ff;
-  font-size: 20px;
-`;
 export default function SurveyItem({ item }) {
   const [questionCount, setQuestionCount] =
     useRecoilState(createdQuestionCount);
@@ -57,7 +38,7 @@ export default function SurveyItem({ item }) {
         <Question>
           <div>
             <Num>{index + 1}</Num>{" "}
-            <Input
+            <MInput
               onChange={updateItem}
               value={item.title}
               placeholder="질문을 입력해주세요."
@@ -73,7 +54,7 @@ export default function SurveyItem({ item }) {
         <Question>
           <div>
             <Num>{index + 1}</Num>{" "}
-            <Input
+            <MInput
               onChange={updateItem}
               value={item.title}
               placeholder="질문을 입력해주세요."
@@ -90,7 +71,7 @@ export default function SurveyItem({ item }) {
           <Question>
             <div>
               <Num>{index + 1}</Num>{" "}
-              <Input
+              <MInput
                 onChange={updateItem}
                 value={item.title}
                 placeholder="질문을 입력해주세요."

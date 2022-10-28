@@ -47,7 +47,7 @@ export default function SurveyItemCreator() {
         sx={{ marginTop: "20px" }}
         onClick={onClickHandler}
       >
-        <AddCircle sx={{ color: "white" }} />
+        <AddCircle sx={{ color: "#202632" }} />
       </Button>
     </Container>
   );
