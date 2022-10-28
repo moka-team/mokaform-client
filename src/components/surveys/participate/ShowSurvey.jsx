@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import NavBar from "./NavBar";
 import EssayQuestionItemDisabled from "./EssayQuestionItemDisabled";
-import { Container, SummaryText, Survey, TitleText } from "./styled";
+import { Container, SNavBar, SummaryText, Survey, TitleText } from "./styled";
 import axios from "axios";
 import Loading from "./Loading";
 import Error from "./Error";
@@ -43,7 +43,7 @@ export default function ShowSurvey({ sharingKey }) {
 
   return (
     <Container>
-      <NavBar></NavBar>
+      <SNavBar></SNavBar>
       <Survey>
         <TitleText>{survey.title}</TitleText>
         <SummaryText>{survey.summary}</SummaryText>

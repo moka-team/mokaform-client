@@ -10,12 +10,27 @@ const MultipleChoiceResult = styled.div`
     margin-bottom: 10px;
   }
   span {
-    color: #202632;
+    color: #0064ff;
+    font-size: 20px;
     font-weight: 600;
   }
 `;
+const formatting = (data) => {
+  const result = [];
+  data.forEach((ele, idx) => {
+    const tmp = {};
+    tmp.id = idx;
+    tmp.label = idx;
+    tmp.content = ele.multiQuestionContent;
+    tmp.value = ele.multiQuestionContentCount;
 
+    result.push(tmp);
+  });
+  return result;
+};
 export default function MultipleChoiceAnalysis({ item }) {
+  const formattedItem = formatting(item);
+
   const countMaxValue = (data) => {
     const max = data.reduce((prev, current) =>
       prev.value > current.value ? prev : current
@@ -25,10 +40,11 @@ export default function MultipleChoiceAnalysis({ item }) {
   return (
     <MultipleChoiceResult>
       <p>
-        가장 많이 선택된 문항은 <span>{countMaxValue(item.data).id}</span> 문항
+        가장 많이 선택된 문항은{" "}
+        <span>{countMaxValue(formattedItem).id + 1}</span> 문항
       </p>
       <p>
-        <span>{countMaxValue(item.data).content}</span>
+        <span>{countMaxValue(formattedItem).content}</span>
       </p>
     </MultipleChoiceResult>
   );
