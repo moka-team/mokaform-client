@@ -17,7 +17,7 @@ const Section = styled.div`
   flex-direction: column;
 `;
 
-export const Button = styled.button`
+const Button = styled.button`
   width: 415px;
   height: 50px;
   margin: 10px;

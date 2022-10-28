@@ -91,36 +91,35 @@ export default function SurveyDetail({ sharingKey }) {
   return (
     <Container>
       <NavBar></NavBar>
-      <Survey>
-        {/* 카드 형식 보여주기 */}
-        {checkingCard() ? (
-          <CardParticipate />
-        ) : (
-          <>
-            <TitleText>{survey.data.title}</TitleText>
-            <SummaryText>{survey.data.summary}</SummaryText>
-            {survey.data.questions.map((question) =>
-              question.type === "ESSAY" ? (
-                <EssayQuestionItem
-                  key={question.questionId}
-                  item={question}
-                ></EssayQuestionItem>
-              ) : question.type === "OX" ? (
-                <OXQuestionItem
-                  key={question.questionId}
-                  item={question}
-                ></OXQuestionItem>
-              ) : (
-                <MultipleChoiceQuestionItem
-                  key={question.questionId}
-                  item={question}
-                  multiquestion={survey.data.multiQuestions}
-                ></MultipleChoiceQuestionItem>
-              )
-            )}
-          </>
-        )}
-      </Survey>
+
+      {/* 카드 형식 보여주기 */}
+      {checkingCard() ? (
+        <CardParticipate />
+      ) : (
+        <Survey>
+          <TitleText>{survey.data.title}</TitleText>
+          <SummaryText>{survey.data.summary}</SummaryText>
+          {survey.data.questions.map((question) =>
+            question.type === "ESSAY" ? (
+              <EssayQuestionItem
+                key={question.questionId}
+                item={question}
+              ></EssayQuestionItem>
+            ) : question.type === "OX" ? (
+              <OXQuestionItem
+                key={question.questionId}
+                item={question}
+              ></OXQuestionItem>
+            ) : (
+              <MultipleChoiceQuestionItem
+                key={question.questionId}
+                item={question}
+                multiquestion={survey.data.multiQuestions}
+              ></MultipleChoiceQuestionItem>
+            )
+          )}
+        </Survey>
+      )}
     </Container>
   );
 }

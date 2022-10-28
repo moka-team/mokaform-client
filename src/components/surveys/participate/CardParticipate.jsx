@@ -10,15 +10,45 @@ import Button from "@mui/material/Button";
 import MultipleChoiceQuestionItem from "./MultipleChoiceQuestionItem";
 import PreviewSection from "../create-card/PreviewSection";
 import styled from "styled-components";
+import CardQuestionItem from "./CardQuestionItem";
 
 const Section = styled.div`
-  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
+  background-color: #202632;
+  width: 100%;
   border-radius: 10px;
   padding: 20px 35px 20px 25px;
   align-items: center;
   justify-content: center;
   display: flex;
   flex-direction: column;
+`;
+
+const NextButton = styled.button`
+  width: 415px;
+  height: 50px;
+  margin: 10px;
+  margin-top: 45px;
+  border-radius: 10px;
+  border: none;
+  background-color: #286bd0;
+  color: white;
+  font-weight: bold;
+  &:hover {
+    background-color: #0064ff;
+  }
+  &:disabled {
+    background-color: gray;
+  }
+`;
+
+const Wrapper = styled.div`
+  width: 100%;
+  min-height: calc(var(--vh, 1vh) * 100);
+  float: right;
+  display: flex;
+  flex-direction: column;
+  background-color: #202632;
 `;
 
 export default function CardParticipate() {
@@ -72,15 +102,18 @@ export default function CardParticipate() {
           </Button>
         </DialogActions>
       </Dialog>
-      <Section>
+      <Wrapper>
         {survey.data.questions.map((question) => (
-          <MultipleChoiceQuestionItem
-            key={question.questionId}
-            item={question}
-            multiquestion={survey.data.multiQuestions}
-          ></MultipleChoiceQuestionItem>
+          <Section>
+            <CardQuestionItem
+              key={question.questionId}
+              item={question}
+              multiquestion={survey.data.multiQuestions}
+            ></CardQuestionItem>
+            <NextButton>다음</NextButton>
+          </Section>
         ))}
-      </Section>
+      </Wrapper>
     </>
   );
 }
