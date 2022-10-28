@@ -70,8 +70,7 @@ export default function UserSurveyCard({ isCreated }) {
   const [createdSurvey, setCreatedSurvey] = useRecoilState(createdMySurvey);
   const [submittedSurvey, setSubmittedSurvey] =
     useRecoilState(submittedMySurvey);
-  console.log("create" + isCreated);
-  return isCreated === true ? (
+  return isCreated ? (
     <Grid container spacing={1} sx={{ ml: 5, mt: 1, mb: 4, mr: -3 }}>
       {createdSurvey.map((survey) => (
         <Grid

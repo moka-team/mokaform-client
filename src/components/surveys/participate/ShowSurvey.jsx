@@ -9,6 +9,8 @@ import OXQuestionItemDisabled from "./OXQuestionItemDisabled";
 import MultipleChoiceQuestionItemDisabled from "./MultipleChoiceQuestionItemDisabled";
 import { surveyForCreated } from "../../../atoms";
 import { useRecoilState } from "recoil";
+import * as Sentry from "@sentry/react";
+import { getAccessToken, getRefreshToken } from "../../../authentication/auth";
 
 export default function ShowSurvey({ sharingKey }) {
   const [survey, setSurvey] = useRecoilState(surveyForCreated);
@@ -22,6 +24,10 @@ export default function ShowSurvey({ sharingKey }) {
         params: {
           sharingKey: sharingKey,
         },
+        headers: {
+          accessToken: getAccessToken(),
+          refreshToken: getRefreshToken(),
+        },
       })
       .then(function (response) {
         console.log(response);
@@ -32,6 +38,7 @@ export default function ShowSurvey({ sharingKey }) {
         console.log(error.message);
         setErrorMessage(error.message);
         setError(true);
+        Sentry.captureException(error);
       })
       .finally(function () {
         // always executed

@@ -13,7 +13,8 @@ import {
 } from "./SignUpState";
 import { Box } from "@mui/material";
 import axios from "axios";
-
+import * as Sentry from "@sentry/react";
+import { getAccessToken, getRefreshToken } from "../../../authentication/auth";
 export default function SignEssentialForm({}) {
   // 이메일, 닉네임, 비밀번호, 비밀번호 확인
   const [email, setEmail] = useRecoilState(emailState);
@@ -51,6 +52,10 @@ export default function SignEssentialForm({}) {
           params: {
             email: emailCurrent,
           },
+          headers: {
+            accessToken: getAccessToken(),
+            refreshToken: getRefreshToken(),
+          },
         })
         .then(function (response) {
           if (response.data.message.includes("성공")) {
@@ -72,6 +77,8 @@ export default function SignEssentialForm({}) {
           }
         })
         .catch(function (error) {
+          Sentry.captureException(error);
+
           console.log(error);
         });
     }
@@ -88,6 +95,10 @@ export default function SignEssentialForm({}) {
           .get("/api/v1/users/check-nickname-duplication", {
             params: {
               nickname: e.target.value,
+            },
+            headers: {
+              accessToken: getAccessToken(),
+              refreshToken: getRefreshToken(),
             },
           })
           .then(function (response) {
@@ -112,6 +123,7 @@ export default function SignEssentialForm({}) {
           })
           .catch(function (error) {
             console.log(error);
+            Sentry.captureException(error);
           });
       }
     },

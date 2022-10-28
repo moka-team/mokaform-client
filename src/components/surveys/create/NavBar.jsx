@@ -1,41 +1,43 @@
 import { useState, useEffect } from "react";
 import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 import Box from "@mui/material/Box";
-import axios from "axios";
-import { SNavBar, SaveBtn } from "./styled";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import {
-  surveyTitle,
-  surveySummary,
-  surveyIsAnonymous,
-  surveyIsPublic,
-  surveyListState,
-  detailMCQuestionState,
-  surveyEndDate,
-  surveyStartDate,
-  surveyCategory,
-  surveyImage,
-  createdQuestionCount,
-  isStartDateValidate,
-  isEndDateValidate,
-} from "../../../atoms";
-import { CustomSwitch } from "./CustomizedSwitches";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import * as React from "react";
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import Modal from "@mui/material/Modal";
-import dayjs from "dayjs";
-import SurveyImg from "./SurveyImg";
-import SelectCategory from "./SelectCategory";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import Modal from "@mui/material/Modal";
+import Typography from "@mui/material/Typography";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import * as Sentry from "@sentry/react";
+import axios from "axios";
+import dayjs from "dayjs";
+import * as React from "react";
 import { useNavigate } from "react-router-dom";
+import {
+  createdQuestionCount,
+  detailMCQuestionState,
+  isEndDateValidate,
+  isStartDateValidate,
+  surveyCategory,
+  surveyEndDate,
+  surveyImage,
+  surveyIsAnonymous,
+  surveyIsPublic,
+  surveyListState,
+  surveyStartDate,
+  surveySummary,
+  surveyTitle,
+} from "../../../atoms";
 import { userState } from "../../../authentication/userState";
+import { CustomSwitch } from "./CustomizedSwitches";
+import SelectCategory from "./SelectCategory";
+import { SaveBtn, SNavBar } from "./styled";
+import SurveyImg from "./SurveyImg";
+import { getAccessToken, getRefreshToken } from "../../../authentication/auth";
 
 const style = {
   position: "absolute",
@@ -195,9 +197,6 @@ function NavBar() {
     console.log(JSON.stringify(surveyInfo));
     console.log("===================================");
 
-    console.log(multiQuestionList.length);
-    console.log(multiQuestionValidate.length);
-
     multiQuestionList.length === multiQuestionValidate.length
       ? axios
           .post("/api/v1/survey?userId=" + user.id, surveyInfo)
@@ -217,7 +216,7 @@ function NavBar() {
           .finally(function () {
             // always executed
           })
-      : alert("질문 하나당 최소 하나의 선지가 필요합니다!");
+      : alert("객관식 질문은 최소 한개의 선지가 필요합니다.");
   };
 
   const handleSubmit = () => {
