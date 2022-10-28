@@ -25,7 +25,7 @@ export default function CreateSection() {
         onChange={titleOnChange}
         bgColor="#f5f6fa"
         tcolor="#202632"
-        mTop="15%"
+        mTop="18%"
       ></Title>
       <Summary
         placeholder="설문 설명을 입력해주세요."

@@ -99,7 +99,6 @@ const Title = styled.input`
 `;
 
 const Summary = styled.input`
-  margin-top: 10px;
   font-weight: 500;
   font-size: medium;
   border: none;
@@ -125,7 +124,7 @@ const TitleText = styled.h6`
 `;
 
 const SummaryText = styled.h3`
-  margin-top: 10px;
+  margin-top: 5px;
   font-weight: 500;
   font-size: medium;
   border: none;

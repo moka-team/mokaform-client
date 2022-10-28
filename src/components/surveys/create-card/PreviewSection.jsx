@@ -10,7 +10,7 @@ export default function PreviewSection() {
   const surveyList = useRecoilValue(surveyListState);
 
   return (
-    <Preview width="55%" bgColor="#202632">
+    <Preview width="70%" bgColor="#202632">
       <TitleText bgColor="#202632" tcolor="white" mTop="9%">
         {title}
       </TitleText>

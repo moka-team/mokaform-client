@@ -31,7 +31,7 @@ export default function SurveyItemCreator() {
         index: getId(),
         title: question,
         type: "MULTIPLE_CHOICE",
-        isMultipleAnswer: optionIndex === 1 ? true : false,
+        isMultipleAnswer: true,
       },
     ]);
     setQuestion("");
