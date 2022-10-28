@@ -8,6 +8,7 @@ import axios from "axios";
 import Loading from "./Loading";
 import Error from "./Error";
 import DeleteSurvey from "./DeleteSurvey";
+import CardParticipate from "./CardParticipate";
 import {
   EssayAnswerListState,
   MultipleChoiceAnswerListState,
@@ -40,6 +41,15 @@ export default function SurveyDetail({ sharingKey }) {
     MultipleChoiceAnswerListState
   );
   const setOXAnswerList = useSetRecoilState(oxAnswerListState);
+
+  function checkingCard() {
+    if (survey.data.questions[0].type === "MULTIPLE_CHOICE") {
+      if (survey.data.multiQuestions[0].multiQuestionType === "CARD") {
+        return true;
+      }
+    }
+    return false;
+  }
 
   useEffect(() => {
     setEssayAnswerList([]);
@@ -77,30 +87,38 @@ export default function SurveyDetail({ sharingKey }) {
   if (isDeleted) return <DeleteSurvey></DeleteSurvey>;
   if (loading) return <Loading></Loading>;
 
+  console.log(survey.data.multiQuestions[0].multiQuestionType);
   return (
     <Container>
       <NavBar></NavBar>
       <Survey>
-        <TitleText>{survey.data.title}</TitleText>
-        <SummaryText>{survey.data.summary}</SummaryText>
-        {survey.data.questions.map((question) =>
-          question.type === "ESSAY" ? (
-            <EssayQuestionItem
-              key={question.questionId}
-              item={question}
-            ></EssayQuestionItem>
-          ) : question.type === "OX" ? (
-            <OXQuestionItem
-              key={question.questionId}
-              item={question}
-            ></OXQuestionItem>
-          ) : (
-            <MultipleChoiceQuestionItem
-              key={question.questionId}
-              item={question}
-              multiquestion={survey.data.multiQuestions}
-            ></MultipleChoiceQuestionItem>
-          )
+        {/* 카드 형식 보여주기 */}
+        {checkingCard() ? (
+          <CardParticipate />
+        ) : (
+          <>
+            <TitleText>{survey.data.title}</TitleText>
+            <SummaryText>{survey.data.summary}</SummaryText>
+            {survey.data.questions.map((question) =>
+              question.type === "ESSAY" ? (
+                <EssayQuestionItem
+                  key={question.questionId}
+                  item={question}
+                ></EssayQuestionItem>
+              ) : question.type === "OX" ? (
+                <OXQuestionItem
+                  key={question.questionId}
+                  item={question}
+                ></OXQuestionItem>
+              ) : (
+                <MultipleChoiceQuestionItem
+                  key={question.questionId}
+                  item={question}
+                  multiquestion={survey.data.multiQuestions}
+                ></MultipleChoiceQuestionItem>
+              )
+            )}
+          </>
         )}
       </Survey>
     </Container>
