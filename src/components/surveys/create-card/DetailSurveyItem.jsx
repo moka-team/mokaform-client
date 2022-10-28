@@ -2,7 +2,7 @@ import React from "react";
 import { useRecoilState } from "recoil";
 import { detailMCQuestionState } from "../../../atoms";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { DetailContainer, Input } from "./styled";
+import { DetailContainer, Input } from "../create/styled";
 
 export default function DetailSurveyItem({ item }) {
   const [detailQuestionList, setDetailQuestionList] = useRecoilState(
@@ -29,11 +29,14 @@ export default function DetailSurveyItem({ item }) {
         onChange={updateDetailItem}
         value={item.content}
         placeholder="응답옵션"
+        bgColor="#f5f6fa"
+        tColor="#202632"
       />
       <DeleteIcon
         onClick={deleteItem}
         fontSize="3px"
         style={{ cursor: "pointer" }}
+        sx={{ color: "#202632" }}
       />
     </DetailContainer>
   );

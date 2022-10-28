@@ -16,15 +16,29 @@ import Show from "./pages/surveys/show";
 import InquireSubmittedSurvey from "./pages/surveys/inquireSubmittedSurvey";
 import { useRecoilValue } from "recoil";
 import { userState } from "./authentication/userState";
+import CreateCardSurvey from "./pages/surveys/create-card/index";
+import { useEffect } from "react";
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
   font-family: 'Inter', sans-serif;
 `;
 
+function setScreenSize() {
+  let vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty("--vh", `${vh}px`); //"--vh"라는 속성으로 정의해준다.
+}
+
 function App() {
   // 로그인 확인 수정 필요
   const user = useRecoilValue(userState);
+
+  window.addEventListener("resize", () => setScreenSize());
+
+  useEffect(() => {
+    setScreenSize();
+  });
+
   return (
     <BrowserRouter>
       <GlobalStyle />
@@ -57,15 +71,29 @@ function App() {
         ></Route>
         <Route
           path={routes.manageSurvey}
-          element={user !== null ? <ManageSurvey /> : <SignIn signInAlert={true}/>}
+          element={
+            user !== null ? <ManageSurvey /> : <SignIn signInAlert={true} />
+          }
         ></Route>
         <Route
           path={routes.createdSurvey}
-          element={user !== null ? <Show /> : <SignIn signInAlert={true}/>}
+          element={user !== null ? <Show /> : <SignIn signInAlert={true} />}
         ></Route>
         <Route
           path={routes.inquireSubmittedSurvey}
-          element={user !== null ? <InquireSubmittedSurvey /> : <SignIn signInAlert={true}/>}
+          element={
+            user !== null ? (
+              <InquireSubmittedSurvey />
+            ) : (
+              <SignIn signInAlert={true} />
+            )
+          }
+        ></Route>
+        <Route
+          path={routes.createCardSurvey}
+          element={
+            user !== null ? <CreateCardSurvey /> : <SignIn signInAlert={true} />
+          }
         ></Route>
       </Routes>
     </BrowserRouter>

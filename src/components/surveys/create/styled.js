@@ -2,11 +2,11 @@ import styled from "styled-components";
 
 const Create = styled.div`
   display: flex;
-  width: 40%;
+  width: ${(props) => props.width || "40%"};
   min-height: 100%;
   flex-direction: column;
-  background-color: #202632;
-  color: white;
+  background-color: ${(props) => props.bgColor || "#202632"};
+  color: ${(props) => props.tcolor || "white"};
   float: left;
   padding: 0% 5% 5% 5%;
   h1 {
@@ -18,10 +18,10 @@ const Create = styled.div`
 
 const Preview = styled.div`
   display: flex;
-  width: 40%;
+  width: ${(props) => props.width || "40%"};
   min-height: 100%;
   flex-direction: column;
-  background-color: #f5f6fa;
+  background-color: ${(props) => props.bgColor || "#f5f6fa"};
   float: right;
   padding: 0% 5% 5% 5%;
   color: black;
@@ -86,12 +86,12 @@ const Save = styled.div`
 `;
 
 const Title = styled.input`
-  margin-top: 10%;
+  margin-top: ${(props) => props.mTop || "10%"};
   font-weight: 900;
   font-size: xx-large;
   border: none;
-  background-color: #202632;
-  color: white;
+  background-color: ${(props) => props.bgColor || "#202632"};
+  color: ${(props) => props.tcolor || "white"};
 
   &:focus {
     outline: none;
@@ -99,12 +99,11 @@ const Title = styled.input`
 `;
 
 const Summary = styled.input`
-  margin-top: 10px;
   font-weight: 500;
   font-size: medium;
   border: none;
-  background-color: #202632;
-  color: white;
+  background-color: ${(props) => props.bgColor || "#202632"};
+  color: ${(props) => props.tcolor || "white"};
 
   &:focus {
     outline: none;
@@ -112,12 +111,12 @@ const Summary = styled.input`
 `;
 
 const TitleText = styled.h6`
-  margin-top: 12%;
+  margin-top: ${(props) => props.mTop || "12%"};
   font-weight: 900;
   font-size: xx-large;
   border: none;
-  background-color: #f5f6fa;
-  color: black;
+  background-color: ${(props) => props.bgColor || "#f5f6fa"};
+  color: ${(props) => props.tcolor || "black"};
 
   &:focus {
     outline: none;
@@ -125,12 +124,12 @@ const TitleText = styled.h6`
 `;
 
 const SummaryText = styled.h3`
-  margin-top: 10px;
+  margin-top: 5px;
   font-weight: 500;
   font-size: medium;
   border: none;
-  background-color: #f5f6fa;
-  color: black;
+  background-color: ${(props) => props.bgColor || "#f5f6fa"};
+  color: ${(props) => props.tcolor || "black"};
 
   &:focus {
     outline: none;
@@ -167,6 +166,43 @@ const SaveBtn = styled.button`
   }
 `;
 
+const DetailContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const Input = styled.input`
+  border: none;
+  background-color: ${(props) => props.bgColor || "#202632"};
+  margin-bottom: 2px;
+  color: ${(props) => props.tColor || "white"};
+  &:focus {
+    outline: none;
+  }
+`;
+
+const Question = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 25px;
+`;
+
+const MInput = styled.input`
+  border: none;
+  background-color: ${(props) => props.bgColor || "#202632"};
+  font-size: 18px;
+  color: ${(props) => props.tColor || "white"};
+  &:focus {
+    outline: none;
+  }
+`;
+
+const Num = styled.span`
+  color: #0064ff;
+  font-size: 20px;
+`;
+
 export {
   Create,
   Preview,
@@ -181,4 +217,9 @@ export {
   SummaryText,
   SNavBar,
   SaveBtn,
+  DetailContainer,
+  Input,
+  Question,
+  MInput,
+  Num,
 };
