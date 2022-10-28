@@ -10,7 +10,8 @@ import {
 } from "./SigninStyle";
 import { useRecoilState } from "recoil";
 import { userState } from "../../../authentication/userState";
-
+import * as Sentry from "@sentry/react";
+import { getAccessToken, getRefreshToken } from "../../../authentication/auth";
 const CustomTextField = styled((props) => (
   <TextField InputProps={{ disableUnderline: true }} {...props} />
 ))(({ theme }) => ({
@@ -55,10 +56,19 @@ function LocalLoginContainer() {
     event.preventDefault();
 
     axios
-      .post("/api/v1/users/login", {
-        email: inputs.email,
-        password: inputs.password,
-      })
+      .post(
+        "/api/v1/users/login",
+        {
+          email: inputs.email,
+          password: inputs.password,
+        },
+        {
+          headers: {
+            accessToken: getAccessToken(),
+            refreshToken: getRefreshToken(),
+          },
+        }
+      )
       .then(function (response) {
         if (response.data.message.includes("성공")) {
           // 로그인 성공 시 로컬 스토리지에 저장
@@ -76,6 +86,7 @@ function LocalLoginContainer() {
       })
       .catch(function (error) {
         window.alert("이메일 또는 비밀번호가 일치하지 않습니다.");
+        Sentry.captureException(error);
       });
   };
 

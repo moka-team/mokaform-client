@@ -19,6 +19,8 @@ import {
   surveyForSubmit,
 } from "../../../atoms";
 import { useRecoilState, useSetRecoilState } from "recoil";
+import * as Sentry from "@sentry/react";
+import { getAccessToken, getRefreshToken } from "../../../authentication/auth";
 
 export default function SurveyDetail({ sharingKey }) {
   const [survey, setSurvey] = useRecoilState(surveyForSubmit);
@@ -55,6 +57,10 @@ export default function SurveyDetail({ sharingKey }) {
         params: {
           sharingKey: sharingKey,
         },
+        headers: {
+          accessToken: getAccessToken(),
+          refreshToken: getRefreshToken(),
+        },
       })
       .then(function (response) {
         console.log(response);
@@ -67,6 +73,7 @@ export default function SurveyDetail({ sharingKey }) {
         console.log(error.message);
         setErrorMessage(error.message);
         setError(true);
+        Sentry.captureException(error);
       })
       .finally(function () {
         // always executed

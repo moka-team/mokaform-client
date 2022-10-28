@@ -16,6 +16,8 @@ import InquireMultipleChoiceQuestionItem from "./MultipleChoiceQuestionItem";
 import InquireOXQuestionItem from "./OXQuestionItem";
 import DeleteSurvey from "../participate/DeleteSurvey";
 import { surveyForSubmitted } from "../../../atoms";
+import * as Sentry from "@sentry/react";
+import { getAccessToken, getRefreshToken } from "../../../authentication/auth";
 
 export default function SubmittedSurvey({ sharingKey }) {
   const user = useRecoilValue(userState);
@@ -34,6 +36,10 @@ export default function SubmittedSurvey({ sharingKey }) {
         params: {
           sharingKey: sharingKey,
         },
+        headers: {
+          accessToken: getAccessToken(),
+          refreshToken: getRefreshToken(),
+        },
       })
       .then(function (response) {
         console.log(response);
@@ -44,6 +50,8 @@ export default function SubmittedSurvey({ sharingKey }) {
       .catch(function (error) {
         console.log(error.message);
         setErrorMessage(error.message);
+        Sentry.captureException(error);
+
         setError(true);
       })
       .finally(function () {

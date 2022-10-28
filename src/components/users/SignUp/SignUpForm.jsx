@@ -1,29 +1,29 @@
-import React, { useRef, useState } from "react";
+import * as Sentry from "@sentry/react";
+import axios from "axios";
+import React, { useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
 import AgeRow from "./AgeRow";
 import JobRow from "./JobRow";
+import PreferenceRow from "./PreferenceRow";
 import SexRow from "./SexRow";
-import { useRecoilState } from "recoil";
+import SignEssentialForm from "./SignEssentialForm";
+import { Button, Container, MainTitle, Rows } from "./SignUpCSS";
 import {
-  emailState,
-  nicknameState,
-  passwordState,
-  passwordConfirmState,
   ageGroupState,
+  emailState,
   genderState,
-  jobState,
-  preferenceState,
   isEmailState,
   isNicknameState,
-  isPasswordState,
   isPasswordConfirmState,
+  isPasswordState,
+  jobState,
+  nicknameState,
+  passwordConfirmState,
+  passwordState,
+  preferenceState,
 } from "./SignUpState";
-import SignEssentialForm from "./SignEssentialForm";
-import { MainTitle, Rows, Button, Container } from "./SignUpCSS";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { alertTitleClasses } from "@mui/material";
-import PreferenceRow from "./PreferenceRow";
-
+import { getAccessToken, getRefreshToken } from "../../../authentication/auth";
 export default function SignUpForm() {
   const signOptionRef = useRef(null);
   const signOptionRef2 = useRef(null);
@@ -57,15 +57,24 @@ export default function SignUpForm() {
 
   const signUpPatch = () => {
     axios
-      .post("/api/v1/users/signup", {
-        email: email,
-        password: password,
-        nickname: nickname,
-        ageGroup: ageGroup,
-        gender: gender,
-        job: job,
-        category: preference,
-      })
+      .post(
+        "/api/v1/users/signup",
+        {
+          email: email,
+          password: password,
+          nickname: nickname,
+          ageGroup: ageGroup,
+          gender: gender,
+          job: job,
+          category: preference,
+        },
+        {
+          headers: {
+            accessToken: getAccessToken(),
+            refreshToken: getRefreshToken(),
+          },
+        }
+      )
       .then(function (response) {
         if (response.data.message === "새로운 유저 생성이 성공하였습니다.") {
           // 회원가입 성공 시 모든 전역 데이터 지우기
@@ -84,6 +93,8 @@ export default function SignUpForm() {
         }
       })
       .catch(function (error) {
+        Sentry.captureException(error);
+
         console.log(error);
       });
   };

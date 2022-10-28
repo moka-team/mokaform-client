@@ -1,41 +1,43 @@
-import { useState } from "react";
-import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 import Box from "@mui/material/Box";
-import axios from "axios";
-import { SNavBar, SaveBtn } from "./styled";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import {
-  surveyTitle,
-  surveySummary,
-  surveyIsAnonymous,
-  surveyIsPublic,
-  surveyListState,
-  detailMCQuestionState,
-  surveyEndDate,
-  surveyStartDate,
-  surveyCategory,
-  surveyImage,
-  createdQuestionCount,
-  isStartDateValidate,
-  isEndDateValidate,
-} from "../../../atoms";
-import { CustomSwitch } from "./CustomizedSwitches";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import * as React from "react";
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import Modal from "@mui/material/Modal";
-import dayjs from "dayjs";
-import SurveyImg from "./SurveyImg";
-import SelectCategory from "./SelectCategory";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import Modal from "@mui/material/Modal";
+import Typography from "@mui/material/Typography";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import * as Sentry from "@sentry/react";
+import axios from "axios";
+import dayjs from "dayjs";
+import * as React from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useRecoilState, useRecoilValue } from "recoil";
+import {
+  createdQuestionCount,
+  detailMCQuestionState,
+  isEndDateValidate,
+  isStartDateValidate,
+  surveyCategory,
+  surveyEndDate,
+  surveyImage,
+  surveyIsAnonymous,
+  surveyIsPublic,
+  surveyListState,
+  surveyStartDate,
+  surveySummary,
+  surveyTitle,
+} from "../../../atoms";
 import { userState } from "../../../authentication/userState";
+import { CustomSwitch } from "./CustomizedSwitches";
+import SelectCategory from "./SelectCategory";
+import { SaveBtn, SNavBar } from "./styled";
+import SurveyImg from "./SurveyImg";
+import { getAccessToken, getRefreshToken } from "../../../authentication/auth";
 
 const style = {
   position: "absolute",
@@ -175,7 +177,12 @@ function NavBar() {
     console.log("===================================");
 
     axios
-      .post("/api/v1/survey?userId=" + user.id, surveyInfo)
+      .post("/api/v1/survey?userId=" + user.id, surveyInfo, {
+        headers: {
+          accessToken: getAccessToken(),
+          refreshToken: getRefreshToken(),
+        },
+      })
       .then(function (response) {
         console.log(response);
         setSharingUrl(
@@ -187,6 +194,7 @@ function NavBar() {
       .catch(function (error) {
         console.log(error.message);
         handleClickFailDialogOpen();
+        Sentry.captureException(error);
       })
       .finally(function () {
         // always executed

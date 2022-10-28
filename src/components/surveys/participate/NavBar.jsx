@@ -1,28 +1,25 @@
-import React, { useEffect, useState } from "react";
-import { SNavBar, SaveBtn } from "./styled";
-import { useRecoilState, useRecoilValue } from "recoil";
-import {
-  EssayAnswerListState,
-  MultipleChoiceAnswerListState,
-  oxAnswerListState,
-  isEssayAnswerValidate,
-  isMultiChoiceAnswerValidate,
-  isOXAnswerValidate,
-  surveyQuestionCount,
-  essayAnswerValidateCount,
-  oxAnswerValidateCount,
-  multiChoiceAnswerValidateCount,
-} from "../../../atoms";
-import axios from "axios";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import React from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
+import {
+  EssayAnswerListState,
+  essayAnswerValidateCount,
+  multiChoiceAnswerValidateCount,
+  MultipleChoiceAnswerListState,
+  oxAnswerListState,
+  oxAnswerValidateCount,
+  surveyQuestionCount,
+} from "../../../atoms";
 import { userState } from "../../../authentication/userState";
-
+import { SaveBtn, SNavBar } from "./styled";
+import * as Sentry from "@sentry/react";
+import { getAccessToken, getRefreshToken } from "../../../authentication/auth";
 export default function NavBar() {
   const user = useRecoilValue(userState);
 
@@ -99,7 +96,12 @@ export default function NavBar() {
     console.log(JSON.stringify(answerInfo));
 
     axios
-      .post("/api/v1/answer?userId=" + user.id, answerInfo)
+      .post("/api/v1/answer?userId=" + user.id, answerInfo, {
+        headers: {
+          accessToken: getAccessToken(),
+          refreshToken: getRefreshToken(),
+        },
+      })
       .then(function (response) {
         console.log(response);
         resetRecoilValue();
@@ -108,6 +110,8 @@ export default function NavBar() {
       .catch(function (error) {
         console.log(error.message);
         resetRecoilValue();
+        Sentry.captureException(error);
+
         // handleClickFailDialogOpen();
       })
       .finally(function () {
