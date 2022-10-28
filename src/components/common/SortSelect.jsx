@@ -221,7 +221,7 @@ export default function SortSelect({ page }) {
     const response = await axios.get("/api/v1/users/my/submitted-surveys", {
       params: {
         page: 0,
-        size: 5,
+        // size: 5,
         sort: "createdAt,desc",
         userId: user.id,
       },
@@ -234,7 +234,7 @@ export default function SortSelect({ page }) {
     const response = await axios.get("/api/v1/users/my/submitted-surveys", {
       params: {
         page: 0,
-        size: 5,
+        // size: 5,
         sort: "surveyeeCount,desc",
         userId: user.id,
       },
