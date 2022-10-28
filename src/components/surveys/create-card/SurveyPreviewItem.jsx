@@ -6,6 +6,7 @@ import {
   QuestionOption,
   QuestionText,
   OptionWrapper,
+  QuestionContentWrapper,
 } from "./styled";
 
 export default function SurveyPreviewItem({ item }) {
@@ -17,13 +18,15 @@ export default function SurveyPreviewItem({ item }) {
       <QuestionWrapper>
         <QuestionText color="#0064ff">Q{index + 1}</QuestionText>
         <QuestionText color="white">{item.title}</QuestionText>
-        {detailQuestionList.map((detailQuestionItem) =>
-          item.index === detailQuestionItem.questionIndex ? (
-            <QuestionOption>{detailQuestionItem.content}</QuestionOption>
-          ) : (
-            <></>
-          )
-        )}
+        <QuestionContentWrapper>
+          {detailQuestionList.map((detailQuestionItem) =>
+            item.index === detailQuestionItem.questionIndex ? (
+              <QuestionOption>{detailQuestionItem.content}</QuestionOption>
+            ) : (
+              <></>
+            )
+          )}
+        </QuestionContentWrapper>
       </QuestionWrapper>
     </>
   );

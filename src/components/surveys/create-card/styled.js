@@ -11,6 +11,13 @@ export const QuestionWrapper = styled.div`
   text-align: center;
 `;
 
+export const QuestionContentWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+`;
+
 export const OptionWrapper = styled.div`
   width: 100%;
   background-color: black;
@@ -42,6 +49,7 @@ export const QuestionText = styled.h1`
   color: ${(props) => props.color};
   font-weight: 500;
   text-align: center;
+  margin-top: 10px;
 `;
 
 export const Wrapper = styled.div`
