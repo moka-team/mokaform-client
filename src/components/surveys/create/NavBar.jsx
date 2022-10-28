@@ -1,3 +1,5 @@
+import { useState, useEffect } from "react";
+import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -14,9 +16,7 @@ import * as Sentry from "@sentry/react";
 import axios from "axios";
 import dayjs from "dayjs";
 import * as React from "react";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useRecoilState, useRecoilValue } from "recoil";
 import {
   createdQuestionCount,
   detailMCQuestionState,
@@ -73,6 +73,24 @@ function NavBar() {
   const [failDialogOpen, setFailDialogOpen] = useState(false);
   const [sharingUrl, setSharingUrl] = useState("");
   const navigate = useNavigate();
+  const [multiQuestionValidate, setMultiQuestionValidate] = useState([]);
+  const [multiQuestionList, setMultiQuestionList] = useState(false);
+
+  useEffect(() => {
+    const newArray = detailList.map((multiQuestion) => {
+      return multiQuestion.questionIndex;
+    });
+    setMultiQuestionValidate([...new Set(newArray)]);
+  }, [detailList]);
+
+  useEffect(() => {
+    const newArray = surveyList
+      .filter((question) => question.isMultipleAnswer)
+      .map((question) => {
+        return question.index;
+      });
+    setMultiQuestionList([...new Set(newArray)]);
+  }, [surveyList]);
 
   const handleClickDialogOpen = () => {
     setInvalidationDialogOpen(true);
@@ -172,33 +190,33 @@ function NavBar() {
       // surveyImage: surveyImg,
     };
 
+    console.log(multiQuestionList);
+    console.log(multiQuestionValidate);
+
     console.log("===================================");
     console.log(JSON.stringify(surveyInfo));
     console.log("===================================");
 
-    axios
-      .post("/api/v1/survey?userId=" + user.id, surveyInfo, {
-        headers: {
-          accessToken: getAccessToken(),
-          refreshToken: getRefreshToken(),
-        },
-      })
-      .then(function (response) {
-        console.log(response);
-        setSharingUrl(
-          "https://mokaform.netlify.app/survey/" + response.data.data.sharingKey
-        );
-        resetRecoilValue();
-        handleClickSuccessDialogOpen();
-      })
-      .catch(function (error) {
-        console.log(error.message);
-        handleClickFailDialogOpen();
-        Sentry.captureException(error);
-      })
-      .finally(function () {
-        // always executed
-      });
+    multiQuestionList.length === multiQuestionValidate.length
+      ? axios
+          .post("/api/v1/survey?userId=" + user.id, surveyInfo)
+          .then(function (response) {
+            console.log(response);
+            setSharingUrl(
+              "https://mokaform.netlify.app/survey/" +
+                response.data.data.sharingKey
+            );
+            resetRecoilValue();
+            handleClickSuccessDialogOpen();
+          })
+          .catch(function (error) {
+            console.log(error.message);
+            handleClickFailDialogOpen();
+          })
+          .finally(function () {
+            // always executed
+          })
+      : alert("객관식 질문은 최소 한개의 선지가 필요합니다.");
   };
 
   const handleSubmit = () => {
