@@ -273,14 +273,14 @@ export default function ManageSurveySection({ userId }) {
                     <StyledTableCell align="center">
                       {data.isPublic ? <div>가능</div> : <div>불가능</div>}
                     </StyledTableCell>
-                    <StyledTableCell>
+                    <StyledTableCell align="center">
                       <IconButton>
                         <Link to={routes.surveyStats}>
-                          <EqualizerIcon />
+                          <EqualizerIcon sx={{ color: "#202632" }} />
                         </Link>
                       </IconButton>
                     </StyledTableCell>
-                    <StyledTableCell>
+                    <StyledTableCell align="center">
                       <IconButton
                         id="lock-button"
                         aria-haspopup="listbox"
@@ -296,7 +296,7 @@ export default function ManageSurveySection({ userId }) {
 
                 {emptyRows > 0 && (
                   <TableRow style={{ height: 53 * emptyRows }}>
-                    <TableCell colSpan={8} />
+                    <TableCell colSpan={9} />
                   </TableRow>
                 )}
               </TableBody>
@@ -309,7 +309,7 @@ export default function ManageSurveySection({ userId }) {
                       25,
                       { label: "All", value: -1 },
                     ]}
-                    colSpan={8}
+                    colSpan={9}
                     count={survey.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
