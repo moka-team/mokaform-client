@@ -248,7 +248,7 @@ function NavBar() {
           <Typography id="modal-modal-description">
             설문의 세부 내용을 설정해주세요.
           </Typography>
-          <Box pt={3}>
+          {/* <Box pt={3}>
             <Typography id="anp" sx={{ mt: 1 }} variant="body2">
               설문 대표 이미지 설정
               <SurveyImg />
@@ -261,7 +261,7 @@ function NavBar() {
               checked={isAnonymous}
               onChange={isAnonymousOnChange}
             />
-          </Typography>
+          </Typography> */}
           <Typography id="anp" sx={{ mt: 1 }} variant="body2">
             설문 공개 여부
             <CustomSwitch
