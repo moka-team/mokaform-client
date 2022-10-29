@@ -84,20 +84,20 @@ export default function SurveyDetail({ sharingKey }) {
         setLoading(false);
       })
       .catch(function (error) {
+        console.log(error.response.data.code);
         console.log(error.message);
         setErrorMessage(error.message);
         setError(true);
         Sentry.captureException(error);
         // Access Token 재발행이 필요한 경우
-        if (error.code === "C005") {
+        if (error.response.data.code === "C005") {
           axios
             .post("/api/v1/users/token/reissue", {
-              headers: {
-                accessToken: getAccessToken(),
-                refreshToken: getRefreshToken(),
-              },
+              accessToken: getAccessToken(),
+              refreshToken: getRefreshToken(),
             })
             .then((res) => {
+              console.log(res);
               updateAccessToken(res.data.data.accessToken);
             });
         }
