@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import NavBar from "./NavBar";
-import EssayQuestionItem from "./EssayQuestionItem";
-import MultipleChoiceQuestionItem from "./MultipleChoiceQuestionItem";
-import OXQuestionItem from "./OXQuestionItem";
+import EssayQuestionItem from "./general/EssayQuestionItem";
+import MultipleChoiceQuestionItem from "./general/MultipleChoiceQuestionItem";
+import OXQuestionItem from "./general/OXQuestionItem";
 import { Container, SummaryText, Survey, TitleText } from "./styled";
 import axios from "axios";
 import Loading from "./Loading";
 import Error from "./Error";
 import DeleteSurvey from "./DeleteSurvey";
-import CardParticipate from "./CardParticipate";
+import CardParticipate from "./card/CardParticipate";
 import {
   EssayAnswerListState,
   MultipleChoiceAnswerListState,

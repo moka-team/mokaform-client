@@ -2,20 +2,21 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Mypage from "./pages/users/mypage/index";
 import Main from "./pages/index";
+
 import SignUp from "./pages/users/signUp";
 import SignIn from "./pages/users/signIn";
-import CreateSurvey from "./pages/surveys/create/index";
+import CreateSurvey from "./pages/surveys/create/general/index";
 import routes from "./routes";
 import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
 import SurveyAnalysis from "./pages/surveys/analysis";
 import Participate from "./pages/surveys/participate/index";
 import ManageSurvey from "./pages/surveys/manage";
-import Show from "./pages/surveys/show";
-import InquireSubmittedSurvey from "./pages/surveys/inquireSubmittedSurvey";
+import Show from "./pages/surveys/inquire/created/general";
+import InquireSubmittedSurvey from "./pages/surveys/inquire/submitted";
 import { useRecoilValue } from "recoil";
 import { userState } from "./authentication/userState";
-import CreateCardSurvey from "./pages/surveys/create-card/index";
+import CreateCardSurvey from "./pages/surveys/create/card/index";
 import { useEffect } from "react";
 
 const GlobalStyle = createGlobalStyle`
