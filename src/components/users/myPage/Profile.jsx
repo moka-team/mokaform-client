@@ -4,7 +4,11 @@ import { useEffect, useState } from "react";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import { useRecoilValue } from "recoil";
 import { userState } from "../../../authentication/userState";
-import { getAccessToken, getRefreshToken } from "../../../authentication/auth";
+import {
+  getAccessToken,
+  getRefreshToken,
+  updateAccessToken,
+} from "../../../authentication/auth";
 import axios from "axios";
 import {
   SProfile,
@@ -19,6 +23,7 @@ import {
   Type,
   UserInput,
 } from "./styled";
+import * as Sentry from "@sentry/react";
 
 function Profile() {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -28,11 +33,28 @@ function Profile() {
 
   // TODO: profile 받아오기
   const fetchProfile = async () => {
-    const response = await axios.get("/api/v1/users/my", {
-      headers: {
-        accessToken: getAccessToken(),
-      },
-    });
+    const response = await axios
+      .get("/api/v1/users/my", {
+        headers: {
+          accessToken: getAccessToken(),
+        },
+      })
+      .catch(function (error) {
+        Sentry.captureException(error);
+        // Access Token 재발행이 필요한 경우
+        if (error.code === "C005") {
+          axios
+            .post("/api/v1/users/token/reissue", {
+              headers: {
+                accessToken: getAccessToken(),
+                refreshToken: getRefreshToken(),
+              },
+            })
+            .then((res) => {
+              updateAccessToken(res.data.data.accessToken);
+            });
+        }
+      });
     setProfile(response.data.data);
     console.log(response.data);
   };

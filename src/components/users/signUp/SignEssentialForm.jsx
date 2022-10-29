@@ -14,7 +14,11 @@ import {
 import { Box } from "@mui/material";
 import axios from "axios";
 import * as Sentry from "@sentry/react";
-import { getAccessToken, getRefreshToken } from "../../../authentication/auth";
+import {
+  getAccessToken,
+  getRefreshToken,
+  updateAccessToken,
+} from "../../../authentication/auth";
 import CustomTextField from "../../common/CustomTextField";
 
 export default function SignEssentialForm({}) {
@@ -80,8 +84,19 @@ export default function SignEssentialForm({}) {
         })
         .catch(function (error) {
           Sentry.captureException(error);
-
-          console.log(error);
+          // Access Token 재발행이 필요한 경우
+          if (error.code === "C005") {
+            axios
+              .post("/api/v1/users/token/reissue", {
+                headers: {
+                  accessToken: getAccessToken(),
+                  refreshToken: getRefreshToken(),
+                },
+              })
+              .then((res) => {
+                updateAccessToken(res.data.data.accessToken);
+              });
+          }
         });
     }
   }, []);
@@ -124,8 +139,20 @@ export default function SignEssentialForm({}) {
             }
           })
           .catch(function (error) {
-            console.log(error);
             Sentry.captureException(error);
+            // Access Token 재발행이 필요한 경우
+            if (error.code === "C005") {
+              axios
+                .post("/api/v1/users/token/reissue", {
+                  headers: {
+                    accessToken: getAccessToken(),
+                    refreshToken: getRefreshToken(),
+                  },
+                })
+                .then((res) => {
+                  updateAccessToken(res.data.data.accessToken);
+                });
+            }
           });
       }
     },

@@ -1,6 +1,10 @@
 import axios from "axios";
 import { React, useEffect, useState } from "react";
-import { getAccessToken, getRefreshToken } from "../../../authentication/auth";
+import {
+  getAccessToken,
+  getRefreshToken,
+  updateAccessToken,
+} from "../../../authentication/auth";
 import Header from "../../common/Header";
 import Error from "../participate/Error";
 import Loading from "../participate/Loading";
@@ -166,7 +170,39 @@ export default function ManageSurveySection({ userId }) {
   const handleOnClick = async (surveyId) => {
     await axios
       .get(`/api/v1/users/my/surveys/${surveyId}/stats`)
-      .then((res) => navigate(routes.surveyStats, { state: res.data.data }));
+      .then((res) => navigate(routes.surveyStats, { state: res.data.data }))
+      .catch(function (error) {
+        Sentry.captureException(error);
+        // Access Token 재발행이 필요한 경우
+        if (error.code === "C005") {
+          axios
+            .post("/api/v1/users/token/reissue", {
+              headers: {
+                accessToken: getAccessToken(),
+                refreshToken: getRefreshToken(),
+              },
+            })
+            .then((res) => {
+              updateAccessToken(res.data.data.accessToken);
+            })
+            .catch(function (error) {
+              Sentry.captureException(error);
+              // Access Token 재발행이 필요한 경우
+              if (error.code === "C005") {
+                axios
+                  .post("/api/v1/users/token/reissue", {
+                    headers: {
+                      accessToken: getAccessToken(),
+                      refreshToken: getRefreshToken(),
+                    },
+                  })
+                  .then((res) => {
+                    updateAccessToken(res.data.data.accessToken);
+                  });
+              }
+            });
+        }
+      });
   };
 
   const handleDeleteItem = () => {
@@ -185,6 +221,35 @@ export default function ManageSurveySection({ userId }) {
       .catch(function (error) {
         console.log(error.message);
         Sentry.captureException(error);
+        // Access Token 재발행이 필요한 경우
+        if (error.code === "C005") {
+          axios
+            .post("/api/v1/users/token/reissue", {
+              headers: {
+                accessToken: getAccessToken(),
+                refreshToken: getRefreshToken(),
+              },
+            })
+            .then((res) => {
+              updateAccessToken(res.data.data.accessToken);
+            })
+            .catch(function (error) {
+              Sentry.captureException(error);
+              // Access Token 재발행이 필요한 경우
+              if (error.code === "C005") {
+                axios
+                  .post("/api/v1/users/token/reissue", {
+                    headers: {
+                      accessToken: getAccessToken(),
+                      refreshToken: getRefreshToken(),
+                    },
+                  })
+                  .then((res) => {
+                    updateAccessToken(res.data.data.accessToken);
+                  });
+              }
+            });
+        }
       })
       .finally(function () {
         // always executed
@@ -215,6 +280,20 @@ export default function ManageSurveySection({ userId }) {
         Sentry.captureException(error);
 
         setError(true);
+
+        // Access Token 재발행이 필요한 경우
+        if (error.code === "C005") {
+          axios
+            .post("/api/v1/users/token/reissue", {
+              headers: {
+                accessToken: getAccessToken(),
+                refreshToken: getRefreshToken(),
+              },
+            })
+            .then((res) => {
+              updateAccessToken(res.data.data.accessToken);
+            });
+        }
       })
       .finally(function () {
         // always executed

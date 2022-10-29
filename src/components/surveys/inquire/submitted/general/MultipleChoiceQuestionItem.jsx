@@ -6,6 +6,7 @@ import { surveyForSubmitted } from "../../../../../atoms";
 import {
   getAccessToken,
   getRefreshToken,
+  updateAccessToken,
 } from "../../../../../authentication/auth";
 import { userState } from "../../../../../authentication/userState";
 import Error from "../../../participate/Error";
@@ -58,6 +59,20 @@ export default function InquireMultipleChoiceQuestionItem({
         Sentry.captureException(error);
 
         setError(true);
+
+        // Access Token 재발행이 필요한 경우
+        if (error.code === "C005") {
+          axios
+            .post("/api/v1/users/token/reissue", {
+              headers: {
+                accessToken: getAccessToken(),
+                refreshToken: getRefreshToken(),
+              },
+            })
+            .then((res) => {
+              updateAccessToken(res.data.data.accessToken);
+            });
+        }
       })
       .finally(function () {
         // always executed
