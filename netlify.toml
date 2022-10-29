@@ -12,4 +12,4 @@
 [[headers]]
  for = "/*"
     [headers.values]
-    Access-Control-Allow-Origin = "http://www.mokaform.site"
+    Access-Control-Allow-Origin = "*"
