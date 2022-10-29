@@ -105,7 +105,7 @@ export default function InquireOXQuestionItem({ item, sharingKey }) {
         weight={!answer ? 600 : 400}
         style={{ pointerEvents: "none" }}
       >
-        아니오 🥲
+        아니오 😭
       </QuestionOption2>
     </QuestionWrapper2>
   );

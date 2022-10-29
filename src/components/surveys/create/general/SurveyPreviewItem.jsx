@@ -28,7 +28,7 @@ export default function SurveyPreviewItem({ item }) {
             <QuestionText color="#0064ff">Q{index + 1}</QuestionText>
             <QuestionText color="black">{item.title}</QuestionText>
             <QuestionOption>네 😀</QuestionOption>
-            <QuestionOption>아니오 🥲</QuestionOption>
+            <QuestionOption>아니오 😭</QuestionOption>
           </QuestionWrapper>
         ) : (
           <QuestionWrapper>
