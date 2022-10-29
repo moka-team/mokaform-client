@@ -17,9 +17,11 @@ import * as Sentry from "@sentry/react";
 import {
   getAccessToken,
   getRefreshToken,
+  logout,
   updateAccessToken,
 } from "../../../authentication/auth";
 import CustomTextField from "../../common/CustomTextField";
+import { setUser } from "@sentry/react";
 
 export default function SignEssentialForm({}) {
   // 이메일, 닉네임, 비밀번호, 비밀번호 확인
@@ -95,6 +97,13 @@ export default function SignEssentialForm({}) {
               })
               .then((res) => {
                 updateAccessToken(res.data.data);
+              })
+              .catch(function (error) {
+                alert("refresh token 만료");
+                logout();
+                window.location.replace("/");
+                localStorage.clear();
+                setUser(null);
               });
           }
         });
@@ -151,6 +160,13 @@ export default function SignEssentialForm({}) {
                 })
                 .then((res) => {
                   updateAccessToken(res.data.data);
+                })
+                .catch(function (error) {
+                  alert("refresh token 만료");
+                  logout();
+                  window.location.replace("/");
+                  localStorage.clear();
+                  setUser(null);
                 });
             }
           });

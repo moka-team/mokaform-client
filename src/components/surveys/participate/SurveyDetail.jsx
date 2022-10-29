@@ -1,6 +1,8 @@
 import * as Sentry from "@sentry/react";
+import { setUser } from "@sentry/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import {
   EssayAnswerListState,
@@ -15,6 +17,7 @@ import {
 import {
   getAccessToken,
   getRefreshToken,
+  logout,
   updateAccessToken,
 } from "../../../authentication/auth";
 import CardParticipate from "./card/CardParticipate";
@@ -48,6 +51,7 @@ export default function SurveyDetail({ sharingKey }) {
   );
   const setOXAnswerList = useSetRecoilState(oxAnswerListState);
 
+  const navigate = useNavigate();
   function checkingCard() {
     if (survey.data.questions[0].type === "MULTIPLE_CHOICE") {
       if (survey.data.multiQuestions[0].multiQuestionType === "CARD") {
@@ -87,6 +91,7 @@ export default function SurveyDetail({ sharingKey }) {
         setErrorMessage(error.message);
         setError(true);
         Sentry.captureException(error);
+        console.log(error);
         // Access Token 재발행이 필요한 경우
         if (error.response.data.code === "C005") {
           axios
@@ -96,6 +101,13 @@ export default function SurveyDetail({ sharingKey }) {
             })
             .then((res) => {
               updateAccessToken(res.data.data);
+            })
+            .catch(function (error) {
+              alert("refresh token 만료");
+              logout();
+              window.location.replace("/");
+              localStorage.clear();
+              setUser(null);
             });
         }
       })

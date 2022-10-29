@@ -1,4 +1,5 @@
 import * as Sentry from "@sentry/react";
+import { setUser } from "@sentry/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
@@ -6,6 +7,7 @@ import { surveyForSubmitted } from "../../../../../atoms";
 import {
   getAccessToken,
   getRefreshToken,
+  logout,
   updateAccessToken,
 } from "../../../../../authentication/auth";
 import { userState } from "../../../../../authentication/userState";
@@ -69,6 +71,13 @@ export default function InquireEssayQuestionItem({ item, sharingKey }) {
             })
             .then((res) => {
               updateAccessToken(res.data.data);
+            })
+            .catch(function (error) {
+              alert("refresh token 만료");
+              logout();
+              window.location.replace("/");
+              localStorage.clear();
+              setUser(null);
             });
         }
       })

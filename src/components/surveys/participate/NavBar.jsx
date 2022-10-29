@@ -22,8 +22,10 @@ import * as Sentry from "@sentry/react";
 import {
   getAccessToken,
   getRefreshToken,
+  logout,
   updateAccessToken,
 } from "../../../authentication/auth";
+import { setUser } from "@sentry/react";
 export default function NavBar() {
   const user = useRecoilValue(userState);
 
@@ -126,6 +128,13 @@ export default function NavBar() {
             })
             .then((res) => {
               updateAccessToken(res.data.data);
+            })
+            .catch(function (error) {
+              alert("refresh token 만료");
+              logout();
+              window.location.replace("/");
+              localStorage.clear();
+              setUser(null);
             });
         }
         // handleClickFailDialogOpen();

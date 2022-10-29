@@ -9,9 +9,11 @@ import { useEffect } from "react";
 import {
   getAccessToken,
   getRefreshToken,
+  logout,
   updateAccessToken,
 } from "../../authentication/auth";
 import * as Sentry from "@sentry/react";
+import { setUser } from "@sentry/react";
 
 const StyledDownButton = styled.button`
   background: none;
@@ -74,23 +76,14 @@ export default function DownButton() {
               },
             })
             .then((res) => {
-              updateAccessToken(res.data.data);
+              updateAccessToken(res.data.data.accessToken);
             })
             .catch(function (error) {
-              Sentry.captureException(error);
-              // Access Token 재발행이 필요한 경우
-              if (error.code === "C005") {
-                axios
-                  .post("/api/v1/users/token/reissue", {
-                    headers: {
-                      accessToken: getAccessToken(),
-                      refreshToken: getRefreshToken(),
-                    },
-                  })
-                  .then((res) => {
-                    updateAccessToken(res.data.data);
-                  });
-              }
+              alert("refresh token 만료");
+              logout();
+              window.location.replace("/");
+              localStorage.clear();
+              setUser(null);
             });
         }
       });

@@ -3,6 +3,7 @@ import { React, useEffect, useState } from "react";
 import {
   getAccessToken,
   getRefreshToken,
+  logout,
   updateAccessToken,
 } from "../../../authentication/auth";
 import Header from "../../common/Header";
@@ -39,6 +40,7 @@ import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import routes from "../../../routes";
 import { TContainer } from "./styled";
+import { setUser } from "@sentry/react";
 function TablePaginationActions(props) {
   const theme = useTheme();
   const { count, page, rowsPerPage, onPageChange } = props;
@@ -198,6 +200,13 @@ export default function ManageSurveySection({ userId }) {
                   })
                   .then((res) => {
                     updateAccessToken(res.data.data);
+                  })
+                  .catch(function (error) {
+                    alert("refresh token 만료");
+                    logout();
+                    window.location.replace("/");
+                    localStorage.clear();
+                    setUser(null);
                   });
               }
             });
@@ -234,20 +243,11 @@ export default function ManageSurveySection({ userId }) {
               updateAccessToken(res.data.data);
             })
             .catch(function (error) {
-              Sentry.captureException(error);
-              // Access Token 재발행이 필요한 경우
-              if (error.code === "C005") {
-                axios
-                  .post("/api/v1/users/token/reissue", {
-                    headers: {
-                      accessToken: getAccessToken(),
-                      refreshToken: getRefreshToken(),
-                    },
-                  })
-                  .then((res) => {
-                    updateAccessToken(res.data.data);
-                  });
-              }
+              alert("refresh token 만료");
+              logout();
+              window.location.replace("/");
+              localStorage.clear();
+              setUser(null);
             });
         }
       })
@@ -292,6 +292,13 @@ export default function ManageSurveySection({ userId }) {
             })
             .then((res) => {
               updateAccessToken(res.data.data);
+            })
+            .catch(function (error) {
+              alert("refresh token 만료");
+              logout();
+              window.location.replace("/");
+              localStorage.clear();
+              setUser(null);
             });
         }
       })

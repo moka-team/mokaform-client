@@ -10,6 +10,7 @@ import * as Sentry from "@sentry/react";
 import {
   getAccessToken,
   getRefreshToken,
+  logout,
   setTokens,
   updateAccessToken,
 } from "../../../authentication/auth";
@@ -74,57 +75,15 @@ function LocalLoginContainer() {
               updateAccessToken(res.data.data);
             })
             .catch(function (error) {
-              Sentry.captureException(error);
-              // Access Token 재발행이 필요한 경우
-              if (error.code === "C005") {
-                axios
-                  .post("/api/v1/users/token/reissue", {
-                    headers: {
-                      accessToken: getAccessToken(),
-                      refreshToken: getRefreshToken(),
-                    },
-                  })
-                  .then((res) => {
-                    updateAccessToken(res.data.data);
-                  })
-                  .catch(function (error) {
-                    Sentry.captureException(error);
-                    // Access Token 재발행이 필요한 경우
-                    if (error.code === "C005") {
-                      axios
-                        .post("/api/v1/users/token/reissue", {
-                          headers: {
-                            accessToken: getAccessToken(),
-                            refreshToken: getRefreshToken(),
-                          },
-                        })
-                        .then((res) => {
-                          updateAccessToken(res.data.data);
-                        })
-                        .catch(function (error) {
-                          Sentry.captureException(error);
-                          // Access Token 재발행이 필요한 경우
-                          if (error.code === "C005") {
-                            axios
-                              .post("/api/v1/users/token/reissue", {
-                                headers: {
-                                  accessToken: getAccessToken(),
-                                  refreshToken: getRefreshToken(),
-                                },
-                              })
-                              .then((res) => {
-                                updateAccessToken(res.data.data);
-                              });
-                          }
-                        });
-                    }
-                  });
-              }
+              alert("refresh token 만료");
+              logout();
+              window.location.replace("/");
+              localStorage.clear();
+              setUser(null);
             });
         }
       });
   };
-
   return (
     <LocalLoginWrapper>
       <form onSubmit={handleSubmit}>
