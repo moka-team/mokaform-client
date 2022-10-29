@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-regular-svg-icons";
 import { useEffect, useState } from "react";
@@ -7,103 +6,19 @@ import { useRecoilValue } from "recoil";
 import { userState } from "../../../authentication/userState";
 import { getAccessToken, getRefreshToken } from "../../../authentication/auth";
 import axios from "axios";
-
-const SProfile = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 20%;
-  min-height: 100vh;
-  padding-top: 25px;
-  background-color: #202632;
-`;
-
-const ProfileImg = styled.div`
-  position: relative;
-  margin-top: 40px;
-  width: 50%;
-  background-color: gray;
-  border-radius: 50%;
-  &::after {
-    display: block;
-    content: "";
-    padding-bottom: 100%;
-  }
-`;
-
-const DefaultImage = styled.img`
-  position: absolute;
-  background-color: gray;
-  margin-top: 5%;
-  margin-left: 10%;
-  border-radius: 50%;
-  width: 80%;
-  height: 80%;
-  object-fit: cover;
-`;
-
-const Image = styled.img`
-  position: absolute;
-  background-color: gray;
-  border-radius: 50%;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-`;
-
-const UploadBtn = styled.label`
-  cursor: pointer;
-  margin-top: -20px;
-  z-index: 3;
-`;
-const UserInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 25px;
-  width: 100%;
-  h1 {
-    font-weight: 800;
-    font-size: 25px;
-    color: #f9fafb;
-  }
-  h2 {
-    color: gray;
-    margin-top: 10px;
-  }
-`;
-
-const LineHeader = styled.div`
-  display: flex;
-  width: 70%;
-  justify-content: space-between;
-  margin-bottom: 25px;
-  margin-top: 100px;
-  p {
-    color: #f9fafb;
-    font-weight: 600;
-  }
-`;
-const LineWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 70%;
-`;
-
-const Line = styled.div`
-  display: flex;
-  margin-bottom: 25px;
-`;
-
-const Type = styled.div`
-  color: gray;
-  width: 50%;
-`;
-
-const UserInput = styled.div`
-  color: #f9fafb;
-  width: 50%;
-`;
+import {
+  SProfile,
+  ProfileImg,
+  DefaultImage,
+  Image,
+  UploadBtn,
+  UserInfo,
+  LineHeader,
+  Line,
+  LineWrapper,
+  Type,
+  UserInput,
+} from "./styled";
 
 function Profile() {
   const [selectedImage, setSelectedImage] = useState(null);

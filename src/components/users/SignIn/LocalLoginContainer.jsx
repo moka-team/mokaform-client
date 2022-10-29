@@ -3,11 +3,7 @@ import TextField from "@mui/material/TextField";
 import { styled } from "@mui/material/styles";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import {
-  LocalLoginWrapper,
-  LoginInputContainer,
-  LoginButton,
-} from "./SigninStyle";
+import { LocalLoginWrapper, LoginInputContainer, LoginButton } from "./styled";
 import { useRecoilState } from "recoil";
 import { userState } from "../../../authentication/userState";
 import * as Sentry from "@sentry/react";

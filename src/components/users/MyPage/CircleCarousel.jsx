@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPaw,
@@ -10,6 +9,7 @@ import {
   faMagnifyingGlass,
   faPersonCircleQuestion,
 } from "@fortawesome/free-solid-svg-icons";
+import { Container, Card } from "./styled";
 import { useState } from "react";
 
 // 임시 유저 관심사 데이터
@@ -23,39 +23,6 @@ const preferenceList = [
   "PREFERENCE_RESEARCH",
   "LIFE",
 ];
-
-const Container = styled.div`
-  display: grid;
-  width: 95%;
-  height: 100%;
-  align-items: center;
-  justify-content: space-between;
-  margin: 20px 50px;
-  grid-template-columns: repeat(8, 1fr);
-  @media screen and (max-width: 1300px) {
-    grid-template-columns: repeat(4, 1fr);
-  }
-`;
-const Card = styled.div`
-  background-color: white;
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  margin-right: 25px;
-  margin-bottom: 25px;
-  // 가로, 세로 가운데 정렬
-  align-items: center; /* 수직 정렬 */
-  flex-direction: row; /* default: row */
-  justify-content: center; /* flex direction에 대해서 정렬방식 선택 */
-  display: flex;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1), 0 4px 4px rgba(0, 0, 0, 0.19);
-  &:hover {
-    background-color: gray;
-    text-align: center;
-    color: white;
-    font-weight: 600;
-  }
-`;
 
 function CircleCarousel() {
   const [ishover1, setIshover1] = useState(false);

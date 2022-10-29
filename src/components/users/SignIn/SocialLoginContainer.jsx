@@ -18,10 +18,7 @@ const KaKaoLoginImg = styled.img`
 function SocialLoginContainer() {
   return (
     <SocialLoginWrapper>
-      <KaKaoLoginImg
-        src={require("../../common/kakao_login_large_wide.png")}
-        onClick=""
-      />
+      <KaKaoLoginImg src={require("../../common/kakao_login_large_wide.png")} />
     </SocialLoginWrapper>
   );
 }
