@@ -16,9 +16,10 @@ import {
   createdMySurvey,
 } from "../../atoms";
 import axios from "axios";
-import { updateAccessToken } from "../../authentication/auth";
+import { logout, updateAccessToken } from "../../authentication/auth";
 import * as Sentry from "@sentry/react";
 import { getAccessToken, getRefreshToken } from "../../authentication/auth";
+import { setUser } from "@sentry/react";
 
 const blue = {
   100: "#DAECFF",
@@ -188,6 +189,13 @@ export default function SortSelect({ page }) {
             })
             .then((res) => {
               updateAccessToken(res.data.data);
+            })
+            .catch(function (error) {
+              alert("refresh token 만료");
+              logout();
+              window.location.replace("/");
+              localStorage.clear();
+              setUser(null);
             });
         }
       });
@@ -219,6 +227,13 @@ export default function SortSelect({ page }) {
             })
             .then((res) => {
               updateAccessToken(res.data.data);
+            })
+            .catch(function (error) {
+              alert("refresh token 만료");
+              logout();
+              window.location.replace("/");
+              localStorage.clear();
+              setUser(null);
             });
         }
       });

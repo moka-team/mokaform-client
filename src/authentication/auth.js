@@ -1,7 +1,6 @@
 import { Cookies } from "react-cookie";
 
 const cookies = new Cookies();
-
 export const setRefreshToken = (refreshToken) => {
   return cookies.set("refresh_token", refreshToken, {
     sameSite: "strict",
