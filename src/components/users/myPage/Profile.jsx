@@ -103,7 +103,6 @@ function Profile() {
       </UserInfo>
       <LineHeader>
         <p>PROFILE</p>
-        <FontAwesomeIcon icon={faEdit} color="gray" />
       </LineHeader>
       <LineWrapper>
         <Line>

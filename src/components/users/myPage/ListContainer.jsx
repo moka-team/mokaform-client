@@ -15,7 +15,6 @@ export default function ListContainer() {
       <Header>
         <Block>
           <p>나의 관심사</p>
-          <FontAwesomeIcon icon={faEdit} color="gray" />
         </Block>
       </Header>
       <CircleCarousel />
@@ -36,7 +35,6 @@ export default function ListContainer() {
           <Block>
             <p>내가 참여한 설문</p>
           </Block>
-          <FontAwesomeIcon icon={faEdit} color="gray" />
         </Box>
         <SortSelect page={"mySubmit"} />
       </Header>
