@@ -5,7 +5,6 @@ const cookies = new Cookies();
 export const setRefreshToken = (refreshToken) => {
   return cookies.set("refresh_token", refreshToken, {
     sameSite: "strict",
-    httpOnly: true,
   });
 };
 
@@ -26,9 +25,7 @@ export const updateAccessToken = (newAccessToken) => {
 };
 
 export const logout = () => {
-  cookies.remove("refresh_token", {
-    httpOnly: true,
-  });
+  cookies.remove("refresh_token");
   cookies.remove("access_token");
 };
 
@@ -37,7 +34,5 @@ export const getAccessToken = () => {
 };
 
 export const getRefreshToken = () => {
-  return cookies.get("refresh_token", {
-    httpOnly: true,
-  });
+  return cookies.get("refresh_token");
 };
