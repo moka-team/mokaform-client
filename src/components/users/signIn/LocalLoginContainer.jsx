@@ -7,7 +7,11 @@ import { LocalLoginWrapper, LoginInputContainer, LoginButton } from "./styled";
 import { useRecoilState } from "recoil";
 import { userState } from "../../../authentication/userState";
 import * as Sentry from "@sentry/react";
-import { getAccessToken, getRefreshToken } from "../../../authentication/auth";
+import {
+  getAccessToken,
+  getRefreshToken,
+  setTokens,
+} from "../../../authentication/auth";
 import CustomTextField from "../../common/CustomTextField";
 
 function LocalLoginContainer() {
@@ -29,19 +33,10 @@ function LocalLoginContainer() {
     event.preventDefault();
 
     axios
-      .post(
-        "/api/v1/users/login",
-        {
-          email: inputs.email,
-          password: inputs.password,
-        },
-        {
-          headers: {
-            accessToken: getAccessToken(),
-            refreshToken: getRefreshToken(),
-          },
-        }
-      )
+      .post("/api/v1/users/login", {
+        email: inputs.email,
+        password: inputs.password,
+      })
       .then(function (response) {
         if (response.data.message.includes("성공")) {
           // 로그인 성공 시 로컬 스토리지에 저장
@@ -56,6 +51,7 @@ function LocalLoginContainer() {
         } else {
           window.alert("로그인 에러 발생");
         }
+        setTokens(response.refreshToken, response.accessToken);
       })
       .catch(function (error) {
         window.alert("이메일 또는 비밀번호가 일치하지 않습니다.");
