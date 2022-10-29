@@ -2,7 +2,7 @@ import { Button } from "@mui/material";
 import React, { useState } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import { detailMCQuestionState } from "../../../atoms";
+import { detailMCQuestionState } from "../../../../atoms";
 
 export default function DetailMCQuestionCreator({ id }) {
   const [detailQuestion, setDetailQuestion] = useState("");

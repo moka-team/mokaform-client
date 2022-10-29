@@ -4,7 +4,7 @@ import {
   QuestionOption,
   QuestionText,
   QuestionContentWrapper,
-} from "../create-card/styled";
+} from "../create/card/styled";
 import {
   MultipleChoiceAnswerListState,
   multiChoiceAnswerValidateCount,

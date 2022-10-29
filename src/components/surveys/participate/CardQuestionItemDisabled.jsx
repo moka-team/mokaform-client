@@ -6,7 +6,7 @@ import {
   QuestionOption,
   QuestionText,
   QuestionContentWrapper,
-} from "../create-card/styled";
+} from "../create/card/styled";
 import { surveyForCreated } from "../../../atoms";
 import { useRecoilValue } from "recoil";
 

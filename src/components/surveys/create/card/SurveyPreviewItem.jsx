@@ -1,5 +1,5 @@
 import React from "react";
-import { surveyListState, detailMCQuestionState } from "../../../atoms";
+import { surveyListState, detailMCQuestionState } from "../../../../atoms";
 import { useRecoilValue } from "recoil";
 import {
   QuestionWrapper,

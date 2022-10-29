@@ -8,7 +8,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Button from "@mui/material/Button";
 import MultipleChoiceQuestionItem from "./MultipleChoiceQuestionItem";
-import PreviewSection from "../create-card/PreviewSection";
+import PreviewSection from "../create/card/PreviewSection";
 import styled from "styled-components";
 import CardQuestionItem from "./CardQuestionItem";
 

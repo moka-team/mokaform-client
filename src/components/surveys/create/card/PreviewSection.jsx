@@ -1,7 +1,7 @@
 import React from "react";
-import { Preview, TitleText, SummaryText } from "../common/styled";
+import { Preview, TitleText, SummaryText } from "../../common/styled";
 import { useRecoilValue } from "recoil";
-import { surveyTitle, surveySummary, surveyListState } from "../../../atoms";
+import { surveyTitle, surveySummary, surveyListState } from "../../../../atoms";
 import SurveyPreviewItem from "./SurveyPreviewItem";
 import styled from "styled-components";
 import { Wrapper } from "./styled";

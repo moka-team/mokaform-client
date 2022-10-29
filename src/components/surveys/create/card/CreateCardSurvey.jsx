@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import NavBar from "../create/general/NavBar";
+import NavBar from "../general/NavBar";
 import PreviewSection from "./PreviewSection";
 import CreateSection from "./CreateSection";
 import {
@@ -17,7 +17,7 @@ import {
   createdQuestionCount,
   isStartDateValidate,
   isEndDateValidate,
-} from "../../../atoms";
+} from "../../../../atoms";
 import { useSetRecoilState } from "recoil";
 import dayjs from "dayjs";
 
