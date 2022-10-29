@@ -8,7 +8,7 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Chip from "@mui/material/Chip";
 import { useRecoilState } from "recoil";
-import { surveyCategory } from "../../../atoms";
+import { surveyCategory } from "../../../../atoms";
 
 const ITEM_HEIGHT = 40;
 const ITEM_PADDING_TOP = 8;

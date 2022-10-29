@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import NavBar from "../create/NavBar";
+import NavBar from "../create/general/NavBar";
 import PreviewSection from "./PreviewSection";
 import CreateSection from "./CreateSection";
 import {

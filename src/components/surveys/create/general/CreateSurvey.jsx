@@ -1,10 +1,8 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import CreateSection from "../../../components/surveys/create/CreateSection";
-import PreviewSection from "../../../components/surveys/create/PreviewSection";
 import NavBar from "./NavBar";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { userState } from "../../../authentication/userState";
+import { userState } from "../../../../authentication/userState";
 import {
   surveyTitle,
   surveySummary,
@@ -18,8 +16,10 @@ import {
   surveyImage,
   isStartDateValidate,
   isEndDateValidate,
-} from "../../../atoms";
+} from "../../../../atoms";
 import dayjs from "dayjs";
+import CreateSection from "./CreateSection";
+import PreviewSection from "./PreviewSection";
 
 const Container = styled.div`
   display: flex;

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import { useRecoilState } from "recoil";
-import { surveyImage } from "../../../atoms";
+import { surveyImage } from "../../../../atoms";
 
 const Container = styled.div`
   display: flex;

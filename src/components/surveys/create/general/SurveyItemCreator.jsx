@@ -1,6 +1,6 @@
 import { React, useState } from "react";
 import { useSetRecoilState, useRecoilState } from "recoil";
-import { surveyListState, createdQuestionCount } from "../../../atoms";
+import { surveyListState, createdQuestionCount } from "../../../../atoms";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import { AddCircle } from "@mui/icons-material";

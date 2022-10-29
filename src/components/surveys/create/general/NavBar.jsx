@@ -31,13 +31,16 @@ import {
   surveyStartDate,
   surveySummary,
   surveyTitle,
-} from "../../../atoms";
-import { userState } from "../../../authentication/userState";
+} from "../../../../atoms";
+import { userState } from "../../../../authentication/userState";
 import { CustomSwitch } from "./CustomizedSwitches";
 import SelectCategory from "./SelectCategory";
-import { SaveBtn, SNavBar } from "../common/styled";
+import { SaveBtn, SNavBar } from "../../common/styled";
 import SurveyImg from "./SurveyImg";
-import { getAccessToken, getRefreshToken } from "../../../authentication/auth";
+import {
+  getAccessToken,
+  getRefreshToken,
+} from "../../../../authentication/auth";
 
 const style = {
   position: "absolute",

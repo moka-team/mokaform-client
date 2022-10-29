@@ -1,7 +1,7 @@
 import { React } from "react";
-import { Create, Title, Summary } from "../common/styled";
+import { Create, Title, Summary } from "../../common/styled";
 import SurveyItemCreator from "./SurveyItemCreator";
-import { surveyTitle, surveySummary, surveyListState } from "../../../atoms";
+import { surveyTitle, surveySummary, surveyListState } from "../../../../atoms";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import SurveyCreateItem from "./SurveyCreateItem";
 
