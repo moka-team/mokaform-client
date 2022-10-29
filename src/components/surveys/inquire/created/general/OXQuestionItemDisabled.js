@@ -60,7 +60,7 @@ export default function OXQuestionItemDisabled({ item }) {
         onClick={onClickHandler}
         style={{ pointerEvents: "none" }}
       >
-        아니오 🥲
+        아니오 😭
       </QuestionOption>
     </QuestionWrapper>
   );

@@ -83,7 +83,7 @@ export default function OXQuestionItem({ item }) {
         네 😀
       </QuestionOption>
       <QuestionOption id={no} value={false} onClick={onClickHandler}>
-        아니오 🥲
+        아니오 😭
       </QuestionOption>
     </QuestionWrapper>
   );
