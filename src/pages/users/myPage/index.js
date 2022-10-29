@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import Header from "../../../components/users/MyPage/MyHeader";
-import Profile from "../../../components/users/MyPage/Profile";
-import ListContainer from "../../../components/users/MyPage/ListContainer";
+import Header from "../../../components/users/mypage/MyHeader";
+import Profile from "../../../components/users/mypage/Profile";
+import ListContainer from "../../../components/users/mypage/ListContainer";
 import { useEffect } from "react";
 import { useRecoilValue } from "recoil";
 import { userState } from "../../../authentication/userState";

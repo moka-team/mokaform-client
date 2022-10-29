@@ -1,10 +1,9 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Mypage from "./pages/users/myPage/index";
+import Mypage from "./pages/users/mypage/index";
 import Main from "./pages/index";
 import SignUp from "./pages/users/SignUpPage";
 import SignIn from "./pages/users/SignIn";
-import ResetPassword from "./pages/users/ResetPassword";
 import CreateSurvey from "./pages/surveys/create/index";
 import routes from "./routes";
 import { createGlobalStyle } from "styled-components";
@@ -50,7 +49,6 @@ function App() {
         ></Route>
         <Route path={routes.signup} element={<SignUp />}></Route>
         <Route path={routes.signin} element={<SignIn />}></Route>
-        <Route path={routes.resetPassword} element={<ResetPassword />}></Route>
         <Route
           path={routes.createSurvey}
           element={

@@ -1,10 +1,12 @@
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-regular-svg-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import { useRecoilValue } from "recoil";
 import { userState } from "../../../authentication/userState";
+import { getAccessToken, getRefreshToken } from "../../../authentication/auth";
+import axios from "axios";
 
 const SProfile = styled.div`
   display: flex;
@@ -105,8 +107,26 @@ const UserInput = styled.div`
 
 function Profile() {
   const [selectedImage, setSelectedImage] = useState(null);
-  // 추후 삭제
+  // user 추후 삭제
   const user = useRecoilValue(userState);
+  const [profile, setProfile] = useState(null);
+
+  // TODO: profile 받아오기
+  const fetchProfile = async () => {
+    const response = await axios.get("/api/v1/users/my", {
+      headers: {
+        accessToken: getAccessToken(),
+      },
+    });
+    setProfile(response.data.data);
+    console.log(response.data);
+  };
+
+  useEffect(() => {
+    fetchProfile();
+  }, []);
+
+  console.log(profile);
   return (
     <SProfile>
       <input
@@ -165,9 +185,9 @@ function Profile() {
               PUBLIC_OFFICIAL: <UserInput>공무원</UserInput>,
               SELF_EMPLOYED: <UserInput>자영업</UserInput>,
               HOUSEWIFE: <UserInput>주부</UserInput>,
-              FREELANCER:<UserInput>프리랜서</UserInput>,
-              JOB_SEEKER:<UserInput>취업준비생</UserInput>,
-              JOBLESS:<UserInput>무직</UserInput>
+              FREELANCER: <UserInput>프리랜서</UserInput>,
+              JOB_SEEKER: <UserInput>취업준비생</UserInput>,
+              JOBLESS: <UserInput>무직</UserInput>,
             }[user.job]
           }
         </Line>
