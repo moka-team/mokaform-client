@@ -56,6 +56,8 @@ export default function InquireMultipleChoiceQuestionItem({
         console.log(error.message);
         setErrorMessage(error.message);
         Sentry.captureException(error);
+
+        setError(true);
       })
       .finally(function () {
         // always executed

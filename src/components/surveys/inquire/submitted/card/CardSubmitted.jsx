@@ -1,14 +1,6 @@
-import React, { useState, useRef } from "react";
-import { useRecoilState } from "recoil";
+import React from "react";
+import { useRecoilValue } from "recoil";
 import { surveyForSubmitted } from "../../../../../atoms";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import Button from "@mui/material/Button";
-import MultipleChoiceQuestionItem from "../general/MultipleChoiceQuestionItem";
-import PreviewSection from "../../../create/card/PreviewSection";
 import styled from "styled-components";
 import CardQuestionItem from "./CardQuestionItem";
 
@@ -57,13 +49,7 @@ const Wrapper = styled.div`
 `;
 
 export default function CardSubmitted({ sharingKey }) {
-  const cardRef = useRef([]);
-  const [survey, setSurvey] = useRecoilState(surveyForSubmitted);
-  const [successDialogOpen, setSuccessDialogOpen] = useState(true);
-
-  const onClickHandler = (index) => {
-    cardRef.current[index + 1]?.scrollIntoView({ behavior: "smooth" });
-  };
+  const survey = useRecoilValue(surveyForSubmitted);
 
   return (
     <>

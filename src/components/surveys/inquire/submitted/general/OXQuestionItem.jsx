@@ -52,6 +52,8 @@ export default function InquireOXQuestionItem({ item, sharingKey }) {
         console.log(error.message);
         setErrorMessage(error.message);
         Sentry.captureException(error);
+
+        setError(true);
       })
       .finally(function () {
         // always executed

@@ -21,7 +21,6 @@ import {
   getAccessToken,
   getRefreshToken,
 } from "../../../../authentication/auth";
-import CardParticipate from "../../participate/CardParticipate";
 import CardSubmitted from "./card/CardSubmitted";
 
 export default function SubmittedSurvey({ sharingKey }) {

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { QuestionWrapper2, QuestionOption2, QuestionText2 } from "../styled";
+import { QuestionText2 } from "../styled";
 import { userState } from "../../../../../authentication/userState";
 import Error from "../../../participate/Error";
-import Loading from "../../../participate/Loading";
 import axios from "axios";
 import { useRecoilValue } from "recoil";
 import { surveyForSubmitted } from "../../../../../atoms";
@@ -80,6 +79,8 @@ export default function CardQuestionItem({ item, multiquestion, sharingKey }) {
         console.log(error.message);
         setErrorMessage(error.message);
         Sentry.captureException(error);
+
+        setError(true);
       })
       .finally(function () {
         // always executed
@@ -87,7 +88,6 @@ export default function CardQuestionItem({ item, multiquestion, sharingKey }) {
   }, []);
 
   if (error) return <Error errorMessage={errorMessage}></Error>;
-  // if (loading) return <Loading></Loading>;
 
   return (
     <QWrapper>
