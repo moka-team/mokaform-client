@@ -15,7 +15,6 @@ const Section = styled.div`
   background-color: #202632;
   width: 100%;
   border-radius: 10px;
-  padding: 20px 35px 20px 25px;
   align-items: center;
   justify-content: center;
   display: flex;

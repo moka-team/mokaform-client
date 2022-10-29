@@ -33,4 +33,58 @@ const QuestionText2 = styled.h1`
   font-weight: 500;
 `;
 
-export { QuestionWrapper2, QuestionOption2, QuestionText2 };
+const Section = styled.div`
+  height: calc(var(--vh, 1vh) * 75);
+  background-color: #202632;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: -5%;
+  display: flex;
+  flex-direction: column;
+`;
+
+const Wrapper = styled.div`
+  width: 100%;
+  min-height: calc(var(--vh, 1vh) * 100);
+  float: right;
+  display: flex;
+  flex-direction: column;
+  background-color: #202632;
+`;
+
+const TitleText = styled.div`
+  margin-top: 7%;
+  font-weight: 900;
+  font-size: xx-large;
+  border: none;
+  color: white;
+  text-align: center;
+
+  &:focus {
+    outline: none;
+  }
+`;
+
+const SummaryText = styled.div`
+  margin-top: 10px;
+  font-weight: 500;
+  font-size: medium;
+  border: none;
+  color: white;
+  text-align: center;
+
+  &:focus {
+    outline: none;
+  }
+`;
+
+export {
+  Section,
+  Wrapper,
+  TitleText,
+  SummaryText,
+  QuestionWrapper2,
+  QuestionOption2,
+  QuestionText2,
+};
