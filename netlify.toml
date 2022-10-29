@@ -1,6 +1,6 @@
 [[redirects]]
   from = "/api/*"
-  to = "http://210.109.60.220:8080/api/:splat"
+  to = "http://www.mokaform.site/api/:splat"
   status = 200
   force = true
 
@@ -12,4 +12,4 @@
 [[headers]]
  for = "/*"
     [headers.values]
-    Access-Control-Allow-Origin = "*"
+    Access-Control-Allow-Origin = "http://www.mokaform.site"
