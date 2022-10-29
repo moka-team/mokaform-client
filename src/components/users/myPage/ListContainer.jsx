@@ -24,7 +24,7 @@ export default function ListContainer() {
           <Block>
             <p>내가 만든 설문</p>
           </Block>
-          <Link to={`/survey/${user.id}/manage`} surveyId={1}>
+          <Link to={`/survey/${user.id}/manage`}>
             <FontAwesomeIcon icon={faEdit} color="gray" />
           </Link>
         </Box>

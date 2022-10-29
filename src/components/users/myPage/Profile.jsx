@@ -61,9 +61,9 @@ function Profile() {
 
   useEffect(() => {
     fetchProfile();
+    console.log(profile);
   }, []);
 
-  console.log(profile);
   return (
     <SProfile>
       <input

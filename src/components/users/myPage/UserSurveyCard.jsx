@@ -1,18 +1,17 @@
-import React from "react";
+import { faPen } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { CardActionArea } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Chip from "@mui/material/Chip";
 import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
-import { CardActionArea } from "@mui/material";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen } from "@fortawesome/free-solid-svg-icons";
+import Typography from "@mui/material/Typography";
+import React from "react";
 import { Link } from "react-router-dom";
 import { useRecoilValue } from "recoil";
-import { createdMySurvey } from "../../../atoms";
-import { submittedMySurvey } from "../../../atoms";
+import { createdMySurvey, submittedMySurvey } from "../../../atoms";
 import defaultImage from "../../common/default_image.png";
 
 function SurveyCard({ survey }) {
@@ -68,10 +67,10 @@ export default function UserSurveyCard({ isCreated }) {
   const submittedSurvey = useRecoilValue(submittedMySurvey);
   return isCreated ? (
     <Grid container spacing={1} sx={{ ml: 5, mt: 1, mb: 4, mr: -3 }}>
-      {createdSurvey.map((survey) => (
+      {createdSurvey.map((survey, idx) => (
         <Grid
           item
-          key={survey.surveyId}
+          key={idx}
           xs={6}
           sm={6}
           md={4}
@@ -111,7 +110,7 @@ export default function UserSurveyCard({ isCreated }) {
           idx < 5 && (
             <Grid
               item
-              key={survey.surveyId}
+              key={idx}
               xs={6}
               sm={6}
               md={4}
