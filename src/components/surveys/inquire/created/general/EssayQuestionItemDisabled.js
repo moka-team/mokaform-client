@@ -1,6 +1,10 @@
 import React from "react";
-import { surveyForCreated } from "../../../atoms";
-import { QuestionWrapper, QuestionText, Answer } from "./styled";
+import { surveyForCreated } from "../../../../../atoms";
+import {
+  QuestionWrapper,
+  QuestionText,
+  Answer,
+} from "../../../participate/styled";
 import { useRecoilValue } from "recoil";
 
 export default function EssayQuestionItemDisabled({ item }) {

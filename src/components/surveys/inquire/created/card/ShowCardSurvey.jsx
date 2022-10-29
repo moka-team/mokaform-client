@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import CardQuestionItem from "./CardQuestionItem";
+import CardQuestionItem from "../../../participate/CardQuestionItem";
 import CardQuestionItemDisabled from "./CardQuestionItemDisabled";
 
 const Section = styled.div`

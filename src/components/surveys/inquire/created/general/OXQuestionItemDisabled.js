@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { QuestionWrapper, QuestionOption, QuestionText } from "./styled";
-import { surveyForCreated } from "../../../atoms";
+import {
+  QuestionWrapper,
+  QuestionOption,
+  QuestionText,
+} from "../../../participate/styled";
 import { useRecoilValue } from "recoil";
+import { surveyForCreated } from "../../../../../atoms";
 
-export default function MultipleChoiceQuestionItemDisabled({
-  item,
-  multiquestion,
-}) {
+export default function OXQuestionItemDisabled({ item }) {
   const survey = useRecoilValue(surveyForCreated);
   const index = survey.questions.findIndex(
     (listItem) => listItem.questionId === item.questionId
@@ -43,23 +44,24 @@ export default function MultipleChoiceQuestionItemDisabled({
     <QuestionWrapper>
       <QuestionText color="#0064ff">Q{index + 1}</QuestionText>
       <QuestionText color="black">{item.title}</QuestionText>
-      {multiquestion
-        .filter(
-          (multiQuestionItem) =>
-            item.questionId === multiQuestionItem.questionId
-        )
-        .map((multiQuestion) => (
-          <QuestionOption
-            disabled
-            id={multiQuestion.multiQuestionId}
-            key={multiQuestion.multiQuestionId}
-            onClick={onClickHandler}
-            value={multiQuestion.multiQuestionContent}
-            style={{ pointerEvents: "none" }}
-          >
-            {multiQuestion.multiQuestionContent}
-          </QuestionOption>
-        ))}
+      <QuestionOption
+        disabled
+        id="yes"
+        value={true}
+        onClick={onClickHandler}
+        style={{ pointerEvents: "none" }}
+      >
+        네 😀
+      </QuestionOption>
+      <QuestionOption
+        disabled
+        id="no"
+        value={false}
+        onClick={onClickHandler}
+        style={{ pointerEvents: "none" }}
+      >
+        아니오 🥲
+      </QuestionOption>
     </QuestionWrapper>
   );
 }

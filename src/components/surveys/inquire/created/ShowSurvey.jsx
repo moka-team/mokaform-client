@@ -1,17 +1,26 @@
 import React, { useState, useEffect } from "react";
-import NavBar from "./NavBar";
-import EssayQuestionItemDisabled from "./EssayQuestionItemDisabled";
-import { Container, SNavBar, SummaryText, Survey, TitleText } from "./styled";
+import NavBar from "../../participate/NavBar";
+import EssayQuestionItemDisabled from "./general/EssayQuestionItemDisabled";
+import {
+  Container,
+  SNavBar,
+  SummaryText,
+  Survey,
+  TitleText,
+} from "../../participate/styled";
 import axios from "axios";
-import Loading from "./Loading";
-import Error from "./Error";
-import OXQuestionItemDisabled from "./OXQuestionItemDisabled";
-import MultipleChoiceQuestionItemDisabled from "./MultipleChoiceQuestionItemDisabled";
-import { surveyForCreated } from "../../../atoms";
+import Loading from "../../participate/Loading";
+import Error from "../../participate/Error";
+import OXQuestionItemDisabled from "./general/OXQuestionItemDisabled";
+import MultipleChoiceQuestionItemDisabled from "./general/MultipleChoiceQuestionItemDisabled";
+import { surveyForCreated } from "../../../../atoms";
 import { useRecoilState } from "recoil";
 import * as Sentry from "@sentry/react";
-import { getAccessToken, getRefreshToken } from "../../../authentication/auth";
-import ShowCardSurvey from "./ShowCardSurvey";
+import {
+  getAccessToken,
+  getRefreshToken,
+} from "../../../../authentication/auth";
+import ShowCardSurvey from "./card/ShowCardSurvey";
 
 export default function ShowSurvey({ sharingKey }) {
   const [survey, setSurvey] = useRecoilState(surveyForCreated);

@@ -6,8 +6,8 @@ import {
   QuestionOption,
   QuestionText,
   QuestionContentWrapper,
-} from "../create/card/styled";
-import { surveyForCreated } from "../../../atoms";
+} from "../../../create/card/styled";
+import { surveyForCreated } from "../../../../../atoms";
 import { useRecoilValue } from "recoil";
 
 const QWrapper = styled.div`
