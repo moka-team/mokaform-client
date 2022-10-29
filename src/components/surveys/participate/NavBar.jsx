@@ -71,11 +71,6 @@ export default function NavBar() {
   };
 
   const handleSubmit = () => {
-    console.log("총 질문: " + questionCount);
-    console.log("주관식: " + essayValidateCount);
-    console.log("객관식: " + multiValidateCount);
-    console.log("찬부식: " + oxValidateCount);
-
     const answerInfo = {
       essayAnswers:
         essayAnswerList.length === 0

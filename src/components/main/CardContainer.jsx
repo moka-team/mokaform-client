@@ -59,7 +59,6 @@ function SurveyCard({ survey }) {
 export default function CardContainer() {
   const surveys = useRecoilValue(surveyList);
 
-  console.log(surveys);
   return (
     <Grid container spacing={2}>
       {surveys.map((survey) => (

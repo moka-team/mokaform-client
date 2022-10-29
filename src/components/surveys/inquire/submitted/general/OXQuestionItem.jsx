@@ -42,7 +42,6 @@ export default function InquireOXQuestionItem({ item, sharingKey }) {
         },
       })
       .then(function (response) {
-        console.log(response.data.data.oxAnswers);
         setOXAnswer(response.data.data.oxAnswers);
         setAnswer(
           response.data.data.oxAnswers.filter(

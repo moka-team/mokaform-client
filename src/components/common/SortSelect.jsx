@@ -200,7 +200,6 @@ export default function SortSelect({ page }) {
         }
       });
     setSurveys(response.data.data.content);
-    console.log(response.data.data.content);
     setSurveySort("new");
   };
 
