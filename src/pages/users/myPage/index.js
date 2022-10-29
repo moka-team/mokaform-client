@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import Header from "../../../components/users/MyPage2/MyHeader";
-import Profile from "../../../components/users/MyPage2/Profile";
-import ListContainer from "../../../components/users/MyPage2/ListContainer";
+import Header from "../../../components/users/myPage/MyHeader";
+import Profile from "../../../components/users/myPage/Profile";
+import ListContainer from "../../../components/users/myPage/ListContainer";
 
 const Container = styled.div`
   padding-top: 65px;
