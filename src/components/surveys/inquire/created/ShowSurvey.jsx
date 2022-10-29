@@ -79,7 +79,7 @@ export default function ShowSurvey({ sharingKey }) {
 
   if (error) return <Error errorMessage={errorMessage}></Error>;
   if (loading) return <Loading></Loading>;
-  console.log(survey.multiQuestions[0].multiQuestionType);
+
   return (
     <Container>
       <SNavBar></SNavBar>
