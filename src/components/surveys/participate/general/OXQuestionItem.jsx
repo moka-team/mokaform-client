@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { QuestionWrapper, QuestionOption, QuestionText } from "./styled";
+import { QuestionWrapper, QuestionOption, QuestionText } from "../styled";
 import {
   oxAnswerListState,
   oxAnswerValidateCount,
   surveyForSubmit,
-} from "../../../atoms";
+} from "../../../../atoms";
 import { useRecoilState, useRecoilValue } from "recoil";
 
 export default function OXQuestionItem({ item }) {

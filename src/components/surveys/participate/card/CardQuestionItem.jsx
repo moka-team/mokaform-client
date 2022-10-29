@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
 import {
-  QuestionWrapper,
   QuestionOption,
   QuestionText,
   QuestionContentWrapper,
-} from "../create/card/styled";
+} from "../../create/card/styled";
 import {
   MultipleChoiceAnswerListState,
   multiChoiceAnswerValidateCount,
   surveyForSubmit,
-} from "../../../atoms";
+} from "../../../../atoms";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 
