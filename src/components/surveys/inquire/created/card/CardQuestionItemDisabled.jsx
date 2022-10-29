@@ -1,12 +1,12 @@
 import React from "react";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
+import { surveyForCreated } from "../../../../../atoms";
 import {
+  QuestionContentWrapper,
   QuestionOption,
   QuestionText,
-  QuestionContentWrapper,
 } from "../../../create/card/styled";
-import { surveyForCreated } from "../../../../../atoms";
-import { useRecoilValue } from "recoil";
 
 const QWrapper = styled.div`
   width: 50%;

@@ -1,9 +1,9 @@
 import React from "react";
 import {
-  Wrapper,
-  TitleText,
-  SummaryText,
   Section,
+  SummaryText,
+  TitleText,
+  Wrapper,
 } from "../../submitted/styled";
 import CardQuestionItemDisabled from "./CardQuestionItemDisabled";
 

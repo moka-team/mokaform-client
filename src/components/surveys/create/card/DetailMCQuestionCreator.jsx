@@ -1,7 +1,6 @@
 import { Button } from "@mui/material";
 import React, { useState } from "react";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import styled from "styled-components";
+import { useSetRecoilState } from "recoil";
 import { detailMCQuestionState } from "../../../../atoms";
 
 export default function DetailMCQuestionCreator({ id }) {

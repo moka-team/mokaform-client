@@ -1,7 +1,7 @@
+import DeleteIcon from "@mui/icons-material/Delete";
 import React from "react";
 import { useRecoilState } from "recoil";
 import { detailMCQuestionState } from "../../../../atoms";
-import DeleteIcon from "@mui/icons-material/Delete";
 import { DetailContainer, Input } from "../../common/styled";
 
 export default function DetailSurveyItem({ item }) {

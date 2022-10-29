@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import { Container } from "./styled";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { userState } from "../../../authentication/userState";
 import { useRecoilValue } from "recoil";
+import { userState } from "../../../authentication/userState";
+import { Container } from "./styled";
 
 export default function DeleteSurvey({ request }) {
   const user = useRecoilValue(userState);

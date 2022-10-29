@@ -1,11 +1,11 @@
 import React from "react";
-import { surveyListState, detailMCQuestionState } from "../../../../atoms";
 import { useRecoilValue } from "recoil";
+import { detailMCQuestionState, surveyListState } from "../../../../atoms";
 import {
-  QuestionWrapper,
+  Answer,
   QuestionOption,
   QuestionText,
-  Answer,
+  QuestionWrapper,
 } from "../../common/styled";
 
 export default function SurveyPreviewItem({ item }) {

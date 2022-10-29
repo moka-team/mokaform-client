@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
-import EssayComponent from "./EssayComponent";
 import BarChart from "./BarChart";
-import PieChart from "./PieChart";
+import EssayComponent from "./EssayComponent";
 import MultipleChoiceAnalysis from "./MultipleChoiceAnalysis";
-import WordCloud from "./WordCloud";
 import OXAnalysis from "./OXAnalysis";
+import PieChart from "./PieChart";
+import WordCloud from "./WordCloud";
 
 const Container = styled.div`
   display: flex;

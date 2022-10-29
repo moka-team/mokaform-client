@@ -1,14 +1,14 @@
+import DeleteIcon from "@mui/icons-material/Delete";
 import React from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import {
-  surveyListState,
-  detailMCQuestionState,
   createdQuestionCount,
+  detailMCQuestionState,
+  surveyListState,
 } from "../../../../atoms";
+import { MInput, Num, Question } from "../../common/styled";
 import DetailMCQuestionCreator from "./DetailMCQuestionCreator";
 import DetailSurveyItem from "./DetailSurveyItem";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { Question, MInput, Num } from "../../common/styled";
 
 export default function SurveyItem({ item }) {
   const [questionCount, setQuestionCount] =

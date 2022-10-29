@@ -1,24 +1,24 @@
+import dayjs from "dayjs";
 import React, { useEffect } from "react";
-import styled from "styled-components";
-import NavBar from "./NavBar";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { userState } from "../../../../authentication/userState";
+import styled from "styled-components";
 import {
-  surveyTitle,
-  surveySummary,
+  detailMCQuestionState,
+  isEndDateValidate,
+  isStartDateValidate,
+  surveyCategory,
+  surveyEndDate,
+  surveyImage,
   surveyIsAnonymous,
   surveyIsPublic,
   surveyListState,
-  detailMCQuestionState,
-  surveyEndDate,
   surveyStartDate,
-  surveyCategory,
-  surveyImage,
-  isStartDateValidate,
-  isEndDateValidate,
+  surveySummary,
+  surveyTitle,
 } from "../../../../atoms";
-import dayjs from "dayjs";
+import { userState } from "../../../../authentication/userState";
 import CreateSection from "./CreateSection";
+import NavBar from "./NavBar";
 import PreviewSection from "./PreviewSection";
 
 const Container = styled.div`

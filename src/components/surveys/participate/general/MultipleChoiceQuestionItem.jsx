@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { QuestionWrapper, QuestionOption, QuestionText } from "../styled";
+import React, { useEffect, useState } from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
 import {
-  MultipleChoiceAnswerListState,
   multiChoiceAnswerValidateCount,
+  MultipleChoiceAnswerListState,
   surveyForSubmit,
 } from "../../../../atoms";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { QuestionOption, QuestionText, QuestionWrapper } from "../styled";
 
 export default function MultipleChoiceQuestionItem({ item, multiquestion }) {
   const [multiChoiceAnswerList, setMultiChoiceAnswerList] = useRecoilState(

@@ -1,8 +1,8 @@
-import { useState } from "react";
-import styled from "styled-components";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState } from "react";
 import { useRecoilState } from "recoil";
+import styled from "styled-components";
 import { surveyImage } from "../../../../atoms";
 
 const Container = styled.div`

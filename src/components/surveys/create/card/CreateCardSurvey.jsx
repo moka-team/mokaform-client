@@ -1,24 +1,24 @@
+import dayjs from "dayjs";
 import React, { useEffect } from "react";
+import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import NavBar from "../general/NavBar";
-import PreviewSection from "./PreviewSection";
-import CreateSection from "./CreateSection";
 import {
-  surveyTitle,
-  surveySummary,
+  detailMCQuestionState,
+  isEndDateValidate,
+  isStartDateValidate,
+  surveyCategory,
+  surveyEndDate,
+  surveyImage,
   surveyIsAnonymous,
   surveyIsPublic,
   surveyListState,
-  detailMCQuestionState,
-  surveyEndDate,
   surveyStartDate,
-  surveyCategory,
-  surveyImage,
-  isStartDateValidate,
-  isEndDateValidate,
+  surveySummary,
+  surveyTitle,
 } from "../../../../atoms";
-import { useSetRecoilState } from "recoil";
-import dayjs from "dayjs";
+import NavBar from "../general/NavBar";
+import CreateSection from "./CreateSection";
+import PreviewSection from "./PreviewSection";
 
 const Container = styled.div`
   display: flex;

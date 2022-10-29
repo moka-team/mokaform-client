@@ -1,7 +1,7 @@
 import React from "react";
-import { Preview, TitleText, SummaryText } from "../../common/styled";
 import { useRecoilValue } from "recoil";
-import { surveyTitle, surveySummary, surveyListState } from "../../../../atoms";
+import { surveyListState, surveySummary, surveyTitle } from "../../../../atoms";
+import { Preview, SummaryText, TitleText } from "../../common/styled";
 
 import SurveyPreviewItem from "./SurveyPreviewItem";
 export default function PreviewSection() {

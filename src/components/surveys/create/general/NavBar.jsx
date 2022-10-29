@@ -1,5 +1,3 @@
-import { useState, useEffect } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -16,7 +14,9 @@ import * as Sentry from "@sentry/react";
 import axios from "axios";
 import dayjs from "dayjs";
 import * as React from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useRecoilState, useRecoilValue } from "recoil";
 import {
   createdQuestionCount,
   detailMCQuestionState,
@@ -32,15 +32,15 @@ import {
   surveySummary,
   surveyTitle,
 } from "../../../../atoms";
-import { userState } from "../../../../authentication/userState";
-import { CustomSwitch } from "./CustomizedSwitches";
-import SelectCategory from "./SelectCategory";
-import { SaveBtn, SNavBar } from "../../common/styled";
-import SurveyImg from "./SurveyImg";
 import {
   getAccessToken,
   getRefreshToken,
 } from "../../../../authentication/auth";
+import { userState } from "../../../../authentication/userState";
+import { SaveBtn, SNavBar } from "../../common/styled";
+import { CustomSwitch } from "./CustomizedSwitches";
+import SelectCategory from "./SelectCategory";
+import SurveyImg from "./SurveyImg";
 
 const style = {
   position: "absolute",

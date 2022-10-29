@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { QuestionWrapper, QuestionOption, QuestionText } from "../styled";
+import React, { useEffect, useState } from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
 import {
   oxAnswerListState,
   oxAnswerValidateCount,
   surveyForSubmit,
 } from "../../../../atoms";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { QuestionOption, QuestionText, QuestionWrapper } from "../styled";
 
 export default function OXQuestionItem({ item }) {
   const [currentClick, setCurrentClick] = useState(null);

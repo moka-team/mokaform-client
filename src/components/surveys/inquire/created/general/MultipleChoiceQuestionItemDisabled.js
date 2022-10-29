@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { useRecoilValue } from "recoil";
+import { surveyForCreated } from "../../../../../atoms";
 import {
-  QuestionWrapper,
   QuestionOption,
   QuestionText,
+  QuestionWrapper,
 } from "../../../participate/styled";
-import { surveyForCreated } from "../../../../../atoms";
-import { useRecoilValue } from "recoil";
 
 export default function MultipleChoiceQuestionItemDisabled({
   item,

@@ -1,7 +1,7 @@
 import React from "react";
 import { useRecoilValue } from "recoil";
 import { surveyForSubmitted } from "../../../../../atoms";
-import { Wrapper, TitleText, SummaryText, Section } from "../styled";
+import { Section, SummaryText, TitleText, Wrapper } from "../styled";
 import CardQuestionItem from "./CardQuestionItem";
 
 export default function CardSubmitted({ sharingKey }) {

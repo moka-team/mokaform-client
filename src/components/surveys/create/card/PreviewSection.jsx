@@ -1,9 +1,9 @@
 import React from "react";
 import { useRecoilValue } from "recoil";
-import { surveyListState } from "../../../../atoms";
-import SurveyPreviewItem from "./SurveyPreviewItem";
 import styled from "styled-components";
+import { surveyListState } from "../../../../atoms";
 import { Wrapper } from "./styled";
+import SurveyPreviewItem from "./SurveyPreviewItem";
 
 const Section = styled.div`
   height: calc(var(--vh, 1vh) * 100);

@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { QuestionText2 } from "../styled";
-import { userState } from "../../../../../authentication/userState";
-import Error from "../../../participate/Error";
-import axios from "axios";
-import { useRecoilValue } from "recoil";
-import { surveyForSubmitted } from "../../../../../atoms";
 import * as Sentry from "@sentry/react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useRecoilValue } from "recoil";
+import styled from "styled-components";
+import { surveyForSubmitted } from "../../../../../atoms";
 import {
   getAccessToken,
   getRefreshToken,
 } from "../../../../../authentication/auth";
-import styled from "styled-components";
+import { userState } from "../../../../../authentication/userState";
+import Error from "../../../participate/Error";
+import { QuestionText2 } from "../styled";
 
 const QWrapper = styled.div`
   width: 50%;

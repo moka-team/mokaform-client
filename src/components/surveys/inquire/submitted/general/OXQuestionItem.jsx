@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { QuestionWrapper2, QuestionOption2, QuestionText2 } from "../styled";
-import { userState } from "../../../../../authentication/userState";
-import Error from "../../../participate/Error";
-import Loading from "../../../participate/Loading";
+import * as Sentry from "@sentry/react";
 import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { surveyForSubmitted } from "../../../../../atoms";
-import * as Sentry from "@sentry/react";
 import {
   getAccessToken,
   getRefreshToken,
 } from "../../../../../authentication/auth";
+import { userState } from "../../../../../authentication/userState";
+import Error from "../../../participate/Error";
+import Loading from "../../../participate/Loading";
+import { QuestionOption2, QuestionText2, QuestionWrapper2 } from "../styled";
 
 export default function InquireOXQuestionItem({ item, sharingKey }) {
   const user = useRecoilValue(userState);

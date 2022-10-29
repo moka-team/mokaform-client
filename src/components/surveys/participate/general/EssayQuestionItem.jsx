@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { QuestionWrapper, QuestionText, Answer } from "../styled";
+import { useRecoilState, useRecoilValue } from "recoil";
 import {
   EssayAnswerListState,
   essayAnswerValidateCount,
   surveyForSubmit,
 } from "../../../../atoms";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { Answer, QuestionText, QuestionWrapper } from "../styled";
 
 export default function EssayQuestionItem({ item }) {
   const [essayAnswerList, setEssayAnswerList] =

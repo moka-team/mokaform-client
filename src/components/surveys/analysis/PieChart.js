@@ -12,8 +12,8 @@ const formatting = (data) => {
   const result = [];
   data.forEach((ele, idx) => {
     const tmp = {};
-    tmp.id = idx+1;
-    tmp.label = idx+1;
+    tmp.id = idx + 1;
+    tmp.label = idx + 1;
     tmp.content = ele.multiQuestionContent;
     tmp.value = ele.multiQuestionContentCount;
 
@@ -40,7 +40,6 @@ export default function PieChart({ data }) {
           from: "color",
           modifiers: [["darker", 0.2]],
         }}
-        
         arcLinkLabelsSkipAngle={10}
         arcLinkLabelsTextColor="#333333"
         arcLinkLabelsThickness={2}

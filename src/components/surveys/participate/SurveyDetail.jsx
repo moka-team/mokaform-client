@@ -1,27 +1,27 @@
-import React, { useState, useEffect } from "react";
-import NavBar from "./NavBar";
+import * as Sentry from "@sentry/react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import {
+  EssayAnswerListState,
+  essayAnswerValidateCount,
+  multiChoiceAnswerValidateCount,
+  MultipleChoiceAnswerListState,
+  oxAnswerListState,
+  oxAnswerValidateCount,
+  surveyForSubmit,
+  surveyQuestionCount,
+} from "../../../atoms";
+import { getAccessToken, getRefreshToken } from "../../../authentication/auth";
+import CardParticipate from "./card/CardParticipate";
+import DeleteSurvey from "./DeleteSurvey";
+import Error from "./Error";
 import EssayQuestionItem from "./general/EssayQuestionItem";
 import MultipleChoiceQuestionItem from "./general/MultipleChoiceQuestionItem";
 import OXQuestionItem from "./general/OXQuestionItem";
-import { Container, SummaryText, Survey, TitleText } from "./styled";
-import axios from "axios";
 import Loading from "./Loading";
-import Error from "./Error";
-import DeleteSurvey from "./DeleteSurvey";
-import CardParticipate from "./card/CardParticipate";
-import {
-  EssayAnswerListState,
-  MultipleChoiceAnswerListState,
-  oxAnswerListState,
-  surveyQuestionCount,
-  essayAnswerValidateCount,
-  oxAnswerValidateCount,
-  multiChoiceAnswerValidateCount,
-  surveyForSubmit,
-} from "../../../atoms";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import * as Sentry from "@sentry/react";
-import { getAccessToken, getRefreshToken } from "../../../authentication/auth";
+import NavBar from "./NavBar";
+import { Container, SummaryText, Survey, TitleText } from "./styled";
 
 export default function SurveyDetail({ sharingKey }) {
   const [survey, setSurvey] = useRecoilState(surveyForSubmit);

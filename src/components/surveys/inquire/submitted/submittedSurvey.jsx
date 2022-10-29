@@ -1,27 +1,27 @@
-import React, { useState, useEffect } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { userState } from "../../../../authentication/userState";
-import axios from "axios";
-import {
-  Container,
-  SummaryText,
-  Survey,
-  TitleText,
-} from "../../participate/styled";
-import Error from "../../participate/Error";
-import Loading from "../../participate/Loading";
-import { SNavBar } from "../../participate/styled";
-import InquireEssayQuestionItem from "./general/EssayQuestionItem";
-import InquireMultipleChoiceQuestionItem from "./general/MultipleChoiceQuestionItem";
-import InquireOXQuestionItem from "./general/OXQuestionItem";
-import DeleteSurvey from "../../participate/DeleteSurvey";
-import { surveyForSubmitted } from "../../../../atoms";
 import * as Sentry from "@sentry/react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { surveyForSubmitted } from "../../../../atoms";
 import {
   getAccessToken,
   getRefreshToken,
 } from "../../../../authentication/auth";
+import { userState } from "../../../../authentication/userState";
+import DeleteSurvey from "../../participate/DeleteSurvey";
+import Error from "../../participate/Error";
+import Loading from "../../participate/Loading";
+import {
+  Container,
+  SNavBar,
+  SummaryText,
+  Survey,
+  TitleText,
+} from "../../participate/styled";
 import CardSubmitted from "./card/CardSubmitted";
+import InquireEssayQuestionItem from "./general/EssayQuestionItem";
+import InquireMultipleChoiceQuestionItem from "./general/MultipleChoiceQuestionItem";
+import InquireOXQuestionItem from "./general/OXQuestionItem";
 
 export default function SubmittedSurvey({ sharingKey }) {
   const user = useRecoilValue(userState);

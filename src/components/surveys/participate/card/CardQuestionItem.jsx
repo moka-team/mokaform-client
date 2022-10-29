@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from "react";
-import {
-  QuestionOption,
-  QuestionText,
-  QuestionContentWrapper,
-} from "../../create/card/styled";
-import {
-  MultipleChoiceAnswerListState,
-  multiChoiceAnswerValidateCount,
-  surveyForSubmit,
-} from "../../../../atoms";
+import React, { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
+import {
+  multiChoiceAnswerValidateCount,
+  MultipleChoiceAnswerListState,
+  surveyForSubmit,
+} from "../../../../atoms";
+import {
+  QuestionContentWrapper,
+  QuestionOption,
+  QuestionText,
+} from "../../create/card/styled";
 
 const QWrapper = styled.div`
   width: 50%;

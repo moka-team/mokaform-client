@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
-import {
-  QuestionWrapper,
-  QuestionOption,
-  QuestionText,
-} from "../../../participate/styled";
+import React, { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { surveyForCreated } from "../../../../../atoms";
+import {
+  QuestionOption,
+  QuestionText,
+  QuestionWrapper,
+} from "../../../participate/styled";
 
 export default function OXQuestionItemDisabled({ item }) {
   const survey = useRecoilValue(surveyForCreated);
