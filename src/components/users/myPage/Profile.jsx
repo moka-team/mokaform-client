@@ -33,15 +33,14 @@ function Profile() {
         accessToken: getAccessToken(),
       },
     });
-    setProfile(response.data.data);
-    console.log(response.data);
   };
 
   useEffect(() => {
     fetchProfile();
+    console.log(profile);
   }, []);
 
-  console.log(profile);
+  
   return (
     <SProfile>
       <input
