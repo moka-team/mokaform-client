@@ -1,6 +1,6 @@
 [[redirects]]
   from = "/api/*"
-  to = "http://210.109.60.220:8080/api/:splat"
+  to = "https://www.mokaform.site/api/:splat"
   status = 200
   force = true
 
