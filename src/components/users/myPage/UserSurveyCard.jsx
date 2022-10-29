@@ -106,41 +106,44 @@ export default function UserSurveyCard({ isCreated }) {
     </Grid>
   ) : (
     <Grid container spacing={1} sx={{ ml: 5, mt: 1, mr: -3 }}>
-      {submittedSurvey.map((survey) => (
-        <Grid
-          item
-          key={survey.surveyId}
-          xs={6}
-          sm={6}
-          md={4}
-          lg={2.25}
-          xl={2.25}
-        >
-          <Link
-            to={`/my/survey/submitted/${survey.sharingKey}`}
-            style={{ textDecoration: "none" }}
-          >
-            <CardActionArea sx={{ width: 200 }}>
-              <Card
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  width: 200,
-                }}
+      {submittedSurvey.map(
+        (survey, idx) =>
+          idx < 5 && (
+            <Grid
+              item
+              key={survey.surveyId}
+              xs={6}
+              sm={6}
+              md={4}
+              lg={2.25}
+              xl={2.25}
+            >
+              <Link
+                to={`/my/survey/submitted/${survey.sharingKey}`}
+                style={{ textDecoration: "none" }}
               >
-                <CardMedia
-                  component="img"
-                  image={defaultImage}
-                  sx={{ height: 150 }}
-                />
-                <CardContent sx={{ flexGrow: 1 }}>
-                  <SurveyCard survey={survey} />
-                </CardContent>
-              </Card>
-            </CardActionArea>
-          </Link>
-        </Grid>
-      ))}
+                <CardActionArea sx={{ width: 200 }}>
+                  <Card
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      width: 200,
+                    }}
+                  >
+                    <CardMedia
+                      component="img"
+                      image={defaultImage}
+                      sx={{ height: 150 }}
+                    />
+                    <CardContent sx={{ flexGrow: 1 }}>
+                      <SurveyCard survey={survey} />
+                    </CardContent>
+                  </Card>
+                </CardActionArea>
+              </Link>
+            </Grid>
+          )
+      )}
     </Grid>
   );
 }

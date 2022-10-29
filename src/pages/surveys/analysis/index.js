@@ -1,12 +1,12 @@
-import styled from "styled-components";
-import ByItem from "../../../components/surveys/analysis/ByItem";
-import Header from "../../../components/common/Header";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPrint } from "@fortawesome/free-solid-svg-icons";
-import { useRecoilValue } from "recoil";
-import { userState } from "../../../authentication/userState";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import styled from "styled-components";
+import { userState } from "../../../authentication/userState";
+import Header from "../../../components/common/Header";
+import ByItem from "../../../components/surveys/analysis/ByItem";
 
 const Container = styled.div`
   display: flex;
