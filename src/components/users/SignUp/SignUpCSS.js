@@ -78,8 +78,8 @@ const EssentialForm = styled.input`
 const Message = styled.p`
   font-size: small;
   width: 400px;
-  padding-left: 10px;
-  margin: 10px;
+  padding-left: 20px;
+  margin: -5px, 10px, 30px, 10px;
   text-align: left;
 
   &.success {

@@ -1,19 +1,4 @@
-import styled from "styled-components";
-
-const SocialLoginWrapper = styled.div`
-  margin-top: 10px;
-  text-align: center;
-`;
-
-const KaKaoLoginImg = styled.img`
-  width: 400px;
-  height: 50px;
-  padding: 0;
-  border-radius: 10px;
-  border: none;
-
-  object-fit: cover;
-`;
+import { SocialLoginWrapper, KaKaoLoginImg } from "./styled";
 
 function SocialLoginContainer() {
   return (
