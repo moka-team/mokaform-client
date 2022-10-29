@@ -5,18 +5,18 @@ import Main from "./pages/index";
 import SignUp from "./pages/users/SignUpPage";
 import SignIn from "./pages/users/SignIn";
 import ResetPassword from "./pages/users/ResetPassword";
-import CreateSurvey from "./pages/surveys/create/index";
+import CreateSurvey from "./pages/surveys/create/general/index";
 import routes from "./routes";
 import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
 import SurveyAnalysis from "./pages/surveys/analysis";
 import Participate from "./pages/surveys/participate/index";
 import ManageSurvey from "./pages/surveys/manage";
-import Show from "./pages/surveys/show";
-import InquireSubmittedSurvey from "./pages/surveys/inquireSubmittedSurvey";
+import Show from "./pages/surveys/inquire/created/general";
+import InquireSubmittedSurvey from "./pages/surveys/inquire/submitted";
 import { useRecoilValue } from "recoil";
 import { userState } from "./authentication/userState";
-import CreateCardSurvey from "./pages/surveys/create-card/index";
+import CreateCardSurvey from "./pages/surveys/create/card/index";
 import { useEffect } from "react";
 
 const GlobalStyle = createGlobalStyle`
