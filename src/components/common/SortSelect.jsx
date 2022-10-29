@@ -16,12 +16,10 @@ import {
   createdMySurvey,
 } from "../../atoms";
 import axios from "axios";
-import {
-  getAccessToken,
-  getRefreshToken,
-  updateAccessToken,
-} from "../../authentication/auth";
+import { updateAccessToken } from "../../authentication/auth";
 import * as Sentry from "@sentry/react";
+import { getAccessToken, getRefreshToken } from "../../authentication/auth";
+
 const blue = {
   100: "#DAECFF",
   200: "#99CCF3",
@@ -261,91 +259,40 @@ export default function SortSelect({ page }) {
 
   // 마이페이지에서 생성한 설문 참여자 많은 순 데이터 불러오기
   const fetchMyCreatedFamousSurvey = async () => {
-    const response = await axios
-      .get("/api/v1/users/my/surveys", {
-        params: {
-          page: 0,
-          size: 5,
-          sort: "surveyeeCount,desc",
-          userId: user.id,
-        },
-      })
-      .catch(function (error) {
-        Sentry.captureException(error);
-        // Access Token 재발행이 필요한 경우
-        if (error.code === "C005") {
-          axios
-            .post("/api/v1/users/token/reissue", {
-              headers: {
-                accessToken: getAccessToken(),
-                refreshToken: getRefreshToken(),
-              },
-            })
-            .then((res) => {
-              updateAccessToken(res.data.data.accessToken);
-            });
-        }
-      });
+    const response = await axios.get("/api/v1/users/my/surveys", {
+      params: {
+        page: 0,
+        size: 5,
+        sort: "surveyeeCount,desc",
+        userId: user.id,
+      },
+    });
     setCreatedSurveys(response.data.data.content);
   };
 
   // 마이페이지에서 참여한 설문 최신순 데이터 불러오기
   const fetchMyRecentSurvey = async () => {
-    const response = await axios
-      .get("/api/v1/users/my/submitted-surveys", {
-        params: {
-          page: 0,
-          size: 50,
-          sort: "createdAt,desc",
-          userId: user.id,
-        },
-      })
-      .catch(function (error) {
-        Sentry.captureException(error);
-        // Access Token 재발행이 필요한 경우
-        if (error.code === "C005") {
-          axios
-            .post("/api/v1/users/token/reissue", {
-              headers: {
-                accessToken: getAccessToken(),
-                refreshToken: getRefreshToken(),
-              },
-            })
-            .then((res) => {
-              updateAccessToken(res.data.data.accessToken);
-            });
-        }
-      });
+    const response = await axios.get("/api/v1/users/my/submitted-surveys", {
+      params: {
+        page: 0,
+        size: 50,
+        sort: "createdAt,desc",
+        userId: user.id,
+      },
+    });
     setSubmittedSurveys(response.data.data.content);
   };
 
   // 마이페이지에서 참여한 설문 참여자 많은 순 데이터 불러오기
   const fetchMyFamousSurvey = async () => {
-    const response = await axios
-      .get("/api/v1/users/my/submitted-surveys", {
-        params: {
-          page: 0,
-          size: 50,
-          sort: "surveyeeCount,desc",
-          userId: user.id,
-        },
-      })
-      .catch(function (error) {
-        Sentry.captureException(error);
-        // Access Token 재발행이 필요한 경우
-        if (error.code === "C005") {
-          axios
-            .post("/api/v1/users/token/reissue", {
-              headers: {
-                accessToken: getAccessToken(),
-                refreshToken: getRefreshToken(),
-              },
-            })
-            .then((res) => {
-              updateAccessToken(res.data.data.accessToken);
-            });
-        }
-      });
+    const response = await axios.get("/api/v1/users/my/submitted-surveys", {
+      params: {
+        page: 0,
+        size: 50,
+        sort: "surveyeeCount,desc",
+        userId: user.id,
+      },
+    });
     setSubmittedSurveys(response.data.data.content);
   };
 

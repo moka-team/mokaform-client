@@ -21,6 +21,7 @@ export const setTokens = (refreshToken, accessToken) => {
 };
 
 export const updateAccessToken = (newAccessToken) => {
+  cookies.remove("access_token");
   setAccessToken(newAccessToken);
 };
 
