@@ -1,44 +1,17 @@
-import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-regular-svg-icons";
-import CircleCarousel from "./CircleCarousel";
-import UserSurveyCard from "./UserSurveyCard";
-import SortSelect from "../../common/SortSelect";
 import { useRecoilValue } from "recoil";
 import { userState } from "../../../authentication/userState";
 import { Link } from "react-router-dom";
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 80%;
-  height: 90%;
-`;
-
-const Box = styled.div`
-  display: flex;
-`;
-
-const Header = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 0px 50px;
-`;
-
-const Block = styled.div`
-  display: flex;
-  p {
-    margin-right: 10px;
-    font-size: 17px;
-    font-weight: 600;
-  }
-`;
+import { RightContainer, Box, Header, Block } from "./styled";
+import CircleCarousel from "./CircleCarousel";
+import UserSurveyCard from "./UserSurveyCard";
+import SortSelect from "../../common/SortSelect";
 
 export default function ListContainer() {
   const user = useRecoilValue(userState);
   return (
-    <Container>
+    <RightContainer>
       <Header>
         <Block>
           <p>나의 관심사</p>
@@ -68,6 +41,6 @@ export default function ListContainer() {
         <SortSelect page={"mySubmit"} />
       </Header>
       <UserSurveyCard isCreated={false} />
-    </Container>
+    </RightContainer>
   );
 }

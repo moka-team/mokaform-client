@@ -15,6 +15,8 @@ import { Box } from "@mui/material";
 import axios from "axios";
 import * as Sentry from "@sentry/react";
 import { getAccessToken, getRefreshToken } from "../../../authentication/auth";
+import CustomTextField from "../../common/CustomTextField";
+
 export default function SignEssentialForm({}) {
   // 이메일, 닉네임, 비밀번호, 비밀번호 확인
   const [email, setEmail] = useRecoilState(emailState);
@@ -166,11 +168,13 @@ export default function SignEssentialForm({}) {
 
   return (
     <>
-      <EssentialForm
+      <CustomTextField
         name="email"
         type="text"
-        placeholder="이메일"
+        label="이메일"
         value={email}
+        variant="filled"
+        size="small"
         onChange={onEmailHandler}
       />
       <Box sx={{ width: 400, height: 25 }}>
@@ -180,12 +184,14 @@ export default function SignEssentialForm({}) {
           </Message>
         )}
       </Box>
-      <EssentialForm
+      <CustomTextField
         name="nickname"
         type="text"
         autoComplete="off"
-        placeholder="닉네임"
+        label="닉네임"
         value={nickname}
+        variant="filled"
+        size="small"
         onChange={onNicknameHandler}
       />
       <Box sx={{ width: 400, height: 25 }}>
@@ -195,12 +201,14 @@ export default function SignEssentialForm({}) {
           </Message>
         )}
       </Box>
-      <EssentialForm
+      <CustomTextField
         autoComplete="off"
         name="password"
         type="password"
-        placeholder="비밀번호"
+        label="비밀번호"
         value={password}
+        variant="filled"
+        size="small"
         onChange={onPasswordHandler}
       />
       <Box sx={{ width: 400, height: 25 }}>
@@ -210,11 +218,13 @@ export default function SignEssentialForm({}) {
           </Message>
         )}
       </Box>
-      <EssentialForm
+      <CustomTextField
         name="confirmPassword"
         type="password"
-        placeholder="비밀번호 확인"
+        label="비밀번호 확인"
         value={passwordConfirm}
+        variant="filled"
+        size="small"
         onChange={onConfirmPasswordHandler}
       />
       <Box sx={{ width: 400, height: 25 }}>

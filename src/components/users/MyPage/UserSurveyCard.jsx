@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from "react";
+import React from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
@@ -10,8 +10,7 @@ import { CardActionArea } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
-import { useRecoilState } from "recoil";
-import { userState } from "../../../authentication/userState";
+import { useRecoilValue } from "recoil";
 import { createdMySurvey } from "../../../atoms";
 import { submittedMySurvey } from "../../../atoms";
 import defaultImage from "../../common/default_image.png";
@@ -65,11 +64,8 @@ function SurveyCard({ survey }) {
 }
 
 export default function UserSurveyCard({ isCreated }) {
-  const [user, setUser] = useRecoilState(userState);
-
-  const [createdSurvey, setCreatedSurvey] = useRecoilState(createdMySurvey);
-  const [submittedSurvey, setSubmittedSurvey] =
-    useRecoilState(submittedMySurvey);
+  const createdSurvey = useRecoilValue(createdMySurvey);
+  const submittedSurvey = useRecoilValue(submittedMySurvey);
   return isCreated ? (
     <Grid container spacing={1} sx={{ ml: 5, mt: 1, mb: 4, mr: -3 }}>
       {createdSurvey.map((survey) => (

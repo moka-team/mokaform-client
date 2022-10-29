@@ -1,13 +1,7 @@
-import styled from "styled-components";
 import LocalLoginContainer from "./LocalLoginContainer";
 import SocialLoginContainer from "./SocialLoginContainer";
 import AuthMenu from "./AuthMenu";
-
-const LoginFormWrapper = styled.div`
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-`;
+import { LoginFormWrapper } from "./styled";
 
 function LoginFormContainer() {
   return (
