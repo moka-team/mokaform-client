@@ -202,10 +202,9 @@ function NavBar() {
 
     multiQuestionList.length === multiQuestionValidate.length
       ? axios
-          .post("/api/v1/survey?userId=" + user.id, surveyInfo, {
+          .post("/api/v1/survey" + surveyInfo, {
             headers: {
               accessToken: getAccessToken(),
-              refreshToken: getRefreshToken(),
             },
           })
           .then(function (response) {

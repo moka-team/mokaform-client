@@ -94,7 +94,6 @@ export default function SurveyDetail({ sharingKey }) {
   if (isDeleted) return <DeleteSurvey></DeleteSurvey>;
   if (loading) return <Loading></Loading>;
 
-  console.log(survey.data.multiQuestions[0].multiQuestionType);
   return (
     <Container>
       <NavBar></NavBar>
