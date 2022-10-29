@@ -37,5 +37,7 @@ export const getAccessToken = () => {
 };
 
 export const getRefreshToken = () => {
-  return cookies.get("refresh_token");
+  return cookies.get("refresh_token", {
+    httpOnly: true,
+  });
 };
