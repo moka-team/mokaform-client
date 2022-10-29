@@ -1,8 +1,6 @@
 import { React, useState } from "react";
 import { useSetRecoilState, useRecoilState } from "recoil";
 import { surveyListState, createdQuestionCount } from "../../../../atoms";
-import MenuItem from "@mui/material/MenuItem";
-import Menu from "@mui/material/Menu";
 import { AddCircle } from "@mui/icons-material";
 import { Button } from "@mui/material";
 import styled from "styled-components";
@@ -17,14 +15,14 @@ export default function SurveyItemCreator() {
   const [questionCount, setQuestionCount] =
     useRecoilState(createdQuestionCount);
   const [question, setQuestion] = useState("");
-  const [type, setType] = useState("MULTIPLE_CHOICE");
   const setSurveyList = useSetRecoilState(surveyListState);
 
   const onClickHandler = (event, index) => {
+    console.log(event);
     addItem(index);
   };
 
-  const addItem = (optionIndex) => {
+  const addItem = () => {
     setSurveyList((oldSurveyList) => [
       ...oldSurveyList,
       {

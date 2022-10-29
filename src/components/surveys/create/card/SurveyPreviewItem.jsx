@@ -5,7 +5,6 @@ import {
   QuestionWrapper,
   QuestionOption,
   QuestionText,
-  OptionWrapper,
   QuestionContentWrapper,
 } from "./styled";
 

@@ -14,7 +14,6 @@ import {
   surveyStartDate,
   surveyCategory,
   surveyImage,
-  createdQuestionCount,
   isStartDateValidate,
   isEndDateValidate,
 } from "../../../../atoms";
