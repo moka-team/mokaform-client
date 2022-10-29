@@ -1,15 +1,15 @@
-import { React, useState } from "react";
+import { React } from "react";
 import { Create, Title, Summary } from "../common/styled";
 import SurveyItemCreator from "./SurveyItemCreator";
 import { surveyTitle, surveySummary, surveyListState } from "../../../atoms";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import SurveyCreateItem from "./SurveyCreateItem";
 
 export default function CreateSection() {
   const surveyList = useRecoilValue(surveyListState);
 
-  const [title, setTitle] = useRecoilState(surveyTitle);
-  const [summary, setSummary] = useRecoilState(surveySummary);
+  const setTitle = useSetRecoilState(surveyTitle);
+  const setSummary = useSetRecoilState(surveySummary);
 
   const titleOnChange = (event) => {
     setTitle(event.target.value);

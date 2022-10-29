@@ -1,14 +1,11 @@
 import { Button } from "@mui/material";
 import React, { useState } from "react";
-import { useRecoilState } from "recoil";
-import styled from "styled-components";
+import { useSetRecoilState } from "recoil";
 import { detailMCQuestionState } from "../../../atoms";
 
 export default function DetailMCQuestionCreator({ id }) {
   const [detailQuestion, setDetailQuestion] = useState("");
-  const [detailQuestionList, setDetailQuestionList] = useRecoilState(
-    detailMCQuestionState
-  );
+  const setDetailQuestionList = useSetRecoilState(detailMCQuestionState);
 
   const addDetailItem = () => {
     setDetailQuestionList((oldDetailQuestionList) => [
@@ -17,7 +14,7 @@ export default function DetailMCQuestionCreator({ id }) {
         questionIndex: id,
         index: getId(),
         content: detailQuestion,
-        type:"GENERAL"
+        type: "GENERAL",
       },
     ]);
     setDetailQuestion("");
