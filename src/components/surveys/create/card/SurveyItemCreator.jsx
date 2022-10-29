@@ -18,7 +18,6 @@ export default function SurveyItemCreator() {
   const setSurveyList = useSetRecoilState(surveyListState);
 
   const onClickHandler = (event, index) => {
-    console.log(event);
     addItem(index);
   };
 

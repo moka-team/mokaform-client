@@ -45,7 +45,6 @@ export default function InquireMultipleChoiceQuestionItem({
         },
       })
       .then(function (response) {
-        console.log(response.data.data.multipleChoiceAnswers);
         setMultiChoiceAnswer(response.data.data.multipleChoiceAnswers);
         setAnswer(
           response.data.data.multipleChoiceAnswers.filter(

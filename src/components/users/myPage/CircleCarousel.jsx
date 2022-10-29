@@ -25,7 +25,6 @@ function CircleCarousel() {
   const [ishover8, setIshover8] = useState(false);
   const user = useRecoilValue(userState);
 
-  console.log("카테고리" + user.categories);
   return (
     <Container>
       <Card

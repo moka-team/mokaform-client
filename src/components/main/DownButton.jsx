@@ -48,7 +48,6 @@ export default function DownButton() {
       },
     });
     setCount((count) => count + 1);
-    console.log(response.data.data.content);
     setServeys([...surveys, ...response.data.data.content]);
   };
   const fetchNewFamousSurvey = async () => {

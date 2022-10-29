@@ -155,34 +155,6 @@ function NavBar() {
   };
 
   const createSurvey = () => {
-    console.log(
-      "설문 정보" +
-        "\n" +
-        "title: " +
-        title +
-        "\n" +
-        "summary: " +
-        summary +
-        "\n" +
-        "isAnonymous: " +
-        isAnonymous +
-        "\n" +
-        "isPublic: " +
-        isPublic +
-        "\n" +
-        "시작 날짜: " +
-        startDate +
-        "\n" +
-        "종료 날짜: " +
-        endDate +
-        "\n" +
-        "카테고리 : " +
-        category +
-        "\n" +
-        "이미지 : " +
-        surveyImg
-    );
-
     const surveyInfo = {
       title: title,
       summary: summary,
@@ -195,16 +167,6 @@ function NavBar() {
       multiQuestions: detailList,
       // surveyImage: surveyImg,
     };
-
-    console.log(category);
-    console.log(multiQuestionList);
-    console.log(multiQuestionValidate);
-
-    console.log("===================================");
-    console.log(JSON.stringify(surveyInfo));
-    console.log("===================================");
-
-    console.log(getAccessToken());
 
     multiQuestionList.length === multiQuestionValidate.length
       ? axios

@@ -12,7 +12,6 @@ const options = {
 
 export default function WordCloud({ item }) {
   const countNum = (data) => {
-    console.log(data);
     const obj = {};
 
     const json = [];

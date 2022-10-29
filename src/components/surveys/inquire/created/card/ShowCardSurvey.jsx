@@ -8,7 +8,6 @@ import {
 import CardQuestionItemDisabled from "./CardQuestionItemDisabled";
 
 export default function ShowCardSurvey({ survey }) {
-  console.log(survey);
   return (
     <Wrapper>
       <TitleText>{survey.title}</TitleText>
