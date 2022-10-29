@@ -1,10 +1,10 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Mypage from "./pages/users/mypage/index";
+import Mypage from "./pages/users/myPage/index";
 import Main from "./pages/index";
 
 import SignUp from "./pages/users/signUp";
-import SignIn from "./pages/users/signIn";
+import SignIn from "./pages/users/SignIn";
 import CreateSurvey from "./pages/surveys/create/general/index";
 import routes from "./routes";
 import { createGlobalStyle } from "styled-components";
