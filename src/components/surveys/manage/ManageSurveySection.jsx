@@ -169,7 +169,12 @@ export default function ManageSurveySection({ userId }) {
   };
   const handleOnClick = async (surveyId) => {
     await axios
-      .get(`/api/v1/users/my/surveys/${surveyId}/stats`)
+      .get(`/api/v1/users/my/surveys/${surveyId}/stats`, {
+        headers: {
+          accessToken: getAccessToken(),
+          refreshToken: getRefreshToken(),
+        },
+      })
       .then((res) => navigate(routes.surveyStats, { state: res.data.data }))
       .catch(function (error) {
         Sentry.captureException(error);
