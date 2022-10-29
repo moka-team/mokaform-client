@@ -196,6 +196,7 @@ function NavBar() {
       // surveyImage: surveyImg,
     };
 
+    console.log(category);
     console.log(multiQuestionList);
     console.log(multiQuestionValidate);
 
@@ -203,9 +204,11 @@ function NavBar() {
     console.log(JSON.stringify(surveyInfo));
     console.log("===================================");
 
+    console.log(getAccessToken());
+
     multiQuestionList.length === multiQuestionValidate.length
       ? axios
-          .post("/api/v1/survey" + surveyInfo, {
+          .post("/api/v1/survey", surveyInfo, {
             headers: {
               accessToken: getAccessToken(),
             },
@@ -250,7 +253,7 @@ function NavBar() {
   };
 
   const handleSubmit = () => {
-    startDateValidate && endDateValidate
+    startDateValidate && endDateValidate && category.length > 0
       ? createSurvey()
       : handleClickDialogOpen();
   };
@@ -374,7 +377,10 @@ function NavBar() {
         <DialogTitle id="invalidate-dialog-title">알림</DialogTitle>
         <DialogContent>
           <DialogContentText id="invalidate-dialog-description">
-            설문 시작 날짜와 종료 날짜를 확인해주세요!
+            설문 세부 설정을 확인해주세요.
+          </DialogContentText>
+          <DialogContentText id="invalidate-dialog-description">
+            설문 시작, 종료 날짜 및 카테고리 지정은 필수입니다!
           </DialogContentText>
         </DialogContent>
         <DialogActions>

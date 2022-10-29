@@ -31,6 +31,27 @@ function LocalLoginContainer() {
     setInputs((values) => ({ ...values, [name]: value }));
   };
 
+  const fetchUser = (accessToken) => {
+    axios
+      .get("/api/v1/users/my", {
+        headers: {
+          accessToken: accessToken,
+        },
+      })
+      .then(function (response) {
+        console.log(response);
+        setUser(response.data.data);
+        window.alert("로그인이 완료되었습니다.");
+        navigate("/");
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
+      .finally(function () {
+        // always executed
+      });
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -43,11 +64,7 @@ function LocalLoginContainer() {
         if (response.data.message.includes("성공")) {
           // 로그인 성공 시 로컬 스토리지에 저장
           localStorage.clear();
-          // 로그인 성공 시 유저 데이터 저장
-          setUser(response.data.data);
-
-          window.alert("로그인이 완료되었습니다.");
-          navigate("/");
+          fetchUser(response.data.data.accessToken);
         } else if (response.data.code === "U001") {
           alert("이메일 또는 비밀번호가 일치하지 않습니다.");
         } else {
