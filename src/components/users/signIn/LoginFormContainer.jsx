@@ -7,7 +7,6 @@ function LoginFormContainer() {
   return (
     <LoginFormWrapper>
       <LocalLoginContainer />
-      <SocialLoginContainer />
       <AuthMenu />
     </LoginFormWrapper>
   );
