@@ -31,7 +31,7 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import routes from "../../../routes";
 import { TContainer } from "./styled";
 import * as Sentry from "@sentry/react";
@@ -136,6 +136,7 @@ export default function ManageSurveySection({ userId }) {
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const [requireRerender, setRequireRerender] = useState(true);
+  const navigate = useNavigate();
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -161,6 +162,11 @@ export default function ManageSurveySection({ userId }) {
 
   const handleDialogClose = () => {
     setDialogOpen(false);
+  };
+  const handleOnClick = async (surveyId) => {
+    await axios
+      .get(`/api/v1/users/my/surveys/${surveyId}/stats`)
+      .then((res) => navigate(routes.surveyStats, { state: res.data.data }));
   };
 
   const handleDeleteItem = () => {
@@ -274,10 +280,8 @@ export default function ManageSurveySection({ userId }) {
                       {data.isPublic ? <div>가능</div> : <div>불가능</div>}
                     </StyledTableCell>
                     <StyledTableCell align="center">
-                      <IconButton>
-                        <Link to={routes.surveyStats}>
-                          <EqualizerIcon sx={{ color: "#202632" }} />
-                        </Link>
+                      <IconButton onClick={() => handleOnClick(data.surveyId)}>
+                        <EqualizerIcon sx={{ color: "#202632" }} />
                       </IconButton>
                     </StyledTableCell>
                     <StyledTableCell align="center">

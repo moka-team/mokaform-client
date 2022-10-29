@@ -25,7 +25,6 @@ const Title = styled.div`
 //index에 따라서 Sorting 하기
 
 export default function ByItem({ result }) {
-  console.log(result);
   return (
     <Container>
       <Wrapper>
@@ -56,7 +55,6 @@ export default function ByItem({ result }) {
           </>
         ))}
       </Wrapper>
-
     </Container>
   );
 }
