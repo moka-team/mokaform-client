@@ -6,7 +6,7 @@ import {
   QuestionOption,
   QuestionText,
   Answer,
-} from "./styled";
+} from "../common/styled";
 
 export default function SurveyPreviewItem({ item }) {
   const detailQuestionList = useRecoilValue(detailMCQuestionState);

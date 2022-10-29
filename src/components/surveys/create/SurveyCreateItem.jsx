@@ -8,7 +8,7 @@ import {
 import DetailMCQuestionCreator from "./DetailMCQuestionCreator";
 import DetailSurveyItem from "./DetailSurveyItem";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { Question, MInput, Num } from "./styled";
+import { Question, MInput, Num } from "../common/styled";
 
 export default function SurveyItem({ item }) {
   const [questionCount, setQuestionCount] =

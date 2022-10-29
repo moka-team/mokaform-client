@@ -1,5 +1,5 @@
 import React from "react";
-import { Preview, TitleText, SummaryText } from "./styled";
+import { Preview, TitleText, SummaryText } from "../common/styled";
 import { useRecoilValue, useResetRecoilState } from "recoil";
 import { surveyTitle, surveySummary, surveyListState } from "../../../atoms";
 
