@@ -1,11 +1,8 @@
-import React, { useState, useRef } from "react";
-import { styled, alpha } from "@mui/material/styles";
+import React, { useRef } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import InputBase from "@mui/material/InputBase";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
@@ -22,15 +19,10 @@ const appBarStyle = {
   boxShadow: "none", // 그림자 없애기
 };
 
-const onRefInput = (c) => {
-  this.input = c;
-};
-
 export default function Header() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const [surveyAnchorEl, setSurveyAnchorEl] = React.useState(null);
-  const [logined, setLogined] = useState(false);
   const [user, setUser] = useRecoilState(userState);
 
   const inputEl = useRef(null);

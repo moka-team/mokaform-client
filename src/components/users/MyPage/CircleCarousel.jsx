@@ -11,7 +11,6 @@ import {
   faPersonCircleQuestion,
 } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
-import { display } from "@mui/system";
 
 // 임시 유저 관심사 데이터
 const preferenceList = [
