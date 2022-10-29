@@ -15,6 +15,8 @@ const Container = styled.div`
   flex-direction: column;
   padding-top: 100px;
   color: #202632;
+  min-height: 89vh;
+  background-color: #f5f6fa;
 `;
 const Title = styled.div`
   color: #0064ff;
