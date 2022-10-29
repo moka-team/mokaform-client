@@ -1,13 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { QuestionWrapper, QuestionText, Answer } from "../participate/styled";
-import { userState } from "../../../authentication/userState";
-import Error from "../participate/Error";
-import Loading from "../participate/Loading";
+import {
+  QuestionWrapper,
+  QuestionText,
+  Answer,
+} from "../../../participate/styled";
+import { userState } from "../../../../../authentication/userState";
+import Error from "../../../participate/Error";
+import Loading from "../../../participate/Loading";
 import axios from "axios";
 import { useRecoilValue } from "recoil";
-import { surveyForSubmitted } from "../../../atoms";
+import { surveyForSubmitted } from "../../../../../atoms";
 import * as Sentry from "@sentry/react";
-import { getAccessToken, getRefreshToken } from "../../../authentication/auth";
+import {
+  getAccessToken,
+  getRefreshToken,
+} from "../../../../../authentication/auth";
 
 export default function InquireEssayQuestionItem({ item, sharingKey }) {
   const user = useRecoilValue(userState);

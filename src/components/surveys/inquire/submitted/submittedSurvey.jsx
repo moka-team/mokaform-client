@@ -1,25 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { userState } from "../../../authentication/userState";
+import { userState } from "../../../../authentication/userState";
 import axios from "axios";
 import {
   Container,
   SummaryText,
   Survey,
   TitleText,
-} from "../participate/styled";
-import Error from "../participate/Error";
-import Loading from "../participate/Loading";
-import { SNavBar } from "../participate/styled";
-import InquireEssayQuestionItem from "./EssayQuestionItem";
-import InquireMultipleChoiceQuestionItem from "./MultipleChoiceQuestionItem";
-import InquireOXQuestionItem from "./OXQuestionItem";
-import DeleteSurvey from "../participate/DeleteSurvey";
-import { surveyForSubmitted } from "../../../atoms";
+} from "../../participate/styled";
+import Error from "../../participate/Error";
+import Loading from "../../participate/Loading";
+import { SNavBar } from "../../participate/styled";
+import InquireEssayQuestionItem from "./general/EssayQuestionItem";
+import InquireMultipleChoiceQuestionItem from "./general/MultipleChoiceQuestionItem";
+import InquireOXQuestionItem from "./general/OXQuestionItem";
+import DeleteSurvey from "../../participate/DeleteSurvey";
+import { surveyForSubmitted } from "../../../../atoms";
 import * as Sentry from "@sentry/react";
-import { getAccessToken, getRefreshToken } from "../../../authentication/auth";
-import CardParticipate from "../participate/CardParticipate";
-import CardSubmitted from "./CardSubmitted";
+import {
+  getAccessToken,
+  getRefreshToken,
+} from "../../../../authentication/auth";
+import CardParticipate from "../../participate/CardParticipate";
+import CardSubmitted from "./card/CardSubmitted";
 
 export default function SubmittedSurvey({ sharingKey }) {
   const user = useRecoilValue(userState);
