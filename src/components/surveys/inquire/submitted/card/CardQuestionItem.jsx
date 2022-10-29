@@ -93,7 +93,7 @@ export default function CardQuestionItem({ item, multiquestion, sharingKey }) {
               },
             })
             .then((res) => {
-              updateAccessToken(res.data.data.accessToken);
+              updateAccessToken(res.data.data);
             });
         }
       })

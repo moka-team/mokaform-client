@@ -84,8 +84,6 @@ export default function SurveyDetail({ sharingKey }) {
         setLoading(false);
       })
       .catch(function (error) {
-        console.log(error.response.data.code);
-        console.log(error.message);
         setErrorMessage(error.message);
         setError(true);
         Sentry.captureException(error);
@@ -97,8 +95,7 @@ export default function SurveyDetail({ sharingKey }) {
               refreshToken: getRefreshToken(),
             })
             .then((res) => {
-              console.log(res);
-              updateAccessToken(res.data.data.accessToken);
+              updateAccessToken(res.data.data);
             });
         }
       })

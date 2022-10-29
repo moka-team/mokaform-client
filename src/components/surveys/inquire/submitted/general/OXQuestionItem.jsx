@@ -66,7 +66,7 @@ export default function InquireOXQuestionItem({ item, sharingKey }) {
               },
             })
             .then((res) => {
-              updateAccessToken(res.data.data.accessToken);
+              updateAccessToken(res.data.data);
             });
         }
       })

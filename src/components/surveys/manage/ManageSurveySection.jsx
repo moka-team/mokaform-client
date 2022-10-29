@@ -183,7 +183,7 @@ export default function ManageSurveySection({ userId }) {
               },
             })
             .then((res) => {
-              updateAccessToken(res.data.data.accessToken);
+              updateAccessToken(res.data.data);
             })
             .catch(function (error) {
               Sentry.captureException(error);
@@ -197,7 +197,7 @@ export default function ManageSurveySection({ userId }) {
                     },
                   })
                   .then((res) => {
-                    updateAccessToken(res.data.data.accessToken);
+                    updateAccessToken(res.data.data);
                   });
               }
             });
@@ -231,7 +231,7 @@ export default function ManageSurveySection({ userId }) {
               },
             })
             .then((res) => {
-              updateAccessToken(res.data.data.accessToken);
+              updateAccessToken(res.data.data);
             })
             .catch(function (error) {
               Sentry.captureException(error);
@@ -245,7 +245,7 @@ export default function ManageSurveySection({ userId }) {
                     },
                   })
                   .then((res) => {
-                    updateAccessToken(res.data.data.accessToken);
+                    updateAccessToken(res.data.data);
                   });
               }
             });
@@ -291,7 +291,7 @@ export default function ManageSurveySection({ userId }) {
               },
             })
             .then((res) => {
-              updateAccessToken(res.data.data.accessToken);
+              updateAccessToken(res.data.data);
             });
         }
       })

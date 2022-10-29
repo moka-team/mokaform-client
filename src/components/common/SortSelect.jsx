@@ -187,7 +187,7 @@ export default function SortSelect({ page }) {
               },
             })
             .then((res) => {
-              updateAccessToken(res.data.data.accessToken);
+              updateAccessToken(res.data.data);
             });
         }
       });
@@ -218,7 +218,7 @@ export default function SortSelect({ page }) {
               },
             })
             .then((res) => {
-              updateAccessToken(res.data.data.accessToken);
+              updateAccessToken(res.data.data);
             });
         }
       });

@@ -94,7 +94,7 @@ export default function SignEssentialForm({}) {
                 },
               })
               .then((res) => {
-                updateAccessToken(res.data.data.accessToken);
+                updateAccessToken(res.data.data);
               });
           }
         });
@@ -150,7 +150,7 @@ export default function SignEssentialForm({}) {
                   },
                 })
                 .then((res) => {
-                  updateAccessToken(res.data.data.accessToken);
+                  updateAccessToken(res.data.data);
                 });
             }
           });

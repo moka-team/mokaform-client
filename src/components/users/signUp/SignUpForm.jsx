@@ -108,7 +108,7 @@ export default function SignUpForm() {
               },
             })
             .then((res) => {
-              updateAccessToken(res.data.data.accessToken);
+              updateAccessToken(res.data.data);
             })
             .catch(function (error) {
               Sentry.captureException(error);
@@ -122,7 +122,7 @@ export default function SignUpForm() {
                     },
                   })
                   .then((res) => {
-                    updateAccessToken(res.data.data.accessToken);
+                    updateAccessToken(res.data.data);
                   });
               }
             });

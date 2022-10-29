@@ -77,7 +77,7 @@ export default function SubmittedSurvey({ sharingKey }) {
               },
             })
             .then((res) => {
-              updateAccessToken(res.data.data.accessToken);
+              updateAccessToken(res.data.data);
             });
         }
       })

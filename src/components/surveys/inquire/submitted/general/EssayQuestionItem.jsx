@@ -68,7 +68,7 @@ export default function InquireEssayQuestionItem({ item, sharingKey }) {
               },
             })
             .then((res) => {
-              updateAccessToken(res.data.data.accessToken);
+              updateAccessToken(res.data.data);
             });
         }
       })

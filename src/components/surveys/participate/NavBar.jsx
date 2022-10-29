@@ -125,7 +125,7 @@ export default function NavBar() {
               },
             })
             .then((res) => {
-              updateAccessToken(res.data.data.accessToken);
+              updateAccessToken(res.data.data);
             });
         }
         // handleClickFailDialogOpen();
