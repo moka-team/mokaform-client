@@ -3,6 +3,7 @@
   to = "http://210.109.60.220:8080/api/:splat"
   status = 200
   force = true
+  headers = {X-From = "Netlify"}
 
 [[redirects]]
   from = "/*"
