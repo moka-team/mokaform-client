@@ -35,6 +35,7 @@ import {
 import {
   getAccessToken,
   getRefreshToken,
+  updateAccessToken,
 } from "../../../../authentication/auth";
 import { userState } from "../../../../authentication/userState";
 import { SaveBtn, SNavBar } from "../../common/styled";
@@ -220,6 +221,18 @@ function NavBar() {
             console.log(error.message);
             handleClickFailDialogOpen();
             Sentry.captureException(error);
+            if (error.code === "C005") {
+              axios
+                .post("/api/v1/users/token/reissue", {
+                  headers: {
+                    accessToken: getAccessToken(),
+                    refreshToken: getRefreshToken(),
+                  },
+                })
+                .then((res) => {
+                  updateAccessToken(res.data.data.accessToken);
+                });
+            }
           })
           .finally(function () {
             // always executed

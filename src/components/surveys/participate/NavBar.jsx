@@ -19,7 +19,11 @@ import {
 import { userState } from "../../../authentication/userState";
 import { SaveBtn, SNavBar } from "./styled";
 import * as Sentry from "@sentry/react";
-import { getAccessToken, getRefreshToken } from "../../../authentication/auth";
+import {
+  getAccessToken,
+  getRefreshToken,
+  updateAccessToken,
+} from "../../../authentication/auth";
 export default function NavBar() {
   const user = useRecoilValue(userState);
 
@@ -111,7 +115,19 @@ export default function NavBar() {
         console.log(error.message);
         resetRecoilValue();
         Sentry.captureException(error);
-
+        // Access Token 재발행이 필요한 경우
+        if (error.code === "C005") {
+          axios
+            .post("/api/v1/users/token/reissue", {
+              headers: {
+                accessToken: getAccessToken(),
+                refreshToken: getRefreshToken(),
+              },
+            })
+            .then((res) => {
+              updateAccessToken(res.data.data.accessToken);
+            });
+        }
         // handleClickFailDialogOpen();
       })
       .finally(function () {

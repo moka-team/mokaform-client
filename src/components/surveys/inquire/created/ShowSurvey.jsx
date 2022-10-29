@@ -6,6 +6,7 @@ import { surveyForCreated } from "../../../../atoms";
 import {
   getAccessToken,
   getRefreshToken,
+  updateAccessToken,
 } from "../../../../authentication/auth";
 import Error from "../../participate/Error";
 import Loading from "../../participate/Loading";
@@ -57,6 +58,19 @@ export default function ShowSurvey({ sharingKey }) {
         setErrorMessage(error.message);
         setError(true);
         Sentry.captureException(error);
+        // Access Token 재발행이 필요한 경우
+        if (error.code === "C005") {
+          axios
+            .post("/api/v1/users/token/reissue", {
+              headers: {
+                accessToken: getAccessToken(),
+                refreshToken: getRefreshToken(),
+              },
+            })
+            .then((res) => {
+              updateAccessToken(res.data.data.accessToken);
+            });
+        }
       })
       .finally(function () {
         // always executed

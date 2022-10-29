@@ -21,6 +21,7 @@ export const setTokens = (refreshToken, accessToken) => {
 };
 
 export const updateAccessToken = (newAccessToken) => {
+  cookies.remove("access_token");
   setAccessToken(newAccessToken);
 };
 
@@ -36,5 +37,7 @@ export const getAccessToken = () => {
 };
 
 export const getRefreshToken = () => {
-  return cookies.get("refresh_token");
+  return cookies.get("refresh_token", {
+    httpOnly: true,
+  });
 };

@@ -12,7 +12,11 @@ import {
   surveyForSubmit,
   surveyQuestionCount,
 } from "../../../atoms";
-import { getAccessToken, getRefreshToken } from "../../../authentication/auth";
+import {
+  getAccessToken,
+  getRefreshToken,
+  updateAccessToken,
+} from "../../../authentication/auth";
 import CardParticipate from "./card/CardParticipate";
 import DeleteSurvey from "./DeleteSurvey";
 import Error from "./Error";
@@ -80,10 +84,23 @@ export default function SurveyDetail({ sharingKey }) {
         setLoading(false);
       })
       .catch(function (error) {
+        console.log(error.response.data.code);
         console.log(error.message);
         setErrorMessage(error.message);
         setError(true);
         Sentry.captureException(error);
+        // Access Token 재발행이 필요한 경우
+        if (error.response.data.code === "C005") {
+          axios
+            .post("/api/v1/users/token/reissue", {
+              accessToken: getAccessToken(),
+              refreshToken: getRefreshToken(),
+            })
+            .then((res) => {
+              console.log(res);
+              updateAccessToken(res.data.data.accessToken);
+            });
+        }
       })
       .finally(function () {
         // always executed
