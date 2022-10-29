@@ -51,7 +51,11 @@ function LocalLoginContainer() {
         } else {
           window.alert("로그인 에러 발생");
         }
-        setTokens(response.refreshToken, response.accessToken);
+        console.log(response);
+        setTokens(
+          response.data.data.refreshToken,
+          response.data.data.accessToken
+        );
       })
       .catch(function (error) {
         window.alert("이메일 또는 비밀번호가 일치하지 않습니다.");
