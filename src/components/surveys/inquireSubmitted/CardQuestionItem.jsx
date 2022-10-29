@@ -1,101 +1,95 @@
 import React, { useState, useEffect } from "react";
-import {
-  QuestionWrapper,
-  QuestionOption,
-  QuestionText,
-  QuestionContentWrapper,
-} from "../create-card/styled";
-import {
-  MultipleChoiceAnswerListState,
-  multiChoiceAnswerValidateCount,
-  surveyForSubmitted,
-} from "../../../atoms";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { QuestionWrapper2, QuestionOption2, QuestionText2 } from "./styled";
+import { userState } from "../../../authentication/userState";
+import Error from "../participate/Error";
+import Loading from "../participate/Loading";
+import axios from "axios";
+import { useRecoilValue } from "recoil";
+import { surveyForSubmitted } from "../../../atoms";
+import * as Sentry from "@sentry/react";
+import { getAccessToken, getRefreshToken } from "../../../authentication/auth";
 import styled from "styled-components";
 
 const QWrapper = styled.div`
   width: 50%;
-  margin-top: 25px;
-  margin-bottom: 15px;
-  border-radius: 10px;
   padding: 20px 35px 20px 35px;
   align-items: center;
   justify-content: center;
   text-align: center;
 `;
+const QuestionContentWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+`;
+const QuestionOption = styled.button`
+  width: 25%;
+  height: 300px;
+  margin-top: 50px;
+  border-radius: 10px;
+  margin-left: 15px;
+  margin-right: 15px;
+  background-color: ${(props) => props.bcolor};
+  border: 0;
+  color: ${(props) => props.color};
+  font-weight: ${(props) => props.weight};
+`;
 
-export default function CardQuestionItem({ item, multiquestion }) {
-  const [multiChoiceAnswerList, setMultiChoiceAnswerList] = useRecoilState(
-    MultipleChoiceAnswerListState
-  );
-  const [multiChoiceAnswer, setMultiChoiceAnswer] = useState({
-    questionId: item.questionId,
-    multiQuestionId: -1,
-  });
-  const [multiChoiceValidateCount, setMultiChocieValidateCount] =
-    useRecoilState(multiChoiceAnswerValidateCount);
-  const index = multiChoiceAnswerList.findIndex(
-    (listItem) => listItem.questionId === multiChoiceAnswer.questionId
-  );
-
+export default function CardQuestionItem({ item, multiquestion, sharingKey }) {
+  const user = useRecoilValue(userState);
   const survey = useRecoilValue(surveyForSubmitted);
-  const qIndex = survey.questions.findIndex(
+  const index = survey.questions.findIndex(
     (listItem) => listItem.questionId === item.questionId
   );
 
-  const [currentClick, setCurrentClick] = useState(null);
-  const [prevClick, setPrevClick] = useState(null);
+  const [multiChoiceAnswer, setMultiChoiceAnswer] = useState([]);
+  const [answer, setAnswer] = useState(-1);
+
+  const [loading, setLoading] = useState(true);
+
+  const [error, setError] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
-    setMultiChoiceAnswerList((oldMultiChoiceAnswerList) => [
-      ...oldMultiChoiceAnswerList,
-      multiChoiceAnswer,
-    ]);
+    axios
+      .get("/api/v1/users/my/submitted-surveys/" + sharingKey, {
+        params: {
+          userId: user.id,
+        },
+        headers: {
+          accessToken: getAccessToken(),
+          refreshToken: getRefreshToken(),
+        },
+      })
+      .then(function (response) {
+        console.log(response.data.data.multipleChoiceAnswers);
+        setMultiChoiceAnswer(response.data.data.multipleChoiceAnswers);
+        setAnswer(
+          response.data.data.multipleChoiceAnswers.filter(
+            (multiChoiceAnswerItem) =>
+              multiChoiceAnswerItem.questionId === item.questionId
+          )[0].multiQuestionId
+        );
+        setLoading(false);
+      })
+      .catch(function (error) {
+        console.log(error.message);
+        setErrorMessage(error.message);
+        Sentry.captureException(error);
+      })
+      .finally(function () {
+        // always executed
+      });
   }, []);
 
-  const onClickHandler = (event) => {
-    prevClick === null
-      ? setMultiChocieValidateCount(multiChoiceValidateCount + 1)
-      : setMultiChocieValidateCount(multiChoiceValidateCount);
+  if (error) return <Error errorMessage={errorMessage}></Error>;
+  // if (loading) return <Loading></Loading>;
 
-    if (prevClick !== null && prevClick !== event.target.id) {
-      let prev = document.getElementById(prevClick);
-      prev.style.color = "black";
-      prev.style.fontWeight = 400;
-      prev.style.backgroundColor = "#edeef0";
-    }
-
-    setCurrentClick(event.target.id);
-
-    setMultiChoiceAnswer({
-      questionId: item.questionId,
-      multiQuestionId: event.target.id,
-    });
-
-    const newList = replaceItemAtIndex(multiChoiceAnswerList, index, {
-      ...multiChoiceAnswer,
-      multiQuestionId: event.target.id,
-    });
-    setMultiChoiceAnswerList(newList);
-  };
-
-  useEffect(
-    (event) => {
-      if (currentClick !== null) {
-        let current = document.getElementById(currentClick);
-        current.style.color = "white";
-        current.style.fontWeight = 600;
-        current.style.backgroundColor = "#0064ff";
-      }
-
-      setPrevClick(currentClick);
-    },
-    [currentClick]
-  );
   return (
     <QWrapper>
-      <QuestionText color="#0064ff">Q{qIndex + 1}</QuestionText>
-      <QuestionText color="white">{item.title}</QuestionText>
+      <QuestionText2 color="#0064ff">Q{index + 1}</QuestionText2>
+      <QuestionText2 color="white">{item.title}</QuestionText2>
       <QuestionContentWrapper>
         {multiquestion
           .filter(
@@ -104,10 +98,15 @@ export default function CardQuestionItem({ item, multiquestion }) {
           )
           .map((multiQuestion) => (
             <QuestionOption
-              id={multiQuestion.multiQuestionId}
               key={multiQuestion.multiQuestionId}
-              onClick={onClickHandler}
-              value={multiQuestion.multiQuestionContent}
+              bcolor={
+                multiQuestion.multiQuestionId === answer ? "#0064ff" : "#edeef0"
+              }
+              color={
+                multiQuestion.multiQuestionId === answer ? "white" : "black"
+              }
+              weight={multiQuestion.multiQuestionId === answer ? 600 : 400}
+              style={{ pointerEvents: "none" }}
             >
               {multiQuestion.multiQuestionContent}
             </QuestionOption>
@@ -115,7 +114,4 @@ export default function CardQuestionItem({ item, multiquestion }) {
       </QuestionContentWrapper>
     </QWrapper>
   );
-}
-function replaceItemAtIndex(arr, index, newValue) {
-  return [...arr.slice(0, index), newValue, ...arr.slice(index + 1)];
 }

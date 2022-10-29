@@ -77,41 +77,37 @@ export default function SubmittedSurvey({ sharingKey }) {
   return (
     <Container>
       <SNavBar></SNavBar>
-
-      <Survey>
-        <TitleText>{survey.title}</TitleText>
-        <SummaryText>{survey.summary}</SummaryText>
-
-        {/* 카드 형식 보여주기 */}
-        {checkingCard() ? (
-          <CardSubmitted />
-        ) : (
-          <>
-            {survey.questions.map((question) =>
-              question.type === "ESSAY" ? (
-                <InquireEssayQuestionItem
-                  key={question.questionId}
-                  item={question}
-                  sharingKey={sharingKey}
-                ></InquireEssayQuestionItem>
-              ) : question.type === "OX" ? (
-                <InquireOXQuestionItem
-                  key={question.questionId}
-                  item={question}
-                  sharingKey={sharingKey}
-                ></InquireOXQuestionItem>
-              ) : (
-                <InquireMultipleChoiceQuestionItem
-                  key={question.questionId}
-                  item={question}
-                  multiquestion={survey.multiQuestions}
-                  sharingKey={sharingKey}
-                ></InquireMultipleChoiceQuestionItem>
-              )
-            )}
-          </>
-        )}
-      </Survey>
+      {/* 카드 형식 보여주기 */}
+      {checkingCard() ? (
+        <CardSubmitted sharingKey={sharingKey} />
+      ) : (
+        <Survey>
+          <TitleText>{survey.title}</TitleText>
+          <SummaryText>{survey.summary}</SummaryText>
+          {survey.questions.map((question) =>
+            question.type === "ESSAY" ? (
+              <InquireEssayQuestionItem
+                key={question.questionId}
+                item={question}
+                sharingKey={sharingKey}
+              ></InquireEssayQuestionItem>
+            ) : question.type === "OX" ? (
+              <InquireOXQuestionItem
+                key={question.questionId}
+                item={question}
+                sharingKey={sharingKey}
+              ></InquireOXQuestionItem>
+            ) : (
+              <InquireMultipleChoiceQuestionItem
+                key={question.questionId}
+                item={question}
+                multiquestion={survey.multiQuestions}
+                sharingKey={sharingKey}
+              ></InquireMultipleChoiceQuestionItem>
+            )
+          )}
+        </Survey>
+      )}
     </Container>
   );
 }

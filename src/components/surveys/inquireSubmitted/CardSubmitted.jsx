@@ -13,32 +13,37 @@ import styled from "styled-components";
 import CardQuestionItem from "./CardQuestionItem";
 
 const Section = styled.div`
-  height: calc(var(--vh, 1vh) * 100);
+  height: calc(var(--vh, 1vh) * 75);
   background-color: #202632;
-  width: 100%;
-  border-radius: 10px;
-  padding: 20px 35px 20px 25px;
   align-items: center;
   justify-content: center;
+  text-align: center;
+  padding: -5%;
   display: flex;
   flex-direction: column;
 `;
 
-const NextButton = styled.button`
-  width: 415px;
-  height: 50px;
-  margin: 10px;
-  margin-top: 45px;
-  border-radius: 10px;
+const TitleText = styled.div`
+  margin-top: 7%;
+  font-weight: 900;
+  font-size: xx-large;
   border: none;
-  background-color: #286bd0;
   color: white;
-  font-weight: bold;
-  &:hover {
-    background-color: #0064ff;
+  text-align: center;
+  &:focus {
+    outline: none;
   }
-  &:disabled {
-    background-color: gray;
+`;
+
+const SummaryText = styled.div`
+  margin-top: 10px;
+  font-weight: 500;
+  font-size: medium;
+  border: none;
+  color: white;
+  text-align: center;
+  &:focus {
+    outline: none;
   }
 `;
 
@@ -51,7 +56,7 @@ const Wrapper = styled.div`
   background-color: #202632;
 `;
 
-export default function CardSubmitted() {
+export default function CardSubmitted({ sharingKey }) {
   const cardRef = useRef([]);
   const [survey, setSurvey] = useRecoilState(surveyForSubmitted);
   const [successDialogOpen, setSuccessDialogOpen] = useState(true);
@@ -59,23 +64,20 @@ export default function CardSubmitted() {
   const onClickHandler = (index) => {
     cardRef.current[index + 1]?.scrollIntoView({ behavior: "smooth" });
   };
-  console.log("이것" + survey.questions);
 
   return (
     <>
       <Wrapper>
-        {survey.questions.map((question, index) => (
-          <Section ref={(el) => (cardRef.current[index] = el)}>
+        <TitleText>{survey.title}</TitleText>
+        <SummaryText>{survey.summary}</SummaryText>
+        {survey.questions.map((question) => (
+          <Section>
             <CardQuestionItem
               key={question.questionId}
               item={question}
               multiquestion={survey.multiQuestions}
+              sharingKey={sharingKey}
             ></CardQuestionItem>
-            {index !== survey.questions.length - 1 && (
-              <NextButton onClick={() => onClickHandler(index)}>
-                다음
-              </NextButton>
-            )}
           </Section>
         ))}
       </Wrapper>
