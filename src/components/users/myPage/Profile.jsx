@@ -7,6 +7,7 @@ import { userState } from "../../../authentication/userState";
 import {
   getAccessToken,
   getRefreshToken,
+  logout,
   updateAccessToken,
 } from "../../../authentication/auth";
 import axios from "axios";
@@ -24,6 +25,7 @@ import {
   UserInput,
 } from "./styled";
 import * as Sentry from "@sentry/react";
+import { setUser } from "@sentry/react";
 
 function Profile() {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -52,6 +54,13 @@ function Profile() {
             })
             .then((res) => {
               updateAccessToken(res.data.data);
+            })
+            .catch(function (error) {
+              alert("refresh token 만료");
+              logout();
+              window.location.replace("/");
+              localStorage.clear();
+              setUser(null);
             });
         }
       });

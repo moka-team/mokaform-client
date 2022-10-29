@@ -11,6 +11,7 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import * as Sentry from "@sentry/react";
+import { setUser } from "@sentry/react";
 import axios from "axios";
 import dayjs from "dayjs";
 import * as React from "react";
@@ -35,6 +36,7 @@ import {
 import {
   getAccessToken,
   getRefreshToken,
+  logout,
   updateAccessToken,
 } from "../../../../authentication/auth";
 import { userState } from "../../../../authentication/userState";
@@ -234,6 +236,13 @@ function NavBar() {
                 })
                 .then((res) => {
                   updateAccessToken(res.data.data);
+                })
+                .catch(function (error) {
+                  alert("refresh token 만료");
+                  logout();
+                  window.location.replace("/");
+                  localStorage.clear();
+                  setUser(null);
                 });
             }
           })

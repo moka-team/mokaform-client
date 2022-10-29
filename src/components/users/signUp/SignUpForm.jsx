@@ -26,8 +26,10 @@ import {
 import {
   getAccessToken,
   getRefreshToken,
+  logout,
   updateAccessToken,
 } from "../../../authentication/auth";
+import { setUser } from "@sentry/react";
 export default function SignUpForm() {
   const signOptionRef = useRef(null);
   const signOptionRef2 = useRef(null);
@@ -111,20 +113,11 @@ export default function SignUpForm() {
               updateAccessToken(res.data.data);
             })
             .catch(function (error) {
-              Sentry.captureException(error);
-              // Access Token 재발행이 필요한 경우
-              if (error.code === "C005") {
-                axios
-                  .post("/api/v1/users/token/reissue", {
-                    headers: {
-                      accessToken: getAccessToken(),
-                      refreshToken: getRefreshToken(),
-                    },
-                  })
-                  .then((res) => {
-                    updateAccessToken(res.data.data);
-                  });
-              }
+              alert("refresh token 만료");
+              logout();
+              window.location.replace("/");
+              localStorage.clear();
+              setUser(null);
             });
         }
       });
