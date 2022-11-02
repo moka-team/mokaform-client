@@ -1,14 +1,15 @@
+import axios from "axios";
 import { Cookies } from "react-cookie";
 
 const cookies = new Cookies();
 export const setRefreshToken = (refreshToken) => {
-  return cookies.set("refresh_token", refreshToken, {
+  cookies.set("refresh_token", refreshToken, {
     sameSite: "strict",
   });
 };
 
 export const setAccessToken = (accessToken) => {
-  return cookies.set("access_token", accessToken, {
+  cookies.set("access_token", accessToken, {
     sameSite: "strict",
   });
 };

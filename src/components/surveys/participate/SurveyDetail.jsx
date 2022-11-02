@@ -75,39 +75,33 @@ export default function SurveyDetail({ sharingKey }) {
         params: {
           sharingKey: sharingKey,
         },
-        headers: {
-          accessToken: getAccessToken(),
-          refreshToken: getRefreshToken(),
-        },
       })
       .then(function (response) {
-        console.log(response);
         setSurvey(response.data);
         setIsDeleted(response.data.data.isDeleted);
         setSurveyQuestionCount(response.data.data.questionCount);
         setLoading(false);
       })
       .catch(function (error) {
-        setErrorMessage(error.message);
-        setError(true);
         Sentry.captureException(error);
         console.log(error);
         // Access Token 재발행이 필요한 경우
         if (error.response.data.code === "C005") {
           axios
-            .post("/api/v1/users/token/reissue", {
-              accessToken: getAccessToken(),
-              refreshToken: getRefreshToken(),
-            })
+            .post("/api/v1/users/token/reissue")
             .then((res) => {
               updateAccessToken(res.data.data);
+              window.location.reload();
             })
-            .catch(function (error) {
-              alert("refresh token 만료");
-              logout();
-              window.location.replace("/");
-              localStorage.clear();
-              setUser(null);
+            .catch(function (err) {
+              if (err.response.data.code === "C009") {
+                alert("토큰 만료! 다시 로그인해주세요! 🥰");
+                logout();
+                window.location.replace("/");
+                localStorage.clear();
+
+                setUser(null);
+              }
             });
         }
       })
