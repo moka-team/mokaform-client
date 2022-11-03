@@ -51,7 +51,6 @@ export default function SurveyDetail({ sharingKey }) {
   );
   const setOXAnswerList = useSetRecoilState(oxAnswerListState);
 
-  const navigate = useNavigate();
   function checkingCard() {
     if (survey.data.questions[0].type === "MULTIPLE_CHOICE") {
       if (survey.data.multiQuestions[0].multiQuestionType === "CARD") {
@@ -85,12 +84,18 @@ export default function SurveyDetail({ sharingKey }) {
       .catch(function (error) {
         Sentry.captureException(error);
         console.log(error);
+
         // Access Token 재발행이 필요한 경우
         if (error.response.data.code === "C005") {
+          delete axios.defaults.headers.common["accessToken"]
           axios
-            .post("/api/v1/users/token/reissue")
+            .post("/api/v1/users/token/reissue",{
+              accessToken:getAccessToken(),
+              refreshToken:"httpsOnly"
+            })
             .then((res) => {
               updateAccessToken(res.data.data);
+              alert("accessToken 갱신!")
               window.location.reload();
             })
             .catch(function (err) {
@@ -99,7 +104,6 @@ export default function SurveyDetail({ sharingKey }) {
                 logout();
                 window.location.replace("/");
                 localStorage.clear();
-
                 setUser(null);
               }
             });

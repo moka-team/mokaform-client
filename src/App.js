@@ -18,7 +18,8 @@ import { useRecoilValue } from "recoil";
 import { userState } from "./authentication/userState";
 import CreateCardSurvey from "./pages/surveys/create/card/index";
 import { useEffect } from "react";
-
+import axios from "axios";
+import { getAccessToken, getRefreshToken } from "./authentication/auth";
 const GlobalStyle = createGlobalStyle`
   ${reset}
   font-family: 'Inter', sans-serif;
@@ -37,6 +38,8 @@ function App() {
 
   useEffect(() => {
     setScreenSize();
+    axios.defaults.headers.common["accessToken"] = getAccessToken();
+    axios.defaults.headers.common["refreshToken"] = getRefreshToken();
   });
 
   return (

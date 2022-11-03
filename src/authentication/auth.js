@@ -5,12 +5,15 @@ const cookies = new Cookies();
 export const setRefreshToken = (refreshToken) => {
   cookies.set("refresh_token", refreshToken, {
     sameSite: "strict",
+    httpOnly:true,
+    secure:true
   });
 };
 
 export const setAccessToken = (accessToken) => {
   cookies.set("access_token", accessToken, {
     sameSite: "strict",
+
   });
 };
 
@@ -34,5 +37,8 @@ export const getAccessToken = () => {
 };
 
 export const getRefreshToken = () => {
-  return cookies.get("refresh_token");
+  return cookies.get("refresh_token",{
+    httpOnly:true,
+    secure:true
+  });
 };
