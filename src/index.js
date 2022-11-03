@@ -12,7 +12,7 @@ Sentry.init({
   integrations: [new BrowserTracing()],
   tracesSampleRate: 1.0,
 });
-axios.defaults.headers.common["accessToken"] = getAccessToken();
+axios.defaults.headers.common["accessToken"] = `Bearer ${getAccessToken()}`;
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

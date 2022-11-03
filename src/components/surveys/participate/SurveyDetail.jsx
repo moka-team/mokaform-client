@@ -91,6 +91,7 @@ export default function SurveyDetail({ sharingKey }) {
           axios
             .post("/api/v1/users/token/reissue",{
               accessToken:getAccessToken(),
+              refreshToken:"httpsOnly"
             })
             .then((res) => {
               updateAccessToken(res.data.data);
