@@ -3,7 +3,7 @@ import { useRecoilState } from "recoil";
 import { Title, Row, Rows, PreferenceButton } from "./SignUpCSS";
 import { preferenceState } from "./SignUpState";
 
-export default function PreferenceRow() {
+export default function PreferenceRow({preference, getPreference}) {
   const [preference1Check, preference1CheckState] = useState(false);
   const [preference2Check, preference2CheckState] = useState(false);
   const [preference3Check, preference3CheckState] = useState(false);
@@ -12,15 +12,12 @@ export default function PreferenceRow() {
   const [preference6Check, preference6CheckState] = useState(false);
   const [preference7Check, preference7CheckState] = useState(false);
   const [preference8Check, preference8CheckState] = useState(false);
-
-  const [preference, setPreference] = useRecoilState(preferenceState);
-
   const onCheckHandler1 = (e) => {
     preference1CheckState(!preference1Check);
     if (!preference1Check) {
-      setPreference([...preference, "DAILY_LIFE"]);
+      getPreference([...preference, "DAILY_LIFE"]);
     } else {
-      setPreference(
+      getPreference(
         preference.filter((preference) => preference !== "DAILY_LIFE")
       );
     }
@@ -28,17 +25,17 @@ export default function PreferenceRow() {
   const onCheckHandler2 = (e) => {
     preference2CheckState(!preference2Check);
     if (!preference2Check) {
-      setPreference([...preference, "IT"]);
+      getPreference([...preference, "IT"]);
     } else {
-      setPreference(preference.filter((preference) => preference !== "IT"));
+      getPreference(preference.filter((preference) => preference !== "IT"));
     }
   };
   const onCheckHandler3 = (e) => {
     preference3CheckState(!preference3Check);
     if (!preference3Check) {
-      setPreference([...preference, "PSYCHOLOGY"]);
+      getPreference([...preference, "PSYCHOLOGY"]);
     } else {
-      setPreference(
+      getPreference(
         preference.filter((preference) => preference !== "PSYCHOLOGY")
       );
     }
@@ -47,9 +44,9 @@ export default function PreferenceRow() {
     preference4CheckState(!preference4Check);
 
     if (!preference4Check) {
-      setPreference([...preference, "LEARNING"]);
+      getPreference([...preference, "LEARNING"]);
     } else {
-      setPreference(
+      getPreference(
         preference.filter((preference) => preference !== "LEARNING")
       );
     }
@@ -58,18 +55,18 @@ export default function PreferenceRow() {
     preference5CheckState(!preference5Check);
 
     if (!preference5Check) {
-      setPreference([...preference, "HOBBY"]);
+      getPreference([...preference, "HOBBY"]);
     } else {
-      setPreference(preference.filter((preference) => preference !== "HOBBY"));
+      getPreference(preference.filter((preference) => preference !== "HOBBY"));
     }
   };
   const onCheckHandler6 = (e) => {
     preference6CheckState(!preference6Check);
 
     if (!preference6Check) {
-      setPreference([...preference, "SOCIAL_POLITICS"]);
+      getPreference([...preference, "SOCIAL_POLITICS"]);
     } else {
-      setPreference(
+      getPreference(
         preference.filter((preference) => preference !== "SOCIAL_POLITICS")
       );
     }
@@ -78,9 +75,9 @@ export default function PreferenceRow() {
     preference7CheckState(!preference7Check);
 
     if (!preference7Check) {
-      setPreference([...preference, "PREFERENCE_RESEARCH"]);
+      getPreference([...preference, "PREFERENCE_RESEARCH"]);
     } else {
-      setPreference(
+      getPreference(
         preference.filter((preference) => preference !== "PREFERENCE_RESEARCH")
       );
     }
@@ -89,9 +86,9 @@ export default function PreferenceRow() {
     preference8CheckState(!preference8Check);
 
     if (!preference8Check) {
-      setPreference([...preference, "PET"]);
+      getPreference([...preference, "PET"]);
     } else {
-      setPreference(preference.filter((preference) => preference !== "PET"));
+      getPreference(preference.filter((preference) => preference !== "PET"));
     }
   };
 
