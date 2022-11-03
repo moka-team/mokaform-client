@@ -16,22 +16,11 @@ import axios from "axios";
 import dayjs from "dayjs";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import {
   createdQuestionCount,
-  detailMCQuestionState,
   isEndDateValidate,
   isStartDateValidate,
-  surveyCategory,
-  surveyEndDate,
-  surveyImage,
-  surveyIsAnonymous,
-  surveyIsPublic,
-  surveyListState,
-  surveyStartDate,
-  surveySummary,
-  surveyTitle,
 } from "../../../../atoms";
 import {
   getAccessToken,
@@ -39,12 +28,10 @@ import {
   logout,
   updateAccessToken,
 } from "../../../../authentication/auth";
-import { userState } from "../../../../authentication/userState";
 import { SaveBtn, SNavBar } from "../../common/styled";
 import { useCreateSurveyActions, useCreateSurveyValue } from "../surveyState";
 import { CustomSwitch } from "./CustomizedSwitches";
 import SelectCategory from "./SelectCategory";
-import SurveyImg from "./SurveyImg";
 
 const style = {
   position: "absolute",
@@ -72,29 +59,18 @@ function NavBar() {
     setMultiQuestions,
   } = useCreateSurveyActions();
 
-  const user = useRecoilValue(userState);
   const questionCount = useRecoilValue(createdQuestionCount);
-  // const [surveyList, setSurveyList] = useRecoilState(surveyListState);
-  // const [detailList, setDetailList] = useRecoilState(detailMCQuestionState);
-  // const [category, setCategory] = useRecoilState(surveyCategory);
-  const [surveyImg, setSurveyImage] = useRecoilState(surveyImage);
-  // const [title, setTitle] = useRecoilState(surveyTitle);
-  // const [summary, setSummary] = useRecoilState(surveySummary);
-  // const [isAnonymous, setIsAnonymous] = useRecoilState(surveyIsAnonymous);
-  // const [isPublic, setIsPublic] = useRecoilState(surveyIsPublic);
-  // const [startDate, setStartDate] = useRecoilState(surveyStartDate);
-  // const [endDate, setEndDate] = useRecoilState(surveyEndDate);
   const [startDateValidate, setStartDateValidate] =
     useRecoilState(isStartDateValidate);
   const [endDateValidate, setEndDateValidate] =
     useRecoilState(isEndDateValidate);
+  const [multiQuestionValidate, setMultiQuestionValidate] = useState([]);
+  const [multiQuestionList, setMultiQuestionList] = useState(false);
+
   const [invalidatoinDialogOpen, setInvalidationDialogOpen] = useState(false);
   const [successDialogOpen, setSuccessDialogOpen] = useState(false);
   const [failDialogOpen, setFailDialogOpen] = useState(false);
   const [sharingUrl, setSharingUrl] = useState("");
-  const navigate = useNavigate();
-  const [multiQuestionValidate, setMultiQuestionValidate] = useState([]);
-  const [multiQuestionList, setMultiQuestionList] = useState(false);
 
   useEffect(() => {
     const newArray = survey.multiQuestions.map((multiQuestion) => {
@@ -153,7 +129,7 @@ function NavBar() {
     setIsPublic(event.target.checked);
   };
 
-  const resetRecoilValue = () => {
+  const resetCreateSurveyState = () => {
     setTitle("");
     setSummary("");
     setIsAnonymous(false);
@@ -161,7 +137,6 @@ function NavBar() {
     setStartDate(dayjs(""));
     setEndDate(dayjs(""));
     setCategories([]);
-    setSurveyImage("");
     setQuestions([]);
     setMultiQuestions([]);
     setStartDateValidate(false);
@@ -182,7 +157,6 @@ function NavBar() {
       // surveyImage: surveyImg,
     };
 
-    console.log(surveyInfo);
     multiQuestionList.length === multiQuestionValidate.length
       ? axios
           .post("/api/v1/survey", surveyInfo, {
@@ -196,7 +170,7 @@ function NavBar() {
               "https://mokaform.netlify.app/survey/" +
                 response.data.data.sharingKey
             );
-            resetRecoilValue();
+            resetCreateSurveyState();
             handleClickSuccessDialogOpen();
           })
           .catch(function (error) {
@@ -348,7 +322,7 @@ function NavBar() {
           "& .MuiDialog-container": {
             "& .MuiPaper-root": {
               width: "100%",
-              maxWidth: "500px", // Set your width here
+              maxWidth: "500px",
             },
           },
         }}
@@ -379,7 +353,7 @@ function NavBar() {
           "& .MuiDialog-container": {
             "& .MuiPaper-root": {
               width: "100%",
-              maxWidth: "500px", // Set your width here
+              maxWidth: "500px",
             },
           },
         }}
@@ -412,7 +386,7 @@ function NavBar() {
           "& .MuiDialog-container": {
             "& .MuiPaper-root": {
               width: "100%",
-              maxWidth: "500px", // Set your width here
+              maxWidth: "500px",
             },
           },
         }}

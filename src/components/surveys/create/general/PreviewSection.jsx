@@ -1,14 +1,12 @@
 import React from "react";
 import { useRecoilValue } from "recoil";
-import { surveyListState, surveySummary, surveyTitle } from "../../../../atoms";
+import { surveyListState } from "../../../../atoms";
 import { Preview, SummaryText, TitleText } from "../../common/styled";
 import { useCreateSurveyValue } from "../surveyState";
 
 import SurveyPreviewItem from "./SurveyPreviewItem";
 export default function PreviewSection() {
   const survey = useCreateSurveyValue();
-
-  const surveyList = useRecoilValue(surveyListState);
 
   return (
     <Preview>

@@ -1,18 +1,14 @@
 import React from "react";
-import { useRecoilValue } from "recoil";
-import { detailMCQuestionState, surveyListState } from "../../../../atoms";
 import {
   Answer,
   QuestionOption,
   QuestionText,
   QuestionWrapper,
 } from "../../common/styled";
-import { useCreateSurveyActions, useCreateSurveyValue } from "../surveyState";
+import { useCreateSurveyValue } from "../surveyState";
 
 export default function SurveyPreviewItem({ item }) {
   const survey = useCreateSurveyValue();
-  // const detailQuestionList = useRecoilValue(detailMCQuestionState);
-  // const surveyList = useRecoilValue(surveyListState);
   const index = survey.questions.findIndex((listItem) => listItem === item);
 
   return (

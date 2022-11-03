@@ -1,20 +1,16 @@
 import { Button } from "@mui/material";
 import React, { useState, useEffect } from "react";
-import { useSetRecoilState } from "recoil";
-import { detailMCQuestionState } from "../../../../atoms";
 import { useCreateSurveyActions, useCreateSurveyValue } from "../surveyState";
 
-export default function DetailMCQuestionCreator({ id }) {
+export default function MultipleChoiceQuestionCreator({ id }) {
   const survey = useCreateSurveyValue();
   const { setMultiQuestions } = useCreateSurveyActions();
-
   const [detailQuestion, setDetailQuestion] = useState("");
   const [multiQuestionList, setMultiQuestionList] = useState(
     survey.multiQuestions
   );
-  // const setDetailQuestionList = useSetRecoilState(detailMCQuestionState);
 
-  const addDetailItem = () => {
+  const addMultiQuestionItem = () => {
     setMultiQuestionList([
       ...survey.multiQuestions,
       {
@@ -28,12 +24,11 @@ export default function DetailMCQuestionCreator({ id }) {
   };
 
   useEffect(() => {
-    console.log(multiQuestionList);
     setMultiQuestions(multiQuestionList);
   }, [multiQuestionList]);
 
   return (
-    <Button onClick={addDetailItem} size="small">
+    <Button onClick={addMultiQuestionItem} size="small">
       응답옵션 추가하기
     </Button>
   );

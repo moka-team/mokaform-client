@@ -6,9 +6,7 @@ import MenuItem from "@mui/material/MenuItem";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import Select from "@mui/material/Select";
 import { useTheme } from "@mui/material/styles";
-import * as React from "react";
-import { useRecoilState } from "recoil";
-import { surveyCategory } from "../../../../atoms";
+import React, { useState } from "react";
 import { useCreateSurveyActions, useCreateSurveyValue } from "../surveyState";
 
 const ITEM_HEIGHT = 40;
@@ -55,8 +53,7 @@ function getStyles(item, category, theme) {
 
 export default function SelectCategory() {
   const theme = useTheme();
-  const [category, setCategory] = React.useState([]);
-  // const [categoryState, setCatergoryState] = useRecoilState(surveyCategory);
+  const [category, setCategory] = useState([]);
   const survey = useCreateSurveyValue();
   const { setCategories } = useCreateSurveyActions();
 

@@ -1,19 +1,45 @@
-import { ArrowDownwardOutlined } from "@mui/icons-material";
-import { React, useContext } from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { surveyListState, surveySummary, surveyTitle } from "../../../../atoms";
+import { React, useEffect } from "react";
 import { Create, Summary, Title } from "../../common/styled";
-import {
-  useCounter,
-  useCreateSurveyActions,
-  useCreateSurveyValue,
-} from "../surveyState";
+import { useCreateSurveyActions, useCreateSurveyValue } from "../surveyState";
 import SurveyCreateItem from "./SurveyCreateItem";
 import SurveyItemCreator from "./SurveyItemCreator";
+import { isEndDateValidate, isStartDateValidate } from "../../../../atoms";
+import dayjs from "dayjs";
+import { useSetRecoilState } from "recoil";
 
 export default function CreateSection() {
   const survey = useCreateSurveyValue();
-  const { setTitle, setSummary } = useCreateSurveyActions();
+  const {
+    setTitle,
+    setSummary,
+    setIsAnonymous,
+    setIsPublic,
+    setStartDate,
+    setEndDate,
+    setCategories,
+    setQuestions,
+    setMultiQuestions,
+  } = useCreateSurveyActions();
+  const setStartDateValidate = useSetRecoilState(isStartDateValidate);
+  const setEndDateValidate = useSetRecoilState(isEndDateValidate);
+
+  const resetCreateSurveyState = () => {
+    setTitle("");
+    setSummary("");
+    setIsAnonymous(false);
+    setIsPublic(false);
+    setStartDate(dayjs(""));
+    setEndDate(dayjs(""));
+    setCategories([]);
+    setQuestions([]);
+    setMultiQuestions([]);
+    setStartDateValidate(false);
+    setEndDateValidate(false);
+  };
+
+  useEffect(() => {
+    resetCreateSurveyState();
+  }, []);
 
   const titleOnChange = (event) => {
     setTitle(event.target.value);

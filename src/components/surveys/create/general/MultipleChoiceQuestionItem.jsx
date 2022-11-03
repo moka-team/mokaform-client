@@ -1,16 +1,11 @@
 import DeleteIcon from "@mui/icons-material/Delete";
 import React from "react";
-import { useRecoilState } from "recoil";
-import { detailMCQuestionState } from "../../../../atoms";
 import { DetailContainer, Input } from "../../common/styled";
 import { useCreateSurveyActions, useCreateSurveyValue } from "../surveyState";
 
-export default function DetailSurveyItem({ item }) {
+export default function MultipleChoiceQuestionItem({ item }) {
   const survey = useCreateSurveyValue();
   const { setMultiQuestions } = useCreateSurveyActions();
-  // const [detailQuestionList, setDetailQuestionList] = useRecoilState(
-  // //   detailMCQuestionState
-  // // );
   const index = survey.multiQuestions.findIndex(
     (listItem) => listItem === item
   );
@@ -20,7 +15,7 @@ export default function DetailSurveyItem({ item }) {
     setMultiQuestions(newList);
   };
 
-  const updateDetailItem = ({ target: { value } }) => {
+  const updateItem = ({ target: { value } }) => {
     const newList = replaceItemAtIndex(survey.multiQuestions, index, {
       ...item,
       content: value,
@@ -31,7 +26,7 @@ export default function DetailSurveyItem({ item }) {
   return (
     <DetailContainer>
       <Input
-        onChange={updateDetailItem}
+        onChange={updateItem}
         value={item.content}
         placeholder="응답옵션"
       />

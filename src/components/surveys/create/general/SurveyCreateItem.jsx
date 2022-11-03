@@ -1,15 +1,11 @@
 import DeleteIcon from "@mui/icons-material/Delete";
 import React from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
-import {
-  createdQuestionCount,
-  detailMCQuestionState,
-  surveyListState,
-} from "../../../../atoms";
+import { useRecoilState } from "recoil";
+import { createdQuestionCount } from "../../../../atoms";
 import { MInput, Num, Question } from "../../common/styled";
 import { useCreateSurveyActions, useCreateSurveyValue } from "../surveyState";
-import DetailMCQuestionCreator from "./DetailMCQuestionCreator";
-import DetailSurveyItem from "./DetailSurveyItem";
+import MultipleChoiceQuestionCreator from "./MultipleChoiceQuestionCreator";
+import MultipleChoiceQuestionItem from "./MultipleChoiceQuestionItem";
 
 export default function SurveyItem({ item }) {
   const survey = useCreateSurveyValue();
@@ -17,10 +13,7 @@ export default function SurveyItem({ item }) {
 
   const [questionCount, setQuestionCount] =
     useRecoilState(createdQuestionCount);
-  // const [surveyList, setSurveyList] = useRecoilState(surveyListState);
   const index = survey.questions.findIndex((listItem) => listItem === item);
-
-  // const detailQuestionList = useRecoilValue(detailMCQuestionState);
 
   const deleteItem = () => {
     const newList = removeItemAtIndex(survey.questions, index);
@@ -33,7 +26,6 @@ export default function SurveyItem({ item }) {
       ...item,
       title: value,
     });
-    console.log(newList);
     setQuestions(newList);
   };
 
@@ -89,10 +81,12 @@ export default function SurveyItem({ item }) {
             />
           </Question>
 
-          <DetailMCQuestionCreator id={item.index}></DetailMCQuestionCreator>
+          <MultipleChoiceQuestionCreator
+            id={item.index}
+          ></MultipleChoiceQuestionCreator>
           {survey.multiQuestions.map((detailQuestionItem) =>
             item.index === detailQuestionItem.questionIndex ? (
-              <DetailSurveyItem
+              <MultipleChoiceQuestionItem
                 key={detailQuestionItem.index}
                 item={detailQuestionItem}
               />
