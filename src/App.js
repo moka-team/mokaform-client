@@ -38,8 +38,6 @@ function App() {
 
   useEffect(() => {
     setScreenSize();
-    axios.defaults.headers.common["accessToken"] = getAccessToken();
-    axios.defaults.headers.common["refreshToken"] = getRefreshToken();
   });
 
   return (

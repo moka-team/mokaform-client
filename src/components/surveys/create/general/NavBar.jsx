@@ -12,7 +12,6 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import * as Sentry from "@sentry/react";
 import { setUser } from "@sentry/react";
-import axios from "axios";
 import dayjs from "dayjs";
 import * as React from "react";
 import { useEffect, useState } from "react";
@@ -40,6 +39,7 @@ import {
   updateAccessToken,
 } from "../../../../authentication/auth";
 import { userState } from "../../../../authentication/userState";
+import  apiClient from '../../../../api/client';
 import { SaveBtn, SNavBar } from "../../common/styled";
 import { CustomSwitch } from "./CustomizedSwitches";
 import SelectCategory from "./SelectCategory";
@@ -169,11 +169,8 @@ function NavBar() {
     };
 
     multiQuestionList.length === multiQuestionValidate.length
-      ? axios
+      ? apiClient
           .post("/api/v1/survey", surveyInfo, {
-            headers: {
-              accessToken: getAccessToken(),
-            },
           })
           .then(function (response) {
             console.log(response);
@@ -183,30 +180,6 @@ function NavBar() {
             );
             resetRecoilValue();
             handleClickSuccessDialogOpen();
-          })
-          .catch(function (error) {
-            console.log(error.message);
-            handleClickFailDialogOpen();
-            Sentry.captureException(error);
-            if (error.code === "C005") {
-              axios
-                .post("/api/v1/users/token/reissue", {
-                  headers: {
-                    accessToken: getAccessToken(),
-                    refreshToken: getRefreshToken(),
-                  },
-                })
-                .then((res) => {
-                  updateAccessToken(res.data.data);
-                })
-                .catch(function (error) {
-                  alert("refresh token 만료");
-                  logout();
-                  window.location.replace("/");
-                  localStorage.clear();
-                  setUser(null);
-                });
-            }
           })
           .finally(function () {
             // always executed

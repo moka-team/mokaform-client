@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
-import axios from "axios";
 import { useRecoilState } from "recoil";
 import { surveyList, surveySortState } from "../../atoms";
 import { useEffect } from "react";
@@ -14,6 +13,7 @@ import {
 } from "../../authentication/auth";
 import * as Sentry from "@sentry/react";
 import { setUser } from "@sentry/react";
+import apiClient from '../../api/client';
 
 const StyledDownButton = styled.button`
   background: none;
@@ -36,56 +36,25 @@ export default function DownButton() {
   }, [surveySort]);
 
   const fetchNewRecentSurvey = async () => {
-    const response = await axios.get("/api/v1/survey/list", {
+    const response = await apiClient.get("/api/v1/survey/list", {
       params: {
         page: 1 + count,
         size: 10,
         sort: "createdAt,desc",
-      },
-      headers: {
-        accessToken: getAccessToken(),
-        refreshToken: getRefreshToken(),
-      },
+      }
     });
     setCount((count) => count + 1);
     setServeys([...surveys, ...response.data.data.content]);
   };
   const fetchNewFamousSurvey = async () => {
-    const response = await axios
+    const response = await apiClient
       .get("/api/v1/survey/list", {
         params: {
           page: 1 + count,
           size: 10,
           sort: "surveyeeCount,desc",
-        },
-        headers: {
-          accessToken: getAccessToken(),
-          refreshToken: getRefreshToken(),
-        },
-      })
-      .catch(function (error) {
-        Sentry.captureException(error);
-        // Access Token 재발행이 필요한 경우
-        if (error.code === "C005") {
-          axios
-            .post("/api/v1/users/token/reissue", {
-              headers: {
-                accessToken: getAccessToken(),
-                refreshToken: getRefreshToken(),
-              },
-            })
-            .then((res) => {
-              updateAccessToken(res.data.data.accessToken);
-            })
-            .catch(function (error) {
-              alert("refresh token 만료");
-              logout();
-              window.location.replace("/");
-              localStorage.clear();
-              setUser(null);
-            });
         }
-      });
+      })
     setCount((count) => count + 1);
     setServeys([...surveys, ...response.data.data.content]);
   };

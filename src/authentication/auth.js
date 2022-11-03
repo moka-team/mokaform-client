@@ -1,4 +1,3 @@
-import axios from "axios";
 import { Cookies } from "react-cookie";
 
 const cookies = new Cookies();
@@ -25,7 +24,6 @@ export const setTokens = (refreshToken, accessToken) => {
 export const updateAccessToken = (newAccessToken) => {
   cookies.remove("access_token");
   setAccessToken(newAccessToken);
-  axios.defaults.headers.common["accessToken"] = `Bearer ${getAccessToken()}`;
 };
 
 export const logout = () => {

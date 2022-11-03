@@ -1,7 +1,6 @@
 import { useState } from "react";
 import TextField from "@mui/material/TextField";
 import { styled } from "@mui/material/styles";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { LocalLoginWrapper, LoginInputContainer, LoginButton } from "./styled";
 import { useRecoilState } from "recoil";
@@ -15,6 +14,7 @@ import {
   updateAccessToken,
 } from "../../../authentication/auth";
 import CustomTextField from "../../common/CustomTextField";
+import apiClient from '../../../api/client';
 
 function LocalLoginContainer() {
   const [inputs, setInputs] = useState({
@@ -32,20 +32,13 @@ function LocalLoginContainer() {
   };
 
   const fetchUser = (accessToken) => {
-    axios
-      .get("/api/v1/users/my", {
-        headers: {
-          accessToken: accessToken,
-        },
-      })
+    apiClient
+      .get("/api/v1/users/my")
       .then(function (response) {
         console.log(response);
         setUser(response.data.data);
         window.alert("로그인이 완료되었습니다.");
         navigate("/");
-      })
-      .catch(function (error) {
-        console.log(error);
       })
       .finally(function () {
         // always executed
@@ -55,7 +48,7 @@ function LocalLoginContainer() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    axios
+    apiClient
       .post("/api/v1/users/login", {
         email: inputs.email,
         password: inputs.password,
@@ -77,28 +70,7 @@ function LocalLoginContainer() {
       })
       .catch(function (error) {
         window.alert("이메일 또는 비밀번호가 일치하지 않습니다.");
-        Sentry.captureException(error);
-        // Access Token 재발행이 필요한 경우
-        if (error.code === "C005") {
-          axios
-            .post("/api/v1/users/token/reissue", {
-              headers: {
-                accessToken: getAccessToken(),
-                refreshToken: getRefreshToken(),
-              },
-            })
-            .then((res) => {
-              updateAccessToken(res.data.data);
-            })
-            .catch(function (error) {
-              alert("refresh token 만료");
-              logout();
-              window.location.replace("/");
-              localStorage.clear();
-              setUser(null);
-            });
-        }
-      });
+        });
   };
   return (
     <LocalLoginWrapper>
