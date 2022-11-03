@@ -1,21 +1,20 @@
 import * as Sentry from "@sentry/react";
+import { setUser } from "@sentry/react";
 import axios from "axios";
-import React, { useRef, createContext, useState } from "react";
+import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useRecoilState } from "recoil";
+import {
+  getAccessToken,
+  getRefreshToken,
+  logout,
+  updateAccessToken
+} from "../../../authentication/auth";
 import AgeRow from "./AgeRow";
 import JobRow from "./JobRow";
 import PreferenceRow from "./PreferenceRow";
 import SexRow from "./SexRow";
 import SignEssentialForm from "./SignEssentialForm";
 import { Button, Container, MainTitle, Rows } from "./SignUpCSS";
-import {
-  getAccessToken,
-  getRefreshToken,
-  logout,
-  updateAccessToken,
-} from "../../../authentication/auth";
-import { setUser } from "@sentry/react";
 
 export default function SignUpForm() {
   const signOptionRef = useRef(null);

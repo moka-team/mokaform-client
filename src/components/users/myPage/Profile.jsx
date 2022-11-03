@@ -31,7 +31,6 @@ function Profile() {
   const [selectedImage, setSelectedImage] = useState(null);
   // user 추후 삭제
   const user = useRecoilValue(userState);
-  const [profile, setProfile] = useState(null);
 
   // TODO: profile 받아오기
   const fetchProfile = async () => {
@@ -64,13 +63,11 @@ function Profile() {
             });
         }
       });
-    setProfile(response.data.data);
     console.log(response.data);
   };
 
   useEffect(() => {
     fetchProfile();
-    console.log(profile);
   }, []);
 
   return (

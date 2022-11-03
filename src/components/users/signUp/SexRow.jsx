@@ -1,8 +1,5 @@
-import { current } from "@reduxjs/toolkit";
-import React, { useState, useEffect } from "react";
-import { useRecoilState } from "recoil";
-import { Title, Row, Rows } from "./SignUpCSS";
-import { genderState } from "./SignUpState";
+import React, { useEffect, useState } from "react";
+import { Row, Rows, Title } from "./SignUpCSS";
 
 export default function SexRow({ gender, getGender }) {
   const sex = ["여성", "남성"];

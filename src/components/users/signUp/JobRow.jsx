@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import Select from "react-select";
-import { useRecoilState } from "recoil";
 import { Title } from "./SignUpCSS";
-import { jobState } from "./SignUpState";
 
 export default function JobRow({ job, getJob }) {
   const jobs = [

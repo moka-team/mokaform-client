@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useRecoilState } from "recoil";
-import { Title, Row } from "./SignUpCSS";
-import { ageGroupState } from "./SignUpState";
+import React, { useEffect, useState } from "react";
+import { Row, Title } from "./SignUpCSS";
 
 export default function AgeRow({ age, getAge }) {
   const ages = ["10대", "20대", "30대", "40대", "50대+"];

@@ -1,27 +1,16 @@
-import React, { useCallback, useState } from "react";
-import { useRecoilState } from "recoil";
-import { EssentialForm, Message } from "./SignUpCSS";
-import {
-  emailState,
-  nicknameState,
-  passwordState,
-  passwordConfirmState,
-  isNicknameState,
-  isEmailState,
-  isPasswordState,
-  isPasswordConfirmState,
-} from "./SignUpState";
 import { Box } from "@mui/material";
-import axios from "axios";
 import * as Sentry from "@sentry/react";
+import { setUser } from "@sentry/react";
+import axios from "axios";
+import React, { useCallback, useState } from "react";
 import {
   getAccessToken,
   getRefreshToken,
   logout,
-  updateAccessToken,
+  updateAccessToken
 } from "../../../authentication/auth";
 import CustomTextField from "../../common/CustomTextField";
-import { setUser } from "@sentry/react";
+import { Message } from "./SignUpCSS";
 
 export default function SignEssentialForm({
   email,

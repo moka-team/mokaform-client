@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useRecoilState } from "recoil";
-import { Title, Row, Rows, PreferenceButton } from "./SignUpCSS";
-import { preferenceState } from "./SignUpState";
+import React, { useState } from "react";
+import { PreferenceButton, Rows, Title } from "./SignUpCSS";
 
 export default function PreferenceRow({preference, getPreference}) {
   const [preference1Check, preference1CheckState] = useState(false);
