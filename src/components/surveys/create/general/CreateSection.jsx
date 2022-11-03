@@ -1,15 +1,19 @@
-import { React } from "react";
+import { ArrowDownwardOutlined } from "@mui/icons-material";
+import { React, useContext } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { surveyListState, surveySummary, surveyTitle } from "../../../../atoms";
 import { Create, Summary, Title } from "../../common/styled";
+import {
+  useCounter,
+  useCreateSurveyActions,
+  useCreateSurveyValue,
+} from "../surveyState";
 import SurveyCreateItem from "./SurveyCreateItem";
 import SurveyItemCreator from "./SurveyItemCreator";
 
 export default function CreateSection() {
-  const surveyList = useRecoilValue(surveyListState);
-
-  const setTitle = useSetRecoilState(surveyTitle);
-  const setSummary = useSetRecoilState(surveySummary);
+  const survey = useCreateSurveyValue();
+  const { setTitle, setSummary } = useCreateSurveyActions();
 
   const titleOnChange = (event) => {
     setTitle(event.target.value);
@@ -29,7 +33,7 @@ export default function CreateSection() {
         placeholder="설문 설명을 입력해주세요."
         onChange={summaryOnChange}
       ></Summary>
-      {surveyList.map((surveyItem) => (
+      {survey.questions.map((surveyItem) => (
         <SurveyCreateItem key={surveyItem.index} item={surveyItem} />
       ))}
       <SurveyItemCreator></SurveyItemCreator>

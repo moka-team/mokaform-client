@@ -3,24 +3,29 @@ import React from "react";
 import { useRecoilState } from "recoil";
 import { detailMCQuestionState } from "../../../../atoms";
 import { DetailContainer, Input } from "../../common/styled";
+import { useCreateSurveyActions, useCreateSurveyValue } from "../surveyState";
 
 export default function DetailSurveyItem({ item }) {
-  const [detailQuestionList, setDetailQuestionList] = useRecoilState(
-    detailMCQuestionState
+  const survey = useCreateSurveyValue();
+  const { setMultiQuestions } = useCreateSurveyActions();
+  // const [detailQuestionList, setDetailQuestionList] = useRecoilState(
+  // //   detailMCQuestionState
+  // // );
+  const index = survey.multiQuestions.findIndex(
+    (listItem) => listItem === item
   );
-  const index = detailQuestionList.findIndex((listItem) => listItem === item);
 
   const deleteItem = () => {
-    const newList = removeItemAtIndex(detailQuestionList, index);
-    setDetailQuestionList(newList);
+    const newList = removeItemAtIndex(survey.multiQuestions, index);
+    setMultiQuestions(newList);
   };
 
   const updateDetailItem = ({ target: { value } }) => {
-    const newList = replaceItemAtIndex(detailQuestionList, index, {
+    const newList = replaceItemAtIndex(survey.multiQuestions, index, {
       ...item,
       content: value,
     });
-    setDetailQuestionList(newList);
+    setMultiQuestions(newList);
   };
 
   return (

@@ -7,11 +7,13 @@ import {
   QuestionText,
   QuestionWrapper,
 } from "../../common/styled";
+import { useCreateSurveyActions, useCreateSurveyValue } from "../surveyState";
 
 export default function SurveyPreviewItem({ item }) {
-  const detailQuestionList = useRecoilValue(detailMCQuestionState);
-  const surveyList = useRecoilValue(surveyListState);
-  const index = surveyList.findIndex((listItem) => listItem === item);
+  const survey = useCreateSurveyValue();
+  // const detailQuestionList = useRecoilValue(detailMCQuestionState);
+  // const surveyList = useRecoilValue(surveyListState);
+  const index = survey.questions.findIndex((listItem) => listItem === item);
 
   return (
     <div>
@@ -34,7 +36,7 @@ export default function SurveyPreviewItem({ item }) {
           <QuestionWrapper>
             <QuestionText color="#0064ff">Q{index + 1}</QuestionText>
             <QuestionText color="black">{item.title}</QuestionText>
-            {detailQuestionList.map((detailQuestionItem) =>
+            {survey.multiQuestions.map((detailQuestionItem) =>
               item.index === detailQuestionItem.questionIndex ? (
                 <QuestionOption>{detailQuestionItem.content}</QuestionOption>
               ) : (

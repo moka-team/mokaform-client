@@ -41,6 +41,7 @@ import {
 } from "../../../../authentication/auth";
 import { userState } from "../../../../authentication/userState";
 import { SaveBtn, SNavBar } from "../../common/styled";
+import { useCreateSurveyActions, useCreateSurveyValue } from "../surveyState";
 import { CustomSwitch } from "./CustomizedSwitches";
 import SelectCategory from "./SelectCategory";
 import SurveyImg from "./SurveyImg";
@@ -58,18 +59,31 @@ const style = {
 };
 
 function NavBar() {
+  const survey = useCreateSurveyValue();
+  const {
+    setTitle,
+    setSummary,
+    setIsAnonymous,
+    setIsPublic,
+    setStartDate,
+    setEndDate,
+    setCategories,
+    setQuestions,
+    setMultiQuestions,
+  } = useCreateSurveyActions();
+
   const user = useRecoilValue(userState);
   const questionCount = useRecoilValue(createdQuestionCount);
-  const [surveyList, setSurveyList] = useRecoilState(surveyListState);
-  const [detailList, setDetailList] = useRecoilState(detailMCQuestionState);
-  const [category, setCategory] = useRecoilState(surveyCategory);
+  // const [surveyList, setSurveyList] = useRecoilState(surveyListState);
+  // const [detailList, setDetailList] = useRecoilState(detailMCQuestionState);
+  // const [category, setCategory] = useRecoilState(surveyCategory);
   const [surveyImg, setSurveyImage] = useRecoilState(surveyImage);
-  const [title, setTitle] = useRecoilState(surveyTitle);
-  const [summary, setSummary] = useRecoilState(surveySummary);
-  const [isAnonymous, setIsAnonymous] = useRecoilState(surveyIsAnonymous);
-  const [isPublic, setIsPublic] = useRecoilState(surveyIsPublic);
-  const [startDate, setStartDate] = useRecoilState(surveyStartDate);
-  const [endDate, setEndDate] = useRecoilState(surveyEndDate);
+  // const [title, setTitle] = useRecoilState(surveyTitle);
+  // const [summary, setSummary] = useRecoilState(surveySummary);
+  // const [isAnonymous, setIsAnonymous] = useRecoilState(surveyIsAnonymous);
+  // const [isPublic, setIsPublic] = useRecoilState(surveyIsPublic);
+  // const [startDate, setStartDate] = useRecoilState(surveyStartDate);
+  // const [endDate, setEndDate] = useRecoilState(surveyEndDate);
   const [startDateValidate, setStartDateValidate] =
     useRecoilState(isStartDateValidate);
   const [endDateValidate, setEndDateValidate] =
@@ -83,20 +97,20 @@ function NavBar() {
   const [multiQuestionList, setMultiQuestionList] = useState(false);
 
   useEffect(() => {
-    const newArray = detailList.map((multiQuestion) => {
+    const newArray = survey.multiQuestions.map((multiQuestion) => {
       return multiQuestion.questionIndex;
     });
     setMultiQuestionValidate([...new Set(newArray)]);
-  }, [detailList]);
+  }, [survey.multiQuestions]);
 
   useEffect(() => {
-    const newArray = surveyList
+    const newArray = survey.questions
       .filter((question) => question.isMultipleAnswer)
       .map((question) => {
         return question.index;
       });
     setMultiQuestionList([...new Set(newArray)]);
-  }, [surveyList]);
+  }, [survey.questions]);
 
   const handleClickDialogOpen = () => {
     setInvalidationDialogOpen(true);
@@ -146,28 +160,29 @@ function NavBar() {
     setIsPublic(false);
     setStartDate(dayjs(""));
     setEndDate(dayjs(""));
-    setCategory([]);
+    setCategories([]);
     setSurveyImage("");
-    setSurveyList([]);
-    setDetailList([]);
+    setQuestions([]);
+    setMultiQuestions([]);
     setStartDateValidate(false);
     setEndDateValidate(false);
   };
 
   const createSurvey = () => {
     const surveyInfo = {
-      title: title,
-      summary: summary,
-      isAnonymous: isAnonymous,
-      isPublic: isPublic,
-      startDate: startDate,
-      endDate: endDate,
-      categories: category,
-      questions: surveyList,
-      multiQuestions: detailList,
+      title: survey.title,
+      summary: survey.summary,
+      isAnonymous: survey.isAnonymous,
+      isPublic: survey.isPublic,
+      startDate: survey.startDate,
+      endDate: survey.endDate,
+      categories: survey.categories,
+      questions: survey.questions,
+      multiQuestions: survey.multiQuestions,
       // surveyImage: surveyImg,
     };
 
+    console.log(surveyInfo);
     multiQuestionList.length === multiQuestionValidate.length
       ? axios
           .post("/api/v1/survey", surveyInfo, {
@@ -215,7 +230,7 @@ function NavBar() {
   };
 
   const handleSubmit = () => {
-    startDateValidate && endDateValidate && category.length > 0
+    startDateValidate && endDateValidate && survey.categories.length > 0
       ? createSurvey()
       : handleClickDialogOpen();
   };
@@ -253,7 +268,7 @@ function NavBar() {
             설문 공개 여부
             <CustomSwitch
               style={{ color: "#edeef0" }}
-              checked={isPublic}
+              checked={survey.isPublic}
               onChange={isPublicOnChange}
             />
           </Typography>
@@ -261,7 +276,7 @@ function NavBar() {
             설문 시작 날짜
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DatePicker
-                value={startDate}
+                value={survey.startDate}
                 inputFormat={"yyyy-MM-dd"}
                 onChange={(newValue) => {
                   setStartDate(dayjs(newValue).format("YYYY-MM-DD"));
@@ -288,7 +303,7 @@ function NavBar() {
             설문 종료 날짜
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DatePicker
-                value={endDate}
+                value={survey.endDate}
                 inputFormat={"yyyy-MM-dd"}
                 onChange={(newValue) => {
                   setEndDate(dayjs(newValue).format("YYYY-MM-DD"));
@@ -318,7 +333,9 @@ function NavBar() {
       </Modal>
       <SaveBtn
         onClick={handleSubmit}
-        disabled={!(title.length && summary.length && questionCount > 0)}
+        disabled={
+          !(survey.title.length && survey.summary.length && questionCount > 0)
+        }
       >
         저장
       </SaveBtn>

@@ -1,15 +1,22 @@
 import { Button } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSetRecoilState } from "recoil";
 import { detailMCQuestionState } from "../../../../atoms";
+import { useCreateSurveyActions, useCreateSurveyValue } from "../surveyState";
 
 export default function DetailMCQuestionCreator({ id }) {
+  const survey = useCreateSurveyValue();
+  const { setMultiQuestions } = useCreateSurveyActions();
+
   const [detailQuestion, setDetailQuestion] = useState("");
-  const setDetailQuestionList = useSetRecoilState(detailMCQuestionState);
+  const [multiQuestionList, setMultiQuestionList] = useState(
+    survey.multiQuestions
+  );
+  // const setDetailQuestionList = useSetRecoilState(detailMCQuestionState);
 
   const addDetailItem = () => {
-    setDetailQuestionList((oldDetailQuestionList) => [
-      ...oldDetailQuestionList,
+    setMultiQuestionList([
+      ...survey.multiQuestions,
       {
         questionIndex: id,
         index: getId(),
@@ -19,6 +26,11 @@ export default function DetailMCQuestionCreator({ id }) {
     ]);
     setDetailQuestion("");
   };
+
+  useEffect(() => {
+    console.log(multiQuestionList);
+    setMultiQuestions(multiQuestionList);
+  }, [multiQuestionList]);
 
   return (
     <Button onClick={addDetailItem} size="small">

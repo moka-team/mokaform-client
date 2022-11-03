@@ -9,6 +9,7 @@ import { useTheme } from "@mui/material/styles";
 import * as React from "react";
 import { useRecoilState } from "recoil";
 import { surveyCategory } from "../../../../atoms";
+import { useCreateSurveyActions, useCreateSurveyValue } from "../surveyState";
 
 const ITEM_HEIGHT = 40;
 const ITEM_PADDING_TOP = 8;
@@ -55,7 +56,9 @@ function getStyles(item, category, theme) {
 export default function SelectCategory() {
   const theme = useTheme();
   const [category, setCategory] = React.useState([]);
-  const [categoryState, setCatergoryState] = useRecoilState(surveyCategory);
+  // const [categoryState, setCatergoryState] = useRecoilState(surveyCategory);
+  const survey = useCreateSurveyValue();
+  const { setCategories } = useCreateSurveyActions();
 
   const handleChange = (event) => {
     const {
@@ -65,7 +68,7 @@ export default function SelectCategory() {
       // On autofill we get a stringified value.
       typeof value === "string" ? value.split(",") : value
     );
-    setCatergoryState(typeof value === "string" ? value.split(",") : value);
+    setCategories(typeof value === "string" ? value.split(",") : value);
   };
 
   return (
@@ -76,7 +79,7 @@ export default function SelectCategory() {
           labelId="demo-multiple-chip-label"
           id="demo-multiple-chip"
           multiple
-          value={categoryState}
+          value={survey.categories}
           onChange={handleChange}
           input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
           renderValue={(selected) => (

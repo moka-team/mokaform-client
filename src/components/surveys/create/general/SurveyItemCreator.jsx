@@ -2,10 +2,12 @@ import { AddCircle } from "@mui/icons-material";
 import { Button } from "@mui/material";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import { useEffect } from "react";
 import { React, useState } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { createdQuestionCount, surveyListState } from "../../../../atoms";
+import { useCreateSurveyActions, useCreateSurveyValue } from "../surveyState";
 
 const options = ["ESSAY", "MULTIPLE_CHOICE", "OX"];
 const kOtions = ["주관식", "객관식", "찬부식"];
@@ -17,6 +19,10 @@ const Container = styled.div`
 `;
 
 export default function SurveyItemCreator() {
+  const survey = useCreateSurveyValue();
+  const { setQuestions } = useCreateSurveyActions();
+  const [questionList, setQuestionList] = useState([]);
+
   const [questionCount, setQuestionCount] =
     useRecoilState(createdQuestionCount);
   const [question, setQuestion] = useState("");
@@ -42,8 +48,8 @@ export default function SurveyItemCreator() {
   };
 
   const addItem = (optionIndex) => {
-    setSurveyList((oldSurveyList) => [
-      ...oldSurveyList,
+    setQuestionList([
+      ...survey.questions,
       {
         index: getId(),
         title: question,
@@ -55,6 +61,10 @@ export default function SurveyItemCreator() {
     setType(options[optionIndex]);
     setQuestionCount(questionCount + 1);
   };
+
+  useEffect(() => {
+    setQuestions(questionList);
+  }, [questionList]);
 
   return (
     <Container>

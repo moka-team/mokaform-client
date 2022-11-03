@@ -20,6 +20,8 @@ import { userState } from "../../../../authentication/userState";
 import CreateSection from "./CreateSection";
 import NavBar from "./NavBar";
 import PreviewSection from "./PreviewSection";
+import { createContext, useContext, useMemo, useRef, useState } from "react";
+import { CounterProvider, CreateSurveyProvider } from "../surveyState";
 
 const Container = styled.div`
   display: flex;
@@ -62,10 +64,12 @@ export default function CreateSurvey() {
   }, []);
 
   return (
-    <Container>
-      <NavBar></NavBar>
-      <CreateSection></CreateSection>
-      <PreviewSection></PreviewSection>
-    </Container>
+    <CreateSurveyProvider>
+      <Container>
+        <NavBar></NavBar>
+        <CreateSection></CreateSection>
+        <PreviewSection></PreviewSection>
+      </Container>
+    </CreateSurveyProvider>
   );
 }

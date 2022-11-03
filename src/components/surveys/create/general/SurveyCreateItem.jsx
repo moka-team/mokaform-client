@@ -7,29 +7,34 @@ import {
   surveyListState,
 } from "../../../../atoms";
 import { MInput, Num, Question } from "../../common/styled";
+import { useCreateSurveyActions, useCreateSurveyValue } from "../surveyState";
 import DetailMCQuestionCreator from "./DetailMCQuestionCreator";
 import DetailSurveyItem from "./DetailSurveyItem";
 
 export default function SurveyItem({ item }) {
+  const survey = useCreateSurveyValue();
+  const { setQuestions } = useCreateSurveyActions();
+
   const [questionCount, setQuestionCount] =
     useRecoilState(createdQuestionCount);
-  const [surveyList, setSurveyList] = useRecoilState(surveyListState);
-  const index = surveyList.findIndex((listItem) => listItem === item);
+  // const [surveyList, setSurveyList] = useRecoilState(surveyListState);
+  const index = survey.questions.findIndex((listItem) => listItem === item);
 
-  const detailQuestionList = useRecoilValue(detailMCQuestionState);
+  // const detailQuestionList = useRecoilValue(detailMCQuestionState);
 
   const deleteItem = () => {
-    const newList = removeItemAtIndex(surveyList, index);
-    setSurveyList(newList);
+    const newList = removeItemAtIndex(survey.questions, index);
+    setQuestions(newList);
     setQuestionCount(questionCount - 1);
   };
 
   const updateItem = ({ target: { value } }) => {
-    const newList = replaceItemAtIndex(surveyList, index, {
+    const newList = replaceItemAtIndex(survey.questions, index, {
       ...item,
       title: value,
     });
-    setSurveyList(newList);
+    console.log(newList);
+    setQuestions(newList);
   };
 
   return (
@@ -85,7 +90,7 @@ export default function SurveyItem({ item }) {
           </Question>
 
           <DetailMCQuestionCreator id={item.index}></DetailMCQuestionCreator>
-          {detailQuestionList.map((detailQuestionItem) =>
+          {survey.multiQuestions.map((detailQuestionItem) =>
             item.index === detailQuestionItem.questionIndex ? (
               <DetailSurveyItem
                 key={detailQuestionItem.index}
