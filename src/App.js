@@ -18,8 +18,8 @@ import { useRecoilValue } from "recoil";
 import { userState } from "./authentication/userState";
 import CreateCardSurvey from "./pages/surveys/create/card/index";
 import { useEffect } from "react";
-import axios from "axios";
-import { getAccessToken, getRefreshToken } from "./authentication/auth";
+import { NotFound } from './components/common/NotFound';
+
 const GlobalStyle = createGlobalStyle`
   ${reset}
   font-family: 'Inter', sans-serif;
@@ -96,6 +96,10 @@ function App() {
           element={
             user !== null ? <CreateCardSurvey /> : <SignIn signInAlert={true} />
           }
+        ></Route>
+        <Route
+        path={"*"}
+        element={<NotFound />}
         ></Route>
       </Routes>
     </BrowserRouter>
