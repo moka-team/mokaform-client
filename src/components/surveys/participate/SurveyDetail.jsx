@@ -91,11 +91,9 @@ export default function SurveyDetail({ sharingKey }) {
           axios
             .post("/api/v1/users/token/reissue",{
               accessToken:getAccessToken(),
-              refreshToken:"httpsOnly"
             })
             .then((res) => {
               updateAccessToken(res.data.data);
-              alert("accessToken 갱신!")
               window.location.reload();
             })
             .catch(function (err) {

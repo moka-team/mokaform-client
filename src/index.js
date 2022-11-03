@@ -13,7 +13,6 @@ Sentry.init({
   tracesSampleRate: 1.0,
 });
 axios.defaults.headers.common["accessToken"] = getAccessToken();
-axios.defaults.headers.common["refreshToken"] = getRefreshToken();
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
