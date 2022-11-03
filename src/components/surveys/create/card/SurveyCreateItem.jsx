@@ -1,35 +1,34 @@
 import DeleteIcon from "@mui/icons-material/Delete";
 import React from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
-import {
-  createdQuestionCount,
-  detailMCQuestionState,
-  surveyListState,
-} from "../../../../atoms";
+import { useRecoilState } from "recoil";
+import { createdQuestionCount } from "../../../../atoms";
 import { MInput, Num, Question } from "../../common/styled";
-import DetailMCQuestionCreator from "./DetailMCQuestionCreator";
-import DetailSurveyItem from "./DetailSurveyItem";
+import { useCreateSurveyActions, useCreateSurveyValue } from "../surveyState";
+import MultipleChoiceQuestionCreator from "./MultipleChoiceQuestionCreator";
+import MultipleChoiceQuestionItem from "./MultipleChoiceQuestionitem";
 
 export default function SurveyCreateItem({ item }) {
+  const survey = useCreateSurveyValue();
+  const { setQuestions } = useCreateSurveyActions();
+
   const [questionCount, setQuestionCount] =
     useRecoilState(createdQuestionCount);
-  const [surveyList, setSurveyList] = useRecoilState(surveyListState);
-  const index = surveyList.findIndex((listItem) => listItem === item);
-  const detailQuestionList = useRecoilValue(detailMCQuestionState);
+  const index = survey.questions.findIndex((listItem) => listItem === item);
 
   const deleteItem = () => {
-    const newList = removeItemAtIndex(surveyList, index);
-    setSurveyList(newList);
+    const newList = removeItemAtIndex(survey.questions, index);
+    setQuestions(newList);
     setQuestionCount(questionCount - 1);
   };
 
   const updateItem = ({ target: { value } }) => {
-    const newList = replaceItemAtIndex(surveyList, index, {
+    const newList = replaceItemAtIndex(survey.questions, index, {
       ...item,
       title: value,
     });
-    setSurveyList(newList);
+    setQuestions(newList);
   };
+
   return (
     <div>
       <Question>
@@ -51,10 +50,12 @@ export default function SurveyCreateItem({ item }) {
         />
       </Question>
 
-      <DetailMCQuestionCreator id={item.index}></DetailMCQuestionCreator>
-      {detailQuestionList.map((detailQuestionItem) =>
+      <MultipleChoiceQuestionCreator
+        id={item.index}
+      ></MultipleChoiceQuestionCreator>
+      {survey.multiQuestions.map((detailQuestionItem) =>
         item.index === detailQuestionItem.questionIndex ? (
-          <DetailSurveyItem
+          <MultipleChoiceQuestionItem
             key={detailQuestionItem.index}
             item={detailQuestionItem}
           />

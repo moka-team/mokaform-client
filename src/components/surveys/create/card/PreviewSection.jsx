@@ -1,7 +1,6 @@
 import React from "react";
-import { useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { surveyListState } from "../../../../atoms";
+import { useCreateSurveyValue } from "../surveyState";
 import { Wrapper } from "./styled";
 import SurveyPreviewItem from "./SurveyPreviewItem";
 
@@ -35,11 +34,11 @@ const Button = styled.button`
 `;
 
 export default function PreviewSection() {
-  const surveyList = useRecoilValue(surveyListState);
+  const survey = useCreateSurveyValue();
 
   return (
     <Wrapper>
-      {surveyList.map((surveyItem) => (
+      {survey.questions.map((surveyItem) => (
         <Section>
           <SurveyPreviewItem key={surveyItem.index} item={surveyItem} />
           <Button>다음</Button>

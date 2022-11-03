@@ -1,9 +1,10 @@
 import { AddCircle } from "@mui/icons-material";
 import { Button } from "@mui/material";
-import { React, useState } from "react";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { React, useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import { createdQuestionCount, surveyListState } from "../../../../atoms";
+import { createdQuestionCount } from "../../../../atoms";
+import { useCreateSurveyActions, useCreateSurveyValue } from "../surveyState";
 
 const Container = styled.div`
   width: 100%;
@@ -12,18 +13,21 @@ const Container = styled.div`
 `;
 
 export default function SurveyItemCreator() {
+  const survey = useCreateSurveyValue();
+  const { setQuestions } = useCreateSurveyActions();
+  const [questionList, setQuestionList] = useState([]);
+
   const [questionCount, setQuestionCount] =
     useRecoilState(createdQuestionCount);
   const [question, setQuestion] = useState("");
-  const setSurveyList = useSetRecoilState(surveyListState);
 
   const onClickHandler = (event, index) => {
     addItem(index);
   };
 
   const addItem = () => {
-    setSurveyList((oldSurveyList) => [
-      ...oldSurveyList,
+    setQuestionList((oldSurveyList) => [
+      ...survey.questions,
       {
         index: getId(),
         title: question,
@@ -34,6 +38,10 @@ export default function SurveyItemCreator() {
     setQuestion("");
     setQuestionCount(questionCount + 1);
   };
+
+  useEffect(() => {
+    setQuestions(questionList);
+  }, [questionList]);
 
   return (
     <Container>

@@ -26,7 +26,6 @@ export default function SurveyItemCreator() {
     useRecoilState(createdQuestionCount);
   const [question, setQuestion] = useState("");
   const [type, setType] = useState("ESSAY");
-  const setSurveyList = useSetRecoilState(surveyListState);
 
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
