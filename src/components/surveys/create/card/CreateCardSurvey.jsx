@@ -1,14 +1,9 @@
 import React from "react";
-import styled from "styled-components";
 import NavBar from "../general/NavBar";
 import { CreateSurveyProvider } from "../surveyState";
 import CreateSection from "./CreateSection";
 import PreviewSection from "./PreviewSection";
-
-const Container = styled.div`
-  display: flex;
-  min-height: calc(var(--vh, 1vh) * 100);
-`;
+import { Container } from "./styled";
 
 export default function CreateCardSurvey() {
   return (

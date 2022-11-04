@@ -2,48 +2,16 @@ import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { useRecoilState } from "recoil";
-import styled from "styled-components";
 import { surveyImage } from "../../../../atoms";
+import { useCreateSurveyActions, useCreateSurveyValue } from "../surveyState";
+import { Container2, UploadBtn, Wrapper } from "./styled";
 
-const Container = styled.div`
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-`;
-const Wrapper = styled.div`
-  position: relative;
-  width: 300px;
-  height: 150px;
-`;
-
-const DefaultImage = styled.div`
-  position: absolute;
-  background-color: gray;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-`;
-
-const Image = styled.img`
-  position: absolute;
-  background-color: gray;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-`;
-
-const UploadBtn = styled.label`
-  cursor: pointer;
-  z-index: 3;
-  margin-top: -30px;
-`;
 export default function SurveyImg() {
+  const { setSurveyImage } = useCreateSurveyActions();
   const [selectedImage, setSelectedImage] = useState(null);
-  const [surveyImageInput, setSurveyImage] = useRecoilState(surveyImage);
 
   return (
-    <Container>
+    <Container2>
       <input
         type="file"
         id="surveyImg"
@@ -63,6 +31,6 @@ export default function SurveyImg() {
       <UploadBtn htmlFor="surveyImg">
         <FontAwesomeIcon icon={faCamera} color="white" fontSize="20px" />
       </UploadBtn>
-    </Container>
+    </Container2>
   );
 }

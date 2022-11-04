@@ -16,12 +16,6 @@ import axios from "axios";
 import dayjs from "dayjs";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
-import {
-  createdQuestionCount,
-  isEndDateValidate,
-  isStartDateValidate,
-} from "../../../../atoms";
 import {
   getAccessToken,
   getRefreshToken,
@@ -59,11 +53,6 @@ function NavBar() {
     setMultiQuestions,
   } = useCreateSurveyActions();
 
-  const questionCount = useRecoilValue(createdQuestionCount);
-  const [startDateValidate, setStartDateValidate] =
-    useRecoilState(isStartDateValidate);
-  const [endDateValidate, setEndDateValidate] =
-    useRecoilState(isEndDateValidate);
   const [multiQuestionValidate, setMultiQuestionValidate] = useState([]);
   const [multiQuestionList, setMultiQuestionList] = useState(false);
 
@@ -139,8 +128,6 @@ function NavBar() {
     setCategories([]);
     setQuestions([]);
     setMultiQuestions([]);
-    setStartDateValidate(false);
-    setEndDateValidate(false);
   };
 
   const createSurvey = () => {
@@ -204,7 +191,9 @@ function NavBar() {
   };
 
   const handleSubmit = () => {
-    startDateValidate && endDateValidate && survey.categories.length > 0
+    survey.startDate.length > 0 &&
+    survey.endDate.length > 0 &&
+    survey.categories.length > 0
       ? createSurvey()
       : handleClickDialogOpen();
   };
@@ -254,7 +243,6 @@ function NavBar() {
                 inputFormat={"yyyy-MM-dd"}
                 onChange={(newValue) => {
                   setStartDate(dayjs(newValue).format("YYYY-MM-DD"));
-                  setStartDateValidate(true);
                 }}
                 renderInput={({ inputRef, inputProps, InputProps }) => (
                   <Box
@@ -281,7 +269,6 @@ function NavBar() {
                 inputFormat={"yyyy-MM-dd"}
                 onChange={(newValue) => {
                   setEndDate(dayjs(newValue).format("YYYY-MM-DD"));
-                  setEndDateValidate(true);
                 }}
                 renderInput={({ inputRef, inputProps, InputProps }) => (
                   <Box
@@ -308,7 +295,11 @@ function NavBar() {
       <SaveBtn
         onClick={handleSubmit}
         disabled={
-          !(survey.title.length && survey.summary.length && questionCount > 0)
+          !(
+            survey.title.length &&
+            survey.summary.length &&
+            survey.questions.length > 0
+          )
         }
       >
         저장

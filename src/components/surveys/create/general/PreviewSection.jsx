@@ -1,6 +1,4 @@
 import React from "react";
-import { useRecoilValue } from "recoil";
-import { surveyListState } from "../../../../atoms";
 import { Preview, SummaryText, TitleText } from "../../common/styled";
 import { useCreateSurveyValue } from "../surveyState";
 

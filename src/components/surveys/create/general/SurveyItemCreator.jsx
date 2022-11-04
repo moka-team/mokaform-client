@@ -3,9 +3,7 @@ import { Button } from "@mui/material";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { React, useEffect, useState } from "react";
-import { useRecoilState, useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { createdQuestionCount, surveyListState } from "../../../../atoms";
 import { useCreateSurveyActions, useCreateSurveyValue } from "../surveyState";
 
 const options = ["ESSAY", "MULTIPLE_CHOICE", "OX"];
@@ -22,10 +20,8 @@ export default function SurveyItemCreator() {
   const { setQuestions } = useCreateSurveyActions();
   const [questionList, setQuestionList] = useState([]);
 
-  const [questionCount, setQuestionCount] =
-    useRecoilState(createdQuestionCount);
   const [question, setQuestion] = useState("");
-  const [type, setType] = useState("ESSAY");
+  const [, setType] = useState("ESSAY");
 
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -57,7 +53,6 @@ export default function SurveyItemCreator() {
     ]);
     setQuestion("");
     setType(options[optionIndex]);
-    setQuestionCount(questionCount + 1);
   };
 
   useEffect(() => {

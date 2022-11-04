@@ -1,11 +1,9 @@
+import dayjs from "dayjs";
 import React, { useEffect } from "react";
-import { useSetRecoilState } from "recoil";
 import { Create, Summary, Title } from "../../common/styled";
+import { useCreateSurveyActions, useCreateSurveyValue } from "../surveyState";
 import SurveyCreateItem from "./SurveyCreateItem";
 import SurveyItemCreator from "./SurveyItemCreator";
-import { isEndDateValidate, isStartDateValidate } from "../../../../atoms";
-import dayjs from "dayjs";
-import { useCreateSurveyActions, useCreateSurveyValue } from "../surveyState";
 
 export default function CreateSection() {
   const survey = useCreateSurveyValue();
@@ -20,8 +18,6 @@ export default function CreateSection() {
     setQuestions,
     setMultiQuestions,
   } = useCreateSurveyActions();
-  const setStartDateValidate = useSetRecoilState(isStartDateValidate);
-  const setEndDateValidate = useSetRecoilState(isEndDateValidate);
 
   const resetCreateSurveyState = () => {
     setTitle("");
@@ -33,8 +29,6 @@ export default function CreateSection() {
     setCategories([]);
     setQuestions([]);
     setMultiQuestions([]);
-    setStartDateValidate(false);
-    setEndDateValidate(false);
   };
 
   useEffect(() => {

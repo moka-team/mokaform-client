@@ -1,14 +1,10 @@
 import React from "react";
-import styled from "styled-components";
 import { CreateSurveyProvider } from "../surveyState";
 import CreateSection from "./CreateSection";
 import NavBar from "./NavBar";
 import PreviewSection from "./PreviewSection";
+import { Container } from "./styled";
 
-const Container = styled.div`
-  display: flex;
-  min-height: 100vh;
-`;
 export default function CreateSurvey() {
   return (
     <CreateSurveyProvider>

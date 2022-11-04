@@ -15,6 +15,7 @@ function CreateSurveyProvider({ children }) {
     categories: [],
     questions: [],
     multiQuestions: [],
+    image: "",
   });
   const actions = useMemo(
     () => ({
@@ -67,10 +68,15 @@ function CreateSurveyProvider({ children }) {
         }));
       },
       setMultiQuestions(multiQuestions) {
-        console.log("나바뀜!!");
         setSurvey((prev) => ({
           ...prev,
           multiQuestions: multiQuestions,
+        }));
+      },
+      setSurveyImage(image) {
+        setSurvey((prev) => ({
+          ...prev,
+          image: image,
         }));
       },
     }),
