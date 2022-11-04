@@ -1,5 +1,4 @@
 import * as Sentry from "@sentry/react";
-import axios from "axios";
 import React, { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
@@ -30,6 +29,7 @@ import {
   updateAccessToken,
 } from "../../../authentication/auth";
 import { setUser } from "@sentry/react";
+import  apiClient  from '../../../api/client';
 export default function SignUpForm() {
   const signOptionRef = useRef(null);
   const signOptionRef2 = useRef(null);
@@ -62,7 +62,7 @@ export default function SignUpForm() {
   let ValidateInfo = false;
 
   const signUpPatch = () => {
-    axios
+    apiClient
       .post(
         "/api/v1/users/signup",
         {
@@ -98,29 +98,6 @@ export default function SignUpForm() {
           window.alert("회원가입 에러 발생");
         }
       })
-      .catch(function (error) {
-        Sentry.captureException(error);
-        // Access Token 재발행이 필요한 경우
-        if (error.code === "C005") {
-          axios
-            .post("/api/v1/users/token/reissue", {
-              headers: {
-                accessToken: getAccessToken(),
-                refreshToken: getRefreshToken(),
-              },
-            })
-            .then((res) => {
-              updateAccessToken(res.data.data);
-            })
-            .catch(function (error) {
-              alert("refresh token 만료");
-              logout();
-              window.location.replace("/");
-              localStorage.clear();
-              setUser(null);
-            });
-        }
-      });
   };
 
   const onCompleteBtnClickHandler = (event) => {

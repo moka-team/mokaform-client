@@ -1,4 +1,3 @@
-import axios from "axios";
 import { React, useEffect, useState } from "react";
 import {
   getAccessToken,
@@ -41,6 +40,7 @@ import { useNavigate } from "react-router-dom";
 import routes from "../../../routes";
 import { TContainer } from "./styled";
 import { setUser } from "@sentry/react";
+import apiClient from '../../../api/client';
 function TablePaginationActions(props) {
   const theme = useTheme();
   const { count, page, rowsPerPage, onPageChange } = props;
@@ -170,91 +170,18 @@ export default function ManageSurveySection({ userId }) {
     setDialogOpen(false);
   };
   const handleOnClick = async (surveyId) => {
-    await axios
-      .get(`/api/v1/users/my/surveys/${surveyId}/stats`, {
-        headers: {
-          accessToken: getAccessToken(),
-          refreshToken: getRefreshToken(),
-        },
-      })
+    await apiClient
+      .get(`/api/v1/users/my/surveys/${surveyId}/stats`)
       .then((res) => navigate(routes.surveyStats, { state: res.data.data }))
-      .catch(function (error) {
-        Sentry.captureException(error);
-        // Access Token 재발행이 필요한 경우
-        if (error.code === "C005") {
-          axios
-            .post("/api/v1/users/token/reissue", {
-              headers: {
-                accessToken: getAccessToken(),
-                refreshToken: getRefreshToken(),
-              },
-            })
-            .then((res) => {
-              updateAccessToken(res.data.data);
-            })
-            .catch(function (error) {
-              Sentry.captureException(error);
-              // Access Token 재발행이 필요한 경우
-              if (error.code === "C005") {
-                axios
-                  .post("/api/v1/users/token/reissue", {
-                    headers: {
-                      accessToken: getAccessToken(),
-                      refreshToken: getRefreshToken(),
-                    },
-                  })
-                  .then((res) => {
-                    updateAccessToken(res.data.data);
-                  })
-                  .catch(function (error) {
-                    alert("refresh token 만료");
-                    logout();
-                    window.location.replace("/");
-                    localStorage.clear();
-                    setUser(null);
-                  });
-              }
-            });
-        }
-      });
   };
 
   const handleDeleteItem = () => {
     setDialogOpen(false);
 
-    axios
-      .delete("/api/v1/survey/" + selectedSurveyId, {
-        headers: {
-          accessToken: getAccessToken(),
-          refreshToken: getRefreshToken(),
-        },
-      })
+    apiClient
+      .delete("/api/v1/survey/" + selectedSurveyId)
       .then(function (response) {
         console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error.message);
-        Sentry.captureException(error);
-        // Access Token 재발행이 필요한 경우
-        if (error.code === "C005") {
-          axios
-            .post("/api/v1/users/token/reissue", {
-              headers: {
-                accessToken: getAccessToken(),
-                refreshToken: getRefreshToken(),
-              },
-            })
-            .then((res) => {
-              updateAccessToken(res.data.data);
-            })
-            .catch(function (error) {
-              alert("refresh token 만료");
-              logout();
-              window.location.replace("/");
-              localStorage.clear();
-              setUser(null);
-            });
-        }
       })
       .finally(function () {
         // always executed
@@ -264,48 +191,16 @@ export default function ManageSurveySection({ userId }) {
   };
 
   const fetchData = () => {
-    axios
+    apiClient
       .get("/api/v1/users/my/surveys", {
         params: {
           userId: userId,
-        },
-        headers: {
-          accessToken: getAccessToken(),
-          refreshToken: getRefreshToken(),
-        },
+        }
       })
       .then(function (response) {
         console.log(response);
         setSurvey(response.data.data.content);
         setLoading(false);
-      })
-      .catch(function (error) {
-        console.log(error.message);
-        setErrorMessage(error.message);
-        Sentry.captureException(error);
-
-        setError(true);
-
-        // Access Token 재발행이 필요한 경우
-        if (error.code === "C005") {
-          axios
-            .post("/api/v1/users/token/reissue", {
-              headers: {
-                accessToken: getAccessToken(),
-                refreshToken: getRefreshToken(),
-              },
-            })
-            .then((res) => {
-              updateAccessToken(res.data.data);
-            })
-            .catch(function (error) {
-              alert("refresh token 만료");
-              logout();
-              window.location.replace("/");
-              localStorage.clear();
-              setUser(null);
-            });
-        }
       })
       .finally(function () {
         // always executed

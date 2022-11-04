@@ -2,14 +2,17 @@ import { Cookies } from "react-cookie";
 
 const cookies = new Cookies();
 export const setRefreshToken = (refreshToken) => {
-  return cookies.set("refresh_token", refreshToken, {
+  cookies.set("refresh_token", refreshToken, {
     sameSite: "strict",
+    httpOnly:true,
+    secure:true
   });
 };
 
 export const setAccessToken = (accessToken) => {
-  return cookies.set("access_token", accessToken, {
+  cookies.set("access_token", accessToken, {
     sameSite: "strict",
+
   });
 };
 
@@ -33,5 +36,8 @@ export const getAccessToken = () => {
 };
 
 export const getRefreshToken = () => {
-  return cookies.get("refresh_token");
+  return cookies.get("refresh_token",{
+    httpOnly:true,
+    secure:true
+  });
 };

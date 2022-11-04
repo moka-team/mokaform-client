@@ -82,5 +82,5 @@
     "eslint-plugin-prettier": "^4.2.1",
     "prettier": "^2.7.1"
   },
-  "proxy": "https://www.mokaform.site"
+  "proxy": "http://210.109.62.23:8080"
 }

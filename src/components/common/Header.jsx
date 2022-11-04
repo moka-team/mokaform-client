@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { userState } from "../../authentication/userState";
 import { Logo } from "./Logo";
+import { logout } from "../../authentication/auth";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -126,8 +127,7 @@ export default function Header() {
   const handleLogout = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
-
-    // local storage에 user 정보 삭제
+    logout();
     window.location.replace("/");
     localStorage.clear();
     setUser(null);
@@ -195,16 +195,6 @@ export default function Header() {
         <Toolbar>
           <Logo to="/">MOKAFORM</Logo>
           <Box sx={{ flexGrow: 1 }} />
-          {/* <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              inputRef={inputEl}
-              placeholder="Search"
-              inputProps={{ "aria-label": "search" }}
-            />
-          </Search> */}
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <Button
               sx={{
@@ -241,7 +231,6 @@ export default function Header() {
                   endIcon={
                     <Avatar
                       alt={user.nickname}
-                      src="testImage.jpg"
                       sx={{ width: 30, height: 30 }}
                     />
                   }
