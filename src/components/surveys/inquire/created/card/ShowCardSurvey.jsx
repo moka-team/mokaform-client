@@ -17,7 +17,7 @@ export default function ShowCardSurvey({ survey }) {
           <CardQuestionItemDisabled
             key={question.questionId}
             item={question}
-            multiquestion={survey.multiQuestions}
+            survey={survey}
           ></CardQuestionItemDisabled>
         </Section>
       ))}

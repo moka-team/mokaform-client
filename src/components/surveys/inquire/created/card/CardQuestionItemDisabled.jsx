@@ -1,7 +1,5 @@
 import React from "react";
-import { useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { surveyForCreated } from "../../../../../atoms";
 import {
   QuestionContentWrapper,
   QuestionOption,
@@ -16,9 +14,7 @@ const QWrapper = styled.div`
   text-align: center;
 `;
 
-export default function CardQuestionItemDisabled({ item, multiquestion }) {
-  const survey = useRecoilValue(surveyForCreated);
-
+export default function CardQuestionItemDisabled({ item, survey }) {
   const index = survey.questions.findIndex(
     (listItem) => listItem.questionId === item.questionId
   );
@@ -28,7 +24,7 @@ export default function CardQuestionItemDisabled({ item, multiquestion }) {
       <QuestionText color="#0064ff">Q{index + 1}</QuestionText>
       <QuestionText color="white">{item.title}</QuestionText>
       <QuestionContentWrapper>
-        {multiquestion
+        {survey.multiQuestions
           .filter(
             (multiQuestionItem) =>
               item.questionId === multiQuestionItem.questionId

@@ -1,4 +1,5 @@
-import { atom } from "recoil";
+import { atom, selectorFamily } from "recoil";
+import apiClient from "./api/client";
 
 export const EssayAnswerListState = atom({
   key: "EssayAnswerListState",
@@ -52,11 +53,6 @@ export const surveyForSubmitted = atom({
   default: [],
 });
 
-export const surveyForCreated = atom({
-  key: "surveyForCreated",
-  default: [],
-});
-
 export const surveySortState = atom({
   key: "surveySortState",
   default: "new",
@@ -95,4 +91,21 @@ export const isStartDateValidate = atom({
 export const isEndDateValidate = atom({
   key: "isEndDateValidate",
   default: false,
+});
+
+// selector 이용한 비동기 처리
+
+export const getSurveyQuery = selectorFamily({
+  key: "surveyState",
+  get: (sharingKey) => async () => {
+    const response = await apiClient.get("/api/v1/survey", {
+      params: {
+        sharingKey: sharingKey,
+      },
+    });
+    if (response.error) {
+      throw response.error;
+    }
+    return response.data.data;
+  },
 });

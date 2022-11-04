@@ -1,17 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useRecoilValue } from "recoil";
-import { surveyForCreated } from "../../../../../atoms";
 import {
   QuestionOption,
   QuestionText,
   QuestionWrapper,
 } from "../../../participate/styled";
 
-export default function MultipleChoiceQuestionItemDisabled({
-  item,
-  multiquestion,
-}) {
-  const survey = useRecoilValue(surveyForCreated);
+export default function MultipleChoiceQuestionItemDisabled({ item, survey }) {
   const index = survey.questions.findIndex(
     (listItem) => listItem.questionId === item.questionId
   );
@@ -47,7 +41,7 @@ export default function MultipleChoiceQuestionItemDisabled({
     <QuestionWrapper>
       <QuestionText color="#0064ff">Q{index + 1}</QuestionText>
       <QuestionText color="black">{item.title}</QuestionText>
-      {multiquestion
+      {survey.multiQuestions
         .filter(
           (multiQuestionItem) =>
             item.questionId === multiQuestionItem.questionId
