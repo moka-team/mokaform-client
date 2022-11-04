@@ -10,18 +10,9 @@ import Typography from "@mui/material/Typography";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import * as Sentry from "@sentry/react";
-import { setUser } from "@sentry/react";
 import dayjs from "dayjs";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import {
-  getAccessToken,
-  getRefreshToken,
-  logout,
-  updateAccessToken,
-} from "../../../../authentication/auth";
-import { userState } from "../../../../authentication/userState";
 import apiClient from "../../../../api/client";
 import { SaveBtn, SNavBar } from "../../common/styled";
 import { useCreateSurveyActions, useCreateSurveyValue } from "../surveyState";
