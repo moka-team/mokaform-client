@@ -4,9 +4,9 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import axios from "axios";
 import React from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
+import apiClient from '../../../api/client';
 import {
   EssayAnswerListState,
   essayAnswerValidateCount,
@@ -18,14 +18,7 @@ import {
 } from "../../../atoms";
 import { userState } from "../../../authentication/userState";
 import { SaveBtn, SNavBar } from "./styled";
-import * as Sentry from "@sentry/react";
-import {
-  getAccessToken,
-  getRefreshToken,
-  logout,
-  updateAccessToken,
-} from "../../../authentication/auth";
-import { setUser } from "@sentry/react";
+
 export default function NavBar() {
   const user = useRecoilValue(userState);
 
@@ -76,63 +69,32 @@ export default function NavBar() {
         essayAnswerList.length === 0
           ? []
           : essayAnswerList.length === 1
-          ? [essayAnswerList[0]]
-          : essayAnswerList,
+            ? [essayAnswerList[0]]
+            : essayAnswerList,
 
       multipleChoiceAnswers:
         multiChoiceAnswerList.length === 0
           ? []
           : multiChoiceAnswerList.length === 1
-          ? [multiChoiceAnswerList[0]]
-          : multiChoiceAnswerList,
+            ? [multiChoiceAnswerList[0]]
+            : multiChoiceAnswerList,
 
       oxAnswers:
         oxAnswerList.length === 0
           ? []
           : oxAnswerList.length === 1
-          ? [oxAnswerList[0]]
-          : oxAnswerList,
+            ? [oxAnswerList[0]]
+            : oxAnswerList,
     };
 
     console.log(JSON.stringify(answerInfo));
 
-    axios
-      .post("/api/v1/answer?userId=" + user.id, answerInfo, {
-        headers: {
-          accessToken: getAccessToken(),
-          refreshToken: getRefreshToken(),
-        },
-      })
+    apiClient
+      .post("/api/v1/answer?userId=" + user.id, answerInfo)
       .then(function (response) {
         console.log(response);
         resetRecoilValue();
         handleClickOpen();
-      })
-      .catch(function (error) {
-        console.log(error.message);
-        resetRecoilValue();
-        Sentry.captureException(error);
-        // Access Token 재발행이 필요한 경우
-        if (error.code === "C005") {
-          axios
-            .post("/api/v1/users/token/reissue", {
-              headers: {
-                accessToken: getAccessToken(),
-                refreshToken: getRefreshToken(),
-              },
-            })
-            .then((res) => {
-              updateAccessToken(res.data.data);
-            })
-            .catch(function (error) {
-              alert("refresh token 만료");
-              logout();
-              window.location.replace("/");
-              localStorage.clear();
-              setUser(null);
-            });
-        }
-        // handleClickFailDialogOpen();
       })
       .finally(function () {
         // always executed
