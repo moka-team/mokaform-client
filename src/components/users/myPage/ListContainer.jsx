@@ -1,15 +1,15 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-regular-svg-icons";
-import { useRecoilValue } from "recoil";
-import { userState } from "../../../authentication/userState";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
-import { RightContainer, Box, Header, Block } from "./styled";
-import CircleCarousel from "./CircleCarousel";
-import UserSurveyCard from "./UserSurveyCard";
+import { UserContext } from "../../../authentication/userState";
 import SortSelect from "../../common/SortSelect";
+import CircleCarousel from "./CircleCarousel";
+import { Block, Box, Header, RightContainer } from "./styled";
+import UserSurveyCard from "./UserSurveyCard";
 
 export default function ListContainer() {
-  const user = useRecoilValue(userState);
+  const user = useContext(UserContext);
   return (
     <RightContainer>
       <Header>

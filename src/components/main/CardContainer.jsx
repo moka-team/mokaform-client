@@ -1,17 +1,17 @@
-import React from "react";
+import { faPen } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { CardActionArea } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Chip from "@mui/material/Chip";
 import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
-import { CardActionArea } from "@mui/material";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen } from "@fortawesome/free-solid-svg-icons";
+import Typography from "@mui/material/Typography";
+import React from "react";
+import { Link } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { surveyList } from "../../atoms";
-import { Link } from "react-router-dom";
 import defaultImage from "../common/default_image.png";
 
 function SurveyCard({ survey }) {
