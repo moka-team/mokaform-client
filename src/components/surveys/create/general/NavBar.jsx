@@ -100,7 +100,13 @@ function NavBar() {
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
+  // 모달 창의 완료 누르면 창 닫힘
   const handleClose = () => setOpen(false);
+  // 모달 창의 닫기 누르면 창 닫힘 & 내용 초기화
+  const closeAndReset = () => {
+    setOpen(false);
+    resetCreateSurveyState();
+  };
 
   const isAnonymousOnChange = (event) => {
     setIsAnonymous(event.target.checked);
@@ -258,7 +264,7 @@ function NavBar() {
             <SelectCategory />
           </Typography>
           <Box sx={{ textAlign: "right", mt: 2 }}>
-            <Button onClick={handleClose} sx={{ fontWeight: 600 }}>
+            <Button onClick={closeAndReset} sx={{ fontWeight: 600 }}>
               닫기
             </Button>
             <Button onClick={handleClose} sx={{ fontWeight: 600 }} autoFocus>
