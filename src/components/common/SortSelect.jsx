@@ -176,29 +176,6 @@ export default function SortSelect({ page }) {
           sort: "createdAt,desc",
         },
       })
-      .catch(function (error) {
-        Sentry.captureException(error);
-        // Access Token 재발행이 필요한 경우
-        if (error.code === "C005") {
-          axios
-            .post("/api/v1/users/token/reissue", {
-              headers: {
-                accessToken: getAccessToken(),
-                refreshToken: getRefreshToken(),
-              },
-            })
-            .then((res) => {
-              updateAccessToken(res.data.data);
-            })
-            .catch(function (error) {
-              alert("refresh token 만료");
-              logout();
-              window.location.replace("/");
-              localStorage.clear();
-              setUser(null);
-            });
-        }
-      });
     setSurveys(response.data.data.content);
     setSurveySort("new");
   };
@@ -213,29 +190,7 @@ export default function SortSelect({ page }) {
           sort: "surveyeeCount,desc",
         },
       })
-      .catch(function (error) {
-        Sentry.captureException(error);
-        // Access Token 재발행이 필요한 경우
-        if (error.code === "C005") {
-          axios
-            .post("/api/v1/users/token/reissue", {
-              headers: {
-                accessToken: getAccessToken(),
-                refreshToken: getRefreshToken(),
-              },
-            })
-            .then((res) => {
-              updateAccessToken(res.data.data);
-            })
-            .catch(function (error) {
-              alert("refresh token 만료");
-              logout();
-              window.location.replace("/");
-              localStorage.clear();
-              setUser(null);
-            });
-        }
-      });
+      
     setSurveys(response.data.data.content);
     console.log(response.data.data.content);
     setSurveySort("hot");

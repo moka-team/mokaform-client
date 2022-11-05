@@ -1,7 +1,6 @@
 import { Box } from "@mui/material";
 import * as Sentry from "@sentry/react";
 import { setUser } from "@sentry/react";
-import axios from "axios";
 import React, { useCallback, useState } from "react";
 import {
   getAccessToken,
@@ -10,7 +9,6 @@ import {
   updateAccessToken
 } from "../../../authentication/auth";
 import CustomTextField from "../../common/CustomTextField";
-import { Message } from "./SignUpCSS";
 
 export default function SignEssentialForm({
   email,
@@ -47,7 +45,7 @@ export default function SignEssentialForm({
       setEmailMessage("이메일 형식으로 입력해주세요.");
       getIsEmail(false);
     } else {
-      axios
+      apiClient
         .get("/api/v1/users/check-email-duplication", {
           params: {
             email: emailCurrent,
@@ -76,29 +74,6 @@ export default function SignEssentialForm({
             getIsEmail(false);
           }
         })
-        .catch(function (error) {
-          Sentry.captureException(error);
-          // Access Token 재발행이 필요한 경우
-          if (error.code === "C005") {
-            axios
-              .post("/api/v1/users/token/reissue", {
-                headers: {
-                  accessToken: getAccessToken(),
-                  refreshToken: getRefreshToken(),
-                },
-              })
-              .then((res) => {
-                updateAccessToken(res.data.data);
-              })
-              .catch(function (error) {
-                alert("refresh token 만료");
-                logout();
-                window.location.replace("/");
-                localStorage.clear();
-                setUser(null);
-              });
-          }
-        });
     }
   }, []);
 
@@ -109,7 +84,7 @@ export default function SignEssentialForm({
         setNicknameMessage("2글자 이상 5글자 이하로 입력해주세요.");
         getIsNickname(false);
       } else {
-        axios
+        apiClient
           .get("/api/v1/users/check-nickname-duplication", {
             params: {
               nickname: e.target.value,
@@ -139,29 +114,6 @@ export default function SignEssentialForm({
               getIsNickname(false);
             }
           })
-          .catch(function (error) {
-            Sentry.captureException(error);
-            // Access Token 재발행이 필요한 경우
-            if (error.code === "C005") {
-              axios
-                .post("/api/v1/users/token/reissue", {
-                  headers: {
-                    accessToken: getAccessToken(),
-                    refreshToken: getRefreshToken(),
-                  },
-                })
-                .then((res) => {
-                  updateAccessToken(res.data.data);
-                })
-                .catch(function (error) {
-                  alert("refresh token 만료");
-                  logout();
-                  window.location.replace("/");
-                  localStorage.clear();
-                  setUser(null);
-                });
-            }
-          });
       }
     },
     [getNickname]

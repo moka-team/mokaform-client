@@ -1,9 +1,9 @@
 import * as Sentry from "@sentry/react";
 import { setUser } from "@sentry/react";
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState, useSetRecoilState } from "recoil";
+import apiClient from '../../../api/client';
 import {
   EssayAnswerListState,
   essayAnswerValidateCount,
@@ -51,7 +51,6 @@ export default function SurveyDetail({ sharingKey }) {
   );
   const setOXAnswerList = useSetRecoilState(oxAnswerListState);
 
-  const navigate = useNavigate();
   function checkingCard() {
     if (survey.data.questions[0].type === "MULTIPLE_CHOICE") {
       if (survey.data.multiQuestions[0].multiQuestionType === "CARD") {
@@ -70,46 +69,17 @@ export default function SurveyDetail({ sharingKey }) {
     setMultiValidateCount(0);
     setOXValidateCount(0);
 
-    axios
+    apiClient
       .get("/api/v1/survey", {
         params: {
           sharingKey: sharingKey,
         },
-        headers: {
-          accessToken: getAccessToken(),
-          refreshToken: getRefreshToken(),
-        },
       })
       .then(function (response) {
-        console.log(response);
         setSurvey(response.data);
         setIsDeleted(response.data.data.isDeleted);
         setSurveyQuestionCount(response.data.data.questionCount);
         setLoading(false);
-      })
-      .catch(function (error) {
-        setErrorMessage(error.message);
-        setError(true);
-        Sentry.captureException(error);
-        console.log(error);
-        // Access Token 재발행이 필요한 경우
-        if (error.response.data.code === "C005") {
-          axios
-            .post("/api/v1/users/token/reissue", {
-              accessToken: getAccessToken(),
-              refreshToken: getRefreshToken(),
-            })
-            .then((res) => {
-              updateAccessToken(res.data.data);
-            })
-            .catch(function (error) {
-              alert("refresh token 만료");
-              logout();
-              window.location.replace("/");
-              localStorage.clear();
-              setUser(null);
-            });
-        }
       })
       .finally(function () {
         // always executed

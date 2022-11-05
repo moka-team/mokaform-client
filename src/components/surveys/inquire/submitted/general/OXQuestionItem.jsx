@@ -1,8 +1,8 @@
 import * as Sentry from "@sentry/react";
 import { setUser } from "@sentry/react";
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
+import apiClient from '../../../../../api/client';
 import { surveyForSubmitted } from "../../../../../atoms";
 import {
   getAccessToken,
@@ -31,15 +31,11 @@ export default function InquireOXQuestionItem({ item, sharingKey }) {
   const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
-    axios
+    apiClient
       .get("/api/v1/users/my/submitted-surveys/" + sharingKey, {
         params: {
           userId: user.id,
-        },
-        headers: {
-          accessToken: getAccessToken(),
-          refreshToken: getRefreshToken(),
-        },
+        }
       })
       .then(function (response) {
         setOXAnswer(response.data.data.oxAnswers);
@@ -49,34 +45,6 @@ export default function InquireOXQuestionItem({ item, sharingKey }) {
           )[0].isYes
         );
         setLoading(false);
-      })
-      .catch(function (error) {
-        console.log(error.message);
-        setErrorMessage(error.message);
-        Sentry.captureException(error);
-
-        setError(true);
-
-        // Access Token 재발행이 필요한 경우
-        if (error.code === "C005") {
-          axios
-            .post("/api/v1/users/token/reissue", {
-              headers: {
-                accessToken: getAccessToken(),
-                refreshToken: getRefreshToken(),
-              },
-            })
-            .then((res) => {
-              updateAccessToken(res.data.data);
-            })
-            .catch(function (error) {
-              alert("refresh token 만료");
-              logout();
-              window.location.replace("/");
-              localStorage.clear();
-              setUser(null);
-            });
-        }
       })
       .finally(function () {
         // always executed
