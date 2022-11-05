@@ -11,6 +11,7 @@ import {
   QuestionOption,
   QuestionText,
 } from "../../create/card/styled";
+import { useCreateAnswerActions, useCreateAnswerValue } from "../answerState";
 
 const QWrapper = styled.div`
   width: 50%;
@@ -24,16 +25,20 @@ const QWrapper = styled.div`
 `;
 
 export default function CardQuestionItem({ item, multiquestion, survey }) {
-  const [multiChoiceAnswerList, setMultiChoiceAnswerList] = useRecoilState(
-    MultipleChoiceAnswerListState
-  );
+  const multipleChoiceAnswers = useCreateAnswerValue().multipleChoiceAnswers;
+  const multipleChoiceAnswerValidate =
+    useCreateAnswerValue().multipleChoiceAnswerValidate;
+  const {
+    addMultipleChoiceAnswer,
+    setMultipleChoiceAnswers,
+    setMultipleChoiceAnswerValidate,
+  } = useCreateAnswerActions();
   const [multiChoiceAnswer, setMultiChoiceAnswer] = useState({
     questionId: item.questionId,
     multiQuestionId: -1,
   });
-  const [multiChoiceValidateCount, setMultiChocieValidateCount] =
-    useRecoilState(multiChoiceAnswerValidateCount);
-  const index = multiChoiceAnswerList.findIndex(
+
+  const index = multipleChoiceAnswers.findIndex(
     (listItem) => listItem.questionId === multiChoiceAnswer.questionId
   );
 
@@ -45,16 +50,13 @@ export default function CardQuestionItem({ item, multiquestion, survey }) {
   const [prevClick, setPrevClick] = useState(null);
 
   useEffect(() => {
-    setMultiChoiceAnswerList((oldMultiChoiceAnswerList) => [
-      ...oldMultiChoiceAnswerList,
-      multiChoiceAnswer,
-    ]);
+    addMultipleChoiceAnswer(multiChoiceAnswer);
   }, []);
 
   const onClickHandler = (event) => {
     prevClick === null
-      ? setMultiChocieValidateCount(multiChoiceValidateCount + 1)
-      : setMultiChocieValidateCount(multiChoiceValidateCount);
+      ? setMultipleChoiceAnswerValidate(multipleChoiceAnswerValidate + 1)
+      : setMultipleChoiceAnswerValidate(multipleChoiceAnswerValidate);
 
     if (prevClick !== null && prevClick !== event.target.id) {
       let prev = document.getElementById(prevClick);
@@ -70,11 +72,11 @@ export default function CardQuestionItem({ item, multiquestion, survey }) {
       multiQuestionId: event.target.id,
     });
 
-    const newList = replaceItemAtIndex(multiChoiceAnswerList, index, {
+    const newList = replaceItemAtIndex(multipleChoiceAnswers, index, {
       ...multiChoiceAnswer,
       multiQuestionId: event.target.id,
     });
-    setMultiChoiceAnswerList(newList);
+    setMultipleChoiceAnswers(newList);
   };
 
   useEffect(

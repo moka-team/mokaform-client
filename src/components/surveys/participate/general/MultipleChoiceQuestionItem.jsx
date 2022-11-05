@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
-import {
-  multiChoiceAnswerValidateCount,
-  MultipleChoiceAnswerListState,
-  surveyForSubmit,
-} from "../../../../atoms";
+import { useCreateAnswerActions, useCreateAnswerValue } from "../answerState";
 import { QuestionOption, QuestionText, QuestionWrapper } from "../styled";
 
 export default function MultipleChoiceQuestionItem({
@@ -12,16 +7,20 @@ export default function MultipleChoiceQuestionItem({
   multiquestion,
   survey,
 }) {
-  const [multiChoiceAnswerList, setMultiChoiceAnswerList] = useRecoilState(
-    MultipleChoiceAnswerListState
-  );
+  const multipleChoiceAnswers = useCreateAnswerValue().multipleChoiceAnswers;
+  const multipleChoiceAnswerValidate =
+    useCreateAnswerValue().multipleChoiceAnswerValidate;
+  const {
+    addMultipleChoiceAnswer,
+    setMultipleChoiceAnswers,
+    setMultipleChoiceAnswerValidate,
+  } = useCreateAnswerActions();
   const [multiChoiceAnswer, setMultiChoiceAnswer] = useState({
     questionId: item.questionId,
     multiQuestionId: -1,
   });
-  const [multiChoiceValidateCount, setMultiChocieValidateCount] =
-    useRecoilState(multiChoiceAnswerValidateCount);
-  const index = multiChoiceAnswerList.findIndex(
+
+  const index = multipleChoiceAnswers.findIndex(
     (listItem) => listItem.questionId === multiChoiceAnswer.questionId
   );
 
@@ -33,16 +32,13 @@ export default function MultipleChoiceQuestionItem({
   const [prevClick, setPrevClick] = useState(null);
 
   useEffect(() => {
-    setMultiChoiceAnswerList((oldMultiChoiceAnswerList) => [
-      ...oldMultiChoiceAnswerList,
-      multiChoiceAnswer,
-    ]);
+    addMultipleChoiceAnswer(multiChoiceAnswer);
   }, []);
 
   const onClickHandler = (event) => {
     prevClick === null
-      ? setMultiChocieValidateCount(multiChoiceValidateCount + 1)
-      : setMultiChocieValidateCount(multiChoiceValidateCount);
+      ? setMultipleChoiceAnswerValidate(multipleChoiceAnswerValidate + 1)
+      : setMultipleChoiceAnswerValidate(multipleChoiceAnswerValidate);
 
     if (prevClick !== null && prevClick !== event.target.id) {
       let prev = document.getElementById(prevClick);
@@ -58,11 +54,11 @@ export default function MultipleChoiceQuestionItem({
       multiQuestionId: event.target.id,
     });
 
-    const newList = replaceItemAtIndex(multiChoiceAnswerList, index, {
+    const newList = replaceItemAtIndex(multipleChoiceAnswers, index, {
       ...multiChoiceAnswer,
       multiQuestionId: event.target.id,
     });
-    setMultiChoiceAnswerList(newList);
+    setMultipleChoiceAnswers(newList);
   };
 
   useEffect(

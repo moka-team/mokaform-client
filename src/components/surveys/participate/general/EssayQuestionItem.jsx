@@ -1,18 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
-import {
-  EssayAnswerListState,
-  essayAnswerValidateCount,
-  surveyForSubmit,
-} from "../../../../atoms";
+import { useCreateAnswerActions, useCreateAnswerValue } from "../answerState";
 import { Answer, QuestionText, QuestionWrapper } from "../styled";
 
 export default function EssayQuestionItem({ item, survey }) {
-  const [essayAnswerList, setEssayAnswerList] =
-    useRecoilState(EssayAnswerListState);
-  const [essayValidateCount, setEssayValidateCount] = useRecoilState(
-    essayAnswerValidateCount
-  );
+  const essayAnswers = useCreateAnswerValue().essayAnswers;
+  const essayAnswerValidate = useCreateAnswerValue().essayAnswerValidate;
+  const { addEssayAnswer, setEssayAnswers, setEssayAnswerValidate } =
+    useCreateAnswerActions();
+
   const [essayAnswer, setEssayAnswer] = useState({
     questionId: item.questionId,
     answerContent: "",
@@ -20,7 +15,7 @@ export default function EssayQuestionItem({ item, survey }) {
   const [prevAnswer, setPrevAnswer] = useState("");
   const [currentAnswer, setCurrentAnswer] = useState("");
 
-  const index = essayAnswerList.findIndex(
+  const index = essayAnswers.findIndex(
     (listItem) => listItem.questionId === essayAnswer.questionId
   );
 
@@ -29,28 +24,25 @@ export default function EssayQuestionItem({ item, survey }) {
   );
 
   useEffect(() => {
-    setEssayAnswerList((oldEssayAnswerList) => [
-      ...oldEssayAnswerList,
-      essayAnswer,
-    ]);
+    addEssayAnswer(essayAnswer);
   }, []);
 
   const onChange = ({ target: { value } }) => {
     value.length === 0 && prevAnswer.length === 1
-      ? setEssayValidateCount(essayValidateCount - 1)
+      ? setEssayAnswerValidate(essayAnswerValidate - 1)
       : value.length === 1 && prevAnswer.length === 0
-      ? setEssayValidateCount(essayValidateCount + 1)
-      : setEssayValidateCount(essayValidateCount);
+      ? setEssayAnswerValidate(essayAnswerValidate + 1)
+      : setEssayAnswerValidate(essayAnswerValidate);
 
     setCurrentAnswer(value);
 
     setEssayAnswer({ questionId: item.questionId, answerContent: value });
 
-    const newList = replaceItemAtIndex(essayAnswerList, index, {
+    const newList = replaceItemAtIndex(essayAnswers, index, {
       ...essayAnswer,
       answerContent: value,
     });
-    setEssayAnswerList(newList);
+    setEssayAnswers(newList);
   };
 
   useEffect(
