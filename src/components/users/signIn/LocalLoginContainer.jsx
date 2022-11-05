@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import apiClient from "../../../api/client";
 import { setTokens } from "../../../authentication/auth";
-import { userState } from "../../../authentication/userState";
+import {
+  UserActionsContext,
+  UserContext,
+} from "../../../authentication/userState";
 import CustomTextField from "../../common/CustomTextField";
 import { LocalLoginWrapper, LoginButton, LoginInputContainer } from "./styled";
 
@@ -13,7 +16,9 @@ function LocalLoginContainer() {
     password: "",
   });
 
-  const [user, setUser] = useRecoilState(userState);
+  const login = useContext(UserContext);
+  const { setLoggedUser } = useContext(UserActionsContext);
+
   const navigate = useNavigate();
 
   const handleChange = (event) => {
@@ -26,7 +31,9 @@ function LocalLoginContainer() {
     apiClient
       .get("/api/v1/users/my")
       .then(function (response) {
-        setUser(response.data.data);
+        console.log(response.data.data);
+        setLoggedUser(response.data.data);
+        console.log(login);
         window.alert("로그인이 완료되었습니다.");
         navigate("/");
       })

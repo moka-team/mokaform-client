@@ -4,9 +4,9 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import React from "react";
+import React, { useContext } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
-import apiClient from '../../../api/client';
+import apiClient from "../../../api/client";
 import {
   EssayAnswerListState,
   essayAnswerValidateCount,
@@ -16,12 +16,10 @@ import {
   oxAnswerValidateCount,
   surveyQuestionCount,
 } from "../../../atoms";
-import { userState } from "../../../authentication/userState";
+import { UserContext } from "../../../authentication/userState";
 import { SaveBtn, SNavBar } from "./styled";
 
 export default function NavBar() {
-  const user = useRecoilValue(userState);
-
   // 답변 저장 활성화 관련 변수
   const [essayValidateCount, setEssayValidateCount] = useRecoilState(
     essayAnswerValidateCount
@@ -43,6 +41,7 @@ export default function NavBar() {
   const [oxAnswerList, setOXAnswerList] = useRecoilState(oxAnswerListState);
 
   const [open, setOpen] = React.useState(false);
+  const user = useContext(UserContext);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -69,22 +68,22 @@ export default function NavBar() {
         essayAnswerList.length === 0
           ? []
           : essayAnswerList.length === 1
-            ? [essayAnswerList[0]]
-            : essayAnswerList,
+          ? [essayAnswerList[0]]
+          : essayAnswerList,
 
       multipleChoiceAnswers:
         multiChoiceAnswerList.length === 0
           ? []
           : multiChoiceAnswerList.length === 1
-            ? [multiChoiceAnswerList[0]]
-            : multiChoiceAnswerList,
+          ? [multiChoiceAnswerList[0]]
+          : multiChoiceAnswerList,
 
       oxAnswers:
         oxAnswerList.length === 0
           ? []
           : oxAnswerList.length === 1
-            ? [oxAnswerList[0]]
-            : oxAnswerList,
+          ? [oxAnswerList[0]]
+          : oxAnswerList,
     };
 
     console.log(JSON.stringify(answerInfo));

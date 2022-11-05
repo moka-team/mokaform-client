@@ -8,7 +8,6 @@ import OptionUnstyled, {
 import PopperUnstyled from "@mui/base/PopperUnstyled";
 import { styled } from "@mui/system";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { userState } from "../../authentication/userState";
 import {
   surveyList,
   surveySortState,
@@ -164,33 +163,30 @@ export default function SortSelect({ page }) {
   const [createdSurveys, setCreatedSurveys] = useRecoilState(createdMySurvey);
   const [submittedSurveys, setSubmittedSurveys] =
     useRecoilState(submittedMySurvey);
-  const user = useRecoilValue(userState);
 
   // 메인에서 최신순 데이터 불러오기
   const fetchRecentSurvey = async () => {
-    const response = await axios
-      .get("api/v1/survey/list", {
-        params: {
-          page: 0,
-          size: 10,
-          sort: "createdAt,desc",
-        },
-      })
+    const response = await axios.get("api/v1/survey/list", {
+      params: {
+        page: 0,
+        size: 10,
+        sort: "createdAt,desc",
+      },
+    });
     setSurveys(response.data.data.content);
     setSurveySort("new");
   };
 
   // 메인에서 참여자 많은 순 데이터 불러오기
   const fetchFamousSurvey = async () => {
-    const response = await axios
-      .get("api/v1/survey/list", {
-        params: {
-          page: 0,
-          size: 10,
-          sort: "surveyeeCount,desc",
-        },
-      })
-      
+    const response = await axios.get("api/v1/survey/list", {
+      params: {
+        page: 0,
+        size: 10,
+        sort: "surveyeeCount,desc",
+      },
+    });
+
     setSurveys(response.data.data.content);
     console.log(response.data.data.content);
     setSurveySort("hot");

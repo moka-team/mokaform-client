@@ -1,25 +1,24 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Mypage from "./pages/users/myPage/index";
 import Main from "./pages/index";
+import Mypage from "./pages/users/myPage/index";
 
-import SignUp from "./pages/users/signUp";
-import SignIn from "./pages/users/signIn";
-import CreateSurvey from "./pages/surveys/create/general/index";
-import routes from "./routes";
+import axios from "axios";
+import { useContext, useEffect } from "react";
 import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
+import { getAccessToken, getRefreshToken } from "./authentication/auth";
 import SurveyAnalysis from "./pages/surveys/analysis";
-import Participate from "./pages/surveys/participate/index";
-import ManageSurvey from "./pages/surveys/manage";
+import CreateCardSurvey from "./pages/surveys/create/card/index";
+import CreateSurvey from "./pages/surveys/create/general/index";
 import Show from "./pages/surveys/inquire/created/general";
 import InquireSubmittedSurvey from "./pages/surveys/inquire/submitted";
-import { useRecoilValue } from "recoil";
-import { userState } from "./authentication/userState";
-import CreateCardSurvey from "./pages/surveys/create/card/index";
-import { useEffect } from "react";
-import { NotFound } from './components/common/NotFound';
-
+import ManageSurvey from "./pages/surveys/manage";
+import Participate from "./pages/surveys/participate/index";
+import SignIn from "./pages/users/signIn";
+import SignUp from "./pages/users/signUp";
+import routes from "./routes";
+import { UserContext } from "./authentication/userState";
 const GlobalStyle = createGlobalStyle`
   ${reset}
   font-family: 'Inter', sans-serif;
@@ -31,15 +30,15 @@ function setScreenSize() {
 }
 
 function App() {
-  // 로그인 확인 수정 필요
-  const user = useRecoilValue(userState);
-
   window.addEventListener("resize", () => setScreenSize());
 
   useEffect(() => {
     setScreenSize();
+    axios.defaults.headers.common["accessToken"] = getAccessToken();
+    axios.defaults.headers.common["refreshToken"] = getRefreshToken();
   });
 
+  const user = useContext(UserContext);
   return (
     <BrowserRouter>
       <GlobalStyle />
@@ -94,10 +93,6 @@ function App() {
           element={
             user !== null ? <CreateCardSurvey /> : <SignIn signInAlert={true} />
           }
-        ></Route>
-        <Route
-        path={"*"}
-        element={<NotFound />}
         ></Route>
       </Routes>
     </BrowserRouter>
