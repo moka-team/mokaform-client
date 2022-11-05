@@ -9,7 +9,8 @@ import {
   updateAccessToken
 } from "../../../authentication/auth";
 import CustomTextField from "../../common/CustomTextField";
-
+import  apiClient  from '../../../api/client';
+import { Message } from "./SignUpCSS";
 export default function SignEssentialForm({
   email,
   nickname,

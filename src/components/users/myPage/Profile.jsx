@@ -32,7 +32,7 @@ function Profile() {
   const [selectedImage, setSelectedImage] = useState(null);
   // user 추후 삭제
   const user = useRecoilValue(userState);
-
+  const [profile, setProfile] = useState("");
   // TODO: profile 받아오기
   const fetchProfile = async () => {
     const response = await apiClient

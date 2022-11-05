@@ -14,12 +14,6 @@ import PreferenceRow from "./PreferenceRow";
 import SexRow from "./SexRow";
 import SignEssentialForm from "./SignEssentialForm";
 import { Button, Container, MainTitle, Rows } from "./SignUpCSS";
-import {
-  getAccessToken,
-  getRefreshToken,
-  logout,
-  updateAccessToken,
-} from "../../../authentication/auth";
 import { setUser } from "@sentry/react";
 import  apiClient  from '../../../api/client';
 
