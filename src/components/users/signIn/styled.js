@@ -91,7 +91,7 @@ const ResetPasswordLink = styled(Link)`
 `;
 
 const SignUpLink = styled(Link)`
-  position: absolute;
+  /* position: absolute; */
   top: 0%;
   right: 0%;
   text-decoration: none;

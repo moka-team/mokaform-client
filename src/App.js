@@ -18,7 +18,8 @@ import { useRecoilValue } from "recoil";
 import { userState } from "./authentication/userState";
 import CreateCardSurvey from "./pages/surveys/create/card/index";
 import { useEffect } from "react";
-import { NotFound } from './components/common/NotFound';
+import { NotFound } from "./components/common/NotFound";
+import ResetPassword from "./pages/users/ResetPassword";
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -51,6 +52,7 @@ function App() {
         ></Route>
         <Route path={routes.signup} element={<SignUp />}></Route>
         <Route path={routes.signin} element={<SignIn />}></Route>
+        <Route path={routes.resetPassword} element={<ResetPassword />}></Route>
         <Route
           path={routes.createSurvey}
           element={
@@ -95,10 +97,7 @@ function App() {
             user !== null ? <CreateCardSurvey /> : <SignIn signInAlert={true} />
           }
         ></Route>
-        <Route
-        path={"*"}
-        element={<NotFound />}
-        ></Route>
+        <Route path={"*"} element={<NotFound />}></Route>
       </Routes>
     </BrowserRouter>
   );
