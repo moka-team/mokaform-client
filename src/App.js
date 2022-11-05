@@ -19,6 +19,7 @@ import { userState } from "./authentication/userState";
 import CreateCardSurvey from "./pages/surveys/create/card/index";
 import { useEffect } from "react";
 import { NotFound } from './components/common/NotFound';
+import EmailConfirm from "./pages/users/emailConfirm";
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -51,6 +52,7 @@ function App() {
         ></Route>
         <Route path={routes.signup} element={<SignUp />}></Route>
         <Route path={routes.signin} element={<SignIn />}></Route>
+        <Route path={routes.emailConfirm} element={<EmailConfirm />}></Route>
         <Route
           path={routes.createSurvey}
           element={
