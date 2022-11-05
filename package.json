@@ -83,5 +83,5 @@
     "prettier": "^2.7.1",
     "uglifyjs-webpack-plugin": "^2.2.0"
   },
-  "proxy": "http://210.109.62.23:8080"
+  "proxy": "https://www.mokaform.site"
 }

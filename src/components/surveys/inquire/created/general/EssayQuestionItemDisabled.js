@@ -1,15 +1,11 @@
 import React from "react";
-import { surveyForCreated } from "../../../../../atoms";
 import {
-  QuestionWrapper,
-  QuestionText,
   Answer,
+  QuestionText,
+  QuestionWrapper,
 } from "../../../participate/styled";
-import { useRecoilValue } from "recoil";
 
-export default function EssayQuestionItemDisabled({ item }) {
-  const survey = useRecoilValue(surveyForCreated);
-
+export default function EssayQuestionItemDisabled({ item, survey }) {
   const index = survey.questions.findIndex(
     (listItem) => listItem.questionId === item.questionId
   );
