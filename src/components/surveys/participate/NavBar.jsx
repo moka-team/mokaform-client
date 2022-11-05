@@ -5,22 +5,15 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import React, { useContext } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import apiClient from "../../../api/client";
-import {
-  EssayAnswerListState,
-  essayAnswerValidateCount,
-  multiChoiceAnswerValidateCount,
-  MultipleChoiceAnswerListState,
-  oxAnswerListState,
-  oxAnswerValidateCount,
-  surveyQuestionCount,
-} from "../../../atoms";
-import { UserContext } from "../../../authentication/userState";
+import { userState } from "../../../authentication/userState";
+import { useCreateAnswerActions, useCreateAnswerValue } from "./answerState";
 import { SaveBtn, SNavBar } from "./styled";
+import { UserContext } from "../../../authentication/userState";
 
 export default function NavBar() {
-  const user = useRecoilValue(userState);
+  const user = useContext(UserContext);
   const answers = useCreateAnswerValue();
   const { setEssayAnswers, setMultipleChoiceAnswers, setOXAnswers } =
     useCreateAnswerActions();
