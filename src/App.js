@@ -18,7 +18,7 @@ import { useRecoilValue } from "recoil";
 import { userState } from "./authentication/userState";
 import CreateCardSurvey from "./pages/surveys/create/card/index";
 import { useEffect } from "react";
-import { NotFound } from './components/common/NotFound';
+import { NotFound } from "./components/common/NotFound";
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -39,6 +39,12 @@ function App() {
   useEffect(() => {
     setScreenSize();
   });
+
+  if (process.env.NODE_ENV !== "development") {
+    console.log = () => {};
+    console.error = () => {};
+    console.debug = () => {};
+  }
 
   return (
     <BrowserRouter>
@@ -95,10 +101,7 @@ function App() {
             user !== null ? <CreateCardSurvey /> : <SignIn signInAlert={true} />
           }
         ></Route>
-        <Route
-        path={"*"}
-        element={<NotFound />}
-        ></Route>
+        <Route path={"*"} element={<NotFound />}></Route>
       </Routes>
     </BrowserRouter>
   );
