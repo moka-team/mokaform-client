@@ -1,32 +1,32 @@
 import DeleteIcon from "@mui/icons-material/Delete";
 import React from "react";
-import { useRecoilState } from "recoil";
-import { detailMCQuestionState } from "../../../../atoms";
 import { DetailContainer, Input } from "../../common/styled";
+import { useCreateSurveyActions, useCreateSurveyValue } from "../surveyState";
 
-export default function DetailSurveyItem({ item }) {
-  const [detailQuestionList, setDetailQuestionList] = useRecoilState(
-    detailMCQuestionState
+export default function MultipleChoiceQuestionItem({ item }) {
+  const survey = useCreateSurveyValue();
+  const { setMultiQuestions } = useCreateSurveyActions();
+  const index = survey.multiQuestions.findIndex(
+    (listItem) => listItem === item
   );
-  const index = detailQuestionList.findIndex((listItem) => listItem === item);
 
   const deleteItem = () => {
-    const newList = removeItemAtIndex(detailQuestionList, index);
-    setDetailQuestionList(newList);
+    const newList = removeItemAtIndex(survey.multiQuestions, index);
+    setMultiQuestions(newList);
   };
 
-  const updateDetailItem = ({ target: { value } }) => {
-    const newList = replaceItemAtIndex(detailQuestionList, index, {
+  const updateItem = ({ target: { value } }) => {
+    const newList = replaceItemAtIndex(survey.multiQuestions, index, {
       ...item,
       content: value,
     });
-    setDetailQuestionList(newList);
+    setMultiQuestions(newList);
   };
 
   return (
     <DetailContainer>
       <Input
-        onChange={updateDetailItem}
+        onChange={updateItem}
         value={item.content}
         placeholder="응답옵션"
         bgColor="#f5f6fa"

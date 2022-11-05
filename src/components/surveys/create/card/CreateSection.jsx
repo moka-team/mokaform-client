@@ -1,14 +1,39 @@
-import React from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { surveyListState, surveySummary, surveyTitle } from "../../../../atoms";
+import dayjs from "dayjs";
+import React, { useEffect } from "react";
 import { Create, Summary, Title } from "../../common/styled";
+import { useCreateSurveyActions, useCreateSurveyValue } from "../surveyState";
 import SurveyCreateItem from "./SurveyCreateItem";
 import SurveyItemCreator from "./SurveyItemCreator";
 
 export default function CreateSection() {
-  const surveyList = useRecoilValue(surveyListState);
-  const setTitle = useSetRecoilState(surveyTitle);
-  const setSummary = useSetRecoilState(surveySummary);
+  const survey = useCreateSurveyValue();
+  const {
+    setTitle,
+    setSummary,
+    setIsAnonymous,
+    setIsPublic,
+    setStartDate,
+    setEndDate,
+    setCategories,
+    setQuestions,
+    setMultiQuestions,
+  } = useCreateSurveyActions();
+
+  const resetCreateSurveyState = () => {
+    setTitle("");
+    setSummary("");
+    setIsAnonymous(false);
+    setIsPublic(false);
+    setStartDate(dayjs(""));
+    setEndDate(dayjs(""));
+    setCategories([]);
+    setQuestions([]);
+    setMultiQuestions([]);
+  };
+
+  useEffect(() => {
+    resetCreateSurveyState();
+  }, []);
 
   const titleOnChange = (event) => {
     setTitle(event.target.value);
@@ -33,7 +58,7 @@ export default function CreateSection() {
         bgColor="#f5f6fa"
         tcolor="#202632"
       ></Summary>
-      {surveyList.map((surveyItem) => (
+      {survey.questions.map((surveyItem) => (
         <SurveyCreateItem
           key={surveyItem.index}
           item={surveyItem}

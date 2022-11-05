@@ -1,20 +1,16 @@
 import React from "react";
-import { useRecoilValue } from "recoil";
-import { surveyListState, surveySummary, surveyTitle } from "../../../../atoms";
 import { Preview, SummaryText, TitleText } from "../../common/styled";
+import { useCreateSurveyValue } from "../surveyState";
 
 import SurveyPreviewItem from "./SurveyPreviewItem";
 export default function PreviewSection() {
-  const title = useRecoilValue(surveyTitle);
-  const summary = useRecoilValue(surveySummary);
-
-  const surveyList = useRecoilValue(surveyListState);
+  const survey = useCreateSurveyValue();
 
   return (
     <Preview>
-      <TitleText>{title}</TitleText>
-      <SummaryText>{summary}</SummaryText>
-      {surveyList.map((surveyItem) => (
+      <TitleText>{survey.title}</TitleText>
+      <SummaryText>{survey.summary}</SummaryText>
+      {survey.questions.map((surveyItem) => (
         <SurveyPreviewItem key={surveyItem.index} item={surveyItem} />
       ))}
     </Preview>

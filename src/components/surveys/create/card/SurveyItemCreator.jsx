@@ -1,29 +1,23 @@
 import { AddCircle } from "@mui/icons-material";
 import { Button } from "@mui/material";
-import { React, useState } from "react";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import styled from "styled-components";
-import { createdQuestionCount, surveyListState } from "../../../../atoms";
-
-const Container = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-`;
+import { React, useEffect, useState } from "react";
+import { useCreateSurveyActions, useCreateSurveyValue } from "../surveyState";
+import { Container2 } from "./styled";
 
 export default function SurveyItemCreator() {
-  const [questionCount, setQuestionCount] =
-    useRecoilState(createdQuestionCount);
+  const survey = useCreateSurveyValue();
+  const { setQuestions } = useCreateSurveyActions();
+  const [questionList, setQuestionList] = useState([]);
+
   const [question, setQuestion] = useState("");
-  const setSurveyList = useSetRecoilState(surveyListState);
 
   const onClickHandler = (event, index) => {
     addItem(index);
   };
 
   const addItem = () => {
-    setSurveyList((oldSurveyList) => [
-      ...oldSurveyList,
+    setQuestionList((oldSurveyList) => [
+      ...survey.questions,
       {
         index: getId(),
         title: question,
@@ -32,11 +26,14 @@ export default function SurveyItemCreator() {
       },
     ]);
     setQuestion("");
-    setQuestionCount(questionCount + 1);
   };
 
+  useEffect(() => {
+    setQuestions(questionList);
+  }, [questionList]);
+
   return (
-    <Container>
+    <Container2>
       <Button
         id="lock-button"
         aria-haspopup="listbox"
@@ -46,7 +43,7 @@ export default function SurveyItemCreator() {
       >
         <AddCircle sx={{ color: "#202632" }} />
       </Button>
-    </Container>
+    </Container2>
   );
 }
 let id = 0;
