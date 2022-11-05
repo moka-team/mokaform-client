@@ -1,29 +1,8 @@
 import SocialLoginContainer from "./SocialLoginContainer";
 import AuthMenu from "./AuthMenu";
-import { LoginFormWrapper } from "./styled";
+import { LoginFormWrapper, InfoTitle, InfoText, CenterWrapper } from "./styled";
 import styled from "styled-components";
 import ResetFormBox from "./ResetFormBox";
-
-const InfoTitle = styled.h1`
-  font-size: larger;
-  font-weight: 600;
-  color: #202632;
-  margin-bottom: 30px;
-`;
-
-const InfoText = styled.h6`
-  font-size: small;
-  color: #202632;
-  margin-top: 10px;
-  color: gray;
-`;
-
-const CenterWrapper = styled.div`
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-  display: flex;
-`;
 
 function ResetContainer() {
   return (

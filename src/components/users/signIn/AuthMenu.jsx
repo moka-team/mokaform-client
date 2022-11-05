@@ -1,20 +1,11 @@
-import { AuthMenuContainer, SignUpLink, ResetPasswordLink } from "./styled";
+import {
+  AuthMenuContainer,
+  SignUpLink,
+  ResetPasswordLink,
+  Wrapper,
+  Distinguish,
+} from "./styled";
 import styled from "styled-components";
-
-const Wrapper = styled.div`
-  margin-top: 25px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-`;
-
-const Distinguish = styled.p`
-  margin-left: 20px;
-  margin-right: 20px;
-  color: gray;
-  font-size: smaller;
-`;
 
 function AuthMenu() {
   return (
