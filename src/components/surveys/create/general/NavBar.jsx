@@ -100,7 +100,13 @@ function NavBar() {
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
+  // 모달 창의 완료 누르면 창 닫힘
   const handleClose = () => setOpen(false);
+  // 모달 창의 닫기 누르면 창 닫힘 & 내용 초기화
+  const closeAndReset = () => {
+    setOpen(false);
+    resetCreateSurveyState();
+  };
 
   const isAnonymousOnChange = (event) => {
     setIsAnonymous(event.target.checked);
@@ -115,7 +121,7 @@ function NavBar() {
     setSummary("");
     setIsAnonymous(false);
     setIsPublic(false);
-    setStartDate(dayjs(""));
+    setStartDate(dayjs().format("YYYY-MM-DD"));
     setEndDate(dayjs(""));
     setCategories([]);
     setQuestions([]);
@@ -161,6 +167,7 @@ function NavBar() {
       ? createSurvey()
       : handleClickDialogOpen();
   };
+
   return (
     <SNavBar>
       <Button onClick={handleOpen}>설문 세부 설정</Button>
@@ -208,6 +215,7 @@ function NavBar() {
                 onChange={(newValue) => {
                   setStartDate(dayjs(newValue).format("YYYY-MM-DD"));
                 }}
+                minDate={dayjs().format("YYYY-MM-DD")}
                 renderInput={({ inputRef, inputProps, InputProps }) => (
                   <Box
                     sx={{
@@ -234,6 +242,7 @@ function NavBar() {
                 onChange={(newValue) => {
                   setEndDate(dayjs(newValue).format("YYYY-MM-DD"));
                 }}
+                minDate={dayjs().format("YYYY-MM-DD")}
                 renderInput={({ inputRef, inputProps, InputProps }) => (
                   <Box
                     sx={{
@@ -254,6 +263,14 @@ function NavBar() {
           <Typography sx={{ mt: 2 }} variant="body2">
             <SelectCategory />
           </Typography>
+          <Box sx={{ textAlign: "right", mt: 2 }}>
+            <Button onClick={closeAndReset} sx={{ fontWeight: 600 }}>
+              닫기
+            </Button>
+            <Button onClick={handleClose} sx={{ fontWeight: 600 }} autoFocus>
+              확인
+            </Button>
+          </Box>
         </Box>
       </Modal>
       <SaveBtn

@@ -1,10 +1,4 @@
 import { React, useEffect, useState } from "react";
-import {
-  getAccessToken,
-  getRefreshToken,
-  logout,
-  updateAccessToken,
-} from "../../../authentication/auth";
 import Header from "../../common/Header";
 import Error from "../participate/Error";
 import Loading from "../participate/Loading";
@@ -34,13 +28,11 @@ import TableFooter from "@mui/material/TableFooter";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import * as Sentry from "@sentry/react";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
+import apiClient from '../../../api/client';
 import routes from "../../../routes";
 import { TContainer } from "./styled";
-import { setUser } from "@sentry/react";
-import apiClient from '../../../api/client';
 function TablePaginationActions(props) {
   const theme = useTheme();
   const { count, page, rowsPerPage, onPageChange } = props;

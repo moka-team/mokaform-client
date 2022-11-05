@@ -4,11 +4,19 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import React from "react";
-import { useRecoilValue } from "recoil";
+import React, { useContext } from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
 import apiClient from "../../../api/client";
-import { userState } from "../../../authentication/userState";
-import { useCreateAnswerActions, useCreateAnswerValue } from "./answerState";
+import {
+  EssayAnswerListState,
+  essayAnswerValidateCount,
+  multiChoiceAnswerValidateCount,
+  MultipleChoiceAnswerListState,
+  oxAnswerListState,
+  oxAnswerValidateCount,
+  surveyQuestionCount,
+} from "../../../atoms";
+import { UserContext } from "../../../authentication/userState";
 import { SaveBtn, SNavBar } from "./styled";
 
 export default function NavBar() {

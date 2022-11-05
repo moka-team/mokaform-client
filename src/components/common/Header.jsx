@@ -1,23 +1,22 @@
-import React, { useState, useRef, useEffect } from "react";
-import { styled, alpha } from "@mui/material/styles";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import InputBase from "@mui/material/InputBase";
-import SearchIcon from "@mui/icons-material/Search";
-import AccountCircle from "@mui/icons-material/AccountCircle";
 import MoreIcon from "@mui/icons-material/MoreVert";
-import Button from "@mui/material/Button";
+import AppBar from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import InputBase from "@mui/material/InputBase";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import { alpha, styled } from "@mui/material/styles";
+import Toolbar from "@mui/material/Toolbar";
+import React, { useContext, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useRecoilState } from "recoil";
-import { userState } from "../../authentication/userState";
-import { Logo } from "./Logo";
 import { logout } from "../../authentication/auth";
+import {
+  UserActionsContext,
+  UserContext,
+} from "../../authentication/userState";
+import { Logo } from "./Logo";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -78,7 +77,6 @@ export default function Header() {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const [surveyAnchorEl, setSurveyAnchorEl] = React.useState(null);
   const [logined, setLogined] = useState(false);
-  const [user, setUser] = useRecoilState(userState);
 
   const inputEl = useRef(null);
   const isMenuOpen = Boolean(anchorEl);
@@ -87,6 +85,8 @@ export default function Header() {
   const isSurveyOpen = Boolean(surveyAnchorEl);
 
   const navigate = useNavigate();
+  const user = useContext(UserContext);
+  const { setLoggedUser } = useContext(UserActionsContext);
 
   const handleNavigateGeneralSurvey = (event) => {
     setSurveyAnchorEl(null);
@@ -130,7 +130,7 @@ export default function Header() {
     logout();
     window.location.replace("/");
     localStorage.clear();
-    setUser(null);
+    setLoggedUser(null);
   };
 
   const handleMobileMenuOpen = (event) => {
@@ -208,7 +208,7 @@ export default function Header() {
             >
               설문 만들기
             </Button>
-            {user === null ? (
+            {!user.loggedIn ? (
               <Button
                 sx={{
                   fontSize: "15px",
