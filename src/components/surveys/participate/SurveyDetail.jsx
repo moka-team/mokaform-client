@@ -1,91 +1,85 @@
-import React, { useState, useEffect } from "react";
-import NavBar from "./NavBar";
-import EssayQuestionItem from "./EssayQuestionItem";
-import MultipleChoiceQuestionItem from "./MultipleChoiceQuestionItem";
-import OXQuestionItem from "./OXQuestionItem";
-import { Container, SummaryText, Survey, TitleText } from "./styled";
-import axios from "axios";
-import Loading from "./Loading";
-import Error from "./Error";
-import DeleteSurvey from "./DeleteSurvey";
+import * as Sentry from "@sentry/react";
+import { setUser } from "@sentry/react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import apiClient from '../../../api/client';
 import {
-  isEssayAnswerValidate,
-  isMultiChoiceAnswerValidate,
-  isOXAnswerValidate,
   EssayAnswerListState,
+  essayAnswerValidateCount,
+  multiChoiceAnswerValidateCount,
   MultipleChoiceAnswerListState,
   oxAnswerListState,
+  oxAnswerValidateCount,
+  surveyForSubmit,
+  surveyQuestionCount,
 } from "../../../atoms";
-import { useSetRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
-import { userState } from "../../../authentication/userState";
+import {
+  getAccessToken,
+  getRefreshToken,
+  logout,
+  updateAccessToken,
+} from "../../../authentication/auth";
+import CardParticipate from "./card/CardParticipate";
+import DeleteSurvey from "./DeleteSurvey";
+import Error from "./Error";
+import EssayQuestionItem from "./general/EssayQuestionItem";
+import MultipleChoiceQuestionItem from "./general/MultipleChoiceQuestionItem";
+import OXQuestionItem from "./general/OXQuestionItem";
+import Loading from "./Loading";
+import NavBar from "./NavBar";
+import { Container, SummaryText, Survey, TitleText } from "./styled";
 
 export default function SurveyDetail({ sharingKey }) {
-  const [survey, setSurvey] = useState(null);
+  const [survey, setSurvey] = useRecoilState(surveyForSubmit);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
   const [isDeleted, setIsDeleted] = useState(false);
 
-  const setEssayAnswerList = useResetRecoilState(EssayAnswerListState);
-  const setMultiChoiceAnswerList = useResetRecoilState(
+  const setSurveyQuestionCount = useSetRecoilState(surveyQuestionCount);
+
+  // 답변 저장 관련 변수
+  const setEssayValidateCount = useSetRecoilState(essayAnswerValidateCount);
+  const setMultiValidateCount = useSetRecoilState(
+    multiChoiceAnswerValidateCount
+  );
+  const setOXValidateCount = useSetRecoilState(oxAnswerValidateCount);
+  const setEssayAnswerList = useSetRecoilState(EssayAnswerListState);
+  const setMultiChoiceAnswerList = useSetRecoilState(
     MultipleChoiceAnswerListState
   );
-  const setOXAnswerList = useResetRecoilState(oxAnswerListState);
+  const setOXAnswerList = useSetRecoilState(oxAnswerListState);
 
-  const setIsEssayValidate = useSetRecoilState(isEssayAnswerValidate);
-  const setIsMultiChoiceValidate = useSetRecoilState(
-    isMultiChoiceAnswerValidate
-  );
-  const setIsOXValidate = useSetRecoilState(isOXAnswerValidate);
-
-  console.log(setEssayAnswerList);
-  console.log(setMultiChoiceAnswerList);
-  console.log(setOXAnswerList);
-
-  // 로그인 상태 검사
-  const user = useRecoilValue(userState);
-  useEffect(() => {
-    if (user === null) {
-      alert("로그인이 필요한 서비스입니다.");
-      window.location.replace("http://localhost:3000/");
+  function checkingCard() {
+    if (survey.data.questions[0].type === "MULTIPLE_CHOICE") {
+      if (survey.data.multiQuestions[0].multiQuestionType === "CARD") {
+        return true;
+      }
     }
-  }, []);
+    return false;
+  }
 
   useEffect(() => {
-    axios
+    setEssayAnswerList([]);
+    setMultiChoiceAnswerList([]);
+    setOXAnswerList([]);
+
+    setEssayValidateCount(0);
+    setMultiValidateCount(0);
+    setOXValidateCount(0);
+
+    apiClient
       .get("/api/v1/survey", {
         params: {
           sharingKey: sharingKey,
         },
       })
       .then(function (response) {
-        console.log(response);
         setSurvey(response.data);
         setIsDeleted(response.data.data.isDeleted);
-
-        response.data.data.questions.filter(
-          (question) => question.type == "ESSAY"
-        ).length === 0
-          ? setIsEssayValidate(true)
-          : setIsEssayValidate(false);
-
-        response.data.data.questions.filter(
-          (question) => question.type == "MULTIPLE_CHOICE"
-        ).length === 0
-          ? setIsMultiChoiceValidate(true)
-          : setIsMultiChoiceValidate(false);
-
-        response.data.data.questions.filter((question) => question.type == "OX")
-          .length === 0
-          ? setIsOXValidate(true)
-          : setIsOXValidate(false);
-
+        setSurveyQuestionCount(response.data.data.questionCount);
         setLoading(false);
-      })
-      .catch(function (error) {
-        console.log(error.message);
-        setErrorMessage(error.message);
-        setError(true);
       })
       .finally(function () {
         // always executed
@@ -99,29 +93,35 @@ export default function SurveyDetail({ sharingKey }) {
   return (
     <Container>
       <NavBar></NavBar>
-      <Survey>
-        <TitleText>{survey.data.title}</TitleText>
-        <SummaryText>{survey.data.summary}</SummaryText>
-        {survey.data.questions.map((question) =>
-          question.type === "ESSAY" ? (
-            <EssayQuestionItem
-              key={question.questionId}
-              item={question}
-            ></EssayQuestionItem>
-          ) : question.type === "OX" ? (
-            <OXQuestionItem
-              key={question.questionId}
-              item={question}
-            ></OXQuestionItem>
-          ) : (
-            <MultipleChoiceQuestionItem
-              key={question.questionId}
-              item={question}
-              multiquestion={survey.data.multiQuestions}
-            ></MultipleChoiceQuestionItem>
-          )
-        )}
-      </Survey>
+
+      {/* 카드 형식 보여주기 */}
+      {checkingCard() ? (
+        <CardParticipate />
+      ) : (
+        <Survey>
+          <TitleText>{survey.data.title}</TitleText>
+          <SummaryText>{survey.data.summary}</SummaryText>
+          {survey.data.questions.map((question) =>
+            question.type === "ESSAY" ? (
+              <EssayQuestionItem
+                key={question.questionId}
+                item={question}
+              ></EssayQuestionItem>
+            ) : question.type === "OX" ? (
+              <OXQuestionItem
+                key={question.questionId}
+                item={question}
+              ></OXQuestionItem>
+            ) : (
+              <MultipleChoiceQuestionItem
+                key={question.questionId}
+                item={question}
+                multiquestion={survey.data.multiQuestions}
+              ></MultipleChoiceQuestionItem>
+            )
+          )}
+        </Survey>
+      )}
     </Container>
   );
 }

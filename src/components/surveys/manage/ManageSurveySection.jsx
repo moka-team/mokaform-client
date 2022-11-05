@@ -1,39 +1,46 @@
-import { React, useState, useEffect } from "react";
+import { React, useEffect, useState } from "react";
+import {
+  getAccessToken,
+  getRefreshToken,
+  logout,
+  updateAccessToken,
+} from "../../../authentication/auth";
 import Header from "../../common/Header";
-import { Container, TableSection, Text } from "./styled";
-import axios from "axios";
 import Error from "../participate/Error";
 import Loading from "../participate/Loading";
+import { Container, TableSection, Text } from "./styled";
 
-import PropTypes from "prop-types";
-import { useTheme } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell, { tableCellClasses } from "@mui/material/TableCell";
-import TableHead from "@mui/material/TableHead";
-import TableContainer from "@mui/material/TableContainer";
-import TableFooter from "@mui/material/TableFooter";
-import TablePagination from "@mui/material/TablePagination";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import IconButton from "@mui/material/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EqualizerIcon from "@mui/icons-material/Equalizer";
 import FirstPageIcon from "@mui/icons-material/FirstPage";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
-import { styled } from "@mui/material/styles";
+import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { TContainer } from "./styled";
-import DeleteIcon from "@mui/icons-material/Delete";
-import EqualizerIcon from "@mui/icons-material/Equalizer";
-import { Link } from "react-router-dom";
+import IconButton from "@mui/material/IconButton";
+import Paper from "@mui/material/Paper";
+import { styled, useTheme } from "@mui/material/styles";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell, { tableCellClasses } from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableFooter from "@mui/material/TableFooter";
+import TableHead from "@mui/material/TableHead";
+import TablePagination from "@mui/material/TablePagination";
+import TableRow from "@mui/material/TableRow";
+import * as Sentry from "@sentry/react";
+import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 import routes from "../../../routes";
+import { TContainer } from "./styled";
+import { setUser } from "@sentry/react";
+import apiClient from '../../../api/client';
 function TablePaginationActions(props) {
   const theme = useTheme();
   const { count, page, rowsPerPage, onPageChange } = props;
@@ -135,6 +142,7 @@ export default function ManageSurveySection({ userId }) {
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const [requireRerender, setRequireRerender] = useState(true);
+  const navigate = useNavigate();
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -161,17 +169,19 @@ export default function ManageSurveySection({ userId }) {
   const handleDialogClose = () => {
     setDialogOpen(false);
   };
+  const handleOnClick = async (surveyId) => {
+    await apiClient
+      .get(`/api/v1/users/my/surveys/${surveyId}/stats`)
+      .then((res) => navigate(routes.surveyStats, { state: res.data.data }))
+  };
 
   const handleDeleteItem = () => {
     setDialogOpen(false);
 
-    axios
+    apiClient
       .delete("/api/v1/survey/" + selectedSurveyId)
       .then(function (response) {
         console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error.message);
       })
       .finally(function () {
         // always executed
@@ -181,21 +191,16 @@ export default function ManageSurveySection({ userId }) {
   };
 
   const fetchData = () => {
-    axios
+    apiClient
       .get("/api/v1/users/my/surveys", {
         params: {
           userId: userId,
-        },
+        }
       })
       .then(function (response) {
         console.log(response);
         setSurvey(response.data.data.content);
         setLoading(false);
-      })
-      .catch(function (error) {
-        console.log(error.message);
-        setErrorMessage(error.message);
-        setError(true);
       })
       .finally(function () {
         // always executed
@@ -260,14 +265,12 @@ export default function ManageSurveySection({ userId }) {
                     <StyledTableCell align="center">
                       {data.isPublic ? <div>가능</div> : <div>불가능</div>}
                     </StyledTableCell>
-                    <StyledTableCell>
-                      <IconButton>
-                        <Link to={routes.surveyStats}>
-                          <EqualizerIcon />
-                        </Link>
+                    <StyledTableCell align="center">
+                      <IconButton onClick={() => handleOnClick(data.surveyId)}>
+                        <EqualizerIcon sx={{ color: "#202632" }} />
                       </IconButton>
                     </StyledTableCell>
-                    <StyledTableCell>
+                    <StyledTableCell align="center">
                       <IconButton
                         id="lock-button"
                         aria-haspopup="listbox"
@@ -283,7 +286,7 @@ export default function ManageSurveySection({ userId }) {
 
                 {emptyRows > 0 && (
                   <TableRow style={{ height: 53 * emptyRows }}>
-                    <TableCell colSpan={8} />
+                    <TableCell colSpan={9} />
                   </TableRow>
                 )}
               </TableBody>
@@ -296,7 +299,7 @@ export default function ManageSurveySection({ userId }) {
                       25,
                       { label: "All", value: -1 },
                     ]}
-                    colSpan={8}
+                    colSpan={9}
                     count={survey.length}
                     rowsPerPage={rowsPerPage}
                     page={page}

@@ -6,11 +6,11 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
-  margin: 50px 0px;
+  margin: 25px 0px;
 `;
 const Content = styled.div`
   border: 1px #a0c7e4 solid;
-  padding: 20px 50px;
+  padding: 20px 150px;
   margin-bottom: 10px;
 `;
 
@@ -64,7 +64,7 @@ export default function EssayComponent({ data }) {
   return (
     <Container>
       {data?.slice(0, next)?.map((item) => (
-        <Content>{item.content}</Content>
+        <Content>{item}</Content>
       ))}
       <Button onClick={handleMore}>LOAD MORE</Button>
     </Container>

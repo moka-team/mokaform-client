@@ -8,23 +8,38 @@ const PieChartContainer = styled.div`
   margin-bottom: 50px;
 `;
 
+const formatting = (data) => {
+  const result = [];
+  data.forEach((ele, idx) => {
+    const tmp = {};
+    tmp.id = idx + 1;
+    tmp.label = idx + 1;
+    tmp.content = ele.multiQuestionContent;
+    tmp.value = ele.multiQuestionContentCount;
+
+    result.push(tmp);
+  });
+  return result;
+};
+
 export default function PieChart({ data }) {
+  const result = formatting(data);
+
   return (
     <PieChartContainer>
       <ResponsivePie
-        data={data}
+        data={result}
         margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
         innerRadius={0.5}
         padAngle={0.7}
         cornerRadius={3}
         activeOuterRadiusOffset={8}
-        colors={{ scheme: "blues" }}
+        colors={{ scheme: "paired" }}
         borderWidth={1}
         borderColor={{
           from: "color",
           modifiers: [["darker", 0.2]],
         }}
-        enableArcLinkLabels={false}
         arcLinkLabelsSkipAngle={10}
         arcLinkLabelsTextColor="#333333"
         arcLinkLabelsThickness={2}

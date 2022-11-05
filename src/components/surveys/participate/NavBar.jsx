@@ -1,44 +1,48 @@
-import React, { useEffect, useState } from "react";
-import { SNavBar, SaveBtn } from "./styled";
-import { useRecoilState, useRecoilValue } from "recoil";
-import {
-  EssayAnswerListState,
-  MultipleChoiceAnswerListState,
-  oxAnswerListState,
-  isEssayAnswerValidate,
-  isMultiChoiceAnswerValidate,
-  isOXAnswerValidate,
-} from "../../../atoms";
-import axios from "axios";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { useNavigate } from "react-router-dom";
+import React from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
+import apiClient from '../../../api/client';
+import {
+  EssayAnswerListState,
+  essayAnswerValidateCount,
+  multiChoiceAnswerValidateCount,
+  MultipleChoiceAnswerListState,
+  oxAnswerListState,
+  oxAnswerValidateCount,
+  surveyQuestionCount,
+} from "../../../atoms";
 import { userState } from "../../../authentication/userState";
+import { SaveBtn, SNavBar } from "./styled";
 
 export default function NavBar() {
   const user = useRecoilValue(userState);
 
-  const [isEssayValidate, setIsEssayValidate] = useRecoilState(
-    isEssayAnswerValidate
+  // 답변 저장 활성화 관련 변수
+  const [essayValidateCount, setEssayValidateCount] = useRecoilState(
+    essayAnswerValidateCount
   );
-  const [isMultiChoiceValidate, setIsMultiChoiceValidate] = useRecoilState(
-    isMultiChoiceAnswerValidate
+  const [multiValidateCount, setMultiValidateCount] = useRecoilState(
+    multiChoiceAnswerValidateCount
   );
-  const [isOXValidate, setIsOXValidate] = useRecoilState(isOXAnswerValidate);
+  const [oxValidateCount, setOXValidateCount] = useRecoilState(
+    oxAnswerValidateCount
+  );
+  const questionCount = useRecoilValue(surveyQuestionCount);
 
-  const [isSubmit, setIsSubmit] = useState(false);
+  // 답변 저장 POST 관련 변수
   const [essayAnswerList, setEssayAnswerList] =
     useRecoilState(EssayAnswerListState);
   const [multiChoiceAnswerList, setMultiChoiceAnswerList] = useRecoilState(
     MultipleChoiceAnswerListState
   );
   const [oxAnswerList, setOXAnswerList] = useRecoilState(oxAnswerListState);
+
   const [open, setOpen] = React.useState(false);
-  const navigate = useNavigate();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -46,23 +50,17 @@ export default function NavBar() {
 
   const handleClose = () => {
     setOpen(false);
-    window.location.replace("http://localhost:3000/");
+    window.location.replace("/");
   };
 
   const resetRecoilValue = () => {
-    setIsEssayValidate(false);
-    setIsMultiChoiceValidate(false);
-    setIsOXValidate(false);
-
     setEssayAnswerList([]);
     setMultiChoiceAnswerList([]);
     setOXAnswerList([]);
 
-    console.log(essayAnswerList);
-    console.log(multiChoiceAnswerList);
-    console.log(oxAnswerList);
-
-    console.log("모두삭제!");
+    setEssayValidateCount(0);
+    setMultiValidateCount(0);
+    setOXValidateCount(0);
   };
 
   const handleSubmit = () => {
@@ -71,37 +69,32 @@ export default function NavBar() {
         essayAnswerList.length === 0
           ? []
           : essayAnswerList.length === 1
-          ? [essayAnswerList[0]]
-          : essayAnswerList,
+            ? [essayAnswerList[0]]
+            : essayAnswerList,
 
       multipleChoiceAnswers:
         multiChoiceAnswerList.length === 0
           ? []
           : multiChoiceAnswerList.length === 1
-          ? [multiChoiceAnswerList[0]]
-          : multiChoiceAnswerList,
+            ? [multiChoiceAnswerList[0]]
+            : multiChoiceAnswerList,
 
       oxAnswers:
         oxAnswerList.length === 0
           ? []
           : oxAnswerList.length === 1
-          ? [oxAnswerList[0]]
-          : oxAnswerList,
+            ? [oxAnswerList[0]]
+            : oxAnswerList,
     };
 
     console.log(JSON.stringify(answerInfo));
 
-    axios
+    apiClient
       .post("/api/v1/answer?userId=" + user.id, answerInfo)
       .then(function (response) {
         console.log(response);
         resetRecoilValue();
         handleClickOpen();
-      })
-      .catch(function (error) {
-        console.log(error.message);
-        resetRecoilValue();
-        // handleClickFailDialogOpen();
       })
       .finally(function () {
         // always executed
@@ -111,7 +104,10 @@ export default function NavBar() {
   return (
     <SNavBar>
       <SaveBtn
-        disabled={!(isEssayValidate && isMultiChoiceValidate && isOXValidate)}
+        disabled={
+          essayValidateCount + multiValidateCount + oxValidateCount !==
+          questionCount
+        }
         onClick={handleSubmit}
       >
         저장

@@ -2,10 +2,19 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
-import axios from "axios";
 import { useRecoilState } from "recoil";
 import { surveyList, surveySortState } from "../../atoms";
 import { useEffect } from "react";
+import {
+  getAccessToken,
+  getRefreshToken,
+  logout,
+  updateAccessToken,
+} from "../../authentication/auth";
+import * as Sentry from "@sentry/react";
+import { setUser } from "@sentry/react";
+import apiClient from '../../api/client';
+
 const StyledDownButton = styled.button`
   background: none;
   width: 100;
@@ -27,25 +36,25 @@ export default function DownButton() {
   }, [surveySort]);
 
   const fetchNewRecentSurvey = async () => {
-    const response = await axios.get("/api/v1/survey/list", {
+    const response = await apiClient.get("/api/v1/survey/list", {
       params: {
         page: 1 + count,
         size: 10,
         sort: "createdAt,desc",
-      },
+      }
     });
     setCount((count) => count + 1);
-    console.log(response.data.data.content);
     setServeys([...surveys, ...response.data.data.content]);
   };
   const fetchNewFamousSurvey = async () => {
-    const response = await axios.get("/api/v1/survey/list", {
-      params: {
-        page: 1 + count,
-        size: 10,
-        sort: "surveyeeCount,desc",
-      },
-    });
+    const response = await apiClient
+      .get("/api/v1/survey/list", {
+        params: {
+          page: 1 + count,
+          size: 10,
+          sort: "surveyeeCount,desc",
+        }
+      })
     setCount((count) => count + 1);
     setServeys([...surveys, ...response.data.data.content]);
   };

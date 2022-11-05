@@ -1,55 +1,4 @@
 import { atom } from "recoil";
-import dayjs from "dayjs";
-
-export const surveyTitle = atom({
-  key: "surveyTitle",
-  default: "",
-});
-
-export const surveySummary = atom({
-  key: "surveySummary",
-  default: "",
-});
-
-export const surveyIsAnonymous = atom({
-  key: "surveyIsAnonymous",
-  default: false,
-});
-
-export const surveyIsPublic = atom({
-  key: "surveyIsPublic",
-  default: false,
-});
-
-export const surveyStartDate = atom({
-  key: "surveyStartDate",
-  default: dayjs(""),
-});
-
-export const surveyEndDate = atom({
-  key: "surveyEndDate",
-  default: dayjs(""),
-});
-
-export const surveyListState = atom({
-  key: "surveyListState",
-  default: [],
-});
-
-export const detailMCQuestionState = atom({
-  key: "detailMCQuestionState",
-  default: [],
-});
-
-export const surveyImage = atom({
-  key: "surveyImage",
-  default: "",
-});
-
-export const surveyCategory = atom({
-  key: "surveyCategory",
-  default: [],
-});
 
 export const EssayAnswerListState = atom({
   key: "EssayAnswerListState",
@@ -66,23 +15,45 @@ export const oxAnswerListState = atom({
   default: [],
 });
 
-export const isEssayAnswerValidate = atom({
-  key: "isEssayAnswerValidate",
-  default: false,
+// 설문 답변 생성
+export const essayAnswerValidateCount = atom({
+  key: "essayAnswerValidateCount",
+  default: 0,
 });
 
-export const isMultiChoiceAnswerValidate = atom({
-  key: "isMultiChoiceAnswerValidate",
-  default: false,
+export const multiChoiceAnswerValidateCount = atom({
+  key: "multiChoiceAnswerValidateCount",
+  default: 0,
 });
 
-export const isOXAnswerValidate = atom({
-  key: "isOXAnswerValidate",
-  default: false,
+export const oxAnswerValidateCount = atom({
+  key: "oxAnswerValidateCount",
+  default: 0,
+});
+
+export const surveyQuestionCount = atom({
+  key: "surveyQuestionCount",
+  default: 0,
+});
+
+export const surveyForSubmit = atom({
+  key: "surveyForSubmit",
+  default: [],
 });
 
 export const surveyList = atom({
   key: "surveyList",
+  default: [],
+});
+
+// 마이페이지
+export const surveyForSubmitted = atom({
+  key: "surveyForSubmitted",
+  default: [],
+});
+
+export const surveyForCreated = atom({
+  key: "surveyForCreated",
   default: [],
 });
 
