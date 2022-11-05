@@ -1,11 +1,9 @@
-import * as Sentry from "@sentry/react";
-import { setUser } from "@sentry/react";
-import React, { useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
-import apiClient from '../../../../api/client';
-import { surveyForCreated } from "../../../../atoms";
+import React, { useState } from "react";
+import { useRecoilValueLoadable } from "recoil";
+import { getSurveyQuery } from "../../../../atoms";
 import Error from "../../participate/Error";
 import Loading from "../../participate/Loading";
+
 import {
   Container,
   SNavBar,
@@ -19,70 +17,63 @@ import MultipleChoiceQuestionItemDisabled from "./general/MultipleChoiceQuestion
 import OXQuestionItemDisabled from "./general/OXQuestionItemDisabled";
 
 export default function ShowSurvey({ sharingKey }) {
-  const [survey, setSurvey] = useRecoilState(surveyForCreated);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [errorMessage, setErrorMessage] = useState(null);
+  function SurveyInfo() {
+    const survey = useRecoilValueLoadable(getSurveyQuery(sharingKey));
+    switch (survey.state) {
+      case "hasValue":
+        return (
+          <Container>
+            <SNavBar></SNavBar>
+            {survey.contents.multiQuestions.length > 0 &&
+            checkingCard(
+              survey.contents.questions[0].type,
+              survey.contents.multiQuestions[0].multiQuestionType
+            ) ? (
+              <ShowCardSurvey survey={survey.contents}></ShowCardSurvey>
+            ) : (
+              <Survey>
+                <TitleText>{survey.contents.title}</TitleText>
+                <SummaryText>{survey.contents.summary}</SummaryText>
+                {survey.contents.questions.map((question) =>
+                  question.type === "ESSAY" ? (
+                    <EssayQuestionItemDisabled
+                      key={question.questionId}
+                      item={question}
+                      survey={survey.contents}
+                    ></EssayQuestionItemDisabled>
+                  ) : question.type === "OX" ? (
+                    <OXQuestionItemDisabled
+                      key={question.questionId}
+                      item={question}
+                      survey={survey.contents}
+                    ></OXQuestionItemDisabled>
+                  ) : (
+                    <MultipleChoiceQuestionItemDisabled
+                      key={question.questionId}
+                      item={question}
+                      survey={survey.contents}
+                    ></MultipleChoiceQuestionItemDisabled>
+                  )
+                )}
+              </Survey>
+            )}
+          </Container>
+        );
+      case "loading":
+        return <Loading></Loading>;
+      case "hasError":
+        return <Error></Error>;
+    }
+  }
 
-  function checkingCard() {
-    if (survey.questions[0].type === "MULTIPLE_CHOICE") {
-      if (survey.multiQuestions[0].multiQuestionType === "CARD") {
+  function checkingCard(questionType, multiQuestionType) {
+    if (questionType === "MULTIPLE_CHOICE") {
+      if (multiQuestionType === "CARD") {
         return true;
       }
     }
     return false;
   }
 
-  useEffect(() => {
-    apiClient
-      .get("/api/v1/survey", {
-        params: {
-          sharingKey: sharingKey,
-        }
-      })
-      .then(function (response) {
-        console.log(response);
-        setSurvey(response.data.data);
-        setLoading(false);
-      })
-      .finally(function () {
-        // always executed
-      });
-  }, [sharingKey]);
-
-  if (error) return <Error errorMessage={errorMessage}></Error>;
-  if (loading) return <Loading></Loading>;
-
-  return (
-    <Container>
-      <SNavBar></SNavBar>
-      {checkingCard() ? (
-        <ShowCardSurvey survey={survey}></ShowCardSurvey>
-      ) : (
-        <Survey>
-          <TitleText>{survey.title}</TitleText>
-          <SummaryText>{survey.summary}</SummaryText>
-          {survey.questions.map((question) =>
-            question.type === "ESSAY" ? (
-              <EssayQuestionItemDisabled
-                key={question.questionId}
-                item={question}
-              ></EssayQuestionItemDisabled>
-            ) : question.type === "OX" ? (
-              <OXQuestionItemDisabled
-                key={question.questionId}
-                item={question}
-              ></OXQuestionItemDisabled>
-            ) : (
-              <MultipleChoiceQuestionItemDisabled
-                key={question.questionId}
-                item={question}
-                multiquestion={survey.multiQuestions}
-              ></MultipleChoiceQuestionItemDisabled>
-            )
-          )}
-        </Survey>
-      )}
-    </Container>
-  );
+  return <SurveyInfo></SurveyInfo>;
 }

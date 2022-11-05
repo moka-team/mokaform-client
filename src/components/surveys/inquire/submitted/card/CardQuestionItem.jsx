@@ -1,12 +1,9 @@
-import * as Sentry from "@sentry/react";
-import { setUser } from "@sentry/react";
-import React, { useEffect, useState } from "react";
-import { useRecoilValue } from "recoil";
+import React from "react";
+import { useRecoilValueLoadable } from "recoil";
 import styled from "styled-components";
-import apiClient from '../../../../../api/client';
-import { surveyForSubmitted } from "../../../../../atoms";
-import { userState } from "../../../../../authentication/userState";
+import { getSurveyAnswerQuery } from "../../../../../atoms";
 import Error from "../../../participate/Error";
+import Loading from "../../../participate/Loading";
 import { QuestionText2 } from "../styled";
 
 const QWrapper = styled.div`
@@ -35,72 +32,60 @@ const QuestionOption = styled.button`
   font-weight: ${(props) => props.weight};
 `;
 
-export default function CardQuestionItem({ item, multiquestion, sharingKey }) {
-  const user = useRecoilValue(userState);
-  const survey = useRecoilValue(surveyForSubmitted);
+export default function CardQuestionItem({ item, sharingKey, survey }) {
   const index = survey.questions.findIndex(
     (listItem) => listItem.questionId === item.questionId
   );
 
-  const [multiChoiceAnswer, setMultiChoiceAnswer] = useState([]);
-  const [answer, setAnswer] = useState(-1);
+  function AnswerInfo() {
+    const answers = useRecoilValueLoadable(getSurveyAnswerQuery(sharingKey));
 
-  const [loading, setLoading] = useState(true);
-
-  const [error, setError] = useState(null);
-  const [errorMessage, setErrorMessage] = useState(null);
-
-  useEffect(() => {
-    apiClient
-      .get("/api/v1/users/my/submitted-surveys/" + sharingKey, {
-        params: {
-          userId: user.id,
-        }
-      })
-      .then(function (response) {
-        console.log(response.data.data.multipleChoiceAnswers);
-        setMultiChoiceAnswer(response.data.data.multipleChoiceAnswers);
-        setAnswer(
-          response.data.data.multipleChoiceAnswers.filter(
-            (multiChoiceAnswerItem) =>
-              multiChoiceAnswerItem.questionId === item.questionId
-          )[0].multiQuestionId
+    switch (answers.state) {
+      case "hasValue":
+        const answer = answers.contents.multipleChoiceAnswers.filter(
+          (multiChoiceAnswerItem) =>
+            multiChoiceAnswerItem.questionId === item.questionId
+        )[0].multiQuestionId;
+        return (
+          <QWrapper>
+            <QuestionText2 color="#0064ff">Q{index + 1}</QuestionText2>
+            <QuestionText2 color="white">{item.title}</QuestionText2>
+            <QuestionContentWrapper>
+              {survey.multiQuestions
+                .filter(
+                  (multiQuestionItem) =>
+                    item.questionId === multiQuestionItem.questionId
+                )
+                .map((multiQuestion) => (
+                  <QuestionOption
+                    key={multiQuestion.multiQuestionId}
+                    bcolor={
+                      multiQuestion.multiQuestionId === answer
+                        ? "#0064ff"
+                        : "#edeef0"
+                    }
+                    color={
+                      multiQuestion.multiQuestionId === answer
+                        ? "white"
+                        : "black"
+                    }
+                    weight={
+                      multiQuestion.multiQuestionId === answer ? 600 : 400
+                    }
+                    style={{ pointerEvents: "none" }}
+                  >
+                    {multiQuestion.multiQuestionContent}
+                  </QuestionOption>
+                ))}
+            </QuestionContentWrapper>
+          </QWrapper>
         );
-        setLoading(false);
-      })
-      .finally(function () {
-        // always executed
-      });
-  }, []);
+      case "loading":
+        return <Loading></Loading>;
+      case "hasError":
+        return <Error></Error>;
+    }
+  }
 
-  if (error) return <Error errorMessage={errorMessage}></Error>;
-
-  return (
-    <QWrapper>
-      <QuestionText2 color="#0064ff">Q{index + 1}</QuestionText2>
-      <QuestionText2 color="white">{item.title}</QuestionText2>
-      <QuestionContentWrapper>
-        {multiquestion
-          .filter(
-            (multiQuestionItem) =>
-              item.questionId === multiQuestionItem.questionId
-          )
-          .map((multiQuestion) => (
-            <QuestionOption
-              key={multiQuestion.multiQuestionId}
-              bcolor={
-                multiQuestion.multiQuestionId === answer ? "#0064ff" : "#edeef0"
-              }
-              color={
-                multiQuestion.multiQuestionId === answer ? "white" : "black"
-              }
-              weight={multiQuestion.multiQuestionId === answer ? 600 : 400}
-              style={{ pointerEvents: "none" }}
-            >
-              {multiQuestion.multiQuestionContent}
-            </QuestionOption>
-          ))}
-      </QuestionContentWrapper>
-    </QWrapper>
-  );
+  return <AnswerInfo></AnswerInfo>;
 }
