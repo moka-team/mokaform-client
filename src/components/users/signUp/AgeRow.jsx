@@ -1,14 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { useRecoilState } from "recoil";
-import { Title, Row } from "./SignUpCSS";
-import { ageGroupState } from "./SignUpState";
+import React, { useEffect, useState } from "react";
+import { Row, Title } from "./SignUpCSS";
 
-export default function AgeRow() {
+export default function AgeRow({ age, getAge }) {
   const ages = ["10대", "20대", "30대", "40대", "50대+"];
   const ids = ["TEENAGER", "TWENTIES", "THIRTIES", "FORTIES", "FIFTIES"];
-
-  const [age, setAgeGroup] = useRecoilState(ageGroupState);
-
   const [currentClick, setCurrentClick] = useState(null);
   const [prevClick, setPrevClick] = useState(null);
 
@@ -21,7 +16,8 @@ export default function AgeRow() {
     }
 
     setCurrentClick(event.target.id);
-    setAgeGroup(event.target.id);
+    getAge(event.target.id);
+    console.log(event.target.id);
   };
 
   useEffect(
