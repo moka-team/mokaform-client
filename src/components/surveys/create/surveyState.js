@@ -10,7 +10,7 @@ function CreateSurveyProvider({ children }) {
     summary: "",
     isAnonymous: false,
     isPublic: false,
-    startDate: dayjs(""),
+    startDate: dayjs().format("YYYY-MM-DD"),
     endDate: dayjs(""),
     categories: [],
     questions: [],
