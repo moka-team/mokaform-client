@@ -1,20 +1,14 @@
-import { useState } from "react";
-import TextField from "@mui/material/TextField";
-import { styled } from "@mui/material/styles";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { LocalLoginWrapper, LoginInputContainer, LoginButton } from "./styled";
 import { useRecoilState } from "recoil";
-import { userState } from "../../../authentication/userState";
-import * as Sentry from "@sentry/react";
+import apiClient from "../../../api/client";
+import { setTokens } from "../../../authentication/auth";
 import {
-  getAccessToken,
-  getRefreshToken,
-  logout,
-  setTokens,
-  updateAccessToken,
-} from "../../../authentication/auth";
+  UserActionsContext,
+  UserContext,
+} from "../../../authentication/userState";
 import CustomTextField from "../../common/CustomTextField";
-import apiClient from '../../../api/client';
+import { LocalLoginWrapper, LoginButton, LoginInputContainer } from "./styled";
 
 function LocalLoginContainer() {
   const [inputs, setInputs] = useState({
@@ -22,7 +16,9 @@ function LocalLoginContainer() {
     password: "",
   });
 
-  const [user, setUser] = useRecoilState(userState);
+  const login = useContext(UserContext);
+  const { setLoggedUser } = useContext(UserActionsContext);
+
   const navigate = useNavigate();
 
   const handleChange = (event) => {
@@ -31,12 +27,13 @@ function LocalLoginContainer() {
     setInputs((values) => ({ ...values, [name]: value }));
   };
 
-  const fetchUser = (accessToken) => {
+  const fetchUser = () => {
     apiClient
       .get("/api/v1/users/my")
       .then(function (response) {
-        console.log(response);
-        setUser(response.data.data);
+        console.log(response.data.data);
+        setLoggedUser(response.data.data);
+        console.log(login);
         window.alert("로그인이 완료되었습니다.");
         navigate("/");
       })
@@ -70,7 +67,7 @@ function LocalLoginContainer() {
       })
       .catch(function (error) {
         window.alert("이메일 또는 비밀번호가 일치하지 않습니다.");
-        });
+      });
   };
   return (
     <LocalLoginWrapper>

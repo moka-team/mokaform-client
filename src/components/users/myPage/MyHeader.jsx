@@ -1,16 +1,15 @@
-import React, { useRef } from "react";
+import MoreIcon from "@mui/icons-material/MoreVert";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import MoreIcon from "@mui/icons-material/MoreVert";
 import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import Toolbar from "@mui/material/Toolbar";
+import React, { useContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { UserActionsContext } from "../../../authentication/userState";
 import { Logo } from "../../common/Logo";
-import { userState } from "../../../authentication/userState";
-import { useRecoilState } from "recoil";
 
 const appBarStyle = {
   backgroundColor: "#F5F6FA",
@@ -23,7 +22,6 @@ export default function Header() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const [surveyAnchorEl, setSurveyAnchorEl] = React.useState(null);
-  const [user, setUser] = useRecoilState(userState);
 
   const inputEl = useRef(null);
   const isMenuOpen = Boolean(anchorEl);
@@ -31,6 +29,7 @@ export default function Header() {
   const menuId = "primary-search-account-menu";
 
   const navigate = useNavigate();
+  const { setLoggedUser } = useContext(UserActionsContext);
 
   const handleNavigateGeneralSurvey = (event) => {
     setSurveyAnchorEl(null);
@@ -50,7 +49,7 @@ export default function Header() {
     // local storage에 user 정보 삭제
     window.location.replace("/");
     localStorage.clear();
-    setUser(null);
+    setLoggedUser(null);
   };
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);

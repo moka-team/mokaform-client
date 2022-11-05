@@ -4,16 +4,16 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
-import { userState } from "../../../authentication/userState";
+import { UserContext } from "../../../authentication/userState";
 import { Container } from "./styled";
 
 export default function DeleteSurvey({ request }) {
-  const user = useRecoilValue(userState);
   const [dialogOpen, setDialogOpen] = useState(true);
   const navigate = useNavigate();
+  const user = useContext(UserContext);
 
   const handleClickDialogOpen = () => {
     setDialogOpen(true);
