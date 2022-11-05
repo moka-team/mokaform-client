@@ -1,10 +1,6 @@
 import React from "react";
-import { Container, MessageText } from "./styled";
+import { MessageText } from "./styled";
 
 export default function Loading() {
-  return (
-    <Container>
-      <MessageText color="black">Loading...</MessageText>
-    </Container>
-  );
+  return <MessageText color="black">Loading...</MessageText>;
 }

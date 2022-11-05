@@ -95,6 +95,7 @@ export const isEndDateValidate = atom({
 
 // selector 이용한 비동기 처리
 
+// 특정 설문 조회
 export const getSurveyQuery = selectorFamily({
   key: "surveyState",
   get: (sharingKey) => async () => {
@@ -103,6 +104,17 @@ export const getSurveyQuery = selectorFamily({
         sharingKey: sharingKey,
       },
     });
+    return response.data.data;
+  },
+});
+
+// 특정 설문에 대한 응답 조회
+export const getSurveyAnswerQuery = selectorFamily({
+  key: "surveyAnswerState",
+  get: (sharingKey) => async () => {
+    const response = await apiClient.get(
+      "/api/v1/users/my/submitted-surveys/" + sharingKey
+    );
     return response.data.data;
   },
 });

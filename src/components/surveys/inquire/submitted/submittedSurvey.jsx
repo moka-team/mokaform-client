@@ -1,16 +1,6 @@
-import * as Sentry from "@sentry/react";
-import { setUser } from "@sentry/react";
-import React, { useEffect, useState } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
-import apiClient from '../../../../api/client';
-import { surveyForSubmitted } from "../../../../atoms";
-import {
-  getAccessToken,
-  getRefreshToken,
-  logout,
-  updateAccessToken,
-} from "../../../../authentication/auth";
-import { userState } from "../../../../authentication/userState";
+import React from "react";
+import { useRecoilValueLoadable } from "recoil";
+import { getSurveyQuery } from "../../../../atoms";
 import DeleteSurvey from "../../participate/DeleteSurvey";
 import Error from "../../participate/Error";
 import Loading from "../../participate/Loading";
@@ -27,81 +17,69 @@ import InquireMultipleChoiceQuestionItem from "./general/MultipleChoiceQuestionI
 import InquireOXQuestionItem from "./general/OXQuestionItem";
 
 export default function SubmittedSurvey({ sharingKey }) {
-  const user = useRecoilValue(userState);
-
-  const [survey, setSurvey] = useRecoilState(surveyForSubmitted);
-  const [loading, setLoading] = useState(true);
-
-  const [error, setError] = useState(null);
-  const [errorMessage, setErrorMessage] = useState(null);
-
-  const [isDeleted, setIsDeleted] = useState(false);
-
-  function checkingCard() {
-    if (survey.questions[0].type === "MULTIPLE_CHOICE") {
-      if (survey.multiQuestions[0].multiQuestionType === "CARD") {
+  function checkingCard(questionType, multiQuestionType) {
+    if (questionType === "MULTIPLE_CHOICE") {
+      if (multiQuestionType === "CARD") {
         return true;
       }
     }
     return false;
   }
 
-  useEffect(() => {
-    apiClient
-      .get("/api/v1/survey", {
-        params: {
-          sharingKey: sharingKey,
-        }
-      })
-      .then(function (response) {
-        console.log(response);
-        setSurvey(response.data.data);
-        setIsDeleted(response.data.data.isDeleted);
-        setLoading(false);
-      })
-      .finally(function () {
-        // always executed
-      });
-  }, []);
-
-  if (error) return <Error errorMessage={errorMessage}></Error>;
-  if (isDeleted) return <DeleteSurvey request={"mypage"}></DeleteSurvey>;
-  if (loading) return <Loading></Loading>;
-
-  return (
-    <Container>
-      <SNavBar></SNavBar>
-      {/* 카드 형식 보여주기 */}
-      {checkingCard() ? (
-        <CardSubmitted sharingKey={sharingKey} />
-      ) : (
-        <Survey>
-          <TitleText>{survey.title}</TitleText>
-          <SummaryText>{survey.summary}</SummaryText>
-          {survey.questions.map((question) =>
-            question.type === "ESSAY" ? (
-              <InquireEssayQuestionItem
-                key={question.questionId}
-                item={question}
-                sharingKey={sharingKey}
-              ></InquireEssayQuestionItem>
-            ) : question.type === "OX" ? (
-              <InquireOXQuestionItem
-                key={question.questionId}
-                item={question}
-                sharingKey={sharingKey}
-              ></InquireOXQuestionItem>
+  function SurveyInfo() {
+    const survey = useRecoilValueLoadable(getSurveyQuery(sharingKey));
+    if (survey.contents.isDeleted) {
+      return <DeleteSurvey request={"mypage"}></DeleteSurvey>;
+    }
+    switch (survey.state) {
+      case "hasValue":
+        return (
+          <Container>
+            <SNavBar></SNavBar>
+            {survey.contents.multiQuestions.length > 0 &&
+            checkingCard(
+              survey.contents.questions[0].type,
+              survey.contents.multiQuestions[0].multiQuestionType
+            ) ? (
+              <CardSubmitted sharingKey={sharingKey} survey={survey.contents} />
             ) : (
-              <InquireMultipleChoiceQuestionItem
-                key={question.questionId}
-                item={question}
-                multiquestion={survey.multiQuestions}
-                sharingKey={sharingKey}
-              ></InquireMultipleChoiceQuestionItem>
-            )
-          )}
-        </Survey>
-      )}
-    </Container>
-  );
+              <Survey>
+                <TitleText>{survey.contents.title}</TitleText>
+                <SummaryText>{survey.contents.summary}</SummaryText>
+                {survey.contents.questions.map((question) =>
+                  question.type === "ESSAY" ? (
+                    <InquireEssayQuestionItem
+                      key={question.questionId}
+                      item={question}
+                      sharingKey={sharingKey}
+                      survey={survey.contents}
+                    ></InquireEssayQuestionItem>
+                  ) : question.type === "OX" ? (
+                    <InquireOXQuestionItem
+                      key={question.questionId}
+                      item={question}
+                      sharingKey={sharingKey}
+                      survey={survey.contents}
+                    ></InquireOXQuestionItem>
+                  ) : (
+                    <InquireMultipleChoiceQuestionItem
+                      key={question.questionId}
+                      item={question}
+                      sharingKey={sharingKey}
+                      survey={survey.contents}
+                    ></InquireMultipleChoiceQuestionItem>
+                  )
+                )}
+              </Survey>
+            )}
+          </Container>
+        );
+      case "loading":
+        return <Loading></Loading>;
+      case "hasError":
+        return <Error></Error>;
+    }
+  }
+
+  return <SurveyInfo></SurveyInfo>;
 }

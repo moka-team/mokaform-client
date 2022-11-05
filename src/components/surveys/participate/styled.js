@@ -2,7 +2,7 @@ import styled from "styled-components";
 const Container = styled.div`
   display: flex;
   min-height: 100vh;
-  background-color: #edeef0;
+  background-color: ${(props) => props.bgColor || "#edeef0"};
 `;
 
 const SNavBar = styled.div`

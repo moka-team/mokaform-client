@@ -1,12 +1,8 @@
 import React from "react";
-import { useRecoilValue } from "recoil";
-import { surveyForSubmitted } from "../../../../../atoms";
 import { Section, SummaryText, TitleText, Wrapper } from "../styled";
 import CardQuestionItem from "./CardQuestionItem";
 
-export default function CardSubmitted({ sharingKey }) {
-  const survey = useRecoilValue(surveyForSubmitted);
-
+export default function CardSubmitted({ sharingKey, survey }) {
   return (
     <>
       <Wrapper>
@@ -17,8 +13,8 @@ export default function CardSubmitted({ sharingKey }) {
             <CardQuestionItem
               key={question.questionId}
               item={question}
-              multiquestion={survey.multiQuestions}
               sharingKey={sharingKey}
+              survey={survey}
             ></CardQuestionItem>
           </Section>
         ))}
