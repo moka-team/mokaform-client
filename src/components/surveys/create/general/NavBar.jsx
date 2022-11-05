@@ -115,7 +115,7 @@ function NavBar() {
     setSummary("");
     setIsAnonymous(false);
     setIsPublic(false);
-    setStartDate(dayjs(""));
+    setStartDate(dayjs().format("YYYY-MM-DD"));
     setEndDate(dayjs(""));
     setCategories([]);
     setQuestions([]);
@@ -161,6 +161,7 @@ function NavBar() {
       ? createSurvey()
       : handleClickDialogOpen();
   };
+
   return (
     <SNavBar>
       <Button onClick={handleOpen}>설문 세부 설정</Button>
@@ -208,6 +209,7 @@ function NavBar() {
                 onChange={(newValue) => {
                   setStartDate(dayjs(newValue).format("YYYY-MM-DD"));
                 }}
+                minDate={dayjs().format("YYYY-MM-DD")}
                 renderInput={({ inputRef, inputProps, InputProps }) => (
                   <Box
                     sx={{
@@ -234,6 +236,7 @@ function NavBar() {
                 onChange={(newValue) => {
                   setEndDate(dayjs(newValue).format("YYYY-MM-DD"));
                 }}
+                minDate={dayjs().format("YYYY-MM-DD")}
                 renderInput={({ inputRef, inputProps, InputProps }) => (
                   <Box
                     sx={{
@@ -254,6 +257,14 @@ function NavBar() {
           <Typography sx={{ mt: 2 }} variant="body2">
             <SelectCategory />
           </Typography>
+          <Box sx={{ textAlign: "right", mt: 2 }}>
+            <Button onClick={handleClose} sx={{ fontWeight: 600 }}>
+              닫기
+            </Button>
+            <Button onClick={handleClose} sx={{ fontWeight: 600 }} autoFocus>
+              확인
+            </Button>
+          </Box>
         </Box>
       </Modal>
       <SaveBtn

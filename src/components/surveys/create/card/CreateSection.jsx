@@ -24,7 +24,7 @@ export default function CreateSection() {
     setSummary("");
     setIsAnonymous(false);
     setIsPublic(false);
-    setStartDate(dayjs(""));
+    setStartDate(dayjs().format("YYYY-MM-DD"));
     setEndDate(dayjs(""));
     setCategories([]);
     setQuestions([]);
