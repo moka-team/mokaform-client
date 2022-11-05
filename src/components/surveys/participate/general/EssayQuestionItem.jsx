@@ -7,7 +7,7 @@ import {
 } from "../../../../atoms";
 import { Answer, QuestionText, QuestionWrapper } from "../styled";
 
-export default function EssayQuestionItem({ item }) {
+export default function EssayQuestionItem({ item, survey }) {
   const [essayAnswerList, setEssayAnswerList] =
     useRecoilState(EssayAnswerListState);
   const [essayValidateCount, setEssayValidateCount] = useRecoilState(
@@ -24,8 +24,7 @@ export default function EssayQuestionItem({ item }) {
     (listItem) => listItem.questionId === essayAnswer.questionId
   );
 
-  const survey = useRecoilValue(surveyForSubmit);
-  const qIndex = survey.data.questions.findIndex(
+  const qIndex = survey.questions.findIndex(
     (listItem) => listItem.questionId === item.questionId
   );
 

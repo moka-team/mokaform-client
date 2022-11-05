@@ -7,7 +7,7 @@ import {
 } from "../../../../atoms";
 import { QuestionOption, QuestionText, QuestionWrapper } from "../styled";
 
-export default function OXQuestionItem({ item }) {
+export default function OXQuestionItem({ item, survey }) {
   const [currentClick, setCurrentClick] = useState(null);
   const [prevClick, setPrevClick] = useState(null);
 
@@ -23,8 +23,8 @@ export default function OXQuestionItem({ item }) {
   const index = oxAnswerList.findIndex(
     (listItem) => listItem.questionId === oxAnswer.questionId
   );
-  const survey = useRecoilValue(surveyForSubmit);
-  const qIndex = survey.data.questions.findIndex(
+
+  const qIndex = survey.questions.findIndex(
     (listItem) => listItem.questionId === item.questionId
   );
 

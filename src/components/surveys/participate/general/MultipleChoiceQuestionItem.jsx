@@ -7,7 +7,11 @@ import {
 } from "../../../../atoms";
 import { QuestionOption, QuestionText, QuestionWrapper } from "../styled";
 
-export default function MultipleChoiceQuestionItem({ item, multiquestion }) {
+export default function MultipleChoiceQuestionItem({
+  item,
+  multiquestion,
+  survey,
+}) {
   const [multiChoiceAnswerList, setMultiChoiceAnswerList] = useRecoilState(
     MultipleChoiceAnswerListState
   );
@@ -21,8 +25,7 @@ export default function MultipleChoiceQuestionItem({ item, multiquestion }) {
     (listItem) => listItem.questionId === multiChoiceAnswer.questionId
   );
 
-  const survey = useRecoilValue(surveyForSubmit);
-  const qIndex = survey.data.questions.findIndex(
+  const qIndex = survey.questions.findIndex(
     (listItem) => listItem.questionId === item.questionId
   );
 

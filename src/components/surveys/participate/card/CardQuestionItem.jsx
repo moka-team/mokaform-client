@@ -23,7 +23,7 @@ const QWrapper = styled.div`
   text-align: center;
 `;
 
-export default function CardQuestionItem({ item, multiquestion }) {
+export default function CardQuestionItem({ item, multiquestion, survey }) {
   const [multiChoiceAnswerList, setMultiChoiceAnswerList] = useRecoilState(
     MultipleChoiceAnswerListState
   );
@@ -37,8 +37,7 @@ export default function CardQuestionItem({ item, multiquestion }) {
     (listItem) => listItem.questionId === multiChoiceAnswer.questionId
   );
 
-  const survey = useRecoilValue(surveyForSubmit);
-  const qIndex = survey.data.questions.findIndex(
+  const qIndex = survey.questions.findIndex(
     (listItem) => listItem.questionId === item.questionId
   );
 
