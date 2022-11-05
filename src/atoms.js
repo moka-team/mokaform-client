@@ -103,9 +103,6 @@ export const getSurveyQuery = selectorFamily({
         sharingKey: sharingKey,
       },
     });
-    if (response.error) {
-      throw response.error;
-    }
     return response.data.data;
   },
 });

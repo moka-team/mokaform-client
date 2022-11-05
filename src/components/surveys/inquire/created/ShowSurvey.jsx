@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { useRecoilValue } from "recoil";
+import { useRecoilValueLoadable } from "recoil";
 import { getSurveyQuery } from "../../../../atoms";
+import Error from "../../participate/Error";
 import Loading from "../../participate/Loading";
+
 import {
   Container,
   SNavBar,
@@ -15,50 +17,53 @@ import MultipleChoiceQuestionItemDisabled from "./general/MultipleChoiceQuestion
 import OXQuestionItemDisabled from "./general/OXQuestionItemDisabled";
 
 export default function ShowSurvey({ sharingKey }) {
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [errorMessage, setErrorMessage] = useState(null);
-
   function SurveyInfo() {
-    const survey = useRecoilValue(getSurveyQuery(sharingKey));
-    return (
-      <Container>
-        <SNavBar></SNavBar>
-        {survey.multiQuestions.length > 0 &&
-        checkingCard(
-          survey.questions[0].type,
-          survey.multiQuestions[0].multiQuestionType
-        ) ? (
-          <ShowCardSurvey survey={survey}></ShowCardSurvey>
-        ) : (
-          <Survey>
-            <TitleText>{survey.title}</TitleText>
-            <SummaryText>{survey.summary}</SummaryText>
-            {survey.questions.map((question) =>
-              question.type === "ESSAY" ? (
-                <EssayQuestionItemDisabled
-                  key={question.questionId}
-                  item={question}
-                  survey={survey}
-                ></EssayQuestionItemDisabled>
-              ) : question.type === "OX" ? (
-                <OXQuestionItemDisabled
-                  key={question.questionId}
-                  item={question}
-                  survey={survey}
-                ></OXQuestionItemDisabled>
-              ) : (
-                <MultipleChoiceQuestionItemDisabled
-                  key={question.questionId}
-                  item={question}
-                  survey={survey}
-                ></MultipleChoiceQuestionItemDisabled>
-              )
+    const survey = useRecoilValueLoadable(getSurveyQuery(sharingKey));
+    switch (survey.state) {
+      case "hasValue":
+        return (
+          <Container>
+            <SNavBar></SNavBar>
+            {survey.contents.multiQuestions.length > 0 &&
+            checkingCard(
+              survey.contents.questions[0].type,
+              survey.contents.multiQuestions[0].multiQuestionType
+            ) ? (
+              <ShowCardSurvey survey={survey.contents}></ShowCardSurvey>
+            ) : (
+              <Survey>
+                <TitleText>{survey.contents.title}</TitleText>
+                <SummaryText>{survey.contents.summary}</SummaryText>
+                {survey.contents.questions.map((question) =>
+                  question.type === "ESSAY" ? (
+                    <EssayQuestionItemDisabled
+                      key={question.questionId}
+                      item={question}
+                      survey={survey.contents}
+                    ></EssayQuestionItemDisabled>
+                  ) : question.type === "OX" ? (
+                    <OXQuestionItemDisabled
+                      key={question.questionId}
+                      item={question}
+                      survey={survey.contents}
+                    ></OXQuestionItemDisabled>
+                  ) : (
+                    <MultipleChoiceQuestionItemDisabled
+                      key={question.questionId}
+                      item={question}
+                      survey={survey.contents}
+                    ></MultipleChoiceQuestionItemDisabled>
+                  )
+                )}
+              </Survey>
             )}
-          </Survey>
-        )}
-      </Container>
-    );
+          </Container>
+        );
+      case "loading":
+        return <Loading></Loading>;
+      case "hasError":
+        return <Error></Error>;
+    }
   }
 
   function checkingCard(questionType, multiQuestionType) {
@@ -70,9 +75,5 @@ export default function ShowSurvey({ sharingKey }) {
     return false;
   }
 
-  return (
-    <React.Suspense fallback={<Loading></Loading>}>
-      <SurveyInfo></SurveyInfo>
-    </React.Suspense>
-  );
+  return <SurveyInfo></SurveyInfo>;
 }
