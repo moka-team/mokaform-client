@@ -28,11 +28,12 @@ export default function SubmittedSurvey({ sharingKey }) {
 
   function SurveyInfo() {
     const survey = useRecoilValueLoadable(getSurveyQuery(sharingKey));
-    if (survey.contents.isDeleted) {
-      return <DeleteSurvey request={"mypage"}></DeleteSurvey>;
-    }
+
     switch (survey.state) {
       case "hasValue":
+        if (survey.contents.isDeleted) {
+          return <DeleteSurvey request={"mypage"}></DeleteSurvey>;
+        }
         return (
           <Container>
             <SNavBar></SNavBar>
