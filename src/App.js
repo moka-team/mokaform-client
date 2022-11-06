@@ -68,7 +68,7 @@ function App() {
         <Route path={routes.main} element={<Main />}></Route>
         <Route
           path={routes.mypage}
-          element={user.loggedIn ? <Mypage /> : <SignIn signInAlert={true} />}
+          element={getAccessToken() ? <Mypage /> : <SignIn signInAlert={true} />}
         ></Route>
         <Route path={routes.signup} element={<SignUp />}></Route>
         <Route path={routes.signin} element={<SignIn />}></Route>
@@ -77,35 +77,35 @@ function App() {
         <Route
           path={routes.createSurvey}
           element={
-            user.loggedIn ? <CreateSurvey /> : <SignIn signInAlert={true} />
+            getAccessToken() ? <CreateSurvey /> : <SignIn signInAlert={true} />
           }
         ></Route>
         <Route
           path={routes.surveyStats}
           element={
-            user.loggedIn ? <SurveyAnalysis /> : <SignIn signInAlert={true} />
+            getAccessToken() ? <SurveyAnalysis /> : <SignIn signInAlert={true} />
           }
         ></Route>
         <Route
           path={routes.participateSurvey}
           element={
-            user.loggedIn ? <Participate /> : <SignIn signInAlert={true} />
+            getAccessToken() ? <Participate /> : <SignIn signInAlert={true} />
           }
         ></Route>
         <Route
           path={routes.manageSurvey}
           element={
-            user.loggedIn ? <ManageSurvey /> : <SignIn signInAlert={true} />
+            getAccessToken() ? <ManageSurvey /> : <SignIn signInAlert={true} />
           }
         ></Route>
         <Route
           path={routes.createdSurvey}
-          element={user.loggedIn ? <Show /> : <SignIn signInAlert={true} />}
+          element={getAccessToken() ? <Show /> : <SignIn signInAlert={true} />}
         ></Route>
         <Route
           path={routes.inquireSubmittedSurvey}
           element={
-            user.loggedIn ? (
+            getAccessToken() ? (
               <InquireSubmittedSurvey />
             ) : (
               <SignIn signInAlert={true} />
@@ -115,7 +115,7 @@ function App() {
         <Route
           path={routes.createCardSurvey}
           element={
-            user.loggedIn ? <CreateCardSurvey /> : <SignIn signInAlert={true} />
+            getAccessToken() ? <CreateCardSurvey /> : <SignIn signInAlert={true} />
           }
         ></Route>
         <Route path={"*"} element={<NotFound />}></Route>
