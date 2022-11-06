@@ -20,11 +20,7 @@ import Mypage from "./pages/users/myPage/index";
 import SignIn from "./pages/users/signIn";
 import SignUp from "./pages/users/signUp";
 import routes from "./routes";
-import { UserContext } from "./authentication/userState";
 import { userState } from "./authentication/userState";
-import CreateCardSurvey from "./pages/surveys/create/card/index";
-import { useEffect } from "react";
-import { NotFound } from "./components/common/NotFound";
 import { NotFound } from "./components/common/NotFound";
 import EmailConfirm from "./pages/users/emailConfirm";
 
