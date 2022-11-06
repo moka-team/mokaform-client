@@ -9,6 +9,24 @@ import {
 const apiClient = axios.create({
   baseURL: "https://www.mokaform.site/",
 });
+
+const reissueToken = async () => {
+  try {
+    const res = await apiClient.post("/api/v1/users/token/reissue", {
+      accessToken: `Bearer ${getAccessToken()}`,
+    });
+    updateAccessToken(res.data.data);
+    window.location.reload();
+  } catch (err) {
+    if (err.response.data.code === "C009") {
+      alert("토큰 만료! 다시 로그인해주세요! 🥰");
+      logout();
+      window.location.replace("/");
+      localStorage.clear();
+    }
+  }
+};
+
 apiClient.interceptors.request.use(
   function (config) {
     config.headers["accessToken"] = `Bearer ${getAccessToken()}`;
@@ -22,22 +40,7 @@ apiClient.interceptors.request.use(
 
     // Access Token 재발행이 필요한 경우
     if (error.response.data.code === "C005") {
-      apiClient
-        .post("/api/v1/users/token/reissue", {
-          accessToken: `Bearer ${getAccessToken()}`,
-        })
-        .then((res) => {
-          updateAccessToken(res.data.data);
-          window.location.reload();
-        })
-        .catch(function (err) {
-          if (err.response.data.code === "C009") {
-            alert("토큰 만료! 다시 로그인해주세요! 🥰");
-            logout();
-            window.location.replace("/");
-            localStorage.clear();
-          }
-        });
+      reissueToken();
     }
     return Promise.reject(error);
   }
@@ -53,22 +56,7 @@ apiClient.interceptors.response.use(
 
     // Access Token 재발행이 필요한 경우
     if (error.response.data.code === "C005") {
-      axios
-        .post("/api/v1/users/token/reissue", {
-          accessToken: `Bearer ${getAccessToken()}`,
-        })
-        .then((res) => {
-          updateAccessToken(res.data.data);
-          window.location.reload();
-        })
-        .catch(function (err) {
-          if (err.response.data.code === "C009") {
-            alert("토큰 만료! 다시 로그인해주세요! 🥰");
-            logout();
-            window.location.replace("/");
-            localStorage.clear();
-          }
-        });
+      reissueToken();
     }
     return Promise.reject(error);
   }
