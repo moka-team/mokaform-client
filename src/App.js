@@ -21,7 +21,7 @@ import SignIn from "./pages/users/signIn";
 import SignUp from "./pages/users/signUp";
 import routes from "./routes";
 
-import { NotFound } from './components/common/NotFound';
+import { NotFound } from "./components/common/NotFound";
 import EmailConfirm from "./pages/users/emailConfirm";
 import ResetPassword from "./pages/users/ResetPassword";
 const GlobalStyle = createGlobalStyle`
@@ -68,7 +68,7 @@ function App() {
         <Route path={routes.main} element={<Main />}></Route>
         <Route
           path={routes.mypage}
-          element={user !== null ? <Mypage /> : <SignIn signInAlert={true} />}
+          element={user.loggedIn ? <Mypage /> : <SignIn signInAlert={true} />}
         ></Route>
         <Route path={routes.signup} element={<SignUp />}></Route>
         <Route path={routes.signin} element={<SignIn />}></Route>
@@ -77,35 +77,35 @@ function App() {
         <Route
           path={routes.createSurvey}
           element={
-            user !== null ? <CreateSurvey /> : <SignIn signInAlert={true} />
+            user.loggedIn ? <CreateSurvey /> : <SignIn signInAlert={true} />
           }
         ></Route>
         <Route
           path={routes.surveyStats}
           element={
-            user !== null ? <SurveyAnalysis /> : <SignIn signInAlert={true} />
+            user.loggedIn ? <SurveyAnalysis /> : <SignIn signInAlert={true} />
           }
         ></Route>
         <Route
           path={routes.participateSurvey}
           element={
-            user != null ? <Participate /> : <SignIn signInAlert={true} />
+            user.loggedIn ? <Participate /> : <SignIn signInAlert={true} />
           }
         ></Route>
         <Route
           path={routes.manageSurvey}
           element={
-            user !== null ? <ManageSurvey /> : <SignIn signInAlert={true} />
+            user.loggedIn ? <ManageSurvey /> : <SignIn signInAlert={true} />
           }
         ></Route>
         <Route
           path={routes.createdSurvey}
-          element={user !== null ? <Show /> : <SignIn signInAlert={true} />}
+          element={user.loggedIn ? <Show /> : <SignIn signInAlert={true} />}
         ></Route>
         <Route
           path={routes.inquireSubmittedSurvey}
           element={
-            user !== null ? (
+            user.loggedIn ? (
               <InquireSubmittedSurvey />
             ) : (
               <SignIn signInAlert={true} />
@@ -115,7 +115,7 @@ function App() {
         <Route
           path={routes.createCardSurvey}
           element={
-            user !== null ? <CreateCardSurvey /> : <SignIn signInAlert={true} />
+            user.loggedIn ? <CreateCardSurvey /> : <SignIn signInAlert={true} />
           }
         ></Route>
         <Route path={"*"} element={<NotFound />}></Route>
