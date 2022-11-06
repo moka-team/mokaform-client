@@ -13,12 +13,18 @@ import CreateCardSurvey from "./pages/surveys/create/card/index";
 import CreateSurvey from "./pages/surveys/create/general/index";
 import Show from "./pages/surveys/inquire/created/general";
 import InquireSubmittedSurvey from "./pages/surveys/inquire/submitted";
+import { useRecoilValue } from "recoil";
 import ManageSurvey from "./pages/surveys/manage";
 import Participate from "./pages/surveys/participate/index";
 import Mypage from "./pages/users/myPage/index";
 import SignIn from "./pages/users/signIn";
 import SignUp from "./pages/users/signUp";
 import routes from "./routes";
+import { UserContext } from "./authentication/userState";
+import { userState } from "./authentication/userState";
+import { NotFound } from "./components/common/NotFound";
+import EmailConfirm from "./pages/users/emailConfirm";
+
 const GlobalStyle = createGlobalStyle`
   ${reset}
   font-family: 'Inter', sans-serif;
@@ -61,6 +67,7 @@ function App() {
         ></Route>
         <Route path={routes.signup} element={<SignUp />}></Route>
         <Route path={routes.signin} element={<SignIn />}></Route>
+        <Route path={routes.emailConfirm} element={<EmailConfirm />}></Route>
         <Route
           path={routes.createSurvey}
           element={

@@ -48,9 +48,8 @@ const Wrapper = styled.div`
   background-color: #202632;
 `;
 
-export default function CardParticipate() {
+export default function CardParticipate({ survey }) {
   const cardRef = useRef([]);
-  const [survey, setSurvey] = useRecoilState(surveyForSubmit);
   const [successDialogOpen, setSuccessDialogOpen] = useState(true);
 
   const handleSuccessDialogClose = () => {
@@ -82,14 +81,14 @@ export default function CardParticipate() {
         }}
       >
         {/* 설문제목 */}
-        <DialogTitle id="success-dialog-title">{survey.data.title}</DialogTitle>
+        <DialogTitle id="success-dialog-title">{survey.title}</DialogTitle>
         <DialogContent>
           {/* 설문 설명 */}
           <DialogContentText
             id="success-dialog-description"
             sx={{ color: "#202632" }}
           >
-            {survey.data.summary}
+            {survey.summary}
           </DialogContentText>
           <DialogContentText sx={{ color: "#202632" }}>
             하나의 질문씩 공개되는 카드 설문입니다.
@@ -105,14 +104,15 @@ export default function CardParticipate() {
         </DialogActions>
       </Dialog>
       <Wrapper>
-        {survey.data.questions.map((question, index) => (
+        {survey.questions.map((question, index) => (
           <Section ref={(el) => (cardRef.current[index] = el)}>
             <CardQuestionItem
               key={question.questionId}
               item={question}
-              multiquestion={survey.data.multiQuestions}
+              multiquestion={survey.multiQuestions}
+              survey={survey}
             ></CardQuestionItem>
-            {index !== survey.data.questions.length - 1 && (
+            {index !== survey.questions.length - 1 && (
               <NextButton onClick={() => onClickHandler(index)}>
                 다음
               </NextButton>

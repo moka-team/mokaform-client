@@ -6,7 +6,7 @@ import {
   getAccessToken,
   getRefreshToken,
   logout,
-  updateAccessToken
+  updateAccessToken,
 } from "../../../authentication/auth";
 import AgeRow from "./AgeRow";
 import JobRow from "./JobRow";
@@ -15,7 +15,7 @@ import SexRow from "./SexRow";
 import SignEssentialForm from "./SignEssentialForm";
 import { Button, Container, MainTitle, Rows } from "./SignUpCSS";
 import { setUser } from "@sentry/react";
-import  apiClient  from '../../../api/client';
+import apiClient from "../../../api/client";
 
 export default function SignUpForm() {
   const signOptionRef = useRef(null);
@@ -104,12 +104,12 @@ export default function SignUpForm() {
       )
       .then(function (response) {
         if (response.data.message === "새로운 유저 생성이 성공하였습니다.") {
-          window.alert("회원가입이 완료되었습니다.");
-          navigate("/");
+          // window.alert("회원가입이 완료되었습니다.");
+          navigate("/email-confirm");
         } else {
           window.alert("회원가입 에러 발생");
         }
-      })
+      });
   };
 
   const onCompleteBtnClickHandler = (event) => {
