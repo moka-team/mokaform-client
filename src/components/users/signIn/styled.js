@@ -91,7 +91,7 @@ const ResetPasswordLink = styled(Link)`
 `;
 
 const SignUpLink = styled(Link)`
-  position: absolute;
+  /* position: absolute; */
   top: 0%;
   right: 0%;
   text-decoration: none;
@@ -131,6 +131,37 @@ const KaKaoLoginImg = styled.img`
 
   object-fit: cover;
 `;
+const InfoTitle = styled.h1`
+  font-size: larger;
+  font-weight: 600;
+  color: #202632;
+  margin-bottom: 30px;
+`;
+const InfoText = styled.h6`
+  font-size: small;
+  color: #202632;
+  margin-top: 10px;
+  color: gray;
+`;
+const CenterWrapper = styled.div`
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  display: flex;
+`;
+const Wrapper = styled.div`
+  margin-top: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+`;
+const Distinguish = styled.p`
+  margin-left: 20px;
+  margin-right: 20px;
+  color: gray;
+  font-size: smaller;
+`;
 
 export {
   LocalLoginWrapper,
@@ -143,4 +174,9 @@ export {
   LoginFormWrapper,
   SocialLoginWrapper,
   KaKaoLoginImg,
+  InfoTitle,
+  InfoText,
+  CenterWrapper,
+  Wrapper,
+  Distinguish,
 };
