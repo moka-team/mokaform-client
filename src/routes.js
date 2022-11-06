@@ -4,6 +4,7 @@ const routes = {
   signup: "/signup",
   signin: "/signin",
   resetPassword: "/reset-password",
+  emailConfirm: "/email-confirm",
   createSurvey: "/create-survey",
   surveyStats: "/survey-stats",
   participateSurvey: "/survey/:sharingKey",

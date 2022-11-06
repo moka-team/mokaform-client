@@ -4,7 +4,6 @@ import { styled } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import { LocalLoginWrapper, LoginInputContainer, LoginButton } from "./styled";
 import { useRecoilState } from "recoil";
-import { userState } from "../../../authentication/userState";
 import * as Sentry from "@sentry/react";
 import {
   getAccessToken,
@@ -21,8 +20,7 @@ function ResetFormBox() {
     email: "",
     password: "",
   });
-
-  const [user, setUser] = useRecoilState(userState);
+  
   const navigate = useNavigate();
 
   const handleChange = (event) => {
