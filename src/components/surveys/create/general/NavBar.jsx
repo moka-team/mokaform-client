@@ -145,19 +145,7 @@ function NavBar() {
     setIsPublic(event.target.checked);
   };
 
-  const resetCreateSurveyState = () => {
-    setTitle("");
-    setSummary("");
-    setIsAnonymous(false);
-    setIsPublic(false);
-    setStartDate(dayjs().format("YYYY-MM-DD"));
-    setEndDate(dayjs(""));
-    setCategories([]);
-    setQuestions([]);
-    setMultiQuestions([]);
-  };
-
-  const createSurvey = () => {
+  const postSurvey = async () => {
     const surveyInfo = {
       title: survey.title,
       summary: survey.summary,
@@ -171,21 +159,33 @@ function NavBar() {
       // surveyImage: surveyImg,
     };
 
+    try {
+      const response = await apiClient.post("/api/v1/survey", surveyInfo);
+      setSharingUrl(
+        "https://mokaform.netlify.app/survey/" + response.data.data.sharingKey
+      );
+      resetCreateSurveyState();
+      handleClickSuccessDialogOpen();
+    } catch (error) {
+      handleClickFailDialogOpen();
+    }
+  };
+
+  const resetCreateSurveyState = () => {
+    setTitle("");
+    setSummary("");
+    setIsAnonymous(false);
+    setIsPublic(false);
+    setStartDate(dayjs().format("YYYY-MM-DD"));
+    setEndDate(dayjs(""));
+    setCategories([]);
+    setQuestions([]);
+    setMultiQuestions([]);
+  };
+
+  const createSurvey = () => {
     multiQuestionList.length === multiQuestionValidate.length
-      ? apiClient
-          .post("/api/v1/survey", surveyInfo, {})
-          .then(function (response) {
-            console.log(response);
-            setSharingUrl(
-              "https://mokaform.netlify.app/survey/" +
-                response.data.data.sharingKey
-            );
-            resetCreateSurveyState();
-            handleClickSuccessDialogOpen();
-          })
-          .finally(function () {
-            // always executed
-          })
+      ? postSurvey()
       : alert("객관식 질문은 최소 한개의 선지가 필요합니다.");
   };
 
@@ -328,12 +328,7 @@ function NavBar() {
           </Box>
         </Box>
       </Modal>
-      <SaveBtn
-        onClick={handleSubmit}
-
-      >
-        저장
-      </SaveBtn>
+      <SaveBtn onClick={handleSubmit}>저장</SaveBtn>
       <Dialog
         open={invalidatoinDialogOpen}
         onClose={handleDialogClose}

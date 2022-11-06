@@ -125,8 +125,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 export default function ManageSurveySection() {
   const [survey, setSurvey] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [errorMessage, setErrorMessage] = useState(null);
 
   const [selectedSurveyId, setSelectedSurveyId] = useState(null);
   const [page, setPage] = useState(0);
@@ -167,39 +165,31 @@ export default function ManageSurveySection() {
       .then((res) => navigate(routes.surveyStats, { state: res.data.data }));
   };
 
-  const handleDeleteItem = () => {
+  const handleDeleteItem = async () => {
     setDialogOpen(false);
 
-    apiClient
-      .delete("/api/v1/survey/" + selectedSurveyId)
-      .then(function (response) {
-        console.log(response);
-      })
-      .finally(function () {
-        // always executed
-      });
-
-    setRequireRerender(!requireRerender);
+    try {
+      const response = await apiClient.delete(
+        "/api/v1/survey/" + selectedSurveyId
+      );
+      setRequireRerender(!requireRerender);
+    } catch (error) {}
   };
 
-  const fetchData = () => {
-    apiClient
-      .get("/api/v1/users/my/surveys")
-      .then(function (response) {
-        console.log(response);
-        setSurvey(response.data.data.content);
-        setLoading(false);
-      })
-      .finally(function () {
-        // always executed
-      });
+  const fetchData = async () => {
+    try {
+      const response = await apiClient.get("/api/v1/users/my/surveys");
+      setSurvey(response.data.data.content);
+      setLoading(false);
+    } catch (error) {
+      return <Error></Error>;
+    }
   };
 
   useEffect(() => {
     fetchData();
   }, [requireRerender]);
 
-  if (error) return <Error errorMessage={errorMessage}></Error>;
   if (loading) return <Loading></Loading>;
 
   return (

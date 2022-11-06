@@ -4,7 +4,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useRecoilValue } from "recoil";
 import apiClient from "../../../api/client";
 import { userState } from "../../../authentication/userState";
@@ -24,8 +24,9 @@ export default function NavBar() {
     setOXAnswers([]);
   };
 
-  const [open, setOpen] = React.useState(false);
-  const [open2, setOpen2] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [open2, setOpen2] = useState(false);
+  const [failDialogOpen, setFailDialogOpen] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -44,27 +45,38 @@ export default function NavBar() {
     setOpen2(false);
   };
 
+  const handleClickFailDialogOpen = () => {
+    setFailDialogOpen(true);
+  };
+
+  const handleFailDialogClose = () => {
+    setFailDialogOpen(false);
+  };
+
   const handleSubmit = () => {
+    answers.essayAnswerValidate === answers.essayAnswers.length &&
+    answers.multipleChoiceAnswerValidate ===
+      answers.multipleChoiceAnswers.length &&
+    answers.oxAnswerValidate === answers.oxAnswers.length
+      ? postAnswer()
+      : handleClickOpen2();
+  };
+
+  const postAnswer = async () => {
     const answerInfo = {
       essayAnswers: answers.essayAnswers,
       multipleChoiceAnswers: answers.multipleChoiceAnswers,
       oxAnswers: answers.oxAnswers,
     };
 
-    answers.essayAnswerValidate === answers.essayAnswers.length &&
-    answers.multipleChoiceAnswerValidate ===
-      answers.multipleChoiceAnswers.length &&
-    answers.oxAnswerValidate === answers.oxAnswers.length
-      ? apiClient
-          .post("/api/v1/answer", answerInfo)
-          .then(function (response) {
-            console.log(response);
-            handleClickOpen();
-          })
-          .finally(function () {
-            resetCreateAnswerState();
-          })
-      : handleClickOpen2();
+    try {
+      const response = apiClient.post("/api/v1/answer", answerInfo);
+      console.log(response);
+      handleClickOpen();
+      resetCreateAnswerState();
+    } catch (error) {
+      handleClickFailDialogOpen();
+    }
   };
 
   return (
@@ -119,6 +131,33 @@ export default function NavBar() {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose2} autoFocus>
+            확인
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog
+        open={failDialogOpen}
+        onClose={handleFailDialogClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        sx={{
+          "& .MuiDialog-container": {
+            "& .MuiPaper-root": {
+              width: "100%",
+              maxWidth: "500px",
+            },
+          },
+        }}
+      >
+        <DialogTitle id="success-dialog-title">알림</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="success-dialog-description">
+            답변 생성이 실패했습니다! 잠시 후, 다시 시도해주세요!
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleFailDialogClose} autoFocus>
             확인
           </Button>
         </DialogActions>

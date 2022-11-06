@@ -27,19 +27,17 @@ function LocalLoginContainer() {
     setInputs((values) => ({ ...values, [name]: value }));
   };
 
-  const fetchUser = () => {
-    apiClient
-      .get("/api/v1/users/my")
-      .then(function (response) {
-        console.log(response.data.data);
-        setLoggedUser(response.data.data);
-        console.log(login);
-        window.alert("로그인이 완료되었습니다.");
-        navigate("/");
-      })
-      .finally(function () {
-        // always executed
-      });
+  const fetchUser = async () => {
+    try {
+      const response = await apiClient.get("/api/v1/users/my");
+      console.log(response.data.data);
+      setLoggedUser(response.data.data);
+      console.log(login);
+      window.alert("로그인이 완료되었습니다.");
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleSubmit = (event) => {
