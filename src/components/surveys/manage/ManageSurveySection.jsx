@@ -30,7 +30,7 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
-import apiClient from '../../../api/client';
+import apiClient from "../../../api/client";
 import routes from "../../../routes";
 import { TContainer } from "./styled";
 function TablePaginationActions(props) {
@@ -122,7 +122,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-export default function ManageSurveySection({ userId }) {
+export default function ManageSurveySection() {
   const [survey, setSurvey] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -164,7 +164,7 @@ export default function ManageSurveySection({ userId }) {
   const handleOnClick = async (surveyId) => {
     await apiClient
       .get(`/api/v1/users/my/surveys/${surveyId}/stats`)
-      .then((res) => navigate(routes.surveyStats, { state: res.data.data }))
+      .then((res) => navigate(routes.surveyStats, { state: res.data.data }));
   };
 
   const handleDeleteItem = () => {
@@ -184,11 +184,7 @@ export default function ManageSurveySection({ userId }) {
 
   const fetchData = () => {
     apiClient
-      .get("/api/v1/users/my/surveys", {
-        params: {
-          userId: userId,
-        }
-      })
+      .get("/api/v1/users/my/surveys")
       .then(function (response) {
         console.log(response);
         setSurvey(response.data.data.content);
