@@ -1,13 +1,13 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import "./App.css";
-import Main from "./pages/index";
-import Mypage from "./pages/users/myPage/index";
-
 import axios from "axios";
 import { useContext, useEffect } from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
+import apiClient from "./api/client";
+import "./App.css";
 import { getAccessToken, getRefreshToken } from "./authentication/auth";
+import { UserActionsContext, UserContext } from "./authentication/userState";
+import Main from "./pages/index";
 import SurveyAnalysis from "./pages/surveys/analysis";
 import CreateCardSurvey from "./pages/surveys/create/card/index";
 import CreateSurvey from "./pages/surveys/create/general/index";
@@ -16,6 +16,7 @@ import InquireSubmittedSurvey from "./pages/surveys/inquire/submitted";
 import { useRecoilValue } from "recoil";
 import ManageSurvey from "./pages/surveys/manage";
 import Participate from "./pages/surveys/participate/index";
+import Mypage from "./pages/users/myPage/index";
 import SignIn from "./pages/users/signIn";
 import SignUp from "./pages/users/signUp";
 import routes from "./routes";
@@ -30,7 +31,7 @@ import EmailConfirm from "./pages/users/emailConfirm";
 const GlobalStyle = createGlobalStyle`
   ${reset}
   font-family: 'Inter', sans-serif;
-`;
+  `;
 
 function setScreenSize() {
   let vh = window.innerHeight * 0.01;
@@ -53,6 +54,17 @@ function App() {
   }
 
   const user = useContext(UserContext);
+  const { setLoggedUser } = useContext(UserActionsContext);
+
+  useEffect(() => {
+    async function fetchUser() {
+      if (getAccessToken()) {
+        const res = await apiClient.get("api/v1/users/my");
+        setLoggedUser(res.data.data);
+      }
+    }
+    fetchUser();
+  }, []);
   return (
     <BrowserRouter>
       <GlobalStyle />

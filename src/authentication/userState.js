@@ -1,4 +1,6 @@
-import { createContext, useMemo, useState } from "react";
+import { createContext, useContext, useMemo, useState } from "react";
+import apiClient from "../api/client";
+import { getAccessToken } from "./auth";
 
 const UserContext = createContext();
 const UserActionsContext = createContext();
@@ -14,6 +16,7 @@ function UserContextProvider({ children }) {
     categories: [],
     loggedIn: false,
   });
+
   const actions = useMemo(
     () => ({
       setLoggedUser(data) {
