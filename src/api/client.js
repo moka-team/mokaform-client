@@ -1,15 +1,17 @@
-import axios from "axios";
 import * as Sentry from "@sentry/react";
-import { getAccessToken, updateAccessToken } from "../authentication/auth";
-import { logout } from "../authentication/auth";
+import axios from "axios";
+import {
+  getAccessToken,
+  logout,
+  updateAccessToken,
+} from "../authentication/auth";
 
 const apiClient = axios.create({
   baseURL: "https://www.mokaform.site/",
 });
-
 apiClient.interceptors.request.use(
   function (config) {
-    config.headers["accessToken"] = getAccessToken();
+    config.headers["accessToken"] = `Bearer ${getAccessToken()}`;
     return config;
   },
   function (error) {
@@ -22,8 +24,7 @@ apiClient.interceptors.request.use(
     if (error.response.data.code === "C005") {
       apiClient
         .post("/api/v1/users/token/reissue", {
-          accessToken: getAccessToken(),
-          refreshToken: "httpsOnly",
+          accessToken: `Bearer ${getAccessToken()}`,
         })
         .then((res) => {
           updateAccessToken(res.data.data);
@@ -44,7 +45,7 @@ apiClient.interceptors.request.use(
 
 apiClient.interceptors.response.use(
   function (config) {
-    config.headers["accessToken"] = getAccessToken();
+    config.headers["accessToken"] = `Bearer ${getAccessToken()}`;
     return config;
   },
   function (error) {
@@ -54,8 +55,7 @@ apiClient.interceptors.response.use(
     if (error.response.data.code === "C005") {
       axios
         .post("/api/v1/users/token/reissue", {
-          accessToken: getAccessToken(),
-          refreshToken: "httpsOnly",
+          accessToken: `Bearer ${getAccessToken()}`,
         })
         .then((res) => {
           updateAccessToken(res.data.data);

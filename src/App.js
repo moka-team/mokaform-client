@@ -13,17 +13,14 @@ import CreateCardSurvey from "./pages/surveys/create/card/index";
 import CreateSurvey from "./pages/surveys/create/general/index";
 import Show from "./pages/surveys/inquire/created/general";
 import InquireSubmittedSurvey from "./pages/surveys/inquire/submitted";
-import { useRecoilValue } from "recoil";
 import ManageSurvey from "./pages/surveys/manage";
 import Participate from "./pages/surveys/participate/index";
+import EmailConfirm from "./pages/users/emailConfirm";
 import Mypage from "./pages/users/myPage/index";
 import SignIn from "./pages/users/signIn";
 import SignUp from "./pages/users/signUp";
 import routes from "./routes";
 
-import { NotFound } from "./components/common/NotFound";
-import EmailConfirm from "./pages/users/emailConfirm";
-import ResetPassword from "./pages/users/ResetPassword";
 const GlobalStyle = createGlobalStyle`
   ${reset}
   font-family: 'Inter', sans-serif;
@@ -42,12 +39,6 @@ function App() {
     axios.defaults.headers.common["accessToken"] = getAccessToken();
     axios.defaults.headers.common["refreshToken"] = getRefreshToken();
   });
-
-  if (process.env.NODE_ENV !== "development") {
-    console.log = () => {};
-    console.error = () => {};
-    console.debug = () => {};
-  }
 
   const user = useContext(UserContext);
   const { setLoggedUser } = useContext(UserActionsContext);
@@ -68,44 +59,43 @@ function App() {
         <Route path={routes.main} element={<Main />}></Route>
         <Route
           path={routes.mypage}
-          element={user.loggedIn ? <Mypage /> : <SignIn signInAlert={true} />}
+          element={user !== null ? <Mypage /> : <SignIn signInAlert={true} />}
         ></Route>
         <Route path={routes.signup} element={<SignUp />}></Route>
         <Route path={routes.signin} element={<SignIn />}></Route>
         <Route path={routes.emailConfirm} element={<EmailConfirm />}></Route>
-        <Route path={routes.resetPassword} element={<ResetPassword />}></Route>
         <Route
           path={routes.createSurvey}
           element={
-            user.loggedIn ? <CreateSurvey /> : <SignIn signInAlert={true} />
+            user !== null ? <CreateSurvey /> : <SignIn signInAlert={true} />
           }
         ></Route>
         <Route
           path={routes.surveyStats}
           element={
-            user.loggedIn ? <SurveyAnalysis /> : <SignIn signInAlert={true} />
+            user !== null ? <SurveyAnalysis /> : <SignIn signInAlert={true} />
           }
         ></Route>
         <Route
           path={routes.participateSurvey}
           element={
-            user.loggedIn ? <Participate /> : <SignIn signInAlert={true} />
+            user != null ? <Participate /> : <SignIn signInAlert={true} />
           }
         ></Route>
         <Route
           path={routes.manageSurvey}
           element={
-            user.loggedIn ? <ManageSurvey /> : <SignIn signInAlert={true} />
+            user !== null ? <ManageSurvey /> : <SignIn signInAlert={true} />
           }
         ></Route>
         <Route
           path={routes.createdSurvey}
-          element={user.loggedIn ? <Show /> : <SignIn signInAlert={true} />}
+          element={user !== null ? <Show /> : <SignIn signInAlert={true} />}
         ></Route>
         <Route
           path={routes.inquireSubmittedSurvey}
           element={
-            user.loggedIn ? (
+            user !== null ? (
               <InquireSubmittedSurvey />
             ) : (
               <SignIn signInAlert={true} />
@@ -115,10 +105,9 @@ function App() {
         <Route
           path={routes.createCardSurvey}
           element={
-            user.loggedIn ? <CreateCardSurvey /> : <SignIn signInAlert={true} />
+            user !== null ? <CreateCardSurvey /> : <SignIn signInAlert={true} />
           }
         ></Route>
-        <Route path={"*"} element={<NotFound />}></Route>
       </Routes>
     </BrowserRouter>
   );

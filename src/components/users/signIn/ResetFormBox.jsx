@@ -1,26 +1,16 @@
 import { useState } from "react";
-import TextField from "@mui/material/TextField";
-import { styled } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
-import { LocalLoginWrapper, LoginInputContainer, LoginButton } from "./styled";
-import { useRecoilState } from "recoil";
-import * as Sentry from "@sentry/react";
-import {
-  getAccessToken,
-  getRefreshToken,
-  logout,
-  setTokens,
-  updateAccessToken,
-} from "../../../authentication/auth";
-import CustomTextField from "../../common/CustomTextField";
 import apiClient from "../../../api/client";
+import { setTokens } from "../../../authentication/auth";
+import CustomTextField from "../../common/CustomTextField";
+import { LocalLoginWrapper, LoginButton, LoginInputContainer } from "./styled";
 
 function ResetFormBox() {
   const [inputs, setInputs] = useState({
     email: "",
     password: "",
   });
-  
+
   const navigate = useNavigate();
 
   const handleChange = (event) => {
