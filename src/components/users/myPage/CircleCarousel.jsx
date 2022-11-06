@@ -10,9 +10,8 @@ import {
   faPersonCircleQuestion,
 } from "@fortawesome/free-solid-svg-icons";
 import { Container, Card } from "./styled";
-import { useState } from "react";
-import { useRecoilValue } from "recoil";
-import { userState } from "../../../authentication/userState";
+import { useContext, useState } from "react";
+import { UserContext } from "../../../authentication/userState";
 
 function CircleCarousel() {
   const [ishover1, setIshover1] = useState(false);
@@ -23,7 +22,8 @@ function CircleCarousel() {
   const [ishover6, setIshover6] = useState(false);
   const [ishover7, setIshover7] = useState(false);
   const [ishover8, setIshover8] = useState(false);
-  const user = useRecoilValue(userState);
+
+  const user = useContext(UserContext);
 
   return (
     <Container>

@@ -1,35 +1,34 @@
-import React, { useCallback, useState } from "react";
-import { useRecoilState } from "recoil";
-import { EssentialForm, Message } from "./SignUpCSS";
-import {
-  emailState,
-  nicknameState,
-  passwordState,
-  passwordConfirmState,
-  isNicknameState,
-  isEmailState,
-  isPasswordState,
-  isPasswordConfirmState,
-} from "./SignUpState";
 import { Box } from "@mui/material";
 import * as Sentry from "@sentry/react";
+import { setUser } from "@sentry/react";
+import React, { useCallback, useState } from "react";
 import {
   getAccessToken,
   getRefreshToken,
   logout,
-  updateAccessToken,
+  updateAccessToken
 } from "../../../authentication/auth";
 import CustomTextField from "../../common/CustomTextField";
-import { setUser } from "@sentry/react";
-import apiClient from '../../../api/client';
-
-export default function SignEssentialForm({}) {
-  // 이메일, 닉네임, 비밀번호, 비밀번호 확인
-  const [email, setEmail] = useRecoilState(emailState);
-  const [nickname, setNickname] = useRecoilState(nicknameState);
-  const [password, setPassword] = useRecoilState(passwordState);
-  const [passwordConfirm, setPasswordConfirm] =
-    useRecoilState(passwordConfirmState);
+import  apiClient  from '../../../api/client';
+import { Message } from "./SignUpCSS";
+export default function SignEssentialForm({
+  email,
+  nickname,
+  password,
+  passwordConfirm,
+  isNickname,
+  isEmail,
+  isPassword,
+  isPasswordConfirm,
+  getEmail,
+  getNickname,
+  getPassword,
+  getPasswordConfirm,
+  getIsNickname,
+  getIsEmail,
+  getIsPassword,
+  getIsPasswordConfirm,
+}) {
 
   //오류메시지 상태저장
   const [nicknameMessage, setNicknameMessage] = useState("");
@@ -37,47 +36,43 @@ export default function SignEssentialForm({}) {
   const [passwordMessage, setPasswordMessage] = useState("");
   const [passwordConfirmMessage, setPasswordConfirmMessage] = useState("");
 
-  // 유효성 검사
-  const [isNickname, setIsNickname] = useRecoilState(isNicknameState);
-  const [isEmail, setIsEmail] = useRecoilState(isEmailState);
-  const [isPassword, setIsPassword] = useRecoilState(isPasswordState);
-  const [isPasswordConfirm, setIsPasswordConfirm] = useRecoilState(
-    isPasswordConfirmState
-  );
-
   const onEmailHandler = useCallback((e) => {
     const emailRegex =
       /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
     const emailCurrent = e.target.value;
-    setEmail(emailCurrent);
+    getEmail(emailCurrent);
 
     if (!emailRegex.test(emailCurrent)) {
       setEmailMessage("이메일 형식으로 입력해주세요.");
-      setIsEmail(false);
+      getIsEmail(false);
     } else {
       apiClient
         .get("/api/v1/users/check-email-duplication", {
           params: {
             email: emailCurrent,
-          }
+          },
+          // headers: {
+          //   accessToken: getAccessToken(),
+          //   refreshToken: getRefreshToken(),
+          // },
         })
         .then(function (response) {
           if (response.data.message.includes("성공")) {
             if (response.data.data.isDuplicated === false) {
               setEmailMessage("사용 가능한 이메일입니다.");
-              setIsEmail(true);
+              getIsEmail(true);
             } else {
               setEmailMessage(
                 "중복 이메일이 있습니다. 다른 이메일을 입력해주세요."
               );
-              setIsEmail(false);
+              getIsEmail(false);
             }
           } else {
             console.log("에러발생");
             setEmailMessage(
               "중복 이메일이 있습니다. 다른 이메일을 입력해주세요."
             );
-            setIsEmail(false);
+            getIsEmail(false);
           }
         })
     }
@@ -85,40 +80,44 @@ export default function SignEssentialForm({}) {
 
   const onNicknameHandler = useCallback(
     (e) => {
-      setNickname(e.target.value);
+      getNickname(e.target.value);
       if (e.target.value.length < 2 || e.target.value.length > 5) {
         setNicknameMessage("2글자 이상 5글자 이하로 입력해주세요.");
-        setIsNickname(false);
+        getIsNickname(false);
       } else {
         apiClient
           .get("/api/v1/users/check-nickname-duplication", {
             params: {
               nickname: e.target.value,
-            }
+            },
+            // headers: {
+            //   accessToken: getAccessToken(),
+            //   refreshToken: getRefreshToken(),
+            // },
           })
           .then(function (response) {
             if (response.data.message.includes("성공")) {
               console.log(response.data.data.isDuplicated);
               if (response.data.data.isDuplicated === false) {
                 setNicknameMessage("사용 가능한 닉네임입니다.");
-                setIsNickname(true);
+                getIsNickname(true);
               } else {
                 setNicknameMessage(
                   "중복 닉네임이 있습니다. 다른 닉네임을 입력해주세요."
                 );
-                setIsNickname(false);
+                getIsNickname(false);
               }
             } else {
               console.log("에러발생");
               setNicknameMessage(
                 "중복 닉네임이 있습니다. 다른 닉네임을 입력해주세요."
               );
-              setIsNickname(false);
+              getIsNickname(false);
             }
           })
       }
     },
-    [setNickname]
+    [getNickname]
   );
 
   const onPasswordHandler = useCallback(
@@ -126,33 +125,33 @@ export default function SignEssentialForm({}) {
       const passwordRegex =
         /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
       const passwordCurrent = e.target.value;
-      setPassword(passwordCurrent);
+      getPassword(passwordCurrent);
       if (!passwordRegex.test(passwordCurrent)) {
         setPasswordMessage(
           "숫자,영문자,특수문자 조합으로 8자리 이상 입력해주세요."
         );
-        setIsPassword(false);
+        getIsPassword(false);
       } else {
         setPasswordMessage("올바른 비밀번호 형식입니다.");
-        setIsPassword(true);
+        getIsPassword(true);
       }
     },
-    [setPassword]
+    [getPassword]
   );
 
   const onConfirmPasswordHandler = useCallback(
     (e) => {
       const passwordConfirmCurrent = e.target.value;
-      setPasswordConfirm(passwordConfirmCurrent);
+      getPasswordConfirm(passwordConfirmCurrent);
       if (password === passwordConfirmCurrent) {
         setPasswordConfirmMessage("비밀번호가 일치합니다.");
-        setIsPasswordConfirm(true);
+        getIsPasswordConfirm(true);
       } else {
         setPasswordConfirmMessage("비밀번호가 일치하지 않습니다.");
-        setIsPasswordConfirm(false);
+        getIsPasswordConfirm(false);
       }
     },
-    [password, setPasswordConfirm]
+    [password, getPasswordConfirm]
   );
 
   return (

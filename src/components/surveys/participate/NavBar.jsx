@@ -4,45 +4,28 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import React from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
-import apiClient from '../../../api/client';
-import {
-  EssayAnswerListState,
-  essayAnswerValidateCount,
-  multiChoiceAnswerValidateCount,
-  MultipleChoiceAnswerListState,
-  oxAnswerListState,
-  oxAnswerValidateCount,
-  surveyQuestionCount,
-} from "../../../atoms";
+import React, { useContext } from "react";
+import { useRecoilValue } from "recoil";
+import apiClient from "../../../api/client";
 import { userState } from "../../../authentication/userState";
+import { useCreateAnswerActions, useCreateAnswerValue } from "./answerState";
 import { SaveBtn, SNavBar } from "./styled";
+import { UserContext } from "../../../authentication/userState";
 
 export default function NavBar() {
-  const user = useRecoilValue(userState);
+  const user = useContext(UserContext);
+  const answers = useCreateAnswerValue();
+  const { setEssayAnswers, setMultipleChoiceAnswers, setOXAnswers } =
+    useCreateAnswerActions();
 
-  // 답변 저장 활성화 관련 변수
-  const [essayValidateCount, setEssayValidateCount] = useRecoilState(
-    essayAnswerValidateCount
-  );
-  const [multiValidateCount, setMultiValidateCount] = useRecoilState(
-    multiChoiceAnswerValidateCount
-  );
-  const [oxValidateCount, setOXValidateCount] = useRecoilState(
-    oxAnswerValidateCount
-  );
-  const questionCount = useRecoilValue(surveyQuestionCount);
-
-  // 답변 저장 POST 관련 변수
-  const [essayAnswerList, setEssayAnswerList] =
-    useRecoilState(EssayAnswerListState);
-  const [multiChoiceAnswerList, setMultiChoiceAnswerList] = useRecoilState(
-    MultipleChoiceAnswerListState
-  );
-  const [oxAnswerList, setOXAnswerList] = useRecoilState(oxAnswerListState);
+  const resetCreateAnswerState = () => {
+    setEssayAnswers([]);
+    setMultipleChoiceAnswers([]);
+    setOXAnswers([]);
+  };
 
   const [open, setOpen] = React.useState(false);
+  const [open2, setOpen2] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -53,65 +36,40 @@ export default function NavBar() {
     window.location.replace("/");
   };
 
-  const resetRecoilValue = () => {
-    setEssayAnswerList([]);
-    setMultiChoiceAnswerList([]);
-    setOXAnswerList([]);
+  const handleClickOpen2 = () => {
+    setOpen2(true);
+  };
 
-    setEssayValidateCount(0);
-    setMultiValidateCount(0);
-    setOXValidateCount(0);
+  const handleClose2 = () => {
+    setOpen2(false);
   };
 
   const handleSubmit = () => {
     const answerInfo = {
-      essayAnswers:
-        essayAnswerList.length === 0
-          ? []
-          : essayAnswerList.length === 1
-            ? [essayAnswerList[0]]
-            : essayAnswerList,
-
-      multipleChoiceAnswers:
-        multiChoiceAnswerList.length === 0
-          ? []
-          : multiChoiceAnswerList.length === 1
-            ? [multiChoiceAnswerList[0]]
-            : multiChoiceAnswerList,
-
-      oxAnswers:
-        oxAnswerList.length === 0
-          ? []
-          : oxAnswerList.length === 1
-            ? [oxAnswerList[0]]
-            : oxAnswerList,
+      essayAnswers: answers.essayAnswers,
+      multipleChoiceAnswers: answers.multipleChoiceAnswers,
+      oxAnswers: answers.oxAnswers,
     };
 
-    console.log(JSON.stringify(answerInfo));
-
-    apiClient
-      .post("/api/v1/answer?userId=" + user.id, answerInfo)
-      .then(function (response) {
-        console.log(response);
-        resetRecoilValue();
-        handleClickOpen();
-      })
-      .finally(function () {
-        // always executed
-      });
+    answers.essayAnswerValidate === answers.essayAnswers.length &&
+    answers.multipleChoiceAnswerValidate ===
+      answers.multipleChoiceAnswers.length &&
+    answers.oxAnswerValidate === answers.oxAnswers.length
+      ? apiClient
+          .post("/api/v1/answer?userId=" + user.id, answerInfo)
+          .then(function (response) {
+            console.log(response);
+            handleClickOpen();
+          })
+          .finally(function () {
+            resetCreateAnswerState();
+          })
+      : handleClickOpen2();
   };
 
   return (
     <SNavBar>
-      <SaveBtn
-        disabled={
-          essayValidateCount + multiValidateCount + oxValidateCount !==
-          questionCount
-        }
-        onClick={handleSubmit}
-      >
-        저장
-      </SaveBtn>
+      <SaveBtn onClick={handleSubmit}>저장</SaveBtn>
       <Dialog
         open={open}
         onClose={handleClose}
@@ -134,6 +92,33 @@ export default function NavBar() {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} autoFocus>
+            확인
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog
+        open={open2}
+        onClose={handleClose2}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        sx={{
+          "& .MuiDialog-container": {
+            "& .MuiPaper-root": {
+              width: "100%",
+              maxWidth: "500px", // Set your width here
+            },
+          },
+        }}
+      >
+        <DialogTitle id="alert-dialog-title">알림</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            모든 항목의 답변을 입력해주세요!
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose2} autoFocus>
             확인
           </Button>
         </DialogActions>

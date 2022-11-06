@@ -1,50 +1,31 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit } from "@fortawesome/free-regular-svg-icons";
-import { useEffect, useState } from "react";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
-import { useRecoilValue } from "recoil";
-import { userState } from "../../../authentication/userState";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useEffect, useState } from "react";
+import apiClient from "../../../api/client";
 import {
-  getAccessToken,
-  getRefreshToken,
-  logout,
-  updateAccessToken,
-} from "../../../authentication/auth";
-import {
-  SProfile,
-  ProfileImg,
   DefaultImage,
   Image,
+  Line,
+  LineHeader,
+  LineWrapper,
+  ProfileImg,
+  SProfile,
+  Type,
   UploadBtn,
   UserInfo,
-  LineHeader,
-  Line,
-  LineWrapper,
-  Type,
   UserInput,
 } from "./styled";
-import * as Sentry from "@sentry/react";
-import { setUser } from "@sentry/react";
-import apiClient from '../../../api/client';
-
 
 function Profile() {
   const [selectedImage, setSelectedImage] = useState(null);
-  // user 추후 삭제
-  const user = useRecoilValue(userState);
-  const [profile, setProfile] = useState(null);
-
-  // TODO: profile 받아오기
+  const [profile, setProfile] = useState("");
   const fetchProfile = async () => {
-    const response = await apiClient
-      .get("/api/v1/users/my")
+    const response = await apiClient.get("/api/v1/users/my");
     setProfile(response.data.data);
-    console.log(response.data);
   };
 
   useEffect(() => {
     fetchProfile();
-    console.log(profile);
   }, []);
 
   return (
@@ -63,7 +44,7 @@ function Profile() {
         ) : (
           // 추후 변경 예정
           <DefaultImage
-            src={user.gender === "FEMALE" ? "/img/girl.png" : "/img/boy.png"}
+            src={profile.gender === "FEMALE" ? "/img/girl.png" : "/img/boy.png"}
           />
         )}
       </ProfileImg>
@@ -72,8 +53,8 @@ function Profile() {
       </UploadBtn>
 
       <UserInfo>
-        <h1>{user.nickname}</h1>
-        <h2>{user.email}</h2>
+        <h1>{profile.nickname}</h1>
+        <h2>{profile.email}</h2>
       </UserInfo>
       <LineHeader>
         <p>PROFILE</p>
@@ -81,7 +62,7 @@ function Profile() {
       <LineWrapper>
         <Line>
           <Type>성별:</Type>
-          <UserInput>{user.gender === "FEMALE" ? "여성" : "남성"}</UserInput>
+          <UserInput>{profile.gender === "FEMALE" ? "여성" : "남성"}</UserInput>
         </Line>
         <Line>
           <Type>연령대:</Type>
@@ -92,7 +73,7 @@ function Profile() {
               THIRTIES: <UserInput>30대</UserInput>,
               FORTIES: <UserInput>40대</UserInput>,
               FIFTIES: <UserInput>50대</UserInput>,
-            }[user.ageGroup]
+            }[profile.ageGroup]
           }
         </Line>
         <Line>
@@ -107,7 +88,7 @@ function Profile() {
               FREELANCER: <UserInput>프리랜서</UserInput>,
               JOB_SEEKER: <UserInput>취업준비생</UserInput>,
               JOBLESS: <UserInput>무직</UserInput>,
-            }[user.job]
+            }[profile.job]
           }
         </Line>
       </LineWrapper>

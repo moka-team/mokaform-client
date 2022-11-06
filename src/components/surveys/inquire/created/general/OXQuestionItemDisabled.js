@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useRecoilValue } from "recoil";
-import { surveyForCreated } from "../../../../../atoms";
 import {
   QuestionOption,
   QuestionText,
   QuestionWrapper,
 } from "../../../participate/styled";
 
-export default function OXQuestionItemDisabled({ item }) {
-  const survey = useRecoilValue(surveyForCreated);
+export default function OXQuestionItemDisabled({ item, survey }) {
   const index = survey.questions.findIndex(
     (listItem) => listItem.questionId === item.questionId
   );
