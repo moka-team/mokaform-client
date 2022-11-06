@@ -25,7 +25,6 @@ apiClient.interceptors.request.use(
       apiClient
         .post("/api/v1/users/token/reissue", {
           accessToken: getAccessToken(),
-          refreshToken: "httpsOnly",
         })
         .then((res) => {
           updateAccessToken(res.data.data);
@@ -57,7 +56,6 @@ apiClient.interceptors.response.use(
       axios
         .post("/api/v1/users/token/reissue", {
           accessToken: getAccessToken(),
-          refreshToken: "httpsOnly",
         })
         .then((res) => {
           updateAccessToken(res.data.data);
