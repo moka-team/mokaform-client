@@ -1,8 +1,7 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useRecoilState } from "recoil";
 import apiClient from "../../../api/client";
-import { setTokens } from "../../../authentication/auth";
+import { getAccessToken, setTokens } from "../../../authentication/auth";
 import {
   UserActionsContext,
   UserContext,
@@ -31,7 +30,6 @@ function LocalLoginContainer() {
     apiClient
       .get("/api/v1/users/my")
       .then(function (response) {
-        console.log(response.data.data);
         setLoggedUser(response.data.data);
         console.log(login);
         window.alert("로그인이 완료되었습니다.");
@@ -51,21 +49,21 @@ function LocalLoginContainer() {
         password: inputs.password,
       })
       .then(function (response) {
+        const token = response.headers.get("Authorization");
         if (response.data.message.includes("성공")) {
+          console.log(token.slice(7));
           // 로그인 성공 시 로컬 스토리지에 저장
           localStorage.clear();
-          fetchUser(response.data.data.accessToken);
+          fetchUser();
         } else if (response.data.code === "U001") {
           alert("이메일 또는 비밀번호가 일치하지 않습니다.");
         } else {
           window.alert("로그인 에러 발생");
         }
-        setTokens(
-          response.data.data.refreshToken,
-          response.data.data.accessToken
-        );
+        setTokens(token.slice(7));
       })
       .catch(function (error) {
+        console.log(error);
         window.alert("이메일 또는 비밀번호가 일치하지 않습니다.");
       });
   };

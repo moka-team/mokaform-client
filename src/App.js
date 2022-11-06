@@ -5,7 +5,7 @@ import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
 import apiClient from "./api/client";
 import "./App.css";
-import { getAccessToken, getRefreshToken } from "./authentication/auth";
+import { getAccessToken } from "./authentication/auth";
 import { UserActionsContext, UserContext } from "./authentication/userState";
 import Main from "./pages/index";
 import SurveyAnalysis from "./pages/surveys/analysis";
@@ -37,7 +37,6 @@ function App() {
   useEffect(() => {
     setScreenSize();
     axios.defaults.headers.common["accessToken"] = getAccessToken();
-    axios.defaults.headers.common["refreshToken"] = getRefreshToken();
   });
 
   const user = useContext(UserContext);
@@ -47,6 +46,7 @@ function App() {
     async function fetchUser() {
       if (getAccessToken()) {
         const res = await apiClient.get("api/v1/users/my");
+        console.log(res);
         setLoggedUser(res.data.data);
       }
     }
