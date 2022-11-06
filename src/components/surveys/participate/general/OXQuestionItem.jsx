@@ -1,30 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
-import {
-  oxAnswerListState,
-  oxAnswerValidateCount,
-  surveyForSubmit,
-} from "../../../../atoms";
+import { useCreateAnswerActions, useCreateAnswerValue } from "../answerState";
 import { QuestionOption, QuestionText, QuestionWrapper } from "../styled";
 
-export default function OXQuestionItem({ item }) {
+export default function OXQuestionItem({ item, survey }) {
+  const oxAnswers = useCreateAnswerValue().oxAnswers;
+  const oxAnswerValidate = useCreateAnswerValue().oxAnswerValidate;
+  const { addOXAnswer, setOXAnswers, setOXAnswerValidate } =
+    useCreateAnswerActions();
+
   const [currentClick, setCurrentClick] = useState(null);
   const [prevClick, setPrevClick] = useState(null);
-
-  const [oxAnswerList, setOXAnswerList] = useRecoilState(oxAnswerListState);
-  const [oxValidateCount, setOXValidateCount] = useRecoilState(
-    oxAnswerValidateCount
-  );
   const [oxAnswer, setOXAnswer] = useState({
     questionId: item.questionId,
     isYes: null,
   });
 
-  const index = oxAnswerList.findIndex(
+  const index = oxAnswers.findIndex(
     (listItem) => listItem.questionId === oxAnswer.questionId
   );
-  const survey = useRecoilValue(surveyForSubmit);
-  const qIndex = survey.data.questions.findIndex(
+
+  const qIndex = survey.questions.findIndex(
     (listItem) => listItem.questionId === item.questionId
   );
 
@@ -32,13 +27,13 @@ export default function OXQuestionItem({ item }) {
   const no = `${item.questionId} no`;
 
   useEffect(() => {
-    setOXAnswerList((oldOXAnswerList) => [...oldOXAnswerList, oxAnswer]);
+    addOXAnswer(oxAnswer);
   }, []);
 
   const onClickHandler = (event) => {
     prevClick === null
-      ? setOXValidateCount(oxValidateCount + 1)
-      : setOXValidateCount(oxValidateCount);
+      ? setOXAnswerValidate(oxAnswerValidate + 1)
+      : setOXAnswerValidate(oxAnswerValidate);
 
     if (prevClick !== null && prevClick !== event.target.id) {
       let prev = document.getElementById(prevClick);
@@ -54,11 +49,11 @@ export default function OXQuestionItem({ item }) {
       isYes: event.target.value,
     });
 
-    const newList = replaceItemAtIndex(oxAnswerList, index, {
+    const newList = replaceItemAtIndex(oxAnswers, index, {
       ...oxAnswer,
       isYes: event.target.value,
     });
-    setOXAnswerList(newList);
+    setOXAnswers(newList);
   };
 
   useEffect(

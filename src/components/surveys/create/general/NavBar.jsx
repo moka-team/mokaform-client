@@ -1,3 +1,5 @@
+import { faClipboard } from "@fortawesome/free-regular-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -7,12 +9,14 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography";
+import { textAlign } from "@mui/system";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import dayjs from "dayjs";
 import * as React from "react";
 import { useEffect, useState } from "react";
+import styled from "styled-components";
 import apiClient from "../../../../api/client";
 import { SaveBtn, SNavBar } from "../../common/styled";
 import { useCreateSurveyActions, useCreateSurveyValue } from "../surveyState";
@@ -30,6 +34,29 @@ const style = {
   p: 4,
   borderRadius: 2,
 };
+
+const CopyBtn = styled.button`
+  background-color: rgba(51, 51, 51, 0.05);
+  border-radius: 8px;
+  border-width: 0;
+  color: #333333;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  list-style: none;
+  margin-top: 20px;
+  margin-bottom: -20px;
+  padding: 10px 12px;
+  text-align: center;
+  transition: all 200ms;
+  vertical-align: baseline;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+`;
 
 function NavBar() {
   const survey = useCreateSurveyValue();
@@ -370,6 +397,20 @@ function NavBar() {
           </DialogContentText>
           <DialogContentText sx={{ color: "#202632" }}>
             공유 링크 : {sharingUrl}
+          </DialogContentText>
+          <DialogContentText sx={{ textAlign: "center" }}>
+            <CopyBtn
+              onClick={() => {
+                navigator.clipboard.writeText(sharingUrl);
+                document.getElementById("copy").innerText = " 복사 완료 ";
+              }}
+            >
+              <span id="copy">공유 주소 복사하기 </span>
+              <FontAwesomeIcon
+                icon={faClipboard}
+                style={{ cursor: "pointer" }}
+              />
+            </CopyBtn>
           </DialogContentText>
         </DialogContent>
         <DialogActions>
