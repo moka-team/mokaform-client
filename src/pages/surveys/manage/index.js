@@ -4,7 +4,6 @@ import { UserContext } from "../../../authentication/userState";
 import ManageSurveySection from "../../../components/surveys/manage/ManageSurveySection";
 
 export default function ManageSurvey() {
-  const { userId } = useParams();
   const navigate = useNavigate();
   const user = useContext(UserContext);
   useEffect(() => {
@@ -13,5 +12,5 @@ export default function ManageSurvey() {
       navigate("/");
     }
   }, []);
-  return <ManageSurveySection userId={userId}></ManageSurveySection>;
+  return <ManageSurveySection></ManageSurveySection>;
 }

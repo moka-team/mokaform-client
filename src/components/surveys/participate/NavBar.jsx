@@ -56,7 +56,7 @@ export default function NavBar() {
       answers.multipleChoiceAnswers.length &&
     answers.oxAnswerValidate === answers.oxAnswers.length
       ? apiClient
-          .post("/api/v1/answer?userId=" + user.id, answerInfo)
+          .post("/api/v1/answer", answerInfo)
           .then(function (response) {
             console.log(response);
             handleClickOpen();
