@@ -6,6 +6,7 @@ import { logout } from "../authentication/auth";
 const apiClient = axios.create({
   baseURL: "https://www.mokaform.site/",
 });
+const { setLoggedUser } = useContext(UserActionsContext);
 
 apiClient.interceptors.request.use(
   function (config) {
@@ -33,6 +34,7 @@ apiClient.interceptors.request.use(
           if (err.response.data.code === "C009") {
             alert("토큰 만료! 다시 로그인해주세요! 🥰");
             logout();
+            setLoggedUser(null);
             window.location.replace("/");
             localStorage.clear();
           }
@@ -65,6 +67,7 @@ apiClient.interceptors.response.use(
           if (err.response.data.code === "C009") {
             alert("토큰 만료! 다시 로그인해주세요! 🥰");
             logout();
+            setLoggedUser(null);
             window.location.replace("/");
             localStorage.clear();
           }

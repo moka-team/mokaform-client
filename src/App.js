@@ -20,10 +20,11 @@ import Mypage from "./pages/users/myPage/index";
 import SignIn from "./pages/users/signIn";
 import SignUp from "./pages/users/signUp";
 import routes from "./routes";
-
+import { UserContext } from "./authentication/userState";
+import { userState } from "./authentication/userState";
 import { NotFound } from "./components/common/NotFound";
 import EmailConfirm from "./pages/users/emailConfirm";
-import ResetPassword from "./pages/users/ResetPassword";
+
 const GlobalStyle = createGlobalStyle`
   ${reset}
   font-family: 'Inter', sans-serif;
@@ -42,12 +43,6 @@ function App() {
     axios.defaults.headers.common["accessToken"] = getAccessToken();
     axios.defaults.headers.common["refreshToken"] = getRefreshToken();
   });
-
-  if (process.env.NODE_ENV !== "development") {
-    console.log = () => {};
-    console.error = () => {};
-    console.debug = () => {};
-  }
 
   const user = useContext(UserContext);
   const { setLoggedUser } = useContext(UserActionsContext);
@@ -68,44 +63,43 @@ function App() {
         <Route path={routes.main} element={<Main />}></Route>
         <Route
           path={routes.mypage}
-          element={getAccessToken() ? <Mypage /> : <SignIn signInAlert={true} />}
+          element={user !== null ? <Mypage /> : <SignIn signInAlert={true} />}
         ></Route>
         <Route path={routes.signup} element={<SignUp />}></Route>
         <Route path={routes.signin} element={<SignIn />}></Route>
         <Route path={routes.emailConfirm} element={<EmailConfirm />}></Route>
-        <Route path={routes.resetPassword} element={<ResetPassword />}></Route>
         <Route
           path={routes.createSurvey}
           element={
-            getAccessToken() ? <CreateSurvey /> : <SignIn signInAlert={true} />
+            user !== null ? <CreateSurvey /> : <SignIn signInAlert={true} />
           }
         ></Route>
         <Route
           path={routes.surveyStats}
           element={
-            getAccessToken() ? <SurveyAnalysis /> : <SignIn signInAlert={true} />
+            user !== null ? <SurveyAnalysis /> : <SignIn signInAlert={true} />
           }
         ></Route>
         <Route
           path={routes.participateSurvey}
           element={
-            getAccessToken() ? <Participate /> : <SignIn signInAlert={true} />
+            user != null ? <Participate /> : <SignIn signInAlert={true} />
           }
         ></Route>
         <Route
           path={routes.manageSurvey}
           element={
-            getAccessToken() ? <ManageSurvey /> : <SignIn signInAlert={true} />
+            user !== null ? <ManageSurvey /> : <SignIn signInAlert={true} />
           }
         ></Route>
         <Route
           path={routes.createdSurvey}
-          element={getAccessToken() ? <Show /> : <SignIn signInAlert={true} />}
+          element={user !== null ? <Show /> : <SignIn signInAlert={true} />}
         ></Route>
         <Route
           path={routes.inquireSubmittedSurvey}
           element={
-            getAccessToken() ? (
+            user !== null ? (
               <InquireSubmittedSurvey />
             ) : (
               <SignIn signInAlert={true} />
@@ -115,10 +109,9 @@ function App() {
         <Route
           path={routes.createCardSurvey}
           element={
-            getAccessToken() ? <CreateCardSurvey /> : <SignIn signInAlert={true} />
+            user !== null ? <CreateCardSurvey /> : <SignIn signInAlert={true} />
           }
         ></Route>
-        <Route path={"*"} element={<NotFound />}></Route>
       </Routes>
     </BrowserRouter>
   );

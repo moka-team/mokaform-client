@@ -8,6 +8,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Toolbar from "@mui/material/Toolbar";
 import React, { useContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { logout } from "../../../authentication/auth";
 import { UserActionsContext } from "../../../authentication/userState";
 import { Logo } from "../../common/Logo";
 
@@ -50,6 +51,7 @@ export default function Header() {
     window.location.replace("/");
     localStorage.clear();
     setLoggedUser(null);
+    logout();
   };
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);

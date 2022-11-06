@@ -1,15 +1,7 @@
 import { Box } from "@mui/material";
-import * as Sentry from "@sentry/react";
-import { setUser } from "@sentry/react";
 import React, { useCallback, useState } from "react";
-import {
-  getAccessToken,
-  getRefreshToken,
-  logout,
-  updateAccessToken
-} from "../../../authentication/auth";
+import apiClient from "../../../api/client";
 import CustomTextField from "../../common/CustomTextField";
-import  apiClient  from '../../../api/client';
 import { Message } from "./SignUpCSS";
 export default function SignEssentialForm({
   email,
@@ -29,7 +21,6 @@ export default function SignEssentialForm({
   getIsPassword,
   getIsPasswordConfirm,
 }) {
-
   //오류메시지 상태저장
   const [nicknameMessage, setNicknameMessage] = useState("");
   const [emailMessage, setEmailMessage] = useState("");
@@ -74,7 +65,7 @@ export default function SignEssentialForm({
             );
             getIsEmail(false);
           }
-        })
+        });
     }
   }, []);
 
@@ -114,7 +105,7 @@ export default function SignEssentialForm({
               );
               getIsNickname(false);
             }
-          })
+          });
       }
     },
     [getNickname]
