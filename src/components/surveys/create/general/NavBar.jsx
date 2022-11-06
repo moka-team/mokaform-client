@@ -52,7 +52,6 @@ function NavBar() {
   const [successDialogOpen, setSuccessDialogOpen] = useState(false);
   const [failDialogOpen, setFailDialogOpen] = useState(false);
   const [sharingUrl, setSharingUrl] = useState("");
-  const [messageTitle, setMessageTitle] = useState("");
   const [message, setMessage] = useState([]);
 
   useEffect(() => {
@@ -175,7 +174,6 @@ function NavBar() {
     ) {
       handleClickDialogOpen();
       if (survey.title.length === 0) {
-        setMessageTitle("설문 내용 또는 세부 설정을 모두 입력해야 합니다.");
         setMessage((message) => [...message, "설문 제목 입력"]);
       }
       if (survey.summary.length === 0) {
@@ -305,13 +303,7 @@ function NavBar() {
       </Modal>
       <SaveBtn
         onClick={handleSubmit}
-        // disabled={
-        //   !(
-        //     survey.title.length &&
-        //     survey.summary.length &&
-        //     survey.questions.length > 0
-        //   )
-        // }
+
       >
         저장
       </SaveBtn>
@@ -332,7 +324,7 @@ function NavBar() {
         <DialogTitle id="invalidate-dialog-title">알림</DialogTitle>
         <DialogContent>
           <DialogContentText id="invalidate-dialog-description">
-            {messageTitle}
+            설문 내용 또는 세부 설정을 모두 입력해야 합니다.
           </DialogContentText>
           <DialogContentText id="invalidate-dialog-description">
             아래 항목을 체크해주세요!
