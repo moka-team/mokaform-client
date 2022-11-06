@@ -52,6 +52,8 @@ function NavBar() {
   const [successDialogOpen, setSuccessDialogOpen] = useState(false);
   const [failDialogOpen, setFailDialogOpen] = useState(false);
   const [sharingUrl, setSharingUrl] = useState("");
+  const [messageTitle, setMessageTitle] = useState("");
+  const [message, setMessage] = useState([]);
 
   useEffect(() => {
     const newArray = survey.multiQuestions.map((multiQuestion) => {
@@ -75,6 +77,7 @@ function NavBar() {
 
   const handleDialogClose = () => {
     setInvalidationDialogOpen(false);
+    setMessage([]);
   };
 
   const handleClickSuccessDialogOpen = () => {
@@ -161,11 +164,38 @@ function NavBar() {
   };
 
   const handleSubmit = () => {
-    survey.startDate.length > 0 &&
-    survey.endDate.length > 0 &&
-    survey.categories.length > 0
-      ? createSurvey()
-      : handleClickDialogOpen();
+    if (
+      !(
+        survey.title.length &&
+        survey.summary.length &&
+        survey.questions.length &&
+        survey.endDate.length &&
+        survey.categories.length
+      )
+    ) {
+      handleClickDialogOpen();
+      if (survey.title.length === 0) {
+        setMessageTitle("설문 내용 또는 세부 설정을 모두 입력해야 합니다.");
+        setMessage((message) => [...message, "설문 제목 입력"]);
+      }
+      if (survey.summary.length === 0) {
+        setMessage((message) => [...message, "설문 설명 입력"]);
+      }
+      if (survey.questions.length === 0) {
+        setMessage((message) => [...message, "질문 한가지 이상 작성"]);
+      }
+      if (survey.startDate.length === 0) {
+        setMessage((message) => [...message, "시작 날짜 설정"]);
+      }
+      if (!survey.endDate.length) {
+        setMessage((message) => [...message, "종료 날짜 설정"]);
+      }
+      if (survey.categories.length === 0) {
+        setMessage((message) => [...message, "카테고리 설정"]);
+      }
+    } else {
+      createSurvey();
+    }
   };
 
   return (
@@ -275,13 +305,13 @@ function NavBar() {
       </Modal>
       <SaveBtn
         onClick={handleSubmit}
-        disabled={
-          !(
-            survey.title.length &&
-            survey.summary.length &&
-            survey.questions.length > 0
-          )
-        }
+        // disabled={
+        //   !(
+        //     survey.title.length &&
+        //     survey.summary.length &&
+        //     survey.questions.length > 0
+        //   )
+        // }
       >
         저장
       </SaveBtn>
@@ -302,11 +332,19 @@ function NavBar() {
         <DialogTitle id="invalidate-dialog-title">알림</DialogTitle>
         <DialogContent>
           <DialogContentText id="invalidate-dialog-description">
-            설문 세부 설정을 확인해주세요.
+            {messageTitle}
           </DialogContentText>
           <DialogContentText id="invalidate-dialog-description">
-            설문 시작, 종료 날짜 및 카테고리 지정은 필수입니다!
+            아래 항목을 체크해주세요!
           </DialogContentText>
+          <br></br>
+          {message.map((list) => {
+            return (
+              <DialogContentText id="invalidate-dialog-description">
+                ✔ {list}
+              </DialogContentText>
+            );
+          })}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleDialogClose}>취소</Button>
