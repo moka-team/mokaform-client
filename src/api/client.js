@@ -13,7 +13,7 @@ const apiClient = axios.create({
 apiClient.defaults.withCredentials = true;
 apiClient.interceptors.request.use(
   function (config) {
-    config.headers["Authorization"] = getAccessToken();
+    config.headers["Authorization"] = `Bearer ${getAccessToken()}`;
     return config;
   },
   function (error) {
@@ -26,7 +26,7 @@ apiClient.interceptors.request.use(
     if (error.response.data.code === "C005") {
       apiClient
         .post("/api/v1/users/token/reissue", {
-          Authorization: getAccessToken(),
+          Authorization: `Bearer ${getAccessToken()}`,
         })
         .then((res) => {
           updateAccessToken(res.data.data);
@@ -47,7 +47,7 @@ apiClient.interceptors.request.use(
 
 apiClient.interceptors.response.use(
   function (config) {
-    config.headers["Authorization"] = getAccessToken();
+    config.headers["Authorization"] = `Bearer ${getAccessToken()}`;
     return config;
   },
   function (error) {
@@ -59,7 +59,7 @@ apiClient.interceptors.response.use(
     if (error.response.data.code === "C005") {
       axios
         .post("/api/v1/users/token/reissue", {
-          Authorization: getAccessToken(),
+          Authorization: `Bearer ${getAccessToken()}`,
         })
         .then((res) => {
           updateAccessToken(res.data.data);

@@ -57,8 +57,7 @@ function LocalLoginContainer() {
         } else {
           window.alert("로그인 에러 발생");
         }
-        console.log(token)
-        setTokens(token);
+        setTokens(token.slice(7));
       })
       .catch(function (error) {
         console.log(error);
