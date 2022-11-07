@@ -10,9 +10,8 @@ import {
   faPersonCircleQuestion,
 } from "@fortawesome/free-solid-svg-icons";
 import { Container, Card } from "./styled";
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState } from "react";
 import { UserContext } from "../../../authentication/userState";
-import apiClient from "../../../api/client";
 
 function CircleCarousel() {
   const [ishover1, setIshover1] = useState(false);
@@ -24,25 +23,14 @@ function CircleCarousel() {
   const [ishover7, setIshover7] = useState(false);
   const [ishover8, setIshover8] = useState(false);
 
-  // const user = useContext(UserContext);
-  const [profile, setProfile] = useState("");
-  const fetchProfile = async () => {
-    const response = await apiClient.get("/api/v1/users/my");
-    setProfile(response.data.data);
-  };
-
-  useEffect(() => {
-    fetchProfile();
-  });
+  const user = useContext(UserContext);
 
   return (
     <Container>
       <Card
         onMouseOver={() => setIshover1(true)}
         onMouseOut={() => setIshover1(false)}
-        style={{
-          display: profile.categories.includes("PET") ? "flex" : "none",
-        }}
+        style={{ display: user.categories.includes("PET") ? "flex" : "none" }}
       >
         <FontAwesomeIcon
           icon={faPaw}
@@ -58,7 +46,7 @@ function CircleCarousel() {
         onMouseOver={() => setIshover2(true)}
         onMouseOut={() => setIshover2(false)}
         style={{
-          display: profile.categories.includes("DAILY_LIFE") ? "flex" : "none",
+          display: user.categories.includes("DAILY_LIFE") ? "flex" : "none",
         }}
       >
         <FontAwesomeIcon
@@ -72,7 +60,7 @@ function CircleCarousel() {
         onMouseOver={() => setIshover3(true)}
         onMouseOut={() => setIshover3(false)}
         style={{
-          display: profile.categories.includes("SOCIAL_POLITICS")
+          display: user.categories.includes("SOCIAL_POLITICS")
             ? "flex"
             : "none",
         }}
@@ -88,7 +76,7 @@ function CircleCarousel() {
         onMouseOver={() => setIshover4(true)}
         onMouseOut={() => setIshover4(false)}
         style={{
-          display: profile.categories.includes("LEARNING") ? "flex" : "none",
+          display: user.categories.includes("LEARNING") ? "flex" : "none",
         }}
       >
         <FontAwesomeIcon
@@ -101,7 +89,7 @@ function CircleCarousel() {
       <Card
         onMouseOver={() => setIshover5(true)}
         onMouseOut={() => setIshover5(false)}
-        style={{ display: profile.categories.includes("IT") ? "flex" : "none" }}
+        style={{ display: user.categories.includes("IT") ? "flex" : "none" }}
       >
         <FontAwesomeIcon
           icon={faLaptopCode}
@@ -113,9 +101,7 @@ function CircleCarousel() {
       <Card
         onMouseOver={() => setIshover6(true)}
         onMouseOut={() => setIshover6(false)}
-        style={{
-          display: profile.categories.includes("HOBBY") ? "flex" : "none",
-        }}
+        style={{ display: user.categories.includes("HOBBY") ? "flex" : "none" }}
       >
         <FontAwesomeIcon
           icon={faGuitar}
@@ -128,7 +114,7 @@ function CircleCarousel() {
         onMouseOver={() => setIshover7(true)}
         onMouseOut={() => setIshover7(false)}
         style={{
-          display: profile.categories.includes("PREFERENCE_RESEARCH")
+          display: user.categories.includes("PREFERENCE_RESEARCH")
             ? "flex"
             : "none",
         }}
@@ -144,7 +130,7 @@ function CircleCarousel() {
         onMouseOver={() => setIshover8(true)}
         onMouseOut={() => setIshover8(false)}
         style={{
-          display: profile.categories.includes("PSYCHOLOGY") ? "flex" : "none",
+          display: user.categories.includes("PSYCHOLOGY") ? "flex" : "none",
         }}
       >
         <FontAwesomeIcon
