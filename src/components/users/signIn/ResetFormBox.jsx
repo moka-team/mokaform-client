@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import apiClient from "../../../api/client";
-import { setTokens } from "../../../authentication/auth";
+import { setAccessToken } from "../../../authentication/auth";
 import CustomTextField from "../../common/CustomTextField";
 import { LocalLoginWrapper, LoginButton, LoginInputContainer } from "./styled";
 
@@ -49,8 +49,8 @@ function ResetFormBox() {
       } else {
         window.alert("로그인 에러 발생");
       }
-      setTokens(
-        response.data.data.accessToken.slice(7)
+      setAccessToken(
+        response.headers.accessToken.slice(7)
       );
     } catch (error) {
       window.alert("이메일 또는 비밀번호가 일치하지 않습니다.");

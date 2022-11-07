@@ -1,11 +1,10 @@
-import axios from "axios";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import apiClient from "../../../api/client";
-import { getAccessToken, setTokens } from "../../../authentication/auth";
+import { setAccessToken } from "../../../authentication/auth";
 import {
   UserActionsContext,
-  UserContext,
+  UserContext
 } from "../../../authentication/userState";
 import CustomTextField from "../../common/CustomTextField";
 import { LocalLoginWrapper, LoginButton, LoginInputContainer } from "./styled";
@@ -57,7 +56,7 @@ function LocalLoginContainer() {
         } else {
           window.alert("로그인 에러 발생");
         }
-        setTokens(token.slice(7));
+        setAccessToken(token.slice(7));
       })
       .catch(function (error) {
         console.log(error);
