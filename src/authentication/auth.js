@@ -8,10 +8,6 @@ export const setAccessToken = (accessToken) => {
   });
 };
 
-export const setTokens = (accessToken) => {
-  setAccessToken(accessToken);
-};
-
 export const updateAccessToken = (newAccessToken) => {
   cookies.remove("access_token");
   setAccessToken(newAccessToken.slice(7));
