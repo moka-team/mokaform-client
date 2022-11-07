@@ -14,6 +14,7 @@ apiClient.defaults.withCredentials = true;
 apiClient.interceptors.request.use(
   function (config) {
     config.headers["Authorization"] = `Bearer ${getAccessToken()}`;
+    config.headers["Content-Type"] = "application/json";
     return config;
   },
   function (error) {
