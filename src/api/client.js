@@ -11,8 +11,6 @@ const apiClient = axios.create({});
 apiClient.defaults.withCredentials = true;
 apiClient.defaults.headers["Access-Control-Allow-Origin"] = "*";
 apiClient.defaults.headers["Content-Type"] = "application/json";
-const apiClient = axios.create({});
-
 apiClient.interceptors.request.use(
   function (config) {
     config.headers["Authorization"] = `Bearer ${getAccessToken()}`;
