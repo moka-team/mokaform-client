@@ -29,7 +29,10 @@ apiClient.interceptors.request.use(
           window.location.reload();
         })
         .catch(function (err) {
-          if (err.response.data.code === "C009") {
+          if (
+            err.response.data.code === "C009" ||
+            err.response.data.code === "C011"
+          ) {
             alert("토큰 만료! 다시 로그인해주세요! 🥰");
             logout();
             window.location.replace("/");
@@ -59,7 +62,10 @@ apiClient.interceptors.response.use(
           window.location.reload();
         })
         .catch(function (err) {
-          if (err.response.data.code === "C009") {
+          if (
+            err.response.data.code === "C009" ||
+            err.response.data.code === "C011"
+          ) {
             alert("토큰 만료! 다시 로그인해주세요! 🥰");
             logout();
             window.location.replace("/");
