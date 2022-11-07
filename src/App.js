@@ -48,7 +48,7 @@ function App() {
     async function fetchUser() {
       if (getAccessToken()) {
         const res = await apiClient.get("api/v1/users/my");
-        setLoggedUser(res.headers.authorization);
+        setLoggedUser(res.data.data);
       }
     }
     fetchUser();

@@ -30,7 +30,6 @@ function LocalLoginContainer() {
   const fetchUser = async () => {
     try {
       const response = await apiClient.get("/api/v1/users/my");
-      console.log(response);
       setLoggedUser(response.data.data);
       window.alert("로그인이 완료되었습니다.");
       navigate("/");
