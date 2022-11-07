@@ -40,7 +40,6 @@ function App() {
     try {
       if (getAccessToken()) {
         const res = apiClient.get("api/v1/users/my");
-        console.log(res);
         setLoggedUser(res.data.data);
       }
     } catch (error) {
