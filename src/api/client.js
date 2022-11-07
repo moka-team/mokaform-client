@@ -11,10 +11,10 @@ const apiClient = axios.create({
 });
 
 apiClient.defaults.withCredentials = true;
+apiClient.defaults.headers["Content-Type"] = "application/json";
 apiClient.interceptors.request.use(
   function (config) {
     config.headers["Authorization"] = `Bearer ${getAccessToken()}`;
-    config.headers["Content-Type"] = "application/json";
     return config;
   },
   function (error) {
