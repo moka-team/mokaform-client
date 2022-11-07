@@ -25,7 +25,7 @@ apiClient.interceptors.request.use(
       apiClient
         .post("/api/v1/users/token/reissue")
         .then((res) => {
-          updateAccessToken(res.headers.authorization);
+          updateAccessToken(res.headers.authorization.slice(7));
           window.location.reload();
         })
         .catch(function (err) {
@@ -55,7 +55,7 @@ apiClient.interceptors.response.use(
       axios
         .post("/api/v1/users/token/reissue")
         .then((res) => {
-          updateAccessToken(res.headers.authorization);
+          updateAccessToken(res.headers.authorization.slice(7));
           window.location.reload();
         })
         .catch(function (err) {
