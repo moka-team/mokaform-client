@@ -8,6 +8,7 @@ import {
 
 const apiClient = axios.create({
   baseURL: "http://devapi.mokaform.site:8080",
+  withCredentials: true,
 });
 
 apiClient.defaults.withCredentials = true;
@@ -16,12 +17,15 @@ apiClient.interceptors.request.use(
     config.headers["Authorization"] = `Bearer ${getAccessToken()}`;
     return config;
   },
+  function (response) {
+    console.log(response);
+  },
   function (error) {
     Sentry.captureException(error);
 
     console.error(error);
     // Access Token 재발행이 필요한 경우
-    if (error.response.data.code === "C005") {
+    if (error.code === "C005") {
       apiClient
         .post("/api/v1/users/token/reissue")
         .then((res) => {
@@ -45,6 +49,9 @@ apiClient.interceptors.response.use(
   function (config) {
     config.headers["Authorization"] = `Bearer ${getAccessToken()}`;
     return config;
+  },
+  function (response) {
+    console.log(response);
   },
   function (error) {
     Sentry.captureException(error);
