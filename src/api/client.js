@@ -19,8 +19,7 @@ apiClient.interceptors.request.use(
   function (error) {
     Sentry.captureException(error);
 
-    alert(error);
-
+    console.error(error);
     // Access Token 재발행이 필요한 경우
     if (error.response.data.code === "C005") {
       apiClient
@@ -49,7 +48,7 @@ apiClient.interceptors.response.use(
   },
   function (error) {
     Sentry.captureException(error);
-    alert(error);
+    console.error(error);
 
     // Access Token 재발행이 필요한 경우
     if (error.response.data.code === "C005") {
