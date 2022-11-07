@@ -5,7 +5,7 @@ import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
 import apiClient from "./api/client";
 import "./App.css";
-import { getAccessToken } from "./authentication/auth";
+import { getAccessToken, getRefreshToken } from "./authentication/auth";
 import { UserActionsContext, UserContext } from "./authentication/userState";
 import Main from "./pages/index";
 import SurveyAnalysis from "./pages/surveys/analysis";
@@ -33,27 +33,24 @@ function setScreenSize() {
 
 function App() {
   window.addEventListener("resize", () => setScreenSize());
+
+  useEffect(() => {
+    setScreenSize();
+    axios.defaults.headers.common["accessToken"] = getAccessToken();
+  });
+
   const user = useContext(UserContext);
   const { setLoggedUser } = useContext(UserActionsContext);
 
-  const fetchUser = async () => {
-    try {
-      if (getAccessToken()) {
-        const res = apiClient.get("api/v1/users/my");
-        setLoggedUser(res.data.data);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
   useEffect(() => {
-    setScreenSize();
-    axios.defaults.headers.common[
-      "Authorization"
-    ] = `Bearer ${getAccessToken()}`;
+    async function fetchUser() {
+      if (getAccessToken()) {
+        const res = await apiClient.get("api/v1/users/my");
+        setLoggedUser(res.headers.authorization);
+      }
+    }
     fetchUser();
-  });
-
+  }, []);
   return (
     <BrowserRouter>
       <GlobalStyle />
