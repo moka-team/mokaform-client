@@ -77,6 +77,8 @@ export default function SubmittedSurvey({ sharingKey }) {
         );
       case "loading":
         return <Loading></Loading>;
+      case "hasError":
+        return <Error></Error>;
     }
   }
 

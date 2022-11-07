@@ -82,6 +82,8 @@ export default function CardQuestionItem({ item, sharingKey, survey }) {
         );
       case "loading":
         return <Loading></Loading>;
+      case "hasError":
+        return <Error></Error>;
     }
   }
 

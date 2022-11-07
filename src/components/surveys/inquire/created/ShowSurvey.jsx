@@ -61,6 +61,8 @@ export default function ShowSurvey({ sharingKey }) {
         );
       case "loading":
         return <Loading></Loading>;
+      case "hasError":
+        return <Error></Error>;
     }
   }
 
