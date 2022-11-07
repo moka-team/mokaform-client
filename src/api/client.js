@@ -25,11 +25,9 @@ apiClient.interceptors.request.use(
     // Access Token 재발행이 필요한 경우
     if (error.response.data.code === "C005") {
       apiClient
-        .post("/api/v1/users/token/reissue", {
-          Authorization: `Bearer ${getAccessToken()}`,
-        })
+        .post("/api/v1/users/token/reissue")
         .then((res) => {
-          updateAccessToken(res.data.data);
+          updateAccessToken(res.headers.authorization);
           window.location.reload();
         })
         .catch(function (err) {
@@ -58,11 +56,9 @@ apiClient.interceptors.response.use(
     // Access Token 재발행이 필요한 경우
     if (error.response.data.code === "C005") {
       axios
-        .post("/api/v1/users/token/reissue", {
-          Authorization: `Bearer ${getAccessToken()}`,
-        })
+        .post("/api/v1/users/token/reissue")
         .then((res) => {
-          updateAccessToken(res.data.data);
+          updateAccessToken(res.headers.authorization);
           window.location.reload();
         })
         .catch(function (err) {

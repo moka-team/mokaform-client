@@ -49,11 +49,6 @@ function LocalLoginContainer() {
       })
       .then(function (response) {
         const token = response.headers.authorization;
-        console.log(response);
-        console.log(response.headers);
-        console.log("인증" + response.headers.authorization);
-        console.log(response.headers.get("Authorization"));
-        console.log("토큰" + token);
         if (response.data.message.includes("성공")) {
           // 로그인 성공 시 로컬 스토리지에 저장
           localStorage.clear();
