@@ -14,11 +14,12 @@ export const setTokens = (accessToken) => {
 
 export const updateAccessToken = (newAccessToken) => {
   cookies.remove("access_token");
-  setAccessToken(newAccessToken);
+  setAccessToken(newAccessToken.slice(7));
 };
 
 export const logout = () => {
   cookies.remove("access_token");
+  cookies.remove("refresh_token");
 };
 
 export const getAccessToken = () => {
