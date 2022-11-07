@@ -47,7 +47,7 @@ function LocalLoginContainer() {
         password: inputs.password,
       })
       .then(function (response) {
-        const token = response.headers.get("Authorization");
+        const token = response.headers.Authorization;
         console.log(response)
         console.log(response.headers)
         console.log(response.headers.get("Authorization"))
