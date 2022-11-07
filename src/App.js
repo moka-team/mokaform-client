@@ -43,13 +43,17 @@ function App() {
   const { setLoggedUser } = useContext(UserActionsContext);
 
   useEffect(() => {
-    async function fetchUser() {
-      if (getAccessToken()) {
-        const res = await apiClient.get("api/v1/users/my");
-        console.log(res);
-        setLoggedUser(res.data.data);
+    const fetchUser = async () => {
+      try {
+        if (getAccessToken()) {
+          const res = apiClient.get("api/v1/users/my");
+          console.log(res);
+          setLoggedUser(res.data.data);
+        }
+      } catch (error) {
+        console.log(error);
       }
-    }
+    };
     fetchUser();
   }, []);
   return (
