@@ -6,9 +6,7 @@ import {
   updateAccessToken,
 } from "../authentication/auth";
 
-const apiClient = axios.create({
-  baseURL: "http://devapi.mokaform.site:8080",
-});
+const apiClient = axios.create({});
 
 apiClient.defaults.withCredentials = true;
 apiClient.defaults.headers["Access-Control-Allow-Origin"] = "*";
