@@ -11,6 +11,8 @@ const apiClient = axios.create({
 });
 
 apiClient.defaults.withCredentials = true;
+apiClient.defaults.headers["Access-Control-Allow-Origin"] =
+  "http://devapi.mokaform.site:8080";
 apiClient.defaults.headers["Content-Type"] = "application/json";
 apiClient.interceptors.request.use(
   function (config) {
