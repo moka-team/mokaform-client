@@ -1,20 +1,22 @@
-import { useCookies } from "react-cookie";
+import { Cookies } from "react-cookie";
 
-const [cookie, setCookie, removeCookie] = useCookies("access_token");
+const cookies = new Cookies();
 
 export const setAccessToken = (accessToken) => {
-  setCookie(accessToken);
+  cookies.set("access_token", accessToken, {
+    sameSite: "strict",
+  });
 };
 
 export const updateAccessToken = (newAccessToken) => {
-  removeCookie("access_token");
-  setCookie(newAccessToken.slice(7));
+  cookies.remove("access_token");
+  setAccessToken(newAccessToken.slice(7));
 };
 
 export const logout = () => {
-  removeCookie("access_token");
+  cookies.remove("access_token");
 };
 
 export const getAccessToken = () => {
-  return cookie.accessToken;
+  return cookies.get("access_token");
 };
