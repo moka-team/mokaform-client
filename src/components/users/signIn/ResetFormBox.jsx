@@ -50,7 +50,7 @@ function ResetFormBox() {
         window.alert("로그인 에러 발생");
       }
       setTokens(
-        response.data.data.accessToken
+        response.data.data.accessToken.slice(7)
       );
     } catch (error) {
       window.alert("이메일 또는 비밀번호가 일치하지 않습니다.");
