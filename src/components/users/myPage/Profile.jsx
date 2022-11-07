@@ -26,7 +26,7 @@ function Profile() {
 
   useEffect(() => {
     fetchProfile();
-  }, []);
+  });
 
   return (
     <SProfile>

@@ -19,6 +19,7 @@ import { logout, updateAccessToken } from "../../authentication/auth";
 import * as Sentry from "@sentry/react";
 import { getAccessToken, getRefreshToken } from "../../authentication/auth";
 import { setUser } from "@sentry/react";
+import apiClient from "../../api/client";
 
 const blue = {
   100: "#DAECFF",
@@ -166,7 +167,7 @@ export default function SortSelect({ page }) {
 
   // 메인에서 최신순 데이터 불러오기
   const fetchRecentSurvey = async () => {
-    const response = await axios.get("api/v1/survey/list", {
+    const response = await apiClient.get("api/v1/survey/list", {
       params: {
         page: 0,
         size: 10,
@@ -179,7 +180,7 @@ export default function SortSelect({ page }) {
 
   // 메인에서 참여자 많은 순 데이터 불러오기
   const fetchFamousSurvey = async () => {
-    const response = await axios.get("api/v1/survey/list", {
+    const response = await apiClient.get("api/v1/survey/list", {
       params: {
         page: 0,
         size: 10,
@@ -194,10 +195,7 @@ export default function SortSelect({ page }) {
 
   // 마이페이지에서 생성한 설문 최신순 데이터 불러오기
   const fetchMyCreatedRecentSurvey = async () => {
-    const response = await axios.get("/api/v1/users/my/surveys", {
-      headers: {
-        accessToken: getAccessToken(),
-      },
+    const response = await apiClient.get("/api/v1/users/my/surveys", {
       params: {
         page: 0,
         size: 5,
@@ -209,10 +207,7 @@ export default function SortSelect({ page }) {
 
   // 마이페이지에서 생성한 설문 참여자 많은 순 데이터 불러오기
   const fetchMyCreatedFamousSurvey = async () => {
-    const response = await axios.get("/api/v1/users/my/surveys", {
-      headers: {
-        accessToken: getAccessToken(),
-      },
+    const response = await apiClient.get("/api/v1/users/my/surveys", {
       params: {
         page: 0,
         size: 5,
@@ -224,10 +219,7 @@ export default function SortSelect({ page }) {
 
   // 마이페이지에서 참여한 설문 최신순 데이터 불러오기
   const fetchMyRecentSurvey = async () => {
-    const response = await axios.get("/api/v1/users/my/submitted-surveys", {
-      headers: {
-        accessToken: getAccessToken(),
-      },
+    const response = await apiClient.get("/api/v1/users/my/submitted-surveys", {
       params: {
         page: 0,
         size: 50,
@@ -239,10 +231,7 @@ export default function SortSelect({ page }) {
 
   // 마이페이지에서 참여한 설문 참여자 많은 순 데이터 불러오기
   const fetchMyFamousSurvey = async () => {
-    const response = await axios.get("/api/v1/users/my/submitted-surveys", {
-      headers: {
-        accessToken: getAccessToken(),
-      },
+    const response = await apiClient.get("/api/v1/users/my/submitted-surveys", {
       params: {
         page: 0,
         size: 50,
