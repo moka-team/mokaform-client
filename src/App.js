@@ -46,6 +46,7 @@ function App() {
     } catch (error) {
       console.log(error);
     }
+  };
   useEffect(() => {
     setScreenSize();
     axios.defaults.headers.common[
@@ -53,7 +54,6 @@ function App() {
     ] = `Bearer ${getAccessToken()}`;
     fetchUser();
   });
-
 
   return (
     <BrowserRouter>
