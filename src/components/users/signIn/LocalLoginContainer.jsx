@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import apiClient from "../../../api/client";
@@ -29,7 +30,7 @@ function LocalLoginContainer() {
   const fetchUser = async () => {
     try {
       const response = await apiClient.get("/api/v1/users/my");
-      console.log(response)
+      console.log(response);
       setLoggedUser(response.data.data);
       window.alert("로그인이 완료되었습니다.");
       navigate("/");
@@ -47,11 +48,12 @@ function LocalLoginContainer() {
         password: inputs.password,
       })
       .then(function (response) {
-        const token = response.headers.get("Authorization");
-        console.log(response)
-        console.log(response.headers)
-        console.log(response.headers.get("Authorization"))
-        console.log(token)
+        const token = response.headers.authorization;
+        console.log(response);
+        console.log(response.headers);
+        console.log("인증" + response.headers.authorization);
+        console.log(response.headers.get("Authorization"));
+        console.log("토큰" + token);
         if (response.data.message.includes("성공")) {
           // 로그인 성공 시 로컬 스토리지에 저장
           localStorage.clear();
