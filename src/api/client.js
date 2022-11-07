@@ -11,6 +11,8 @@ const apiClient = axios.create({});
 apiClient.defaults.withCredentials = true;
 apiClient.defaults.headers["Access-Control-Allow-Origin"] = "*";
 apiClient.defaults.headers["Content-Type"] = "application/json";
+const apiClient = axios.create({});
+
 apiClient.interceptors.request.use(
   function (config) {
     config.headers["Authorization"] = `Bearer ${getAccessToken()}`;
@@ -19,7 +21,6 @@ apiClient.interceptors.request.use(
   function (error) {
     Sentry.captureException(error);
 
-    console.error("에러: " + error.response);
     // Access Token 재발행이 필요한 경우
     if (error.response.data.code === "C005") {
       apiClient
@@ -51,7 +52,6 @@ apiClient.interceptors.response.use(
   },
   function (error) {
     Sentry.captureException(error);
-    console.error("에러:" + error);
 
     // Access Token 재발행이 필요한 경우
     if (error.response.data.code === "C005") {
