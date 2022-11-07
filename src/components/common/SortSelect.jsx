@@ -195,9 +195,6 @@ export default function SortSelect({ page }) {
   // 마이페이지에서 생성한 설문 최신순 데이터 불러오기
   const fetchMyCreatedRecentSurvey = async () => {
     const response = await axios.get("/api/v1/users/my/surveys", {
-      headers: {
-        accessToken: getAccessToken(),
-      },
       params: {
         page: 0,
         size: 5,
@@ -210,9 +207,6 @@ export default function SortSelect({ page }) {
   // 마이페이지에서 생성한 설문 참여자 많은 순 데이터 불러오기
   const fetchMyCreatedFamousSurvey = async () => {
     const response = await axios.get("/api/v1/users/my/surveys", {
-      headers: {
-        accessToken: getAccessToken(),
-      },
       params: {
         page: 0,
         size: 5,
@@ -225,9 +219,6 @@ export default function SortSelect({ page }) {
   // 마이페이지에서 참여한 설문 최신순 데이터 불러오기
   const fetchMyRecentSurvey = async () => {
     const response = await axios.get("/api/v1/users/my/submitted-surveys", {
-      headers: {
-        accessToken: getAccessToken(),
-      },
       params: {
         page: 0,
         size: 50,
@@ -240,9 +231,6 @@ export default function SortSelect({ page }) {
   // 마이페이지에서 참여한 설문 참여자 많은 순 데이터 불러오기
   const fetchMyFamousSurvey = async () => {
     const response = await axios.get("/api/v1/users/my/submitted-surveys", {
-      headers: {
-        accessToken: getAccessToken(),
-      },
       params: {
         page: 0,
         size: 50,

@@ -50,7 +50,6 @@ function ResetFormBox() {
         window.alert("로그인 에러 발생");
       }
       setTokens(
-        response.data.data.refreshToken,
         response.data.data.accessToken
       );
     } catch (error) {

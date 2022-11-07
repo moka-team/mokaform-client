@@ -36,7 +36,7 @@ function App() {
 
   useEffect(() => {
     setScreenSize();
-    axios.defaults.headers.common["accessToken"] = getAccessToken();
+    axios.defaults.headers.common["Authorization"] = getAccessToken();
   });
 
   const user = useContext(UserContext);
