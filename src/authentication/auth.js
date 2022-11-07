@@ -15,9 +15,4 @@ export const updateAccessToken = (newAccessToken) => {
 
 export const logout = () => {
   cookies.remove("access_token");
-  cookies.remove("refresh_token");
-};
-
-export const getAccessToken = () => {
-  return cookies.get("access_token");
 };
