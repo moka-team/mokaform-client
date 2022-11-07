@@ -16,12 +16,9 @@ apiClient.interceptors.request.use(
     config.headers["Authorization"] = `Bearer ${getAccessToken()}`;
     return config;
   },
-  function (response) {
-    alert(response);
-  },
   function (error) {
     Sentry.captureException(error);
-    alert(error);
+    console.error(error);
     // Access Token 재발행이 필요한 경우
     if (error.response.data.code === "C005") {
       apiClient
@@ -48,13 +45,9 @@ apiClient.interceptors.response.use(
     config.headers["Authorization"] = `Bearer ${getAccessToken()}`;
     return config;
   },
-  function (response) {
-    alert(response);
-  },
   function (error) {
     Sentry.captureException(error);
-    alert(error);
-
+    console.error(error);
     // Access Token 재발행이 필요한 경우
     if (error.response.data.code === "C005") {
       axios
