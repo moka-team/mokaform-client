@@ -182,7 +182,6 @@ export default function ManageSurveySection() {
       setSurvey(response.data.data.content);
       setLoading(false);
     } catch (error) {
-      return <Error></Error>;
     }
   };
 

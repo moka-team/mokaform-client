@@ -27,8 +27,6 @@ export default function SurveyDetail({ sharingKey }) {
         );
       case "loading":
         return <Loading></Loading>;
-      case "hasError":
-        return <Error></Error>;
     }
   }
 

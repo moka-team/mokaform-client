@@ -30,8 +30,6 @@ export default function InquireEssayQuestionItem({ item, sharingKey, survey }) {
         );
       case "loading":
         return <Loading></Loading>;
-      case "hasError":
-        return <Error></Error>;
     }
   }
   return <AnswerInfo></AnswerInfo>;
