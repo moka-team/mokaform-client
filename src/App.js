@@ -20,7 +20,6 @@ import EmailConfirm from "./pages/users/emailConfirm";
 import Mypage from "./pages/users/myPage/index";
 import SignIn from "./pages/users/signIn";
 import SignUp from "./pages/users/signUp";
-import { NotFound } from "./components/common/NotFound";
 import routes from "./routes";
 
 const GlobalStyle = createGlobalStyle`
