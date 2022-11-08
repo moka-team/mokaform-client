@@ -7,6 +7,7 @@ import apiClient from "./api/client";
 import "./App.css";
 import { getAccessToken, getRefreshToken } from "./authentication/auth";
 import { UserActionsContext, UserContext } from "./authentication/userState";
+import { NotFound } from "./components/common/NotFound";
 import Main from "./pages/index";
 import SurveyAnalysis from "./pages/surveys/analysis";
 import CreateCardSurvey from "./pages/surveys/create/card/index";
@@ -111,6 +112,7 @@ function App() {
             user !== null ? <CreateCardSurvey /> : <SignIn signInAlert={true} />
           }
         ></Route>
+        <Route path={"*"} element={<NotFound />}></Route>
       </Routes>
     </BrowserRouter>
   );
