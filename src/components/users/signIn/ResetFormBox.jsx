@@ -28,8 +28,8 @@ const TextMessage = styled.p`
   font-size: small;
   color: #0064ff;
 `;
-function ResetFormBox({ codeCheck, getCodeCheck }) {
-  const [email, setEmail] = useState("");
+function ResetFormBox({ email, getEmail, codeCheck, getCodeCheck }) {
+  // const [email, setEmail] = useState("");
   const [emailMessage, setEmailMessage] = useState("");
   const [emailCheck, setEmailCheck] = useState(false);
   const [code, setCode] = useState("");
@@ -45,7 +45,7 @@ function ResetFormBox({ codeCheck, getCodeCheck }) {
   const navigate = useNavigate();
 
   const handleChange = (event) => {
-    setEmail(event.target.value);
+    getEmail(event.target.value);
   };
 
   const handleCodeChange = (event) => {

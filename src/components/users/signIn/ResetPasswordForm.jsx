@@ -4,9 +4,9 @@ import apiClient from "../../../api/client";
 import { LocalLoginWrapper, LoginButton, LoginInputContainer } from "./styled";
 import CustomTextField from "../../common/CustomTextField";
 import { Message } from "../signUp/SignUpCSS";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-export default function ResetPasswordForm() {
+export default function ResetPasswordForm({ email }) {
   const [password, setPassword] = useState("");
   const [passwordMessage, setPasswordMessage] = useState("");
   const [passwordCheck, setPasswordCheck] = useState(false);
@@ -15,6 +15,7 @@ export default function ResetPasswordForm() {
   const [passwordConfirmMessage, setPasswordConfirmMessage] = useState("");
   const [passwordConfirmCheck, setPasswordConfirmCheck] = useState(false);
 
+  const navigate = useNavigate();
   const onPasswordHandler = useCallback(
     (e) => {
       const passwordRegex =
@@ -51,21 +52,14 @@ export default function ResetPasswordForm() {
 
   const fetchPassword = async () => {
     try {
-      const response = await apiClient.post(
-        "/api/v1/users/reset-password",
-        null,
-        {
-          params: {
-            // 이메일 수정 필요
-            email: "adad",
-            password: password,
-          },
-        }
-      );
+      const response = await apiClient.post("/api/v1/users/reset-password", {
+        email: "adad05011@gachon.ac.kr",
+        password: password,
+      });
       console.log(response);
       if (response.data.message.includes("완료")) {
         alert("비밀번호 재설정 완료");
-        Navigate("/");
+        navigate("/");
       }
     } catch (error) {
       console.log(error);
@@ -73,9 +67,15 @@ export default function ResetPasswordForm() {
     }
   };
 
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    fetchPassword();
+  };
+
+  console.log("email: " + email);
   return (
     <LocalLoginWrapper>
-      <form>
+      <form onSubmit={handleSubmit}>
         <LoginInputContainer>
           <CustomTextField
             type="password"
@@ -89,6 +89,8 @@ export default function ResetPasswordForm() {
           <Message className={passwordCheck ? "ok" : "error"}>
             {passwordMessage}
           </Message>
+          <br></br>
+          <br></br>
           <CustomTextField
             type="password"
             name="passwordConfirm"
@@ -103,7 +105,10 @@ export default function ResetPasswordForm() {
           </Message>
         </LoginInputContainer>
         <div>
-          <LoginButton type="submit" disabled={!passwordCheck || !passwordConfirmCheck}>
+          <LoginButton
+            type="submit"
+            disabled={!passwordCheck || !passwordConfirmCheck}
+          >
             비밀번호 변경
           </LoginButton>
         </div>

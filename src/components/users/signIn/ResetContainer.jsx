@@ -4,6 +4,7 @@ import { LoginFormWrapper, InfoTitle, InfoText, CenterWrapper } from "./styled";
 import styled from "styled-components";
 import ResetFormBox from "./ResetFormBox";
 import ResetPasswordForm from "./ResetPasswordForm";
+import { useState } from "react";
 
 function ResetContainer({
   passwordContainer,
@@ -13,6 +14,10 @@ function ResetContainer({
   text1,
   text2,
 }) {
+  const [email, setEmail] = useState("");
+  const getEmail = (email) => {
+    setEmail(email);
+  };
   return (
     <LoginFormWrapper>
       <CenterWrapper>
@@ -21,9 +26,9 @@ function ResetContainer({
         <InfoText>{text2}</InfoText>
       </CenterWrapper>
       {!passwordContainer ? (
-        <ResetFormBox codeCheck={codeCheck} getCodeCheck={getCodeCheck} />
+        <ResetFormBox email={email} getEmail={getEmail} codeCheck={codeCheck} getCodeCheck={getCodeCheck} />
       ) : (
-        <ResetPasswordForm />
+        <ResetPasswordForm email={email}/>
       )}
     </LoginFormWrapper>
   );
