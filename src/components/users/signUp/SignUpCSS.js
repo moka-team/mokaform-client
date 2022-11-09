@@ -118,6 +118,24 @@ const Button = styled.button`
   }
 `;
 
+const EmailCheckButton = styled.button`
+  width: 90px;
+  height: 47px;
+  border-radius: 10px;
+  border: none;
+  background-color: #286bd0;
+  margin-bottom: 15px;
+  margin-left: 10px;
+  color: white;
+  &:hover {
+    background-color: #0064ff;
+  }
+  &:disabled {
+    background-color: gray;
+  }
+`;
+
+const EmailWrapper = styled.div``;
 const Container = styled.div`
   display: flex;
   align-items: center;
@@ -137,4 +155,6 @@ export {
   Container,
   MainTitle,
   PreferenceButton,
+  EmailCheckButton,
+  EmailWrapper,
 };

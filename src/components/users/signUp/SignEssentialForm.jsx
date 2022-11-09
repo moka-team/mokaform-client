@@ -2,7 +2,11 @@ import { Box } from "@mui/material";
 import React, { useCallback, useState } from "react";
 import apiClient from "../../../api/client";
 import CustomTextField from "../../common/CustomTextField";
-import { Message } from "./SignUpCSS";
+import EmailCustomTextField from "./EmailCustomTextField";
+import TextField from "@mui/material/TextField";
+import { EmailCheckButton, EmailWrapper, Message, Rows } from "./SignUpCSS";
+import Timer from "react-timer-wrapper";
+import Timecode from "react-timecode";
 export default function SignEssentialForm({
   email,
   nickname,
@@ -12,6 +16,7 @@ export default function SignEssentialForm({
   isEmail,
   isPassword,
   isPasswordConfirm,
+  isValidateEmail,
   getEmail,
   getNickname,
   getPassword,
@@ -20,12 +25,25 @@ export default function SignEssentialForm({
   getIsEmail,
   getIsPassword,
   getIsPasswordConfirm,
+  getIsEmailValidate,
 }) {
   //오류메시지 상태저장
   const [nicknameMessage, setNicknameMessage] = useState("");
   const [emailMessage, setEmailMessage] = useState("");
+  const [emailValidateOpen, setEmailValidateOpen] = useState(false);
+  const [emailValidateText, setEmailValidateText] = useState("");
+  const [emailValidate, setEmailValidate] = useState(false);
+  const [emailValidateMessage, setEmailValidateMessage] = useState("");
   const [passwordMessage, setPasswordMessage] = useState("");
   const [passwordConfirmMessage, setPasswordConfirmMessage] = useState("");
+
+  const [time, setTime] = useState();
+  const [duration, setDuration] = useState();
+
+  const onTimerUpdate = ({ time, duration }) => {
+    setTime(time);
+    setDuration(duration);
+  };
 
   const checkEmail = async (emailCurrent) => {
     try {
@@ -69,6 +87,26 @@ export default function SignEssentialForm({
     } else {
       checkEmail(emailCurrent);
     }
+  }, []);
+
+  const onValidateHandler = useCallback((e) => {
+    setEmailValidateText(e.target.value);
+  }, []);
+
+  const onEmailCheckHandler = useCallback((e) => {
+    setEmailValidateOpen(true);
+  }, []);
+
+  const onEmailValidateCheckHandler = useCallback((e) => {
+    // 인증번호 확인
+
+    // 인증번호 일치
+    getIsEmailValidate(true);
+    setEmailValidateMessage("정상 확인 되었습니다.");
+
+    // 인증번호 불일치
+    getIsEmailValidate(false);
+    setEmailValidateMessage("인증번호가 다릅니다.");
   }, []);
 
   const checkNickname = async (nickname) => {
@@ -153,7 +191,7 @@ export default function SignEssentialForm({
 
   return (
     <>
-      <CustomTextField
+      <EmailCustomTextField
         name="email"
         type="text"
         label="이메일"
@@ -162,6 +200,9 @@ export default function SignEssentialForm({
         size="small"
         onChange={onEmailHandler}
       />
+      <EmailCheckButton onClick={onEmailCheckHandler} disabled={!isEmail}>
+        인증 요청
+      </EmailCheckButton>
       <Box sx={{ width: 400, height: 25 }}>
         {email.length > 0 && (
           <Message className={isEmail ? "success" : "error"}>
@@ -169,6 +210,33 @@ export default function SignEssentialForm({
           </Message>
         )}
       </Box>
+      {emailValidateOpen && (
+        <div>
+          <EmailCustomTextField
+            name="validate"
+            type="text"
+            label="인증번호"
+            value={emailValidateText}
+            variant="filled"
+            size="small"
+            onChange={onValidateHandler}
+          />
+          <EmailCheckButton onClick={onEmailValidateCheckHandler}>
+            인증확인
+          </EmailCheckButton>
+          <Box sx={{ width: 400, height: 25 }}>
+            <Message className={isValidateEmail ? "success" : "error"}>
+              {emailValidateMessage}
+            </Message>
+            <Timer
+              active
+              duration={5 * 60 * 1000}
+              onTimeUpdate={onTimerUpdate}
+            />
+            <Timecode time={duration - time} />
+          </Box>
+        </div>
+      )}
       <CustomTextField
         name="nickname"
         type="text"

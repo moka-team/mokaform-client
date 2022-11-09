@@ -25,6 +25,7 @@ export default function SignUpForm() {
   const [isEmail, setIsEmail] = useState(false);
   const [isPassword, setIsPassword] = useState(false);
   const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
+  const [isValidateEmail, setIsValidateEmail] = useState(false);
 
   const navigate = useNavigate();
   const onClickHandler = (event) => {
@@ -69,6 +70,9 @@ export default function SignUpForm() {
   };
   const getIsPasswordConfirm = (isPasswordConfirm) => {
     setIsPasswordConfirm(isPasswordConfirm);
+  };
+  const getIsEmailValidate = (isValidateEmail) => {
+    setIsValidateEmail(isValidateEmail);
   };
 
   let ValidateInfo = false;
@@ -128,6 +132,7 @@ export default function SignUpForm() {
             isNickname={isNickname}
             isPassword={isPassword}
             isPasswordConfirm={isPasswordConfirm}
+            isValidateEmail={isValidateEmail}
             getEmail={getEmail}
             getNickname={getNickname}
             getPassword={getPassword}
@@ -136,6 +141,7 @@ export default function SignUpForm() {
             getIsNickname={getIsNickname}
             getIsPassword={getIsPassword}
             getIsPasswordConfirm={getIsPasswordConfirm}
+            getIsEmailValidate={getIsEmailValidate}
           />
           <Button onClick={onClickHandler}>다음</Button>
         </Rows>
