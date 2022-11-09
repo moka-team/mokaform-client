@@ -3,16 +3,28 @@ import AuthMenu from "./AuthMenu";
 import { LoginFormWrapper, InfoTitle, InfoText, CenterWrapper } from "./styled";
 import styled from "styled-components";
 import ResetFormBox from "./ResetFormBox";
+import ResetPasswordForm from "./ResetPasswordForm";
 
-function ResetContainer() {
+function ResetContainer({
+  passwordContainer,
+  codeCheck,
+  getCodeCheck,
+  title,
+  text1,
+  text2,
+}) {
   return (
     <LoginFormWrapper>
       <CenterWrapper>
-        <InfoTitle>비밀번호를 잊어버리셨나요?</InfoTitle>
-        <InfoText>가입한 계정 정보를 입력해주세요.</InfoText>
-        <InfoText>계정 이메일로 비밀번호 재설정 링크를 보내드립니다.</InfoText>
+        <InfoTitle>{title}</InfoTitle>
+        <InfoText>{text1}</InfoText>
+        <InfoText>{text2}</InfoText>
       </CenterWrapper>
-      <ResetFormBox />
+      {!passwordContainer ? (
+        <ResetFormBox codeCheck={codeCheck} getCodeCheck={getCodeCheck} />
+      ) : (
+        <ResetPasswordForm />
+      )}
     </LoginFormWrapper>
   );
 }

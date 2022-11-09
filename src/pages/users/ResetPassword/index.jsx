@@ -1,4 +1,5 @@
 import { Box, StyledEngineProvider } from "@mui/material";
+import { useState } from "react";
 import styled from "styled-components";
 import { SignInLogo } from "../../../components/common/Logo";
 import ResetContainer from "../../../components/users/signIn/ResetContainer";
@@ -31,17 +32,47 @@ const Logo = styled.img`
 `;
 
 function ResetPassword() {
+  const [codeCheck, setCodeCheck] = useState(false);
+  const getCodeCheck = (codeCheck) => {
+    setCodeCheck(codeCheck);
+  };
   return (
-    <Container>
-      <StyledEngineProvider injectFirst>
-        <RoundedBox>
-          <LogoContainer>
-            <SignInLogo to="/">MOKAFORM</SignInLogo>
-          </LogoContainer>
-          <ResetContainer />
-        </RoundedBox>
-      </StyledEngineProvider>
-    </Container>
+    <>
+      <Container>
+        <StyledEngineProvider injectFirst>
+          <RoundedBox>
+            <LogoContainer>
+              <SignInLogo to="/">MOKAFORM</SignInLogo>
+            </LogoContainer>
+            <ResetContainer
+              passwordContainer={false}
+              codeCheck={codeCheck}
+              getCodeCheck={getCodeCheck}
+              title={"비밀번호를 잊어버리셨나요?"}
+              text1={"가입한 계정 정보를 입력해주세요."}
+              text2={"계정 이메일로 인증번호를 보내드립니다."}
+            />
+          </RoundedBox>
+        </StyledEngineProvider>
+      </Container>
+      {codeCheck && (
+        <Container>
+          <StyledEngineProvider injectFirst>
+            <RoundedBox>
+              <LogoContainer>
+                <SignInLogo to="/">MOKAFORM</SignInLogo>
+              </LogoContainer>
+              <ResetContainer
+                passwordContainer={true}
+                title={"비밀번호 재설정"}
+                text1={""}
+                text2={""}
+              />
+            </RoundedBox>
+          </StyledEngineProvider>
+        </Container>
+      )}
+    </>
   );
 }
 

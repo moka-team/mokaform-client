@@ -53,6 +53,9 @@ const LoginButton = styled.button`
   &:hover {
     background-color: #0064ff;
   }
+  &:disabled {
+    background-color: gray;
+  }
 `;
 
 const AuthMenuContainer = styled.div`
