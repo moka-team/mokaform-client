@@ -27,6 +27,36 @@ export default function SignEssentialForm({
   const [passwordMessage, setPasswordMessage] = useState("");
   const [passwordConfirmMessage, setPasswordConfirmMessage] = useState("");
 
+  const checkEmail = async (emailCurrent) => {
+    try {
+      const response = await apiClient.get(
+        "/api/v1/users/check-email-duplication",
+        {
+          params: {
+            email: emailCurrent,
+          },
+        }
+      );
+      if (response.data.message.includes("성공")) {
+        if (response.data.data.isDuplicated === false) {
+          setEmailMessage("사용 가능한 이메일입니다.");
+          getIsEmail(true);
+        } else {
+          setEmailMessage(
+            "중복 이메일이 있습니다. 다른 이메일을 입력해주세요."
+          );
+          getIsEmail(false);
+        }
+      } else {
+        console.log("에러발생");
+        setEmailMessage("중복 이메일이 있습니다. 다른 이메일을 입력해주세요.");
+        getIsEmail(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const onEmailHandler = useCallback((e) => {
     const emailRegex =
       /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
@@ -37,37 +67,42 @@ export default function SignEssentialForm({
       setEmailMessage("이메일 형식으로 입력해주세요.");
       getIsEmail(false);
     } else {
-      apiClient
-        .get("/api/v1/users/check-email-duplication", {
-          params: {
-            email: emailCurrent,
-          },
-          // headers: {
-          //   accessToken: getAccessToken(),
-          //   refreshToken: getRefreshToken(),
-          // },
-        })
-        .then(function (response) {
-          if (response.data.message.includes("성공")) {
-            if (response.data.data.isDuplicated === false) {
-              setEmailMessage("사용 가능한 이메일입니다.");
-              getIsEmail(true);
-            } else {
-              setEmailMessage(
-                "중복 이메일이 있습니다. 다른 이메일을 입력해주세요."
-              );
-              getIsEmail(false);
-            }
-          } else {
-            console.log("에러발생");
-            setEmailMessage(
-              "중복 이메일이 있습니다. 다른 이메일을 입력해주세요."
-            );
-            getIsEmail(false);
-          }
-        });
+      checkEmail(emailCurrent);
     }
   }, []);
+
+  const checkNickname = async (nickname) => {
+    try {
+      const response = await apiClient.get(
+        "/api/v1/users/check-nickname-duplication",
+        {
+          params: {
+            nickname: nickname,
+          },
+        }
+      );
+      if (response.data.message.includes("성공")) {
+        console.log(response.data.data.isDuplicated);
+        if (response.data.data.isDuplicated === false) {
+          setNicknameMessage("사용 가능한 닉네임입니다.");
+          getIsNickname(true);
+        } else {
+          setNicknameMessage(
+            "중복 닉네임이 있습니다. 다른 닉네임을 입력해주세요."
+          );
+          getIsNickname(false);
+        }
+      } else {
+        console.log("에러발생");
+        setNicknameMessage(
+          "중복 닉네임이 있습니다. 다른 닉네임을 입력해주세요."
+        );
+        getIsNickname(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const onNicknameHandler = useCallback(
     (e) => {
@@ -76,36 +111,7 @@ export default function SignEssentialForm({
         setNicknameMessage("2글자 이상 5글자 이하로 입력해주세요.");
         getIsNickname(false);
       } else {
-        apiClient
-          .get("/api/v1/users/check-nickname-duplication", {
-            params: {
-              nickname: e.target.value,
-            },
-            // headers: {
-            //   accessToken: getAccessToken(),
-            //   refreshToken: getRefreshToken(),
-            // },
-          })
-          .then(function (response) {
-            if (response.data.message.includes("성공")) {
-              console.log(response.data.data.isDuplicated);
-              if (response.data.data.isDuplicated === false) {
-                setNicknameMessage("사용 가능한 닉네임입니다.");
-                getIsNickname(true);
-              } else {
-                setNicknameMessage(
-                  "중복 닉네임이 있습니다. 다른 닉네임을 입력해주세요."
-                );
-                getIsNickname(false);
-              }
-            } else {
-              console.log("에러발생");
-              setNicknameMessage(
-                "중복 닉네임이 있습니다. 다른 닉네임을 입력해주세요."
-              );
-              getIsNickname(false);
-            }
-          });
+        checkNickname(e.target.value);
       }
     },
     [getNickname]
