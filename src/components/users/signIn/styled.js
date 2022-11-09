@@ -7,6 +7,7 @@ const LocalLoginWrapper = styled.div`
   align-items: center;
   justify-content: center;
   text-align: center;
+  flex-direction: column;
 `;
 
 const LoginInputContainer = styled.div`
