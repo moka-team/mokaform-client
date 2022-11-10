@@ -1,12 +1,15 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useContext } from "react";
 import LocalLoginContainer from "./LocalLoginContainer";
 import apiClient from "../../../api/client";
 import { LocalLoginWrapper, LoginButton, LoginInputContainer } from "./styled";
 import CustomTextField from "../../common/CustomTextField";
 import { Message } from "../signUp/SignUpCSS";
 import { useNavigate } from "react-router-dom";
+import { EmailActionsContext, EmailContext } from "./emailState";
 
-export default function ResetPasswordForm({ email }) {
+export default function ResetPasswordForm() {
+  const email = useContext(EmailContext);
+  const { setValidateEmail } = useContext(EmailActionsContext);
   const [password, setPassword] = useState("");
   const [passwordMessage, setPasswordMessage] = useState("");
   const [passwordCheck, setPasswordCheck] = useState(false);
@@ -53,7 +56,7 @@ export default function ResetPasswordForm({ email }) {
   const fetchPassword = async () => {
     try {
       const response = await apiClient.post("/api/v1/users/reset-password", {
-        email: "adad05011@gachon.ac.kr",
+        email: email,
         password: password,
       });
       console.log(response);
@@ -70,6 +73,7 @@ export default function ResetPasswordForm({ email }) {
   const handleSubmit = async (event) => {
     event.preventDefault();
     fetchPassword();
+    console.log("네!!" + email);
   };
 
   console.log("email: " + email);

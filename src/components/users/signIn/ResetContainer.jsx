@@ -1,10 +1,8 @@
-import SocialLoginContainer from "./SocialLoginContainer";
-import AuthMenu from "./AuthMenu";
 import { LoginFormWrapper, InfoTitle, InfoText, CenterWrapper } from "./styled";
 import styled from "styled-components";
 import ResetFormBox from "./ResetFormBox";
 import ResetPasswordForm from "./ResetPasswordForm";
-import { useState } from "react";
+import { EmailContextProvider } from "./emailState";
 
 function ResetContainer({
   passwordContainer,
@@ -14,10 +12,6 @@ function ResetContainer({
   text1,
   text2,
 }) {
-  const [email, setEmail] = useState("");
-  const getEmail = (email) => {
-    setEmail(email);
-  };
   return (
     <LoginFormWrapper>
       <CenterWrapper>
@@ -25,11 +19,13 @@ function ResetContainer({
         <InfoText>{text1}</InfoText>
         <InfoText>{text2}</InfoText>
       </CenterWrapper>
-      {!passwordContainer ? (
-        <ResetFormBox email={email} getEmail={getEmail} codeCheck={codeCheck} getCodeCheck={getCodeCheck} />
-      ) : (
-        <ResetPasswordForm email={email}/>
-      )}
+      <EmailContextProvider>
+        {!passwordContainer ? (
+          <ResetFormBox codeCheck={codeCheck} getCodeCheck={getCodeCheck} />
+        ) : (
+          <ResetPasswordForm />
+        )}
+      </EmailContextProvider>
     </LoginFormWrapper>
   );
 }

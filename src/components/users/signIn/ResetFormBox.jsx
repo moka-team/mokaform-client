@@ -1,16 +1,13 @@
-import { ErrorOutlineRounded } from "@mui/icons-material";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Stack } from "@mui/material";
+import { useContext, useState } from "react";
+import Timecode from "react-timecode";
+import Timer from "react-timer-wrapper";
+import styled from "styled-components";
 import apiClient from "../../../api/client";
-import { setAccessToken } from "../../../authentication/auth";
 import CustomTextField from "../../common/CustomTextField";
 import { Message } from "../signUp/SignUpCSS";
 import { LocalLoginWrapper, LoginButton, LoginInputContainer } from "./styled";
-import Timer from "react-timer-wrapper";
-import Timecode from "react-timecode";
-import styled from "styled-components";
-import { Stack } from "@mui/material";
-
+import { EmailActionsContext, EmailContext } from "./emailState";
 const Wrapper = styled.div`
   padding-right: 20px;
 `;
@@ -28,24 +25,21 @@ const TextMessage = styled.p`
   font-size: small;
   color: #0064ff;
 `;
-function ResetFormBox({ email, getEmail, codeCheck, getCodeCheck }) {
+function ResetFormBox({ codeCheck, getCodeCheck }) {
   // const [email, setEmail] = useState("");
+  const email = useContext(EmailContext);
+  const { setValidateEmail } = useContext(EmailActionsContext);
   const [emailMessage, setEmailMessage] = useState("");
   const [emailCheck, setEmailCheck] = useState(false);
   const [code, setCode] = useState("");
   const [codeMessage, setCodeMessage] = useState("");
-  // const [codeCheck, setCodeCheck] = useState(false);
-  const [password, setPassword] = useState("");
-  const [passwordMessage, setPasswordMessage] = useState("");
-  const [passwordCheck, setPasswordCheck] = useState(false);
 
   const [time, setTime] = useState(0);
   const [duration, setDuration] = useState(5 * 60 * 1000);
 
-  const navigate = useNavigate();
-
   const handleChange = (event) => {
-    getEmail(event.target.value);
+    setValidateEmail(event.target.value);
+    console.log("이메일 들어가나요?" + email);
   };
 
   const handleCodeChange = (event) => {
@@ -191,37 +185,6 @@ function ResetFormBox({ email, getEmail, codeCheck, getCodeCheck }) {
           </div>
         </form>
       )}
-      {/* <br></br>
-      <br></br> */}
-      {/* {codeCheck && (
-        <form>
-          <LoginInputContainer>
-            <CustomTextField
-              type="password"
-              name="password"
-              label="새 비밀번호"
-              variant="filled"
-              size="small"
-              value={code || ""}
-              onChange={handlePasswordChange}
-            />
-            <Message></Message>
-            <CustomTextField
-              type="password"
-              name="password"
-              label="새 비밀번호 확인"
-              variant="filled"
-              size="small"
-              value={code || ""}
-              onChange={handlePasswordChange}
-            />
-            <Message></Message>
-          </LoginInputContainer>
-          <div>
-            <LoginButton type="submit">비밀번호 변경</LoginButton>
-          </div>
-        </form>
-      )} */}
     </LocalLoginWrapper>
   );
 }
