@@ -167,6 +167,7 @@ export default function SignUpForm() {
                 isEmail &&
                 isPassword &&
                 isPasswordConfirm &&
+                isValidateEmail &&
                 ValidateInfo
               )
             }

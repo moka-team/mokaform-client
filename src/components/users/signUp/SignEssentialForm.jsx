@@ -1,12 +1,19 @@
 import { Box } from "@mui/material";
 import React, { useCallback, useState } from "react";
+import Timecode from "react-timecode";
+import Timer from "react-timer-wrapper";
 import apiClient from "../../../api/client";
 import CustomTextField from "../../common/CustomTextField";
 import EmailCustomTextField from "./EmailCustomTextField";
-import TextField from "@mui/material/TextField";
-import { EmailCheckButton, EmailWrapper, Message, Rows } from "./SignUpCSS";
-import Timer from "react-timer-wrapper";
-import Timecode from "react-timecode";
+import {
+  EmailCheckButton,
+  Message,
+  TextMessage,
+  TimeMessage,
+} from "./SignUpCSS";
+
+import { Stack } from "@mui/material";
+
 export default function SignEssentialForm({
   email,
   nickname,
@@ -29,20 +36,23 @@ export default function SignEssentialForm({
 }) {
   //오류메시지 상태저장
   const [nicknameMessage, setNicknameMessage] = useState("");
+  const [emailCheck, setEmailCheck] = useState(false);
   const [emailMessage, setEmailMessage] = useState("");
   const [emailValidateOpen, setEmailValidateOpen] = useState(false);
-  const [emailValidateText, setEmailValidateText] = useState("");
-  const [emailValidate, setEmailValidate] = useState(false);
+  const [emailValidateCode, setEmailValidateCode] = useState("");
   const [emailValidateMessage, setEmailValidateMessage] = useState("");
   const [passwordMessage, setPasswordMessage] = useState("");
   const [passwordConfirmMessage, setPasswordConfirmMessage] = useState("");
 
-  const [time, setTime] = useState();
-  const [duration, setDuration] = useState();
+  const [time, setTime] = useState(0);
+  const [duration, setDuration] = useState(5 * 60 * 1000);
+  const [isTimeout, setIsTimeout] = useState(false);
 
-  const onTimerUpdate = ({ time, duration }) => {
-    setTime(time);
-    setDuration(duration);
+  const TimerStyle = {
+    fontSize: "14px",
+    fontWeight: "600",
+    marginBottom: "-10px",
+    color: !isTimeout ? "#0064ff" : "#ff2727",
   };
 
   const checkEmail = async (emailCurrent) => {
@@ -90,24 +100,97 @@ export default function SignEssentialForm({
   }, []);
 
   const onValidateHandler = useCallback((e) => {
-    setEmailValidateText(e.target.value);
+    setEmailValidateCode(e.target.value);
   }, []);
 
-  const onEmailCheckHandler = useCallback((e) => {
-    setEmailValidateOpen(true);
-  }, []);
+  const onEmailCheckHandler = useCallback(
+    (e) => {
+      setEmailValidateOpen(true);
+      fetchEmail(email);
+    },
+    [email]
+  );
 
-  const onEmailValidateCheckHandler = useCallback((e) => {
-    // 인증번호 확인
+  // 타이머 시간 업데이트
+  const onTimerUpdate = ({ time, duration }) => {
+    setTime(time);
+    setDuration(duration);
+  };
 
-    // 인증번호 일치
-    getIsEmailValidate(true);
-    setEmailValidateMessage("정상 확인 되었습니다.");
+  // 타이머 끝남
+  const onTimerFinish = ({ time, duration }) => {
+    setIsTimeout(true);
+  };
 
-    // 인증번호 불일치
-    getIsEmailValidate(false);
-    setEmailValidateMessage("인증번호가 다릅니다.");
-  }, []);
+  // 타이머 시작
+  const onTimerStart = ({ time, duration }) => {
+    setTime(0);
+    setIsTimeout(false);
+  };
+
+  const fetchEmail = async (email) => {
+    try {
+      const response = await apiClient.post(
+        "/api/v1/users/signup/email-verification/send",
+        null,
+        {
+          params: {
+            email: email,
+          },
+        }
+      );
+      console.log(response);
+      if (response.data.message.includes("완료")) {
+        if (!emailCheck) {
+          setEmailMessage("이메일 전송이 완료되었습니다!");
+        } else {
+          setEmailMessage("이메일 재전송이 완료되었습니다!");
+          setTime(0);
+          setIsTimeout(false);
+        }
+        setEmailCheck(true);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchCode = async () => {
+    try {
+      const response = await apiClient.get(
+        "/api/v1/users/signup/email-verification/check",
+        {
+          params: {
+            email: email,
+            code: emailValidateCode,
+          },
+        }
+      );
+      console.log(response);
+      if (response.data.message.includes("완료")) {
+        setEmailValidateMessage("인증번호 확인이 완료되었습니다!");
+        getIsEmailValidate(true);
+      }
+    } catch (error) {
+      console.log(error);
+      if (error.response.data.code === "U003") {
+        setEmailValidateMessage(
+          "유효시간이 만료된 인증번호입니다. 재인증해주세요."
+        );
+      } else if (error.response.data.code === "U004") {
+        setEmailValidateMessage(
+          "인증번호가 일치하지 않습니다. 다시 입력해주세요."
+        );
+      }
+    }
+  };
+
+  const onEmailValidateCheckHandler = useCallback(
+    (e) => {
+      fetchCode();
+    },
+    [emailValidateCode]
+  );
 
   const checkNickname = async (nickname) => {
     try {
@@ -216,7 +299,7 @@ export default function SignEssentialForm({
             name="validate"
             type="text"
             label="인증번호"
-            value={emailValidateText}
+            value={emailValidateCode}
             variant="filled"
             size="small"
             onChange={onValidateHandler}
@@ -225,15 +308,26 @@ export default function SignEssentialForm({
             인증확인
           </EmailCheckButton>
           <Box sx={{ width: 400, height: 25 }}>
-            <Message className={isValidateEmail ? "success" : "error"}>
-              {emailValidateMessage}
-            </Message>
-            <Timer
-              active
-              duration={5 * 60 * 1000}
-              onTimeUpdate={onTimerUpdate}
-            />
-            <Timecode time={duration - time} />
+            <Stack direction="row">
+              <TextMessage className={isValidateEmail ? "ok" : "error"}>
+                {emailValidateMessage}
+              </TextMessage>
+              <TimeMessage className={!isTimeout ? "ok" : "error"}>
+                남은 시간:&nbsp;
+              </TimeMessage>
+              <Timer
+                active={!isTimeout}
+                onStart={onTimerStart}
+                duration={5 * 60 * 1000}
+                onTimeUpdate={onTimerUpdate}
+                onFinish={onTimerFinish}
+              />
+              <Timecode
+                style={TimerStyle}
+                time={duration - time}
+                component="p"
+              />
+            </Stack>
           </Box>
         </div>
       )}
