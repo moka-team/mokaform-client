@@ -1,10 +1,13 @@
-import React, { useState, useCallback, useContext } from "react";
-import LocalLoginContainer from "./LocalLoginContainer";
-import apiClient from "../../../api/client";
-import { LocalLoginWrapper, LoginButton, LoginInputContainer } from "./styled";
-import CustomTextField from "../../common/CustomTextField";
-import { Message } from "../signUp/SignUpCSS";
+import React, { useCallback, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import apiClient from "../../../api/client";
+import CustomTextField from "../../common/CustomTextField";
+import {
+  LocalLoginWrapper,
+  LoginButton,
+  LoginInputContainer
+} from "../signIn/styled";
+import { Message } from "../signUp/SignUpCSS";
 import { EmailContext } from "./emailState";
 
 export default function ResetPasswordForm() {
@@ -60,7 +63,7 @@ export default function ResetPasswordForm() {
       });
       console.log(response);
       if (response.data.message.includes("완료")) {
-        alert("비밀번호 재설정 완료");
+        alert("비밀번호 재설정이 완료되었습니다!");
         navigate("/");
       }
     } catch (error) {
@@ -72,10 +75,8 @@ export default function ResetPasswordForm() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     fetchPassword();
-    console.log("네!!" + email);
   };
 
-  console.log("email: " + email);
   return (
     <LocalLoginWrapper>
       <form onSubmit={handleSubmit}>

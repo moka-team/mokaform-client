@@ -1,5 +1,6 @@
-import { LoginFormWrapper, InfoTitle, InfoText, CenterWrapper } from "./styled";
-import styled from "styled-components";
+import {
+  CenterWrapper, InfoText, InfoTitle, LoginFormWrapper
+} from "../signIn/styled";
 import ResetFormBox from "./ResetFormBox";
 import ResetPasswordForm from "./ResetPasswordForm";
 

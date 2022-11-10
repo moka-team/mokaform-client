@@ -1,4 +1,4 @@
-import { createContext, useContext, useMemo, useState } from "react";
+import { createContext, useMemo, useState } from "react";
 
 const EmailContext = createContext();
 const EmailActionsContext = createContext();
@@ -9,9 +9,7 @@ function EmailContextProvider({ children }) {
   const actions = useMemo(
     () => ({
       setValidateEmail(data) {
-        if (data !== "") {
-          setEmail(data);
-        }
+        setEmail(data);
       },
     }),
     []
@@ -25,3 +23,4 @@ function EmailContextProvider({ children }) {
 }
 
 export { EmailContext, EmailActionsContext, EmailContextProvider };
+

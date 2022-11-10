@@ -2,44 +2,37 @@ import { Stack } from "@mui/material";
 import { useContext, useState } from "react";
 import Timecode from "react-timecode";
 import Timer from "react-timer-wrapper";
-import styled from "styled-components";
 import apiClient from "../../../api/client";
 import CustomTextField from "../../common/CustomTextField";
+import {
+  LocalLoginWrapper,
+  LoginButton,
+  LoginInputContainer
+} from "../signIn/styled";
 import { Message } from "../signUp/SignUpCSS";
-import { LocalLoginWrapper, LoginButton, LoginInputContainer } from "./styled";
 import { EmailActionsContext, EmailContext } from "./emailState";
-const Wrapper = styled.div`
-  padding-right: 20px;
-`;
+import { TextMessage, TimeMessage } from "./styled";
 
-const TimeMessage = styled.p`
-  margin-left: 7px;
-  margin-top: 1px;
-  font-size: small;
-  font-weight: 600;
-  color: #0064ff;
-`;
-
-const TextMessage = styled.p`
-  margin-top: 1px;
-  font-size: small;
-  color: #0064ff;
-`;
 function ResetFormBox({ codeCheck, getCodeCheck }) {
-  // const [email, setEmail] = useState("");
   const email = useContext(EmailContext);
   const { setValidateEmail } = useContext(EmailActionsContext);
   const [emailMessage, setEmailMessage] = useState("");
   const [emailCheck, setEmailCheck] = useState(false);
   const [code, setCode] = useState("");
   const [codeMessage, setCodeMessage] = useState("");
-
   const [time, setTime] = useState(0);
   const [duration, setDuration] = useState(5 * 60 * 1000);
+  const [isTimeout, setIsTimeout] = useState(false);
+
+  const TimerStyle = {
+    fontSize: "14px",
+    fontWeight: "600",
+    marginBottom: "-10px",
+    color: !isTimeout ? "#0064ff" : "#ff2727",
+  };
 
   const handleChange = (event) => {
     setValidateEmail(event.target.value);
-    console.log("이메일 들어가나요?" + email);
   };
 
   const handleCodeChange = (event) => {
@@ -59,14 +52,13 @@ function ResetFormBox({ codeCheck, getCodeCheck }) {
       );
       console.log(response);
       if (response.data.message.includes("완료")) {
-        if (duration === 5 * 60 * 1000) {
+        if (!emailCheck) {
           setEmailMessage("이메일 전송이 완료되었습니다!");
         } else {
           setEmailMessage("이메일 재전송이 완료되었습니다!");
-          setDuration(5 * 60 * 1000);
           setTime(0);
+          setIsTimeout(false);
         }
-
         setEmailCheck(true);
       }
     } catch (error) {
@@ -113,9 +105,21 @@ function ResetFormBox({ codeCheck, getCodeCheck }) {
     fetchCode();
   };
 
+  // 타이머 시간 업데이트
   const onTimerUpdate = ({ time, duration }) => {
     setTime(time);
     setDuration(duration);
+  };
+
+  // 타이머 끝남
+  const onTimerFinish = ({ time, duration }) => {
+    setIsTimeout(true);
+  };
+
+  // 타이머 시작
+  const onTimerStart = ({ time, duration }) => {
+    setTime(0);
+    setIsTimeout(false);
   };
 
   return (
@@ -138,7 +142,7 @@ function ResetFormBox({ codeCheck, getCodeCheck }) {
         </LoginInputContainer>
 
         <div>
-          <LoginButton type="submit" disabled={codeCheck}>
+          <LoginButton type="submit" disabled={isTimeout || codeCheck}>
             계정 인증 메일 보내기
           </LoginButton>
         </div>
@@ -159,23 +163,28 @@ function ResetFormBox({ codeCheck, getCodeCheck }) {
               disabled={codeCheck}
             />
             <Stack direction="row" justifyContent="flex-end">
-              <TextMessage>{codeMessage}</TextMessage>
-              <TimeMessage>남은 시간:&nbsp;</TimeMessage>
-              <Timer
-                active
-                duration={5 * 60 * 1000}
-                onTimeUpdate={onTimerUpdate}
-              />
-              <Timecode
-                style={{
-                  fontSize: "14px",
-                  fontWeight: "600",
-                  marginBottom: "-10px",
-                  color: "#0064FF",
-                }}
-                time={duration - time}
-                component="p"
-              />
+              <TextMessage className={codeCheck ? "ok" : "error"}>
+                {codeMessage}
+              </TextMessage>
+              {!codeCheck && (
+                <>
+                  <TimeMessage className={!isTimeout ? "ok" : "error"}>
+                    남은 시간:&nbsp;
+                  </TimeMessage>
+                  <Timer
+                    active={!isTimeout}
+                    onStart={onTimerStart}
+                    duration={5 * 60 * 1000}
+                    onTimeUpdate={onTimerUpdate}
+                    onFinish={onTimerFinish}
+                  />
+                  <Timecode
+                    style={TimerStyle}
+                    time={duration - time}
+                    component="p"
+                  />
+                </>
+              )}
             </Stack>
           </LoginInputContainer>
           <div>

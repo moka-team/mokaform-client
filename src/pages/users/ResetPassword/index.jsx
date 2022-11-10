@@ -1,9 +1,9 @@
 import { Box, StyledEngineProvider } from "@mui/material";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import { SignInLogo } from "../../../components/common/Logo";
-import ResetContainer from "../../../components/users/signIn/ResetContainer";
-import { EmailContextProvider } from "../../../components/users/signIn/emailState";
+import ResetContainer from "../../../components/users/resetPassword/ResetContainer";
+import { EmailContextProvider } from "../../../components/users/resetPassword/emailState";
 const Container = styled.div`
   display: flex;
   align-items: center;
@@ -37,6 +37,12 @@ function ResetPassword() {
   const getCodeCheck = (codeCheck) => {
     setCodeCheck(codeCheck);
   };
+  const passwordRef = useRef(null);
+
+  useEffect(() => {
+    passwordRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [codeCheck]);
+
   return (
     <>
       <EmailContextProvider>
@@ -59,7 +65,7 @@ function ResetPassword() {
           </StyledEngineProvider>
         </Container>
         {codeCheck && (
-          <Container>
+          <Container ref={passwordRef}>
             <StyledEngineProvider injectFirst>
               <RoundedBox>
                 <LogoContainer>
@@ -68,8 +74,8 @@ function ResetPassword() {
                 <ResetContainer
                   passwordContainer={true}
                   title={"비밀번호 재설정"}
-                  text1={""}
-                  text2={""}
+                  text1={"계정 확인이 완료되었습니다."}
+                  text2={"새로운 비밀번호를 설정해주세요."}
                 />
               </RoundedBox>
             </StyledEngineProvider>
