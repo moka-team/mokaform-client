@@ -5,11 +5,10 @@ import { LocalLoginWrapper, LoginButton, LoginInputContainer } from "./styled";
 import CustomTextField from "../../common/CustomTextField";
 import { Message } from "../signUp/SignUpCSS";
 import { useNavigate } from "react-router-dom";
-import { EmailActionsContext, EmailContext } from "./emailState";
+import { EmailContext } from "./emailState";
 
 export default function ResetPasswordForm() {
   const email = useContext(EmailContext);
-  const { setValidateEmail } = useContext(EmailActionsContext);
   const [password, setPassword] = useState("");
   const [passwordMessage, setPasswordMessage] = useState("");
   const [passwordCheck, setPasswordCheck] = useState(false);

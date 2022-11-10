@@ -2,7 +2,6 @@ import { LoginFormWrapper, InfoTitle, InfoText, CenterWrapper } from "./styled";
 import styled from "styled-components";
 import ResetFormBox from "./ResetFormBox";
 import ResetPasswordForm from "./ResetPasswordForm";
-import { EmailContextProvider } from "./emailState";
 
 function ResetContainer({
   passwordContainer,
@@ -19,13 +18,11 @@ function ResetContainer({
         <InfoText>{text1}</InfoText>
         <InfoText>{text2}</InfoText>
       </CenterWrapper>
-      <EmailContextProvider>
-        {!passwordContainer ? (
-          <ResetFormBox codeCheck={codeCheck} getCodeCheck={getCodeCheck} />
-        ) : (
-          <ResetPasswordForm />
-        )}
-      </EmailContextProvider>
+      {!passwordContainer ? (
+        <ResetFormBox codeCheck={codeCheck} getCodeCheck={getCodeCheck} />
+      ) : (
+        <ResetPasswordForm />
+      )}
     </LoginFormWrapper>
   );
 }
