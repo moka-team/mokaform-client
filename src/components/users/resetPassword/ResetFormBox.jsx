@@ -7,7 +7,7 @@ import CustomTextField from "../../common/CustomTextField";
 import {
   LocalLoginWrapper,
   LoginButton,
-  LoginInputContainer
+  LoginInputContainer,
 } from "../signIn/styled";
 import { Message } from "../signUp/SignUpCSS";
 import { EmailActionsContext, EmailContext } from "./emailState";
@@ -142,7 +142,10 @@ function ResetFormBox({ codeCheck, getCodeCheck }) {
         </LoginInputContainer>
 
         <div>
-          <LoginButton type="submit" disabled={isTimeout || codeCheck}>
+          <LoginButton
+            type="submit"
+            disabled={(!isTimeout && emailCheck) || codeCheck}
+          >
             계정 인증 메일 보내기
           </LoginButton>
         </div>
