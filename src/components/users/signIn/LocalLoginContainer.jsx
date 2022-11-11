@@ -76,7 +76,7 @@ function LocalLoginContainer() {
             value={inputs.email || ""}
             onChange={handleChange}
           />
-          <br></br>
+          <br></br><br></br>
           <CustomTextField
             type="password"
             name="password"

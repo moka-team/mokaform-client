@@ -20,6 +20,7 @@ import EmailConfirm from "./pages/users/emailConfirm";
 import Mypage from "./pages/users/myPage/index";
 import SignIn from "./pages/users/signIn";
 import SignUp from "./pages/users/signUp";
+import ResetPassword from "./pages/users/ResetPassword";
 import routes from "./routes";
 
 const GlobalStyle = createGlobalStyle`
@@ -67,6 +68,7 @@ function App() {
         ></Route>
         <Route path={routes.signup} element={<SignUp />}></Route>
         <Route path={routes.signin} element={<SignIn />}></Route>
+        <Route path={routes.resetPassword} element={<ResetPassword />}></Route>
         <Route path={routes.emailConfirm} element={<EmailConfirm />}></Route>
         <Route
           path={routes.createSurvey}

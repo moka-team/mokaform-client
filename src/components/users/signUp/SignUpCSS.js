@@ -86,6 +86,10 @@ const Message = styled.p`
     color: #8f8c8b;
   }
 
+  &.ok {
+    color: #0064FF;
+  }
+
   &.error {
     color: #ff2727;
   }
