@@ -112,34 +112,27 @@ export default function SignUpForm() {
 
   let ValidateInfo = false;
 
-  const signUpPatch = () => {
-    apiClient
-      .post(
-        "/api/v1/users/signup",
-        {
-          email: email,
-          password: password,
-          nickname: nickname,
-          ageGroup: age,
-          gender: gender,
-          job: job,
-          category: preference,
-        },
-        {
-          // headers: {
-          //   accessToken: getAccessToken(),
-          //   refreshToken: getRefreshToken(),
-          // },
-        }
-      )
-      .then(function (response) {
-        if (response.data.message === "새로운 유저 생성이 성공하였습니다.") {
-          // window.alert("회원가입이 완료되었습니다.");
-          navigate("/email-confirm");
-        } else {
-          window.alert("회원가입 에러 발생");
-        }
+  const signUpPatch = async () => {
+    try {
+      const response = await apiClient.post("/api/v1/users/signup", {
+        email: email,
+        password: password,
+        nickname: nickname,
+        ageGroup: age,
+        gender: gender,
+        job: job,
+        category: preference,
       });
+      if (response.data.message === "새로운 유저 생성이 성공하였습니다.") {
+        // window.alert("회원가입이 완료되었습니다.");
+        // navigate("/email-confirm");
+        navigate("/");
+      } else {
+        window.alert("회원가입 에러 발생");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const onCompleteBtnClickHandler = (event) => {

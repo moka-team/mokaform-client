@@ -323,7 +323,7 @@ export default function SignEssentialForm({
                   <Timer
                     active={!isTimeout}
                     onStart={onTimerStart}
-                    duration={10 * 1000}
+                    duration={5 * 60 * 1000}
                     onTimeUpdate={onTimerUpdate}
                     onFinish={onTimerFinish}
                   />
