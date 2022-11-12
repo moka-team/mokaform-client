@@ -33,6 +33,8 @@ import { useNavigate } from "react-router-dom";
 import apiClient from "../../../api/client";
 import routes from "../../../routes";
 import { TContainer } from "./styled";
+import { Edit } from '@mui/icons-material';
+import { useCreateSurveyActions, useCreateSurveyValue } from '../create/surveyState';
 function TablePaginationActions(props) {
   const theme = useTheme();
   const { count, page, rowsPerPage, onPageChange } = props;
@@ -138,6 +140,20 @@ export default function ManageSurveySection() {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - survey.length) : 0;
 
+
+    const currentSurvey = useCreateSurveyValue();
+    const {
+      setTitle,
+      setSummary,
+      setIsAnonymous,
+      setIsPublic,
+      setStartDate,
+      setEndDate,
+      setCategories,
+      setQuestions,
+      setMultiQuestions,
+    } = useCreateSurveyActions();
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -164,6 +180,18 @@ export default function ManageSurveySection() {
       .get(`/api/v1/users/my/surveys/${surveyId}/stats`)
       .then((res) => navigate(routes.surveyStats, { state: res.data.data }));
   };
+
+  const handleClickEdit = async( sharingKey) => {
+    await apiClient.get("/api/v1/survey",{
+      params:{
+        sharingKey
+      }
+    }).then((res)=>{
+
+      navigate(routes.editSurvey,{state:res.data.data})
+    })
+
+  }
 
   const handleDeleteItem = async () => {
     setDialogOpen(false);
@@ -210,6 +238,7 @@ export default function ManageSurveySection() {
                   <StyledTableCell align="center">익명</StyledTableCell>
                   <StyledTableCell align="center">공개</StyledTableCell>
                   <StyledTableCell align="center">통계</StyledTableCell>
+                  <StyledTableCell align="center">수정</StyledTableCell>
                   <StyledTableCell align="center">삭제</StyledTableCell>
                 </TableRow>
               </TableHead>
@@ -246,6 +275,11 @@ export default function ManageSurveySection() {
                     <StyledTableCell align="center">
                       <IconButton onClick={() => handleOnClick(data.surveyId)}>
                         <EqualizerIcon sx={{ color: "#202632" }} />
+                      </IconButton>
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      <IconButton onClick={()=>handleClickEdit( data.sharingKey)}>
+                        <Edit sx={{ color: "#202632" }}/>
                       </IconButton>
                     </StyledTableCell>
                     <StyledTableCell align="center">

@@ -12,6 +12,7 @@ import Main from "./pages/index";
 import SurveyAnalysis from "./pages/surveys/analysis";
 import CreateCardSurvey from "./pages/surveys/create/card/index";
 import CreateSurvey from "./pages/surveys/create/general/index";
+import EditSurvey from "./pages/surveys/edit";
 import Show from "./pages/surveys/inquire/created/general";
 import InquireSubmittedSurvey from "./pages/surveys/inquire/submitted";
 import ManageSurvey from "./pages/surveys/manage";
@@ -112,6 +113,7 @@ function App() {
             user !== null ? <CreateCardSurvey /> : <SignIn signInAlert={true} />
           }
         ></Route>
+        <Route path={routes.editSurvey} element={<EditSurvey />}></Route>
         <Route path={"*"} element={<NotFound />}></Route>
       </Routes>
     </BrowserRouter>

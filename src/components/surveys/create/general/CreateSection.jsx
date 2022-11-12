@@ -54,7 +54,7 @@ export default function CreateSection() {
         onChange={summaryOnChange}
       ></Summary>
       {survey.questions.map((surveyItem) => (
-        <SurveyCreateItem key={surveyItem.index} item={surveyItem} />
+        <SurveyCreateItem key={surveyItem.index} item={surveyItem} survey={survey}/>
       ))}
       <SurveyItemCreator></SurveyItemCreator>
     </Create>

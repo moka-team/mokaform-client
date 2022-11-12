@@ -2,6 +2,7 @@ import { React, useContext, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { UserContext } from "../../../authentication/userState";
 import ManageSurveySection from "../../../components/surveys/manage/ManageSurveySection";
+import { CreateSurveyProvider } from "../../../components/surveys/create/surveyState";
 
 export default function ManageSurvey() {
   const navigate = useNavigate();
@@ -12,5 +13,9 @@ export default function ManageSurvey() {
       navigate("/");
     }
   }, []);
-  return <ManageSurveySection></ManageSurveySection>;
+  return (
+    <CreateSurveyProvider>
+      <ManageSurveySection></ManageSurveySection>
+    </CreateSurveyProvider>
+  );
 }
