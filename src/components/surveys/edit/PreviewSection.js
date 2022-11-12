@@ -1,8 +1,16 @@
-import styled from "styled-components";
+import { Preview, SummaryText, TitleText } from "../common/styled";
+import SurveyPreviewItem from "./SurveyPreviewItem";
+import { useEditSurveyValue } from "./surveyState";
 
-const Container = styled.div`
-  background-color: aqua;
-`;
 export function PreviewSection() {
-  return <Container></Container>;
+  const survey = useEditSurveyValue();
+  return (
+    <Preview>
+      <TitleText>{survey.title}</TitleText>
+      <SummaryText>{survey.summary}</SummaryText>
+      {survey.questions.map((surveyItem) => (
+        <SurveyPreviewItem key={surveyItem.index} item={surveyItem} />
+      ))}
+    </Preview>
+  );
 }
