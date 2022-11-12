@@ -13,7 +13,7 @@ export default function JobRow({ job, getJob, getIsJob }) {
     { value: "JOB_SEEKER", label: "취업준비생" },
     { value: "JOBLESS", label: "무직" },
   ];
-  const [selected, setSelected] = useState(0);
+  const [selected, setSelected] = useState(job);
 
   const onChangeHandler = (value) => {
     getIsJob(true);

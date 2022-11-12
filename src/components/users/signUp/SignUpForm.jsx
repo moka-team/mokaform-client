@@ -23,9 +23,9 @@ export default function SignUpForm() {
   const [nickname, setNickname] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
-  const [age, setAge] = useState("");
-  const [gender, setGender] = useState("");
-  const [job, setJob] = useState("");
+  const [age, setAge] = useState(null);
+  const [gender, setGender] = useState(null);
+  const [job, setJob] = useState(0);
   const [preference, setPreference] = useState("");
   const [isNickname, setIsNickname] = useState(false);
   const [isEmail, setIsEmail] = useState(false);
@@ -171,7 +171,7 @@ export default function SignUpForm() {
       }
     } else {
       event.preventDefault();
-      // signUpPatch();
+      signUpPatch();
     }
   };
 

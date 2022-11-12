@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { PreferenceButton, Rows, Title } from "./SignUpCSS";
 
 export default function PreferenceRow({ preference, getPreference }) {
@@ -10,6 +10,34 @@ export default function PreferenceRow({ preference, getPreference }) {
   const [preference6Check, preference6CheckState] = useState(false);
   const [preference7Check, preference7CheckState] = useState(false);
   const [preference8Check, preference8CheckState] = useState(false);
+
+  useEffect(() => {
+    if (preference.includes("DAILY_LIFE")) {
+      preference1CheckState(true);
+    }
+    if (preference.includes("IT")) {
+      preference2CheckState(true);
+    }
+    if (preference.includes("PSYCHOLOGY")) {
+      preference3CheckState(true);
+    }
+    if (preference.includes("LEARNING")) {
+      preference4CheckState(true);
+    }
+    if (preference.includes("HOBBY")) {
+      preference5CheckState(true);
+    }
+    if (preference.includes("SOCIAL_POLITICS")) {
+      preference6CheckState(true);
+    }
+    if (preference.includes("PREFERENCE_RESEARCH")) {
+      preference7CheckState(true);
+    }
+    if (preference.includes("PET")) {
+      preference8CheckState(true);
+    }
+  }, []);
+
   const onCheckHandler1 = (e) => {
     preference1CheckState(!preference1Check);
     if (!preference1Check) {
