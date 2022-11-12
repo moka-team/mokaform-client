@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Row, Title } from "./SignUpCSS";
 
-export default function AgeRow({ age, getAge }) {
+export default function AgeRow({ age, getAge, getIsAge }) {
   const ages = ["10대", "20대", "30대", "40대", "50대+"];
   const ids = ["TEENAGER", "TWENTIES", "THIRTIES", "FORTIES", "FIFTIES"];
   const [currentClick, setCurrentClick] = useState(null);
@@ -23,6 +23,7 @@ export default function AgeRow({ age, getAge }) {
   useEffect(
     (event) => {
       if (currentClick !== null) {
+        getIsAge(true);
         let current = document.getElementById(currentClick);
         current.style.color = "white";
         current.style.fontWeight = 600;

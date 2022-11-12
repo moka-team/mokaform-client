@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Select from "react-select";
 import { Title } from "./SignUpCSS";
 
-export default function JobRow({ job, getJob }) {
+export default function JobRow({ job, getJob, getIsJob }) {
   const jobs = [
     { value: "STUDENT", label: "학생" },
     { value: "OFFICE_WORKERS", label: "직장인" },
@@ -16,6 +16,7 @@ export default function JobRow({ job, getJob }) {
   const [selected, setSelected] = useState(0);
 
   const onChangeHandler = (value) => {
+    getIsJob(true);
     setSelected(value);
     getJob(value);
     console.log(value);

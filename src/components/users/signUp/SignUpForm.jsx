@@ -32,6 +32,10 @@ export default function SignUpForm() {
   const [isPassword, setIsPassword] = useState(false);
   const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
   const [isValidateEmail, setIsValidateEmail] = useState(false);
+  const [isAge, setIsAge] = useState(false);
+  const [isGender, setIsGender] = useState(false);
+  const [isJob, setIsJob] = useState(false);
+  const [isPreference, setIsPreference] = useState(false);
 
   const [invalidatoinDialogOpen, setInvalidationDialogOpen] = useState(false);
   const [message, setMessage] = useState([]);
@@ -67,7 +71,17 @@ export default function SignUpForm() {
     }
   };
   const onNextBtnClickHandler = (event) => {
-    signOptionRef2.current?.scrollIntoView({ behavior: "smooth" });
+    if (!(isAge && isGender)) {
+      handleClickDialogOpen();
+      if (!isAge) {
+        setMessage((message) => [...message, "나이 입력"]);
+      }
+      if (!isGender) {
+        setMessage((message) => [...message, "성별 입력"]);
+      }
+    } else {
+      signOptionRef2.current?.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   const getEmail = (email) => {
@@ -109,7 +123,18 @@ export default function SignUpForm() {
   const getIsEmailValidate = (isValidateEmail) => {
     setIsValidateEmail(isValidateEmail);
   };
-
+  const getIsAge = (isAge) => {
+    setIsAge(isAge);
+  };
+  const getIsGender = (isGender) => {
+    setIsGender(isGender);
+  };
+  const getIsJob = (isJob) => {
+    setIsJob(isJob);
+  };
+  const getIsPreference = (isPreference) => {
+    setIsPreference(isPreference);
+  };
   let ValidateInfo = false;
 
   const signUpPatch = async () => {
@@ -136,8 +161,18 @@ export default function SignUpForm() {
   };
 
   const onCompleteBtnClickHandler = (event) => {
-    event.preventDefault();
-    signUpPatch();
+    if (!(isJob && preference.length)) {
+      handleClickDialogOpen();
+      if (!isJob) {
+        setMessage((message) => [...message, "직업 입력"]);
+      }
+      if (!preference.length) {
+        setMessage((message) => [...message, "관심사 입력 (최소 1개)"]);
+      }
+    } else {
+      event.preventDefault();
+      // signUpPatch();
+    }
   };
 
   if (age === "" || gender === "" || job === "" || preference.length === 0) {
@@ -178,35 +213,29 @@ export default function SignUpForm() {
         <div>
           <Container color="#f9fafb" ref={signOptionRef}>
             <Rows>
-              <AgeRow age={age} getAge={getAge}></AgeRow>
-              <SexRow gender={gender} getGender={getGender}></SexRow>
+              <AgeRow age={age} getAge={getAge} getIsAge={getIsAge}></AgeRow>
+              <SexRow
+                gender={gender}
+                getGender={getGender}
+                getIsGender={getIsGender}
+              ></SexRow>
               <SignUpButton onClick={onNextBtnClickHandler}>다음</SignUpButton>
             </Rows>
           </Container>
-          <Container ref={signOptionRef2}>
-            <Rows>
-              <JobRow job={job} getJob={getJob}></JobRow>
-              <PreferenceRow
-                preference={preference}
-                getPreference={getPreference}
-              />
-              <SignUpButton
-                disabled={
-                  !(
-                    isNickname &&
-                    isEmail &&
-                    isPassword &&
-                    isPasswordConfirm &&
-                    isValidateEmail &&
-                    ValidateInfo
-                  )
-                }
-                onClick={onCompleteBtnClickHandler}
-              >
-                가입 완료
-              </SignUpButton>
-            </Rows>
-          </Container>
+          {isAge && isGender && (
+            <Container ref={signOptionRef2}>
+              <Rows>
+                <JobRow job={job} getJob={getJob} getIsJob={getIsJob}></JobRow>
+                <PreferenceRow
+                  preference={preference}
+                  getPreference={getPreference}
+                />
+                <SignUpButton onClick={onCompleteBtnClickHandler}>
+                  가입 완료
+                </SignUpButton>
+              </Rows>
+            </Container>
+          )}
         </div>
       )}
       <Dialog

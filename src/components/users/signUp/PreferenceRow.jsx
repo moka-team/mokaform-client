@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { PreferenceButton, Rows, Title } from "./SignUpCSS";
 
-export default function PreferenceRow({preference, getPreference}) {
+export default function PreferenceRow({ preference, getPreference }) {
   const [preference1Check, preference1CheckState] = useState(false);
   const [preference2Check, preference2CheckState] = useState(false);
   const [preference3Check, preference3CheckState] = useState(false);
