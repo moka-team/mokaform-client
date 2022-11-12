@@ -1,9 +1,9 @@
 import { Box, StyledEngineProvider } from "@mui/material";
+import { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
-import LoginFormContainer from "../../../components/users/signIn/LoginFormContainer";
 import { SignInLogo } from "../../../components/common/Logo";
-import { useEffect } from "react";
-import ResetContainer from "../../../components/users/signIn/ResetContainer";
+import ResetContainer from "../../../components/users/resetPassword/ResetContainer";
+import { EmailContextProvider } from "../../../components/users/resetPassword/emailState";
 const Container = styled.div`
   display: flex;
   align-items: center;
@@ -33,17 +33,56 @@ const Logo = styled.img`
 `;
 
 function ResetPassword() {
+  const [codeCheck, setCodeCheck] = useState(false);
+  const getCodeCheck = (codeCheck) => {
+    setCodeCheck(codeCheck);
+  };
+  const passwordRef = useRef(null);
+
+  useEffect(() => {
+    passwordRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [codeCheck]);
+
   return (
-    <Container>
-      <StyledEngineProvider injectFirst>
-        <RoundedBox>
-          <LogoContainer>
-            <SignInLogo to="/">MOKAFORM</SignInLogo>
-          </LogoContainer>
-          <ResetContainer />
-        </RoundedBox>
-      </StyledEngineProvider>
-    </Container>
+    <>
+      <EmailContextProvider>
+        <Container>
+          <StyledEngineProvider injectFirst>
+            <RoundedBox>
+              <LogoContainer>
+                <SignInLogo to="/">MOKAFORM</SignInLogo>
+              </LogoContainer>
+
+              <ResetContainer
+                passwordContainer={false}
+                codeCheck={codeCheck}
+                getCodeCheck={getCodeCheck}
+                title={"비밀번호를 잊어버리셨나요?"}
+                text1={"가입한 계정 정보를 입력해주세요."}
+                text2={"계정 이메일로 인증번호를 보내드립니다."}
+              />
+            </RoundedBox>
+          </StyledEngineProvider>
+        </Container>
+        {codeCheck && (
+          <Container ref={passwordRef}>
+            <StyledEngineProvider injectFirst>
+              <RoundedBox>
+                <LogoContainer>
+                  <SignInLogo to="/">MOKAFORM</SignInLogo>
+                </LogoContainer>
+                <ResetContainer
+                  passwordContainer={true}
+                  title={"비밀번호 재설정"}
+                  text1={"계정 확인이 완료되었습니다."}
+                  text2={"새로운 비밀번호를 설정해주세요."}
+                />
+              </RoundedBox>
+            </StyledEngineProvider>
+          </Container>
+        )}
+      </EmailContextProvider>
+    </>
   );
 }
 

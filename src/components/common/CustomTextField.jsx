@@ -9,7 +9,7 @@ const CustomTextField = styled((props) => (
     border: "none",
     width: "400px",
     overflow: "hidden",
-    marginBottom: "15px",
+    marginBottom: "7px",
     borderRadius: 8,
     backgroundColor: "#edeef0",
     transition: theme.transitions.create([

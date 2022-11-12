@@ -7,6 +7,7 @@ const LocalLoginWrapper = styled.div`
   align-items: center;
   justify-content: center;
   text-align: center;
+  flex-direction: column;
 `;
 
 const LoginInputContainer = styled.div`
@@ -51,6 +52,9 @@ const LoginButton = styled.button`
 
   &:hover {
     background-color: #0064ff;
+  }
+  &:disabled {
+    background-color: gray;
   }
 `;
 
