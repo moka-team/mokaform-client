@@ -1,18 +1,37 @@
 import { faClipboard } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import Modal from "@mui/material/Modal";
+import Typography from "@mui/material/Typography";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import dayjs from "dayjs";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { SaveBtn, SNavBar } from "../common/styled";
+import { CustomSwitch } from "../create/general/CustomizedSwitches";
+import SelectCategory from "./SelectCategory";
 import { useEditSurveyActions, useEditSurveyValue } from "./surveyState";
 
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  boxShadow: 24,
+  p: 4,
+  borderRadius: 2,
+};
 const CopyBtn = styled.button`
   background-color: rgba(51, 51, 51, 0.05);
   border-radius: 8px;
@@ -157,6 +176,93 @@ function NavBar() {
 
   return (
     <SNavBar>
+      <Button onClick={handleOpen}>설문 세부 설정</Button>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            설문 세부 설정
+          </Typography>
+          <Typography id="modal-modal-description">
+            설문의 세부 내용을 설정해주세요.
+          </Typography>
+          <Typography id="anp" sx={{ mt: 1 }} variant="body2">
+            설문 공개 여부
+            <CustomSwitch
+              style={{ color: "#edeef0" }}
+              checked={survey.isPublic}
+              onChange={isPublicOnChange}
+            />
+          </Typography>
+          <Typography id="anp" sx={{ mt: 1 }} variant="body2">
+            설문 시작 날짜
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <DatePicker
+                value={survey.startDate}
+                inputFormat={"yyyy-MM-dd"}
+                onChange={(newValue) => {
+                  setStartDate(dayjs(newValue).format("YYYY-MM-DD"));
+                }}
+                minDate={dayjs().format("YYYY-MM-DD")}
+                renderInput={({ inputRef, inputProps, InputProps }) => (
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      svg: {
+                        color: "#0064FF",
+                      },
+                    }}
+                  >
+                    <input ref={inputRef} {...inputProps} />
+                    {InputProps?.endAdornment}
+                  </Box>
+                )}
+              />
+            </LocalizationProvider>
+          </Typography>
+          <Typography id="anp" sx={{ mt: 1 }} variant="body2">
+            설문 종료 날짜
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <DatePicker
+                value={survey.endDate}
+                inputFormat={"yyyy-MM-dd"}
+                onChange={(newValue) => {
+                  setEndDate(dayjs(newValue).format("YYYY-MM-DD"));
+                }}
+                minDate={dayjs().format("YYYY-MM-DD")}
+                renderInput={({ inputRef, inputProps, InputProps }) => (
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      svg: {
+                        color: "#0064FF",
+                      },
+                    }}
+                  >
+                    <input ref={inputRef} {...inputProps} />
+                    {InputProps?.endAdornment}
+                  </Box>
+                )}
+              />
+            </LocalizationProvider>
+          </Typography>
+          <Typography sx={{ mt: 2 }} variant="body2"></Typography>
+          <Box sx={{ textAlign: "right", mt: 2 }}>
+            <Button onClick={closeAndReset} sx={{ fontWeight: 600 }}>
+              닫기
+            </Button>
+            <Button onClick={handleClose} sx={{ fontWeight: 600 }} autoFocus>
+              확인
+            </Button>
+          </Box>
+        </Box>
+      </Modal>
       <SaveBtn onClick={handleSubmit}>저장</SaveBtn>
       <Dialog
         open={invalidatoinDialogOpen}
