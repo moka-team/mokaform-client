@@ -10,8 +10,6 @@ import { useEditSurveyValue } from "./surveyState";
 export default function SurveyPreviewItem({ item }) {
   const survey = useEditSurveyValue();
   const index = survey.questions.findIndex((listItem) => listItem === item);
-  console.log(survey);
-  console.log(item);
 
   return (
     <div>
