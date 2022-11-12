@@ -1,3 +1,9 @@
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import apiClient from "../../../api/client";
@@ -6,7 +12,7 @@ import JobRow from "./JobRow";
 import PreferenceRow from "./PreferenceRow";
 import SexRow from "./SexRow";
 import SignEssentialForm from "./SignEssentialForm";
-import { Button, Container, MainTitle, Rows } from "./SignUpCSS";
+import { Container, MainTitle, Rows, SignUpButton } from "./SignUpCSS";
 
 export default function SignUpForm() {
   const signOptionRef = useRef(null);
@@ -27,9 +33,38 @@ export default function SignUpForm() {
   const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
   const [isValidateEmail, setIsValidateEmail] = useState(false);
 
+  const [invalidatoinDialogOpen, setInvalidationDialogOpen] = useState(false);
+  const [message, setMessage] = useState([]);
+
   const navigate = useNavigate();
+
+  const handleClickDialogOpen = () => {
+    setInvalidationDialogOpen(true);
+  };
+
+  const handleDialogClose = () => {
+    setInvalidationDialogOpen(false);
+    setMessage([]);
+  };
+
   const onClickHandler = (event) => {
-    signOptionRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (!(isNickname && isValidateEmail && isPassword && isPasswordConfirm)) {
+      handleClickDialogOpen();
+      if (!isNickname) {
+        setMessage((message) => [...message, "닉네임 입력"]);
+      }
+      if (!isValidateEmail) {
+        setMessage((message) => [...message, "이메일 인증"]);
+      }
+      if (!isPassword) {
+        setMessage((message) => [...message, "패스워드 입력"]);
+      }
+      if (!isPasswordConfirm) {
+        setMessage((message) => [...message, "패스워드 확인"]);
+      }
+    } else {
+      signOptionRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
   };
   const onNextBtnClickHandler = (event) => {
     signOptionRef2.current?.scrollIntoView({ behavior: "smooth" });
@@ -143,40 +178,81 @@ export default function SignUpForm() {
             getIsPasswordConfirm={getIsPasswordConfirm}
             getIsEmailValidate={getIsEmailValidate}
           />
-          <Button onClick={onClickHandler}>다음</Button>
+          <SignUpButton onClick={onClickHandler}>다음</SignUpButton>
         </Rows>
       </Container>
-      <Container color="#f9fafb" ref={signOptionRef}>
-        <Rows>
-          <AgeRow age={age} getAge={getAge}></AgeRow>
-          <SexRow gender={gender} getGender={getGender}></SexRow>
-          <Button onClick={onNextBtnClickHandler}>다음</Button>
-        </Rows>
-      </Container>
-      <Container ref={signOptionRef2}>
-        <Rows>
-          <JobRow job={job} getJob={getJob}></JobRow>
-          <PreferenceRow
-            preference={preference}
-            getPreference={getPreference}
-          />
-          <Button
-            disabled={
-              !(
-                isNickname &&
-                isEmail &&
-                isPassword &&
-                isPasswordConfirm &&
-                isValidateEmail &&
-                ValidateInfo
-              )
-            }
-            onClick={onCompleteBtnClickHandler}
-          >
-            가입 완료
+      {isNickname && isValidateEmail && isPassword && isPasswordConfirm && (
+        <div>
+          <Container color="#f9fafb" ref={signOptionRef}>
+            <Rows>
+              <AgeRow age={age} getAge={getAge}></AgeRow>
+              <SexRow gender={gender} getGender={getGender}></SexRow>
+              <SignUpButton onClick={onNextBtnClickHandler}>다음</SignUpButton>
+            </Rows>
+          </Container>
+          <Container ref={signOptionRef2}>
+            <Rows>
+              <JobRow job={job} getJob={getJob}></JobRow>
+              <PreferenceRow
+                preference={preference}
+                getPreference={getPreference}
+              />
+              <SignUpButton
+                disabled={
+                  !(
+                    isNickname &&
+                    isEmail &&
+                    isPassword &&
+                    isPasswordConfirm &&
+                    isValidateEmail &&
+                    ValidateInfo
+                  )
+                }
+                onClick={onCompleteBtnClickHandler}
+              >
+                가입 완료
+              </SignUpButton>
+            </Rows>
+          </Container>
+        </div>
+      )}
+      <Dialog
+        open={invalidatoinDialogOpen}
+        onClose={handleDialogClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        sx={{
+          "& .MuiDialog-container": {
+            "& .MuiPaper-root": {
+              width: "100%",
+              maxWidth: "500px",
+            },
+          },
+        }}
+      >
+        <DialogTitle id="invalidate-dialog-title">알림</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="invalidate-dialog-description">
+            가입 필수 항목을 모두 입력해야 합니다.
+          </DialogContentText>
+          <DialogContentText id="invalidate-dialog-description">
+            아래 항목을 체크해주세요!
+          </DialogContentText>
+          <br></br>
+          {message.map((list) => {
+            return (
+              <DialogContentText id="invalidate-dialog-description">
+                ✔ {list}
+              </DialogContentText>
+            );
+          })}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDialogClose} autoFocus>
+            확인
           </Button>
-        </Rows>
-      </Container>
+        </DialogActions>
+      </Dialog>
     </>
   );
 }

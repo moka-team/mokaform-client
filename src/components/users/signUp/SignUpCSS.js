@@ -87,7 +87,7 @@ const Message = styled.p`
   }
 
   &.ok {
-    color: #0064FF;
+    color: #0064ff;
   }
 
   &.error {
@@ -104,7 +104,7 @@ const MainTitle = styled.h1`
   font-weight: 700;
 `;
 
-const Button = styled.button`
+const SignUpButton = styled.button`
   width: 415px;
   height: 50px;
   margin: 10px;
@@ -182,7 +182,7 @@ export {
   Rows,
   EssentialForm,
   Message,
-  Button,
+  SignUpButton,
   Container,
   MainTitle,
   PreferenceButton,
