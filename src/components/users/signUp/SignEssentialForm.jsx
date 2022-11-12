@@ -1,7 +1,6 @@
 import { Box } from "@mui/material";
+import { Stack } from "@mui/material";
 import React, { useCallback, useState } from "react";
-import Timecode from "react-timecode";
-import Timer from "react-timer-wrapper";
 import apiClient from "../../../api/client";
 import CustomTextField from "../../common/CustomTextField";
 import EmailCustomTextField from "./EmailCustomTextField";
@@ -11,8 +10,8 @@ import {
   TextMessage,
   TimeMessage,
 } from "./SignUpCSS";
-
-import { Stack } from "@mui/material";
+import Timecode from "react-timecode";
+import Timer from "react-timer-wrapper";
 
 export default function SignEssentialForm({
   email,
@@ -36,14 +35,16 @@ export default function SignEssentialForm({
 }) {
   //오류메시지 상태저장
   const [nicknameMessage, setNicknameMessage] = useState("");
-  const [emailCheck, setEmailCheck] = useState(false);
   const [emailMessage, setEmailMessage] = useState("");
-  const [emailValidateOpen, setEmailValidateOpen] = useState(false);
-  const [emailValidateCode, setEmailValidateCode] = useState("");
-  const [emailValidateMessage, setEmailValidateMessage] = useState("");
   const [passwordMessage, setPasswordMessage] = useState("");
   const [passwordConfirmMessage, setPasswordConfirmMessage] = useState("");
 
+  // 이메일 인증
+  const [emailCheck, setEmailCheck] = useState(false);
+  const [code, setCode] = useState("");
+  const [codeMessage, setCodeMessage] = useState("");
+
+  // 타이머
   const [time, setTime] = useState(0);
   const [duration, setDuration] = useState(5 * 60 * 1000);
   const [isTimeout, setIsTimeout] = useState(false);
@@ -53,6 +54,76 @@ export default function SignEssentialForm({
     fontWeight: "600",
     marginBottom: "-10px",
     color: !isTimeout ? "#0064ff" : "#ff2727",
+  };
+
+  const fetchEmail = async () => {
+    try {
+      const response = await apiClient.post(
+        "/api/v1/users/signup/email-verification/send",
+        null,
+        {
+          params: {
+            email: email,
+          },
+        }
+      );
+      console.log(response);
+      if (response.data.message.includes("완료")) {
+        if (!emailCheck) {
+          setEmailMessage("이메일 전송이 완료되었습니다!");
+        } else {
+          setEmailMessage("이메일 재전송이 완료되었습니다!");
+          setTime(0);
+          setIsTimeout(false);
+        }
+        setEmailCheck(true);
+      }
+    } catch (error) {
+      console.log(error);
+      if (error.response.data.code === "U001") {
+        setEmailMessage("존재하지 않는 계정의 이메일입니다. 다시 확인해주세요");
+      }
+    }
+  };
+
+  const fetchCode = async () => {
+    try {
+      const response = await apiClient.get(
+        "/api/v1/users/signup/email-verification/check",
+        {
+          params: {
+            email: email,
+            code: code,
+          },
+        }
+      );
+      console.log(response);
+      if (response.data.message.includes("완료")) {
+        setCodeMessage("인증번호 확인이 완료되었습니다!");
+        getIsEmailValidate(true);
+      }
+    } catch (error) {
+      console.log(error);
+      if (error.response.data.code === "U003") {
+        setCodeMessage("유효시간이 만료된 인증번호입니다. 재인증해주세요.");
+      } else if (error.response.data.code === "U004") {
+        setCodeMessage("인증번호가 일치하지 않습니다. 다시 입력해주세요.");
+      }
+    }
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    fetchEmail();
+  };
+
+  const handleCodeSubmit = async (event) => {
+    event.preventDefault();
+    fetchCode();
+  };
+
+  const handleCodeChange = (event) => {
+    setCode(event.target.value);
   };
 
   const checkEmail = async (emailCurrent) => {
@@ -98,99 +169,6 @@ export default function SignEssentialForm({
       checkEmail(emailCurrent);
     }
   }, []);
-
-  const onValidateHandler = useCallback((e) => {
-    setEmailValidateCode(e.target.value);
-  }, []);
-
-  const onEmailCheckHandler = useCallback(
-    (e) => {
-      setEmailValidateOpen(true);
-      fetchEmail(email);
-    },
-    [email]
-  );
-
-  // 타이머 시간 업데이트
-  const onTimerUpdate = ({ time, duration }) => {
-    setTime(time);
-    setDuration(duration);
-  };
-
-  // 타이머 끝남
-  const onTimerFinish = ({ time, duration }) => {
-    setIsTimeout(true);
-  };
-
-  // 타이머 시작
-  const onTimerStart = ({ time, duration }) => {
-    setTime(0);
-    setIsTimeout(false);
-  };
-
-  const fetchEmail = async (email) => {
-    try {
-      const response = await apiClient.post(
-        "/api/v1/users/signup/email-verification/send",
-        null,
-        {
-          params: {
-            email: email,
-          },
-        }
-      );
-      console.log(response);
-      if (response.data.message.includes("완료")) {
-        if (!emailCheck) {
-          setEmailMessage("이메일 전송이 완료되었습니다!");
-        } else {
-          setEmailMessage("이메일 재전송이 완료되었습니다!");
-          setTime(0);
-          setIsTimeout(false);
-        }
-        setEmailCheck(true);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const fetchCode = async () => {
-    try {
-      const response = await apiClient.get(
-        "/api/v1/users/signup/email-verification/check",
-        {
-          params: {
-            email: email,
-            code: emailValidateCode,
-          },
-        }
-      );
-      console.log(response);
-      if (response.data.message.includes("완료")) {
-        setEmailValidateMessage("인증번호 확인이 완료되었습니다!");
-        getIsEmailValidate(true);
-      }
-    } catch (error) {
-      console.log(error);
-      if (error.response.data.code === "U003") {
-        setEmailValidateMessage(
-          "유효시간이 만료된 인증번호입니다. 재인증해주세요."
-        );
-      } else if (error.response.data.code === "U004") {
-        setEmailValidateMessage(
-          "인증번호가 일치하지 않습니다. 다시 입력해주세요."
-        );
-      }
-    }
-  };
-
-  const onEmailValidateCheckHandler = useCallback(
-    (e) => {
-      fetchCode();
-    },
-    [emailValidateCode]
-  );
 
   const checkNickname = async (nickname) => {
     try {
@@ -272,6 +250,23 @@ export default function SignEssentialForm({
     [password, getPasswordConfirm]
   );
 
+  // 타이머 시간 업데이트
+  const onTimerUpdate = ({ time, duration }) => {
+    setTime(time);
+    setDuration(duration);
+  };
+
+  // 타이머 끝남
+  const onTimerFinish = ({ time, duration }) => {
+    setIsTimeout(true);
+  };
+
+  // 타이머 시작
+  const onTimerStart = ({ time, duration }) => {
+    setTime(0);
+    setIsTimeout(false);
+  };
+
   return (
     <>
       <EmailCustomTextField
@@ -282,8 +277,12 @@ export default function SignEssentialForm({
         variant="filled"
         size="small"
         onChange={onEmailHandler}
+        disabled={isValidateEmail}
       />
-      <EmailCheckButton onClick={onEmailCheckHandler} disabled={!isEmail}>
+      <EmailCheckButton
+        onClick={handleSubmit}
+        disabled={!isEmail || (!isTimeout && emailCheck) || isValidateEmail}
+      >
         인증 요청
       </EmailCheckButton>
       <Box sx={{ width: 400, height: 25 }}>
@@ -293,40 +292,48 @@ export default function SignEssentialForm({
           </Message>
         )}
       </Box>
-      {emailValidateOpen && (
+      {emailCheck && (
         <div>
           <EmailCustomTextField
             name="validate"
             type="text"
             label="인증번호"
-            value={emailValidateCode}
+            value={code || ""}
             variant="filled"
             size="small"
-            onChange={onValidateHandler}
+            onChange={handleCodeChange}
+            disabled={isValidateEmail}
           />
-          <EmailCheckButton onClick={onEmailValidateCheckHandler}>
+          <EmailCheckButton
+            onClick={handleCodeSubmit}
+            disabled={isValidateEmail}
+          >
             인증확인
           </EmailCheckButton>
           <Box sx={{ width: 400, height: 25 }}>
-            <Stack direction="row">
+            <Stack direction="row" justifyContent="flex-end">
               <TextMessage className={isValidateEmail ? "ok" : "error"}>
-                {emailValidateMessage}
+                {codeMessage}
               </TextMessage>
-              <TimeMessage className={!isTimeout ? "ok" : "error"}>
-                남은 시간:&nbsp;
-              </TimeMessage>
-              <Timer
-                active={!isTimeout}
-                onStart={onTimerStart}
-                duration={5 * 60 * 1000}
-                onTimeUpdate={onTimerUpdate}
-                onFinish={onTimerFinish}
-              />
-              <Timecode
-                style={TimerStyle}
-                time={duration - time}
-                component="p"
-              />
+              {!isValidateEmail && (
+                <>
+                  <TimeMessage className={!isTimeout ? "ok" : "error"}>
+                    남은 시간:&nbsp;
+                  </TimeMessage>
+                  <Timer
+                    active={!isTimeout}
+                    onStart={onTimerStart}
+                    duration={10 * 1000}
+                    onTimeUpdate={onTimerUpdate}
+                    onFinish={onTimerFinish}
+                  />
+                  <Timecode
+                    style={TimerStyle}
+                    time={duration - time}
+                    component="p"
+                  />
+                </>
+              )}
             </Stack>
           </Box>
         </div>
