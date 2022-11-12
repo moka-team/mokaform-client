@@ -217,7 +217,7 @@ function NavBar() {
             id="success-dialog-description"
             sx={{ color: "#202632" }}
           >
-            설문 생성이 완료되었습니다!
+            설문 수정이 완료되었습니다!
           </DialogContentText>
           <DialogContentText sx={{ color: "#202632" }}>
             공유 링크 : {sharingUrl}
@@ -261,7 +261,7 @@ function NavBar() {
         <DialogTitle id="success-dialog-title">알림</DialogTitle>
         <DialogContent>
           <DialogContentText id="success-dialog-description">
-            설문 생성이 실패했습니다! 잠시 후, 다시 시도해주세요!
+            설문 수정에 실패하였습니다! 잠시 후, 다시 시도해주세요!
           </DialogContentText>
         </DialogContent>
         <DialogActions>
