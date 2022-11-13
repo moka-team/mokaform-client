@@ -16,11 +16,10 @@ import dayjs from "dayjs";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import apiClient from "../../../../api/client";
-import { SaveBtn, SNavBar } from "../../common/styled";
-import { useCreateSurveyActions, useCreateSurveyValue } from "../surveyState";
-import { CustomSwitch } from "./CustomizedSwitches";
+import { SaveBtn, SNavBar } from "../common/styled";
+import { CustomSwitch } from "../create/general/CustomizedSwitches";
 import SelectCategory from "./SelectCategory";
+import { useEditSurveyActions, useEditSurveyValue } from "./surveyState";
 
 const style = {
   position: "absolute",
@@ -33,7 +32,6 @@ const style = {
   p: 4,
   borderRadius: 2,
 };
-
 const CopyBtn = styled.button`
   background-color: rgba(51, 51, 51, 0.05);
   border-radius: 8px;
@@ -58,7 +56,7 @@ const CopyBtn = styled.button`
 `;
 
 function NavBar() {
-  const survey = useCreateSurveyValue();
+  const survey = useEditSurveyValue();
   const {
     setTitle,
     setSummary,
@@ -69,8 +67,7 @@ function NavBar() {
     setCategories,
     setQuestions,
     setMultiQuestions,
-  } = useCreateSurveyActions();
-
+  } = useEditSurveyActions();
   const [multiQuestionValidate, setMultiQuestionValidate] = useState([]);
   const [multiQuestionList, setMultiQuestionList] = useState(false);
 
@@ -145,25 +142,10 @@ function NavBar() {
   };
 
   const postSurvey = async () => {
-    const surveyInfo = {
-      title: survey.title,
-      summary: survey.summary,
-      isAnonymous: survey.isAnonymous,
-      isPublic: survey.isPublic,
-      startDate: survey.startDate,
-      endDate: survey.endDate,
-      categories: survey.categories,
-      questions: survey.questions,
-      multiQuestions: survey.multiQuestions,
-      // surveyImage: surveyImg,
-    };
+    alert(JSON.stringify(survey));
 
     try {
-      const response = await apiClient.post("/api/v1/survey", surveyInfo);
-      setSharingUrl(
-        "https://mokaform.netlify.app/survey/" + response.data.data.sharingKey
-      );
-      resetCreateSurveyState();
+      //TODO: 설문 수정 API
       handleClickSuccessDialogOpen();
     } catch (error) {
       handleClickFailDialogOpen();
@@ -189,37 +171,7 @@ function NavBar() {
   };
 
   const handleSubmit = () => {
-    if (
-      !(
-        survey.title.length &&
-        survey.summary.length &&
-        survey.questions.length &&
-        survey.endDate.length &&
-        survey.categories.length
-      )
-    ) {
-      handleClickDialogOpen();
-      if (survey.title.length === 0) {
-        setMessage((message) => [...message, "설문 제목 입력"]);
-      }
-      if (survey.summary.length === 0) {
-        setMessage((message) => [...message, "설문 설명 입력"]);
-      }
-      if (survey.questions.length === 0) {
-        setMessage((message) => [...message, "질문 한가지 이상 작성"]);
-      }
-      if (survey.startDate.length === 0) {
-        setMessage((message) => [...message, "시작 날짜 설정"]);
-      }
-      if (!survey.endDate.length) {
-        setMessage((message) => [...message, "종료 날짜 설정"]);
-      }
-      if (survey.categories.length === 0) {
-        setMessage((message) => [...message, "카테고리 설정"]);
-      }
-    } else {
-      createSurvey();
-    }
+    alert(JSON.stringify(survey));
   };
 
   return (
@@ -238,20 +190,6 @@ function NavBar() {
           <Typography id="modal-modal-description">
             설문의 세부 내용을 설정해주세요.
           </Typography>
-          {/* <Box pt={3}>
-            <Typography id="anp" sx={{ mt: 1 }} variant="body2">
-              설문 대표 이미지 설정
-              <SurveyImg />
-            </Typography>
-          </Box>
-          <Typography id="anp" sx={{ mt: 3 }} variant="body2">
-            설문 익명 가능 여부
-            <CustomSwitch
-              style={{ color: "#edeef0" }}
-              checked={isAnonymous}
-              onChange={isAnonymousOnChange}
-            />
-          </Typography> */}
           <Typography id="anp" sx={{ mt: 1 }} variant="body2">
             설문 공개 여부
             <CustomSwitch
@@ -314,9 +252,7 @@ function NavBar() {
               />
             </LocalizationProvider>
           </Typography>
-          <Typography sx={{ mt: 2 }} variant="body2">
-            <SelectCategory />
-          </Typography>
+          <Typography sx={{ mt: 2 }} variant="body2"></Typography>
           <Box sx={{ textAlign: "right", mt: 2 }}>
             <Button onClick={closeAndReset} sx={{ fontWeight: 600 }}>
               닫기
@@ -387,7 +323,7 @@ function NavBar() {
             id="success-dialog-description"
             sx={{ color: "#202632" }}
           >
-            설문 생성이 완료되었습니다!
+            설문 수정이 완료되었습니다!
           </DialogContentText>
           <DialogContentText sx={{ color: "#202632" }}>
             공유 링크 : {sharingUrl}
@@ -431,7 +367,7 @@ function NavBar() {
         <DialogTitle id="success-dialog-title">알림</DialogTitle>
         <DialogContent>
           <DialogContentText id="success-dialog-description">
-            설문 생성이 실패했습니다! 잠시 후, 다시 시도해주세요!
+            설문 수정에 실패하였습니다! 잠시 후, 다시 시도해주세요!
           </DialogContentText>
         </DialogContent>
         <DialogActions>
