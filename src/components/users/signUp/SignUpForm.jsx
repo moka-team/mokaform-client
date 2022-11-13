@@ -1,3 +1,9 @@
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import apiClient from "../../../api/client";
@@ -6,7 +12,7 @@ import JobRow from "./JobRow";
 import PreferenceRow from "./PreferenceRow";
 import SexRow from "./SexRow";
 import SignEssentialForm from "./SignEssentialForm";
-import { Button, Container, MainTitle, Rows } from "./SignUpCSS";
+import { Container, MainTitle, Rows, SignUpButton } from "./SignUpCSS";
 
 export default function SignUpForm() {
   const signOptionRef = useRef(null);
@@ -17,21 +23,65 @@ export default function SignUpForm() {
   const [nickname, setNickname] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
-  const [age, setAge] = useState("");
-  const [gender, setGender] = useState("");
-  const [job, setJob] = useState("");
+  const [age, setAge] = useState(null);
+  const [gender, setGender] = useState(null);
+  const [job, setJob] = useState(0);
   const [preference, setPreference] = useState("");
   const [isNickname, setIsNickname] = useState(false);
   const [isEmail, setIsEmail] = useState(false);
   const [isPassword, setIsPassword] = useState(false);
   const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
+  const [isValidateEmail, setIsValidateEmail] = useState(false);
+  const [isAge, setIsAge] = useState(false);
+  const [isGender, setIsGender] = useState(false);
+  const [isJob, setIsJob] = useState(false);
+  const [isPreference, setIsPreference] = useState(false);
+
+  const [invalidatoinDialogOpen, setInvalidationDialogOpen] = useState(false);
+  const [message, setMessage] = useState([]);
 
   const navigate = useNavigate();
+
+  const handleClickDialogOpen = () => {
+    setInvalidationDialogOpen(true);
+  };
+
+  const handleDialogClose = () => {
+    setInvalidationDialogOpen(false);
+    setMessage([]);
+  };
+
   const onClickHandler = (event) => {
-    signOptionRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (!(isNickname && isValidateEmail && isPassword && isPasswordConfirm)) {
+      handleClickDialogOpen();
+      if (!isNickname) {
+        setMessage((message) => [...message, "닉네임 입력"]);
+      }
+      if (!isValidateEmail) {
+        setMessage((message) => [...message, "이메일 인증"]);
+      }
+      if (!isPassword) {
+        setMessage((message) => [...message, "패스워드 입력"]);
+      }
+      if (!isPasswordConfirm) {
+        setMessage((message) => [...message, "패스워드 확인"]);
+      }
+    } else {
+      signOptionRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
   };
   const onNextBtnClickHandler = (event) => {
-    signOptionRef2.current?.scrollIntoView({ behavior: "smooth" });
+    if (!(isAge && isGender)) {
+      handleClickDialogOpen();
+      if (!isAge) {
+        setMessage((message) => [...message, "나이 입력"]);
+      }
+      if (!isGender) {
+        setMessage((message) => [...message, "성별 입력"]);
+      }
+    } else {
+      signOptionRef2.current?.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   const getEmail = (email) => {
@@ -70,42 +120,59 @@ export default function SignUpForm() {
   const getIsPasswordConfirm = (isPasswordConfirm) => {
     setIsPasswordConfirm(isPasswordConfirm);
   };
-
+  const getIsEmailValidate = (isValidateEmail) => {
+    setIsValidateEmail(isValidateEmail);
+  };
+  const getIsAge = (isAge) => {
+    setIsAge(isAge);
+  };
+  const getIsGender = (isGender) => {
+    setIsGender(isGender);
+  };
+  const getIsJob = (isJob) => {
+    setIsJob(isJob);
+  };
+  const getIsPreference = (isPreference) => {
+    setIsPreference(isPreference);
+  };
   let ValidateInfo = false;
 
-  const signUpPatch = () => {
-    apiClient
-      .post(
-        "/api/v1/users/signup",
-        {
-          email: email,
-          password: password,
-          nickname: nickname,
-          ageGroup: age,
-          gender: gender,
-          job: job,
-          category: preference,
-        },
-        {
-          // headers: {
-          //   accessToken: getAccessToken(),
-          //   refreshToken: getRefreshToken(),
-          // },
-        }
-      )
-      .then(function (response) {
-        if (response.data.message === "새로운 유저 생성이 성공하였습니다.") {
-          // window.alert("회원가입이 완료되었습니다.");
-          navigate("/email-confirm");
-        } else {
-          window.alert("회원가입 에러 발생");
-        }
+  const signUpPatch = async () => {
+    try {
+      const response = await apiClient.post("/api/v1/users/signup", {
+        email: email,
+        password: password,
+        nickname: nickname,
+        ageGroup: age,
+        gender: gender,
+        job: job,
+        category: preference,
       });
+      if (response.data.message === "새로운 유저 생성이 성공하였습니다.") {
+        // window.alert("회원가입이 완료되었습니다.");
+        // navigate("/email-confirm");
+        navigate("/");
+      } else {
+        window.alert("회원가입 에러 발생");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const onCompleteBtnClickHandler = (event) => {
-    event.preventDefault();
-    signUpPatch();
+    if (!(isJob && preference.length)) {
+      handleClickDialogOpen();
+      if (!isJob) {
+        setMessage((message) => [...message, "직업 입력"]);
+      }
+      if (!preference.length) {
+        setMessage((message) => [...message, "관심사 입력 (최소 1개)"]);
+      }
+    } else {
+      event.preventDefault();
+      signUpPatch();
+    }
   };
 
   if (age === "" || gender === "" || job === "" || preference.length === 0) {
@@ -128,6 +195,7 @@ export default function SignUpForm() {
             isNickname={isNickname}
             isPassword={isPassword}
             isPasswordConfirm={isPasswordConfirm}
+            isValidateEmail={isValidateEmail}
             getEmail={getEmail}
             getNickname={getNickname}
             getPassword={getPassword}
@@ -136,40 +204,77 @@ export default function SignUpForm() {
             getIsNickname={getIsNickname}
             getIsPassword={getIsPassword}
             getIsPasswordConfirm={getIsPasswordConfirm}
+            getIsEmailValidate={getIsEmailValidate}
           />
-          <Button onClick={onClickHandler}>다음</Button>
+          <SignUpButton onClick={onClickHandler}>다음</SignUpButton>
         </Rows>
       </Container>
-      <Container color="#f9fafb" ref={signOptionRef}>
-        <Rows>
-          <AgeRow age={age} getAge={getAge}></AgeRow>
-          <SexRow gender={gender} getGender={getGender}></SexRow>
-          <Button onClick={onNextBtnClickHandler}>다음</Button>
-        </Rows>
-      </Container>
-      <Container ref={signOptionRef2}>
-        <Rows>
-          <JobRow job={job} getJob={getJob}></JobRow>
-          <PreferenceRow
-            preference={preference}
-            getPreference={getPreference}
-          />
-          <Button
-            disabled={
-              !(
-                isNickname &&
-                isEmail &&
-                isPassword &&
-                isPasswordConfirm &&
-                ValidateInfo
-              )
-            }
-            onClick={onCompleteBtnClickHandler}
-          >
-            가입 완료
+      {isNickname && isValidateEmail && isPassword && isPasswordConfirm && (
+        <div>
+          <Container color="#f9fafb" ref={signOptionRef}>
+            <Rows>
+              <AgeRow age={age} getAge={getAge} getIsAge={getIsAge}></AgeRow>
+              <SexRow
+                gender={gender}
+                getGender={getGender}
+                getIsGender={getIsGender}
+              ></SexRow>
+              <SignUpButton onClick={onNextBtnClickHandler}>다음</SignUpButton>
+            </Rows>
+          </Container>
+          {isAge && isGender && (
+            <Container ref={signOptionRef2}>
+              <Rows>
+                <JobRow job={job} getJob={getJob} getIsJob={getIsJob}></JobRow>
+                <PreferenceRow
+                  preference={preference}
+                  getPreference={getPreference}
+                />
+                <SignUpButton onClick={onCompleteBtnClickHandler}>
+                  가입 완료
+                </SignUpButton>
+              </Rows>
+            </Container>
+          )}
+        </div>
+      )}
+      <Dialog
+        open={invalidatoinDialogOpen}
+        onClose={handleDialogClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        sx={{
+          "& .MuiDialog-container": {
+            "& .MuiPaper-root": {
+              width: "100%",
+              maxWidth: "500px",
+            },
+          },
+        }}
+      >
+        <DialogTitle id="invalidate-dialog-title">알림</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="invalidate-dialog-description">
+            가입 필수 항목을 모두 입력해야 합니다.
+          </DialogContentText>
+          <DialogContentText id="invalidate-dialog-description">
+            아래 항목을 체크해주세요!
+          </DialogContentText>
+          <br></br>
+          {message.map((list) => {
+            return (
+              <DialogContentText id="invalidate-dialog-description">
+                ✔ {list}
+              </DialogContentText>
+            );
+          })}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDialogClose} autoFocus>
+            확인
           </Button>
-        </Rows>
-      </Container>
+        </DialogActions>
+      </Dialog>
     </>
   );
 }

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Row, Rows, Title } from "./SignUpCSS";
 
-export default function SexRow({ gender, getGender }) {
+export default function SexRow({ gender, getGender, getIsGender }) {
   const sex = ["여성", "남성"];
   const ids = ["FEMALE", "MALE"];
-  const [currentClick, setCurrentClick] = useState(null);
+  const [currentClick, setCurrentClick] = useState(gender);
   const [prevClick, setPrevClick] = useState(null);
 
   const onClickHandler = (event) => {
@@ -22,6 +22,7 @@ export default function SexRow({ gender, getGender }) {
   useEffect(
     (event) => {
       if (currentClick !== null) {
+        getIsGender(true);
         let current = document.getElementById(currentClick);
         current.style.color = "white";
         current.style.fontWeight = 600;

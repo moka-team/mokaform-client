@@ -87,7 +87,7 @@ const Message = styled.p`
   }
 
   &.ok {
-    color: #0064FF;
+    color: #0064ff;
   }
 
   &.error {
@@ -104,7 +104,7 @@ const MainTitle = styled.h1`
   font-weight: 700;
 `;
 
-const Button = styled.button`
+const SignUpButton = styled.button`
   width: 415px;
   height: 50px;
   margin: 10px;
@@ -122,6 +122,24 @@ const Button = styled.button`
   }
 `;
 
+const EmailCheckButton = styled.button`
+  width: 90px;
+  height: 47px;
+  border-radius: 10px;
+  border: none;
+  background-color: #286bd0;
+  margin-bottom: 15px;
+  margin-left: 10px;
+  color: white;
+  &:hover {
+    background-color: #0064ff;
+  }
+  &:disabled {
+    background-color: gray;
+  }
+`;
+
+const EmailWrapper = styled.div``;
 const Container = styled.div`
   display: flex;
   align-items: center;
@@ -131,14 +149,45 @@ const Container = styled.div`
   background-color: ${(props) => props.color || "white"};
 `;
 
+const TimeMessage = styled.p`
+  margin-left: 7px;
+  margin-top: 1px;
+  font-size: small;
+  font-weight: 600;
+  color: #0064ff;
+  &.ok {
+    color: #0064ff;
+  }
+  &.error {
+    color: #ff2727;
+  }
+`;
+
+const TextMessage = styled.p`
+  margin-top: 1px;
+  font-size: small;
+  padding-left: 20px;
+  color: #0064ff;
+  &.ok {
+    color: #0064ff;
+  }
+  &.error {
+    color: #ff2727;
+  }
+`;
+
 export {
   Title,
   Row,
   Rows,
   EssentialForm,
   Message,
-  Button,
+  SignUpButton,
   Container,
   MainTitle,
   PreferenceButton,
+  EmailCheckButton,
+  EmailWrapper,
+  TimeMessage,
+  TextMessage,
 };
