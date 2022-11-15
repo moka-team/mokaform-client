@@ -32,6 +32,12 @@ const Card = styled.div`
     color: white;
     font-weight: 600;
   }
+  &.selected {
+    background-color: lightgrey;
+    text-align: center;
+    color: white;
+    font-weight: 600;
+  }
 `;
 
 const RightContainer = styled.div`

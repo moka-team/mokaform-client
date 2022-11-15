@@ -13,7 +13,7 @@ import { Container, Card } from "../../../../components/users/myPage/styled";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function CircleCarousel() {
+function CircleCarousel({ text }) {
   const [ishover1, setIshover1] = useState(false);
   const [ishover2, setIshover2] = useState(false);
   const [ishover3, setIshover3] = useState(false);
@@ -25,9 +25,11 @@ function CircleCarousel() {
 
   const navigate = useNavigate();
 
+  console.log(text);
   return (
     <Container>
       <Card
+        className={text === "PET" && "selected"}
         onMouseOver={() => setIshover1(true)}
         onMouseOut={() => setIshover1(false)}
         onClick={() =>
@@ -45,6 +47,7 @@ function CircleCarousel() {
         <p style={{ display: ishover1 ? "flex" : "none" }}>반려동물</p>
       </Card>
       <Card
+        className={text === "DAILY_LIFE" && "selected"}
         onMouseOver={() => setIshover2(true)}
         onMouseOut={() => setIshover2(false)}
         onClick={() =>
@@ -59,6 +62,7 @@ function CircleCarousel() {
         <p style={{ display: ishover2 ? "flex" : "none" }}>일상</p>
       </Card>
       <Card
+        className={text === "SOCIAL_POLITICS" && "selected"}
         onMouseOver={() => setIshover3(true)}
         onMouseOut={() => setIshover3(false)}
         onClick={() =>
@@ -73,6 +77,7 @@ function CircleCarousel() {
         <p style={{ display: ishover3 ? "flex" : "none" }}>사회·정치</p>
       </Card>
       <Card
+        className={text === "LEARNING" && "selected"}
         onMouseOver={() => setIshover4(true)}
         onMouseOut={() => setIshover4(false)}
         onClick={() =>
@@ -87,6 +92,7 @@ function CircleCarousel() {
         <p style={{ display: ishover4 ? "flex" : "none" }}>학습</p>
       </Card>
       <Card
+        className={text === "IT" && "selected"}
         onMouseOver={() => setIshover5(true)}
         onMouseOut={() => setIshover5(false)}
         onClick={() =>
@@ -101,6 +107,7 @@ function CircleCarousel() {
         <p style={{ display: ishover5 ? "flex" : "none" }}>IT</p>
       </Card>
       <Card
+        className={text === "HOBBY" && "selected"}
         onMouseOver={() => setIshover6(true)}
         onMouseOut={() => setIshover6(false)}
         onClick={() =>
@@ -115,6 +122,7 @@ function CircleCarousel() {
         <p style={{ display: ishover6 ? "flex" : "none" }}>취미</p>
       </Card>
       <Card
+        className={text === "PREFERENCE_RESEARCH" && "selected"}
         onMouseOver={() => setIshover7(true)}
         onMouseOut={() => setIshover7(false)}
         onClick={() =>
@@ -131,6 +139,7 @@ function CircleCarousel() {
         <p style={{ display: ishover7 ? "flex" : "none" }}>선호도 조사</p>
       </Card>
       <Card
+        className={text === "PSYCHOLOGY" && "selected"}
         onMouseOver={() => setIshover8(true)}
         onMouseOut={() => setIshover8(false)}
         onClick={() =>

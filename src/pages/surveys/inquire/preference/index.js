@@ -6,7 +6,7 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import Header from "../../../../components/common/Header.jsx";
-import CardContainer from "../../../../components/main/CardContainer.jsx";
+import CardContainer from "../../../../components/surveys/inquire/preference/CardContainer";
 import ChatbotFab from "../../../../components/main/ChatbotFab.jsx";
 import DownButton from "../../../../components/main/DownButton.jsx";
 import Footer from "../../../../components/main/Footer.jsx";
@@ -32,7 +32,7 @@ export default function InquirePreferenceSurvey() {
           <Container maxWidth="xl" sx={{ mt: 6 }}>
             <Grid container>
               <>
-                <CircleCarousel />
+                <CircleCarousel text={text}/>
                 <Grid item xs={10}>
                   <SubTitleText text={text} />
                 </Grid>
