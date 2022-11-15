@@ -7,6 +7,8 @@ export default function MultipleChoiceQuestionItem({
   multiquestion,
   survey,
 }) {
+  console.log(survey);
+  console.log(multiquestion);
   const multipleChoiceAnswers = useCreateAnswerValue().multipleChoiceAnswers;
   const multipleChoiceAnswerValidate =
     useCreateAnswerValue().multipleChoiceAnswerValidate;
