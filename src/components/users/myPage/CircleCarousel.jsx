@@ -12,6 +12,7 @@ import {
 import { Container, Card } from "./styled";
 import { useContext, useState } from "react";
 import { UserContext } from "../../../authentication/userState";
+import { useNavigate } from "react-router-dom";
 
 function CircleCarousel() {
   const [ishover1, setIshover1] = useState(false);
@@ -24,12 +25,14 @@ function CircleCarousel() {
   const [ishover8, setIshover8] = useState(false);
 
   const user = useContext(UserContext);
+  const navigate = useNavigate();
 
   return (
     <Container>
       <Card
         onMouseOver={() => setIshover1(true)}
         onMouseOut={() => setIshover1(false)}
+        onClick={() => navigate("/preference", "PET")}
         style={{ display: user.categories.includes("PET") ? "flex" : "none" }}
       >
         <FontAwesomeIcon
@@ -89,6 +92,7 @@ function CircleCarousel() {
       <Card
         onMouseOver={() => setIshover5(true)}
         onMouseOut={() => setIshover5(false)}
+        onClick={() => navigate("/preference", { state: { text: "IT" } })}
         style={{ display: user.categories.includes("IT") ? "flex" : "none" }}
       >
         <FontAwesomeIcon

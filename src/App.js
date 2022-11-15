@@ -23,6 +23,7 @@ import SignIn from "./pages/users/signIn";
 import SignUp from "./pages/users/signUp";
 import ResetPassword from "./pages/users/ResetPassword";
 import routes from "./routes";
+import InquirePreferenceSurvey from "./pages/surveys/inquire/preference";
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -51,11 +52,16 @@ function App() {
 
   useEffect(() => {
     async function fetchUser() {
-      if (getAccessToken()) {
+      console.log("hello");
+      console.log(getAccessToken().length);
+      if (getAccessToken().length > 0) {
+        console.log("통과");
         const res = await apiClient.get("api/v1/users/my");
         setLoggedUser(res.data.data);
+        console.log(res.data.data);
       }
     }
+    console.log("hi");
     fetchUser();
   }, []);
   return (
@@ -108,6 +114,10 @@ function App() {
               <SignIn signInAlert={true} />
             )
           }
+        ></Route>
+        <Route
+          path={routes.preference}
+          element={<InquirePreferenceSurvey />}
         ></Route>
         <Route
           path={routes.createCardSurvey}
