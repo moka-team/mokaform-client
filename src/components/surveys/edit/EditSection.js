@@ -6,6 +6,7 @@ import { useEditSurveyActions, useEditSurveyValue } from "./surveyState";
 export function EditSection() {
   const currentSurvey = useEditSurveyValue();
   const { setTitle, setSummary } = useEditSurveyActions();
+  console.log(currentSurvey);
   return (
     <Create>
       <Title

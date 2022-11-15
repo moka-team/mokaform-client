@@ -16,9 +16,9 @@ import dayjs from "dayjs";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import apiClient from "../../../api/client";
 import { SaveBtn, SNavBar } from "../common/styled";
 import { CustomSwitch } from "../create/general/CustomizedSwitches";
-import SelectCategory from "./SelectCategory";
 import { useEditSurveyActions, useEditSurveyValue } from "./surveyState";
 
 const style = {
@@ -143,8 +143,13 @@ function NavBar() {
 
   const postSurvey = async () => {
     try {
-      //TODO: 설문 수정 API
-      console.log(survey);
+      const res = await apiClient.get(`/api/v1/survey`, {
+        params: {
+          surveyId: survey.surveyId,
+          sharingKey: survey.sharingKey,
+        },
+      });
+      console.log(res);
       handleClickSuccessDialogOpen();
     } catch (error) {
       handleClickFailDialogOpen();
@@ -169,7 +174,12 @@ function NavBar() {
       : alert("객관식 질문은 최소 한개의 선지가 필요합니다.");
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    console.log(survey);
+    await apiClient.patch(`/api/v1/survey/${survey.surveyId}`, {
+      ...survey,
+      categories: survey.surveyCategories,
+    });
     postSurvey();
   };
 

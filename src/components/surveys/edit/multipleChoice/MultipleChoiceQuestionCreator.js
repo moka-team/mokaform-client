@@ -10,12 +10,17 @@ export default function MultipleChoiceQuestionCreator({ id }) {
     survey.multiQuestions
   );
 
+  const index = survey.questions.findIndex(
+    (listItem) => listItem.questionId === id
+  );
+
   const addMultiQuestionItem = () => {
     setMultiQuestionList([
       ...survey.multiQuestions,
       {
         multiQuestionContent: detailQuestion,
         questionId: id,
+        questionIndex: index,
         multiQuestionIndex: multiQuestionList.length,
         multiQuestionType: "GENERAL",
       },

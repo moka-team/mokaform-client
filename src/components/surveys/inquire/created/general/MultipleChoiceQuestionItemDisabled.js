@@ -37,6 +37,7 @@ export default function MultipleChoiceQuestionItemDisabled({ item, survey }) {
     },
     [currentClick]
   );
+
   return (
     <QuestionWrapper>
       <QuestionText color="#0064ff">Q{index + 1}</QuestionText>

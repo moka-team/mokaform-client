@@ -19,6 +19,8 @@ import OXQuestionItemDisabled from "./general/OXQuestionItemDisabled";
 export default function ShowSurvey({ sharingKey }) {
   function SurveyInfo() {
     const survey = useRecoilValueLoadable(getSurveyQuery(sharingKey));
+
+    console.log(survey);
     switch (survey.state) {
       case "hasValue":
         return (
