@@ -1,5 +1,6 @@
 import { Create, Summary, Title } from "../common/styled";
 import { SurveyEditItem } from "./SurveyEditItem";
+import SurveyItemCreator from "./SurveyItemCreator";
 import { useEditSurveyActions, useEditSurveyValue } from "./surveyState";
 
 export function EditSection() {
@@ -18,6 +19,7 @@ export function EditSection() {
       {currentSurvey.questions.map((surveyItem) => (
         <SurveyEditItem key={surveyItem.index} item={surveyItem} />
       ))}
+      <SurveyItemCreator />
     </Create>
   );
 }

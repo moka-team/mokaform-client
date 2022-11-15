@@ -142,10 +142,9 @@ function NavBar() {
   };
 
   const postSurvey = async () => {
-    alert(JSON.stringify(survey));
-
     try {
       //TODO: 설문 수정 API
+      console.log(survey);
       handleClickSuccessDialogOpen();
     } catch (error) {
       handleClickFailDialogOpen();
@@ -171,7 +170,7 @@ function NavBar() {
   };
 
   const handleSubmit = () => {
-    alert(JSON.stringify(survey));
+    postSurvey();
   };
 
   return (

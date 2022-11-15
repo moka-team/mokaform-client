@@ -14,7 +14,6 @@ export default function MultipleChoiceQuestionCreator({ id }) {
     setMultiQuestionList([
       ...survey.multiQuestions,
       {
-        multiQuestionId: multiQuestionList.at(-1).multiQuestionId + 1,
         multiQuestionContent: detailQuestion,
         questionId: id,
         multiQuestionIndex: multiQuestionList.length,
