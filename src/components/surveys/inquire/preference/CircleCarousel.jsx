@@ -9,9 +9,8 @@ import {
   faMagnifyingGlass,
   faPersonCircleQuestion,
 } from "@fortawesome/free-solid-svg-icons";
-import { Container, Card } from "./styled";
+import { Container, Card } from "../../../../components/users/myPage/styled";
 import { useContext, useState } from "react";
-import { UserContext } from "../../../authentication/userState";
 import { useNavigate } from "react-router-dom";
 
 function CircleCarousel() {
@@ -24,7 +23,6 @@ function CircleCarousel() {
   const [ishover7, setIshover7] = useState(false);
   const [ishover8, setIshover8] = useState(false);
 
-  const user = useContext(UserContext);
   const navigate = useNavigate();
 
   return (
@@ -32,8 +30,9 @@ function CircleCarousel() {
       <Card
         onMouseOver={() => setIshover1(true)}
         onMouseOut={() => setIshover1(false)}
-        onClick={() => navigate("/survey/preference", { state: { text: "PET" } })}
-        style={{ display: user.categories.includes("PET") ? "flex" : "none" }}
+        onClick={() =>
+          navigate("/survey/preference", { state: { text: "PET" } })
+        }
       >
         <FontAwesomeIcon
           icon={faPaw}
@@ -48,10 +47,9 @@ function CircleCarousel() {
       <Card
         onMouseOver={() => setIshover2(true)}
         onMouseOut={() => setIshover2(false)}
-        onClick={() => navigate("/survey/preference", { state: { text: "DAILY_LIFE" } })}
-        style={{
-          display: user.categories.includes("DAILY_LIFE") ? "flex" : "none",
-        }}
+        onClick={() =>
+          navigate("/survey/preference", { state: { text: "DAILY_LIFE" } })
+        }
       >
         <FontAwesomeIcon
           icon={faFaceSmile}
@@ -63,12 +61,9 @@ function CircleCarousel() {
       <Card
         onMouseOver={() => setIshover3(true)}
         onMouseOut={() => setIshover3(false)}
-        onClick={() => navigate("/survey/preference", { state: { text: "SOCIAL_POLITICS" } })}
-        style={{
-          display: user.categories.includes("SOCIAL_POLITICS")
-            ? "flex"
-            : "none",
-        }}
+        onClick={() =>
+          navigate("/survey/preference", { state: { text: "SOCIAL_POLITICS" } })
+        }
       >
         <FontAwesomeIcon
           icon={faHashtag}
@@ -80,10 +75,9 @@ function CircleCarousel() {
       <Card
         onMouseOver={() => setIshover4(true)}
         onMouseOut={() => setIshover4(false)}
-        onClick={() => navigate("/survey/preference", { state: { text: "LEARNING" } })}
-        style={{
-          display: user.categories.includes("LEARNING") ? "flex" : "none",
-        }}
+        onClick={() =>
+          navigate("/survey/preference", { state: { text: "LEARNING" } })
+        }
       >
         <FontAwesomeIcon
           icon={faBook}
@@ -95,8 +89,9 @@ function CircleCarousel() {
       <Card
         onMouseOver={() => setIshover5(true)}
         onMouseOut={() => setIshover5(false)}
-        onClick={() => navigate("/survey/preference", { state: { text: "IT" } })}
-        style={{ display: user.categories.includes("IT") ? "flex" : "none" }}
+        onClick={() =>
+          navigate("/survey/preference", { state: { text: "IT" } })
+        }
       >
         <FontAwesomeIcon
           icon={faLaptopCode}
@@ -108,8 +103,9 @@ function CircleCarousel() {
       <Card
         onMouseOver={() => setIshover6(true)}
         onMouseOut={() => setIshover6(false)}
-        onClick={() => navigate("/survey/preference", { state: { text: "HOBBY" } })}
-        style={{ display: user.categories.includes("HOBBY") ? "flex" : "none" }}
+        onClick={() =>
+          navigate("/survey/preference", { state: { text: "HOBBY" } })
+        }
       >
         <FontAwesomeIcon
           icon={faGuitar}
@@ -121,12 +117,11 @@ function CircleCarousel() {
       <Card
         onMouseOver={() => setIshover7(true)}
         onMouseOut={() => setIshover7(false)}
-        onClick={() => navigate("/survey/preference", { state: { text: "PREFERENCE_RESEARCH" } })}
-        style={{
-          display: user.categories.includes("PREFERENCE_RESEARCH")
-            ? "flex"
-            : "none",
-        }}
+        onClick={() =>
+          navigate("/survey/preference", {
+            state: { text: "PREFERENCE_RESEARCH" },
+          })
+        }
       >
         <FontAwesomeIcon
           icon={faMagnifyingGlass}
@@ -138,10 +133,9 @@ function CircleCarousel() {
       <Card
         onMouseOver={() => setIshover8(true)}
         onMouseOut={() => setIshover8(false)}
-        onClick={() => navigate("/survey/preference", { state: { text: "PSYCHOLOGY" } })}
-        style={{
-          display: user.categories.includes("PSYCHOLOGY") ? "flex" : "none",
-        }}
+        onClick={() =>
+          navigate("/survey/preference", { state: { text: "PSYCHOLOGY" } })
+        }
       >
         <FontAwesomeIcon
           icon={faPersonCircleQuestion}
