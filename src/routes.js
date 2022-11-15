@@ -1,5 +1,5 @@
 const routes = {
-  mypage: "/mypage/:userId",
+  mypage: "/mypage",
   main: "/",
   signup: "/signup",
   signin: "/signin",

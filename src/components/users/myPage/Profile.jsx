@@ -1,6 +1,6 @@
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import apiClient from "../../../api/client";
 import {
   DefaultImage,
@@ -15,18 +15,20 @@ import {
   UserInfo,
   UserInput,
 } from "./styled";
+import { UserContext } from "../../../authentication/userState";
 
 function Profile() {
+  const user = useContext(UserContext);
   const [selectedImage, setSelectedImage] = useState(null);
-  const [profile, setProfile] = useState("");
-  const fetchProfile = async () => {
-    const response = await apiClient.get("/api/v1/users/my");
-    setProfile(response.data.data);
-  };
+  // const [profile, setProfile] = useState("");
+  // const fetchProfile = async () => {
+  //   const response = await apiClient.get("/api/v1/users/my");
+  //   setProfile(response.data.data);
+  // };
 
-  useEffect(() => {
-    fetchProfile();
-  });
+  // useEffect(() => {
+  //   fetchProfile();
+  // },[]);
 
   return (
     <SProfile>
@@ -44,7 +46,7 @@ function Profile() {
         ) : (
           // 추후 변경 예정
           <DefaultImage
-            src={profile.gender === "FEMALE" ? "/img/girl.png" : "/img/boy.png"}
+            src={user.gender === "FEMALE" ? "/img/girl.png" : "/img/boy.png"}
           />
         )}
       </ProfileImg>
@@ -53,8 +55,8 @@ function Profile() {
       </UploadBtn>
 
       <UserInfo>
-        <h1>{profile.nickname}</h1>
-        <h2>{profile.email}</h2>
+        <h1>{user.nickname}</h1>
+        <h2>{user.email}</h2>
       </UserInfo>
       <LineHeader>
         <p>PROFILE</p>
@@ -62,7 +64,7 @@ function Profile() {
       <LineWrapper>
         <Line>
           <Type>성별:</Type>
-          <UserInput>{profile.gender === "FEMALE" ? "여성" : "남성"}</UserInput>
+          <UserInput>{user.gender === "FEMALE" ? "여성" : "남성"}</UserInput>
         </Line>
         <Line>
           <Type>연령대:</Type>
@@ -73,7 +75,7 @@ function Profile() {
               THIRTIES: <UserInput>30대</UserInput>,
               FORTIES: <UserInput>40대</UserInput>,
               FIFTIES: <UserInput>50대</UserInput>,
-            }[profile.ageGroup]
+            }[user.ageGroup]
           }
         </Line>
         <Line>
@@ -88,7 +90,7 @@ function Profile() {
               FREELANCER: <UserInput>프리랜서</UserInput>,
               JOB_SEEKER: <UserInput>취업준비생</UserInput>,
               JOBLESS: <UserInput>무직</UserInput>,
-            }[profile.job]
+            }[user.job]
           }
         </Line>
       </LineWrapper>
