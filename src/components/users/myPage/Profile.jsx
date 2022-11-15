@@ -1,6 +1,7 @@
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import apiClient from "../../../api/client";
 import {
   DefaultImage,
@@ -20,13 +21,19 @@ function Profile() {
   const [selectedImage, setSelectedImage] = useState(null);
   const [profile, setProfile] = useState("");
   const fetchProfile = async () => {
+    console.log("hi");
     const response = await apiClient.get("/api/v1/users/my");
     setProfile(response.data.data);
   };
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchProfile();
-  });
+  }, []);
+
+  const onClickHandler = (event) => {
+    navigate("/withdrawal");
+  };
 
   return (
     <SProfile>
@@ -92,6 +99,9 @@ function Profile() {
           }
         </Line>
       </LineWrapper>
+      <LineHeader>
+        <button onClick={onClickHandler}>탈퇴하기</button>
+      </LineHeader>
     </SProfile>
   );
 }

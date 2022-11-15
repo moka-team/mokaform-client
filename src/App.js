@@ -23,6 +23,7 @@ import SignIn from "./pages/users/signIn";
 import SignUp from "./pages/users/signUp";
 import ResetPassword from "./pages/users/ResetPassword";
 import routes from "./routes";
+import Withdrawal from "./components/users/withdrawal/Withdrawal";
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -117,6 +118,10 @@ function App() {
         ></Route>
         <Route path={routes.editSurvey} element={<EditSurvey />}></Route>
         <Route path={"*"} element={<NotFound />}></Route>
+        <Route
+          path={routes.withdrawl}
+          element={<Withdrawal></Withdrawal>}
+        ></Route>
       </Routes>
     </BrowserRouter>
   );
