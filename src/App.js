@@ -24,6 +24,8 @@ import SignUp from "./pages/users/signUp";
 import ResetPassword from "./pages/users/ResetPassword";
 import routes from "./routes";
 import Withdrawal from "./components/users/withdrawal/Withdrawal";
+import PrivacyPolicy from "./components/common/PrivacyPolicy";
+import TermsOfService from "./components/common/ TermsOfService";
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -121,6 +123,14 @@ function App() {
         <Route
           path={routes.withdrawl}
           element={<Withdrawal></Withdrawal>}
+        ></Route>
+        <Route
+          path={routes.privacyPolicy}
+          element={<PrivacyPolicy></PrivacyPolicy>}
+        ></Route>
+        <Route
+          path={routes.termsOfService}
+          element={<TermsOfService></TermsOfService>}
         ></Route>
       </Routes>
     </BrowserRouter>

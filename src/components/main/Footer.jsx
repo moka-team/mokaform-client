@@ -1,15 +1,32 @@
-import { Typography, Box, Link } from "@mui/material";
+import { Typography, Box } from "@mui/material";
+import Stack from "@mui/material/Stack";
+import { Link } from "react-router-dom";
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="text.secondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        MOKA
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
+    <Stack
+      direction="row"
+      alignItems="center"
+      justifyContent="center"
+      spacing={2}
+    >
+      <Typography variant="body2" color="text.secondary" align="center">
+        <Link to={`/termsOfService`} style={{ textDecoration: "none" }}>
+          이용약관
+        </Link>
+      </Typography>
+      <Typography variant="body2" color="text.secondary" align="center">
+        <Link to={`/privacyPolicy`} style={{ textDecoration: "none" }}>
+          개인정보 처리방침
+        </Link>{" "}
+      </Typography>
+      <Typography variant="body2" color="text.secondary" align="center">
+        {"Copyright © "}
+        MOKA {new Date().getFullYear()}
+        {/* <Link color="black">MOKA</Link> {new Date().getFullYear()} */}
+        {"."}
+      </Typography>
+    </Stack>
   );
 }
 

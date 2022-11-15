@@ -14,6 +14,8 @@ const routes = {
   createCardSurvey: "/create-card-survey",
   editSurvey: "/survey/edit",
   withdrawl: "/withdrawal",
+  privacyPolicy: "/privacyPolicy",
+  termsOfService: "/termsOfService",
 };
 
 export default routes;
