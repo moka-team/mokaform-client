@@ -176,6 +176,55 @@ const TextMessage = styled.p`
   }
 `;
 
+const AgreeButton = styled.button`
+  width: 190px;
+  height: 50px;
+  border: 0px;
+  border-radius: 10px;
+  border: none;
+  background-color: #286bd0;
+  color: white;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  margin-top: 10px;
+  margin-left: 10px;
+
+  &.cancle {
+    background-color: gray;
+    &:hover {
+      background-color: gray;
+    }
+  }
+  &:hover {
+    background-color: #0064ff;
+  }
+  &:disabled {
+    background-color: gray;
+  }
+`;
+
+const Message2 = styled.p`
+  font-size: small;
+  width: 400px;
+  padding-left: 20px;
+  text-align: left;
+  margin-top: 40px;
+
+  &.success {
+    color: #8f8c8b;
+  }
+
+  &.ok {
+    color: #0064ff;
+  }
+
+  &.error {
+    color: #ff2727;
+  }
+`;
+
 export {
   Title,
   Row,
@@ -190,4 +239,6 @@ export {
   EmailWrapper,
   TimeMessage,
   TextMessage,
+  AgreeButton,
+  Message2,
 };

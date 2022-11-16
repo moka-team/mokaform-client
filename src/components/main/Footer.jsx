@@ -1,6 +1,6 @@
-import { Typography, Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import Stack from "@mui/material/Stack";
-import { Link } from "react-router-dom";
+import { PolicyLink } from "../common/styled";
 
 function Copyright() {
   return (
@@ -11,14 +11,14 @@ function Copyright() {
       spacing={2}
     >
       <Typography variant="body2" color="text.secondary" align="center">
-        <Link to={`/termsOfService`} style={{ textDecoration: "none" }}>
+        <PolicyLink to={`/termsOfService`} style={{ textDecoration: "none" }}>
           이용약관
-        </Link>
+        </PolicyLink>
       </Typography>
       <Typography variant="body2" color="text.secondary" align="center">
-        <Link to={`/privacyPolicy`} style={{ textDecoration: "none" }}>
+        <PolicyLink to={`/privacyPolicy`} style={{ textDecoration: "none" }}>
           개인정보 처리방침
-        </Link>{" "}
+        </PolicyLink>{" "}
       </Typography>
       <Typography variant="body2" color="text.secondary" align="center">
         {"Copyright © "}

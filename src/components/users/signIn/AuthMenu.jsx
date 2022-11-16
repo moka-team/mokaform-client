@@ -1,11 +1,4 @@
-import {
-  AuthMenuContainer,
-  SignUpLink,
-  ResetPasswordLink,
-  Wrapper,
-  Distinguish,
-} from "./styled";
-import styled from "styled-components";
+import { Distinguish, ResetPasswordLink, SignUpLink, Wrapper } from "./styled";
 
 function AuthMenu() {
   return (
@@ -16,7 +9,7 @@ function AuthMenu() {
     <Wrapper>
       <ResetPasswordLink to="/reset-password">비밀번호 찾기</ResetPasswordLink>
       <Distinguish>|</Distinguish>
-      <SignUpLink to="/signup">회원가입</SignUpLink>
+      <SignUpLink to="/signup/agree">회원가입</SignUpLink>
     </Wrapper>
   );
 }

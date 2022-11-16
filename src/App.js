@@ -26,6 +26,7 @@ import routes from "./routes";
 import Withdrawal from "./components/users/withdrawal/Withdrawal";
 import PrivacyPolicy from "./components/common/PrivacyPolicy";
 import TermsOfService from "./components/common/ TermsOfService";
+import Agree from "./components/users/signUp/Agree";
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -132,6 +133,7 @@ function App() {
           path={routes.termsOfService}
           element={<TermsOfService></TermsOfService>}
         ></Route>
+        <Route path={routes.agreeSignPolicy} element={<Agree></Agree>}></Route>
       </Routes>
     </BrowserRouter>
   );

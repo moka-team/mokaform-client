@@ -7,12 +7,14 @@ import DialogTitle from "@mui/material/DialogTitle";
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import apiClient from "../../../api/client";
+import { SignInLogo } from "../../common/Logo";
+import { LogoContainer } from "../signIn/styled";
 import AgeRow from "./AgeRow";
 import JobRow from "./JobRow";
 import PreferenceRow from "./PreferenceRow";
 import SexRow from "./SexRow";
 import SignEssentialForm from "./SignEssentialForm";
-import { Container, MainTitle, Rows, SignUpButton } from "./SignUpCSS";
+import { Container, Rows, SignUpButton } from "./SignUpCSS";
 
 export default function SignUpForm() {
   const signOptionRef = useRef(null);
@@ -185,7 +187,9 @@ export default function SignUpForm() {
     <>
       <Container>
         <Rows>
-          <MainTitle>SIGN UP | MOKA FORM</MainTitle>
+          <LogoContainer>
+            <SignInLogo>MOKAFORM</SignInLogo>
+          </LogoContainer>
           <SignEssentialForm
             email={email}
             nickname={nickname}

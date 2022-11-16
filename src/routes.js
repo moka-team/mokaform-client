@@ -16,6 +16,7 @@ const routes = {
   withdrawl: "/withdrawal",
   privacyPolicy: "/privacyPolicy",
   termsOfService: "/termsOfService",
+  agreeSignPolicy: "/signup/agree",
 };
 
 export default routes;

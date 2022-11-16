@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   width: 100%;
@@ -57,6 +58,30 @@ const TextButton = styled.button`
   }
 `;
 
+const PolicyLink = styled(Link)`
+  /* position: absolute; */
+  top: 0%;
+  right: 0%;
+  text-decoration: none;
+  color: #000000cc;
+  &:link {
+    text-decoration-line: none;
+    color: #000000cc;
+  }
+  &:visited {
+    text-decoration-line: none;
+    color: #000000cc;
+  }
+  &:hover {
+    text-decoration: none;
+    color: #0064ff;
+  }
+  &:active {
+    text-decoration-line: none;
+    color: #000000cc;
+  }
+`;
+
 export {
   Container,
   Wrapper,
@@ -65,4 +90,5 @@ export {
   Message,
   DetailMessage,
   TextButton,
+  PolicyLink,
 };
