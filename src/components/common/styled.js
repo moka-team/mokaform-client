@@ -8,7 +8,7 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #edeef0;
+  background-color: #f5f6fa;
 `;
 
 const Wrapper = styled.div`
@@ -51,7 +51,7 @@ const TextButton = styled.button`
   color: #0064ff;
   width: 100%;
   text-align: left;
-  background-color: #edeef0;
+  background-color: #f5f6fa;
 
   &:hover {
     text-decoration: underline;
