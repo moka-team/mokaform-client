@@ -16,12 +16,13 @@ import {
   UserInfo,
   UserInput,
 } from "./styled";
+import { UserContext } from "../../../authentication/userState";
 
 function Profile() {
+  // const user = useContext(UserContext);
   const [selectedImage, setSelectedImage] = useState(null);
   const [profile, setProfile] = useState("");
   const fetchProfile = async () => {
-    console.log("hi");
     const response = await apiClient.get("/api/v1/users/my");
     setProfile(response.data.data);
   };
