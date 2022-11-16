@@ -13,6 +13,7 @@ import { Link } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { surveyList } from "../../atoms";
 import defaultImage from "../common/default_image.png";
+import Popup from "./Popup";
 
 function SurveyCard({ survey }) {
   return (
@@ -39,7 +40,7 @@ function SurveyCard({ survey }) {
         </Stack>
       </Grid>
       <Grid item xs={6} align="right" sx={{ mt: 0.5, mb: -1 }}>
-        {
+        {/* {
           {
             HOBBY: <Chip label="취미" />,
             DAILY_LIFE: <Chip label="일상" />,
@@ -50,7 +51,8 @@ function SurveyCard({ survey }) {
             PREFERENCE_RESEARCH: <Chip label="선호도 조사" />,
             PET: <Chip label="반려동물" />,
           }[survey.surveyCategories[0]]
-        }
+        } */}
+        <Popup categories={survey.surveyCategories} />
       </Grid>
     </Grid>
   );
