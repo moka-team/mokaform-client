@@ -15,6 +15,29 @@ const StyledPopperDiv = styled("div")(
 `
 );
 
+function convertCategory(category) {
+  switch (category) {
+    case "HOBBY":
+      return "취미";
+    case "DAILY_LIFE":
+      return "일상";
+    case "IT":
+      return "IT";
+    case "LEARNING":
+      return "학습";
+    case "PSYCHOLOGY":
+      return "심리";
+    case "SOCIAL_POLITICS":
+      return "사회·정치";
+    case "PREFERENCE_RESEARCH":
+      return "선호도 조사";
+    case "PET":
+      return "반려동물";
+    default:
+      return "";
+  }
+}
+
 export default function Popup({ categories }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -37,41 +60,23 @@ export default function Popup({ categories }) {
     <div>
       <Chip
         aria-describedby={id}
-        label={categories[0]}
+        label={convertCategory(categories[0])}
         onMouseEnter={handlePopupOpen}
         onMouseLeave={handlePopupClose}
       />
-      <Popper id={id} open={open} anchorEl={anchorEl} placement="top-end">
-        <Chip
-          aria-describedby={id}
-          label="popup1"
-          sx={{
-            opacity: 1,
-            margin: "0.25rem 0px",
-            backgroundColor: "lightgray",
-          }}
-        />
-        <Chip
-          aria-describedby={id}
-          label="popup2"
-          sx={{ opacity: 1, margin: "0.25rem 0px" }}
-        />
-        <Chip
-          aria-describedby={id}
-          label="popup3"
-          sx={{ opacity: 1, margin: "0.25rem 0px" }}
-        />
-
-        {/* <Chip
-          aria-describedby={id}
-          label="popup"
-          onMouseEnter={handlePopupOpen}
-          onMouseLeave={handlePopupClose}
-        /> */}
-        {/* <StyledPopperDiv>1</StyledPopperDiv>
-        <StyledPopperDiv>2</StyledPopperDiv>
-        <StyledPopperDiv>3</StyledPopperDiv> */}
-      </Popper>
+      {categories.map((category) => (
+        <Popper id={id} open={open} anchorEl={anchorEl} placement="top-end">
+          <Chip
+            aria-describedby={id}
+            label={category}
+            sx={{
+              opacity: 1,
+              margin: "0.25rem 0px",
+              backgroundColor: "lightgray",
+            }}
+          />
+        </Popper>
+      ))}
     </div>
   );
 }
