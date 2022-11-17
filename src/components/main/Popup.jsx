@@ -1,10 +1,9 @@
-import * as React from "react";
-import PopperUnstyled from "@mui/base/PopperUnstyled";
-import { Box, styled } from "@mui/system";
 import { Chip } from "@mui/material";
-import Popper from "@mui/material/Popper";
-import Fade from "@mui/material/Fade";
 import Grow from "@mui/material/Grow";
+import Popper from "@mui/material/Popper";
+import Stack from "@mui/material/Stack";
+import { Box, styled } from "@mui/system";
+import * as React from "react";
 const StyledPopperDiv = styled("div")(
   ({ theme }) => `
   padding: 0.5rem;
@@ -43,13 +42,16 @@ export default function Popup({ categories }) {
 
   const handlePopupOpen = (event) => {
     setAnchorEl(event.currentTarget);
+    setChecked((prev) => !prev);
   };
   const handlePopupClose = (event) => {
     setAnchorEl(null);
+    setChecked((prev) => !prev);
   };
 
   const open = Boolean(anchorEl);
   const id = open ? "simple-popper" : undefined;
+  const [checked, setChecked] = React.useState(false);
 
   return (
     <div>
@@ -58,26 +60,36 @@ export default function Popup({ categories }) {
         label={convertCategory(categories[0])}
         onMouseEnter={handlePopupOpen}
         onMouseLeave={handlePopupClose}
+        sx={{
+          backgroundColor: "#dbdde0",
+        }}
       />
       {categories.length > 1 && (
         <Popper id={id} open={open} anchorEl={anchorEl} placement="top-end">
-          {categories.map(
-            (category, idx) =>
-              idx !== 0 && (
-                <Box sx={{ textAlign: "right" }}>
-                  <Chip
-                    aria-describedby={id}
-                    label={convertCategory(category)}
-                    sx={{
-                      opacity: 1,
-                      margin: "0.25rem 0px",
-                      backgroundColor: "lightgray",
-                    }}
-                  />
-                  <br />
-                </Box>
-              )
-          )}
+          <Stack direction="column-reverse">
+            {categories.map(
+              (category, idx) =>
+                idx !== 0 && (
+                  <Box sx={{ textAlign: "right" }}>
+                    <Grow
+                      in={checked}
+                      {...(checked ? { timeout: idx * 500 } : {})}
+                    >
+                      <Chip
+                        aria-describedby={id}
+                        label={convertCategory(category)}
+                        sx={{
+                          opacity: 1,
+                          margin: "0.25rem 0px",
+                          backgroundColor: "#dbdde0",
+                        }}
+                      />
+                    </Grow>
+                    <br />
+                  </Box>
+                )
+            )}
+          </Stack>
         </Popper>
       )}
     </div>
