@@ -70,7 +70,6 @@ function NavBar() {
   } = useEditSurveyActions();
   const [multiQuestionValidate, setMultiQuestionValidate] = useState([]);
   const [multiQuestionList, setMultiQuestionList] = useState(false);
-
   const [invalidatoinDialogOpen, setInvalidationDialogOpen] = useState(false);
   const [successDialogOpen, setSuccessDialogOpen] = useState(false);
   const [failDialogOpen, setFailDialogOpen] = useState(false);
@@ -83,15 +82,6 @@ function NavBar() {
     });
     setMultiQuestionValidate([...new Set(newArray)]);
   }, [survey.multiQuestions]);
-
-  useEffect(() => {
-    const newArray = survey.questions
-      .filter((question) => question.isMultipleAnswer)
-      .map((question) => {
-        return question.index;
-      });
-    setMultiQuestionList([...new Set(newArray)]);
-  }, [survey.questions]);
 
   const handleClickDialogOpen = () => {
     setInvalidationDialogOpen(true);
@@ -141,15 +131,26 @@ function NavBar() {
     setIsPublic(event.target.checked);
   };
 
+  const setIndex = () => {
+    const newList = survey.multiQuestions.map((item, idx) => ({
+      ...item,
+      multiQuestionIndex: idx,
+    }));
+    return newList;
+  };
+
   const postSurvey = async () => {
+    const newList = setIndex();
+    console.error(newList);
     try {
-      const res = await apiClient.get(`/api/v1/survey`, {
-        params: {
-          surveyId: survey.surveyId,
-          sharingKey: survey.sharingKey,
-        },
+      const newObj = {
+        ...survey,
+        categories: survey.surveyCategories,
+        multiQuestions: newList,
+      };
+      apiClient.patch(`/api/v1/survey/${survey.surveyId}`, {
+        ...newObj,
       });
-      console.log(res);
       handleClickSuccessDialogOpen();
     } catch (error) {
       handleClickFailDialogOpen();
@@ -174,12 +175,7 @@ function NavBar() {
       : alert("객관식 질문은 최소 한개의 선지가 필요합니다.");
   };
 
-  const handleSubmit = async () => {
-    console.log(survey);
-    await apiClient.patch(`/api/v1/survey/${survey.surveyId}`, {
-      ...survey,
-      categories: survey.surveyCategories,
-    });
+  const handleSubmit = () => {
     postSurvey();
   };
 
@@ -335,12 +331,14 @@ function NavBar() {
             설문 수정이 완료되었습니다!
           </DialogContentText>
           <DialogContentText sx={{ color: "#202632" }}>
-            공유 링크 : {sharingUrl}
+            공유 링크 : https://mokaform.site/survey/{survey.sharing_key}
           </DialogContentText>
           <DialogContentText sx={{ textAlign: "center" }}>
             <CopyBtn
               onClick={() => {
-                navigator.clipboard.writeText(sharingUrl);
+                navigator.clipboard.writeText(
+                  "https://mokaform.site/survey" + survey.sharing_key
+                );
                 document.getElementById("copy").innerText = " 복사 완료 ";
               }}
             >

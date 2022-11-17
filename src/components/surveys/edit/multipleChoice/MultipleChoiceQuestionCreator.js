@@ -21,12 +21,10 @@ export default function MultipleChoiceQuestionCreator({ id }) {
         multiQuestionContent: detailQuestion,
         questionId: id,
         questionIndex: index,
-        multiQuestionIndex: multiQuestionList.length,
         multiQuestionType: "GENERAL",
       },
     ]);
     setDetailQuestion("");
-    console.log(multiQuestionList);
   };
 
   useEffect(() => {
