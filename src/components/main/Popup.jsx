@@ -1,6 +1,6 @@
 import * as React from "react";
 import PopperUnstyled from "@mui/base/PopperUnstyled";
-import { styled } from "@mui/system";
+import { Box, styled } from "@mui/system";
 import { Chip } from "@mui/material";
 import Popper from "@mui/material/Popper";
 import Fade from "@mui/material/Fade";
@@ -41,10 +41,6 @@ function convertCategory(category) {
 export default function Popup({ categories }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const handleClick = (event) => {
-    setAnchorEl(anchorEl ? null : event.currentTarget);
-  };
-
   const handlePopupOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -64,19 +60,27 @@ export default function Popup({ categories }) {
         onMouseEnter={handlePopupOpen}
         onMouseLeave={handlePopupClose}
       />
-      {categories.map((category) => (
+      {categories.length > 1 && (
         <Popper id={id} open={open} anchorEl={anchorEl} placement="top-end">
-          <Chip
-            aria-describedby={id}
-            label={category}
-            sx={{
-              opacity: 1,
-              margin: "0.25rem 0px",
-              backgroundColor: "lightgray",
-            }}
-          />
+          {categories.map(
+            (category, idx) =>
+              idx !== 0 && (
+                <Box sx={{ textAlign: "right" }}>
+                  <Chip
+                    aria-describedby={id}
+                    label={convertCategory(category)}
+                    sx={{
+                      opacity: 1,
+                      margin: "0.25rem 0px",
+                      backgroundColor: "lightgray",
+                    }}
+                  />
+                  <br />
+                </Box>
+              )
+          )}
         </Popper>
-      ))}
+      )}
     </div>
   );
 }
