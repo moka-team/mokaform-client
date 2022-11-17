@@ -1,6 +1,7 @@
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import apiClient from "../../../api/client";
 import {
   DefaultImage,
@@ -18,17 +19,22 @@ import {
 import { UserContext } from "../../../authentication/userState";
 
 function Profile() {
-  const user = useContext(UserContext);
+  // const user = useContext(UserContext);
   const [selectedImage, setSelectedImage] = useState(null);
-  // const [profile, setProfile] = useState("");
-  // const fetchProfile = async () => {
-  //   const response = await apiClient.get("/api/v1/users/my");
-  //   setProfile(response.data.data);
-  // };
+  const [profile, setProfile] = useState("");
+  const fetchProfile = async () => {
+    const response = await apiClient.get("/api/v1/users/my");
+    setProfile(response.data.data);
+  };
+  const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   fetchProfile();
-  // },[]);
+  useEffect(() => {
+    fetchProfile();
+  }, []);
+
+  const onClickHandler = (event) => {
+    navigate("/withdrawal");
+  };
 
   return (
     <SProfile>
@@ -46,7 +52,7 @@ function Profile() {
         ) : (
           // 추후 변경 예정
           <DefaultImage
-            src={user.gender === "FEMALE" ? "/img/girl.png" : "/img/boy.png"}
+            src={profile.gender === "FEMALE" ? "/img/girl.png" : "/img/boy.png"}
           />
         )}
       </ProfileImg>
@@ -55,8 +61,8 @@ function Profile() {
       </UploadBtn>
 
       <UserInfo>
-        <h1>{user.nickname}</h1>
-        <h2>{user.email}</h2>
+        <h1>{profile.nickname}</h1>
+        <h2>{profile.email}</h2>
       </UserInfo>
       <LineHeader>
         <p>PROFILE</p>
@@ -64,7 +70,7 @@ function Profile() {
       <LineWrapper>
         <Line>
           <Type>성별:</Type>
-          <UserInput>{user.gender === "FEMALE" ? "여성" : "남성"}</UserInput>
+          <UserInput>{profile.gender === "FEMALE" ? "여성" : "남성"}</UserInput>
         </Line>
         <Line>
           <Type>연령대:</Type>
@@ -75,7 +81,7 @@ function Profile() {
               THIRTIES: <UserInput>30대</UserInput>,
               FORTIES: <UserInput>40대</UserInput>,
               FIFTIES: <UserInput>50대</UserInput>,
-            }[user.ageGroup]
+            }[profile.ageGroup]
           }
         </Line>
         <Line>
@@ -90,10 +96,13 @@ function Profile() {
               FREELANCER: <UserInput>프리랜서</UserInput>,
               JOB_SEEKER: <UserInput>취업준비생</UserInput>,
               JOBLESS: <UserInput>무직</UserInput>,
-            }[user.job]
+            }[profile.job]
           }
         </Line>
       </LineWrapper>
+      <LineHeader>
+        <button onClick={onClickHandler}>탈퇴하기</button>
+      </LineHeader>
     </SProfile>
   );
 }

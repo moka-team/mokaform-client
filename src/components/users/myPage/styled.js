@@ -136,6 +136,12 @@ const LineHeader = styled.div`
     color: #f9fafb;
     font-weight: 600;
   }
+  button {
+    color: gray;
+    border: none;
+    background-color: #202632;
+    font-weight: 700;
+  }
 `;
 const LineWrapper = styled.div`
   display: flex;

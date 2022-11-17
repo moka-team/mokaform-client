@@ -1,5 +1,5 @@
-import styled from "styled-components";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
 
 const LocalLoginWrapper = styled.div`
   margin-top: 25px;
@@ -167,6 +167,24 @@ const Distinguish = styled.p`
   font-size: smaller;
 `;
 
+const Container = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f5f6fa;
+  white-space: pre-wrap;
+`;
+
+const LogoContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 50px;
+`;
+
 export {
   LocalLoginWrapper,
   LoginInputContainer,
@@ -183,4 +201,6 @@ export {
   CenterWrapper,
   Wrapper,
   Distinguish,
+  Container,
+  LogoContainer,
 };

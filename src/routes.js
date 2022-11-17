@@ -13,6 +13,10 @@ const routes = {
   inquireSubmittedSurvey: "/my/survey/submitted/:sharingKey",
   createCardSurvey: "/create-card-survey",
   editSurvey: "/survey/edit",
+  withdrawl: "/withdrawal",
+  privacyPolicy: "/privacyPolicy",
+  termsOfService: "/termsOfService",
+  agreeSignPolicy: "/signup/agree",
 };
 
 export default routes;

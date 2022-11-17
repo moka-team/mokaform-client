@@ -23,6 +23,10 @@ import SignIn from "./pages/users/signIn";
 import SignUp from "./pages/users/signUp";
 import ResetPassword from "./pages/users/ResetPassword";
 import routes from "./routes";
+import Withdrawal from "./components/users/withdrawal/Withdrawal";
+import PrivacyPolicy from "./components/common/PrivacyPolicy";
+import TermsOfService from "./components/common/ TermsOfService";
+import Agree from "./components/users/signUp/Agree";
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -117,6 +121,19 @@ function App() {
         ></Route>
         <Route path={routes.editSurvey} element={<EditSurvey />}></Route>
         <Route path={"*"} element={<NotFound />}></Route>
+        <Route
+          path={routes.withdrawl}
+          element={<Withdrawal></Withdrawal>}
+        ></Route>
+        <Route
+          path={routes.privacyPolicy}
+          element={<PrivacyPolicy></PrivacyPolicy>}
+        ></Route>
+        <Route
+          path={routes.termsOfService}
+          element={<TermsOfService></TermsOfService>}
+        ></Route>
+        <Route path={routes.agreeSignPolicy} element={<Agree></Agree>}></Route>
       </Routes>
     </BrowserRouter>
   );
