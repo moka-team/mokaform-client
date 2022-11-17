@@ -14,7 +14,7 @@ import { useRecoilValue } from "recoil";
 import { surveyList } from "../../../../atoms";
 import defaultImage from "../../../common/default_image.png";
 import { SurveyListActionsContext, SurveyListContext } from "./surveyState";
-
+import { useNavigate } from "react-router-dom";
 function SurveyCard({ survey }) {
   return (
     <Grid container>
@@ -60,33 +60,30 @@ function SurveyCard({ survey }) {
 export default function CardContainer() {
   const surveys = useRecoilValue(surveyList);
   const preferenceSurveyList = useContext(SurveyListContext);
+  const navigate = useNavigate();
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={12} justifyContent="center">
       {preferenceSurveyList.map((survey) => (
         <Grid item key={survey.surveyId} xs={6} sm={6} md={4} lg={2.4} xl={2.4}>
-          <Link
-            to={`/survey/${survey.sharingKey}`}
-            style={{ textDecoration: "none" }}
+          <CardActionArea
+            onClick={() => navigate(`/survey/${survey.sharingKey}`)}
           >
-            <CardActionArea sx={{ width: 200 }}>
-              <Card
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  width: 200,
-                }}
-              >
-                <CardMedia
-                  component="img"
-                  src={defaultImage}
-                  sx={{ height: 150 }}
-                />
-                <CardContent sx={{ flexGrow: 1 }}>
-                  <SurveyCard survey={survey} />
-                </CardContent>
-              </Card>
-            </CardActionArea>
-          </Link>
+            <Card
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <CardMedia
+                component="img"
+                src={defaultImage}
+                sx={{ height: 150 }}
+              />
+              <CardContent sx={{ flexGrow: 1 }}>
+                <SurveyCard survey={survey} />
+              </CardContent>
+            </Card>
+          </CardActionArea>
         </Grid>
       ))}
     </Grid>
