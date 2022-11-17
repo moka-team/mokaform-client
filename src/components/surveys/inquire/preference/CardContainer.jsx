@@ -62,7 +62,7 @@ export default function CardContainer() {
   const preferenceSurveyList = useContext(SurveyListContext);
   const navigate = useNavigate();
   return (
-    <Grid container spacing={12} justifyContent="center">
+    <Grid container columnSpacing={12} rowSpacing={3} justifyContent="center">
       {preferenceSurveyList.map((survey) => (
         <Grid item key={survey.surveyId} xs={6} sm={6} md={4} lg={2.4} xl={2.4}>
           <CardActionArea
