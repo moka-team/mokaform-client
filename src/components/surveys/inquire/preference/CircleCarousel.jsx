@@ -12,8 +12,11 @@ import {
 import { Container, Card } from "../../../../components/users/myPage/styled";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { SurveyListContext, SurveyListActionsContext } from "./surveyState";
 
 function CircleCarousel({ text }) {
+  // const surveyList = useContext(SurveyListContext);
+  // const { setList } = useContext(SurveyListActionsContext);
   const [ishover1, setIshover1] = useState(false);
   const [ishover2, setIshover2] = useState(false);
   const [ishover3, setIshover3] = useState(false);
@@ -25,7 +28,7 @@ function CircleCarousel({ text }) {
 
   const navigate = useNavigate();
 
-  console.log(text);
+  function fetchData() {}
   return (
     <Container>
       <Card

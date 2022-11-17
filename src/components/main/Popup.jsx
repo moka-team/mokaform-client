@@ -51,7 +51,6 @@ export default function Popup({ categories }) {
   const open = Boolean(anchorEl);
   const id = open ? "simple-popper" : undefined;
 
-  console.log(categories);
   return (
     <div>
       <Chip

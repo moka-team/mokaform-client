@@ -12,6 +12,10 @@ import DownButton from "../../../../components/main/DownButton.jsx";
 import Footer from "../../../../components/main/Footer.jsx";
 import SubTitleText from "../../../../components/main/SubTitleText.jsx";
 import CircleCarousel from "../../../../components/surveys/inquire/preference/CircleCarousel";
+import SortSelect from "../../../../components/common/SortSelect";
+import PreferenceTitle from "../../../../components/surveys/inquire/preference/PreferenceTitle.jsx";
+import { SurveyListContextProvider } from "../../../../components/surveys/inquire/preference/surveyState.js";
+import PreferenceSortSelect from "../../../../components/surveys/inquire/preference/PreferenceSortSelect.jsx";
 const MContainer = styled.div`
   min-height: 100vh;
 `;
@@ -28,15 +32,17 @@ export default function InquirePreferenceSurvey() {
       <CssBaseline />
       <MContainer>
         <Header />
-        <main>
+        <SurveyListContextProvider>
           <Container maxWidth="xl" sx={{ mt: 6 }}>
             <Grid container>
               <>
-                <CircleCarousel text={text}/>
+                <CircleCarousel text={text} />
                 <Grid item xs={10}>
-                  <SubTitleText text={text} />
+                  <PreferenceTitle text={text} />
                 </Grid>
-                <Grid item xs={2}></Grid>
+                <Grid item xs={2}>
+                  <PreferenceSortSelect />
+                </Grid>
               </>
             </Grid>
             <CardContainer />
@@ -45,7 +51,7 @@ export default function InquirePreferenceSurvey() {
           <Box textAlign="center">
             <DownButton />
           </Box>
-        </main>
+        </SurveyListContextProvider>
       </MContainer>
       <Footer />
     </div>
