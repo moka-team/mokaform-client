@@ -1,13 +1,14 @@
 import OptionUnstyled, {
-    optionUnstyledClasses
+  optionUnstyledClasses,
 } from "@mui/base/OptionUnstyled";
 import PopperUnstyled from "@mui/base/PopperUnstyled";
 import SelectUnstyled, {
-    selectUnstyledClasses
+  selectUnstyledClasses,
 } from "@mui/base/SelectUnstyled";
 import { styled } from "@mui/system";
 import React, { useContext } from "react";
 import apiClient from "../../../../api/client";
+import { SortActionsContext, SortContext } from "./sortState";
 import { SurveyListActionsContext, SurveyListContext } from "./surveyState";
 
 const blue = {
@@ -147,33 +148,35 @@ const CustomSelect = React.forwardRef(function CustomSelect(props, ref) {
 });
 
 export default function PreferenceSortSelect() {
-  const preferenceSurveyList = useContext(SurveyListContext);
   const { setPreferenceList } = useContext(SurveyListActionsContext);
+  const { setPreferenceSort } = useContext(SortActionsContext);
 
   // 관심사 페이지에서 최신순 데이터 불러오기
   const fetchPreferenceRecentSurvey = async () => {
     // TODO: url 주소 변경 필요
-    const response = await apiClient.get("api/v1/survey/list", {
+    const response = await apiClient.get("/api/v1/users/my/surveys", {
       params: {
         page: 0,
-        size: 10,
+        size: 5,
         sort: "createdAt,desc",
       },
     });
     setPreferenceList(response.data.data.content);
+    setPreferenceSort("new");
   };
 
   // 관심사 페이지에서 참여한 설문 참여자 많은 순 데이터 불러오기
   const fetchPreferenceFamousSurvey = async () => {
     // TODO: url 주소 변경 필요
-    const response = await apiClient.get("api/v1/survey/list", {
+    const response = await apiClient.get("/api/v1/users/my/surveys", {
       params: {
         page: 0,
-        size: 10,
-        sort: "createdAt,desc",
+        size: 5,
+        sort: "surveyeeCount,desc",
       },
     });
     setPreferenceList(response.data.data.content);
+    setPreferenceSort("hot");
   };
   const handleChange = (e) => {
     if (e.target.innerHTML === "최신순") {

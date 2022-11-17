@@ -5,6 +5,7 @@ import styled from "styled-components";
 const Title = styled.h1`
   font-weight: 600;
   padding-top: 3ch;
+  padding-bottom: 1ch;
   font-size: 20px;
   color: ${(props) => props.color};
 `;

@@ -16,6 +16,8 @@ import SortSelect from "../../../../components/common/SortSelect";
 import PreferenceTitle from "../../../../components/surveys/inquire/preference/PreferenceTitle.jsx";
 import { SurveyListContextProvider } from "../../../../components/surveys/inquire/preference/surveyState.js";
 import PreferenceSortSelect from "../../../../components/surveys/inquire/preference/PreferenceSortSelect.jsx";
+import PreferenceDownButton from "../../../../components/surveys/inquire/preference/PreferenceDownButton.jsx";
+import { SortContextProvider } from "../../../../components/surveys/inquire/preference/sortState.js";
 const MContainer = styled.div`
   min-height: 100vh;
 `;
@@ -33,24 +35,28 @@ export default function InquirePreferenceSurvey() {
       <MContainer>
         <Header />
         <SurveyListContextProvider>
-          <Container maxWidth="xl" sx={{ mt: 6 }}>
-            <Grid container>
-              <>
-                <CircleCarousel text={text} />
-                <Grid item xs={10}>
-                  <PreferenceTitle text={text} />
-                </Grid>
-                <Grid item xs={2}>
-                  <PreferenceSortSelect />
-                </Grid>
-              </>
-            </Grid>
-            <CardContainer />
-          </Container>
-          <ChatbotFab />
-          <Box textAlign="center">
-            <DownButton />
-          </Box>
+          <SortContextProvider>
+            <Container maxWidth="xl" sx={{ mt: 6 }}>
+              <Grid container>
+                <>
+                  <CircleCarousel text={text} />
+                  <Grid item xs={10}>
+                    <PreferenceTitle text={text} />
+                  </Grid>
+                  <Grid item xs={2}>
+                    <Box textAlign={"right"}>
+                      <PreferenceSortSelect />
+                    </Box>
+                  </Grid>
+                </>
+              </Grid>
+              <CardContainer />
+            </Container>
+            <ChatbotFab />
+            <Box textAlign="center">
+              <PreferenceDownButton />
+            </Box>
+          </SortContextProvider>
         </SurveyListContextProvider>
       </MContainer>
       <Footer />

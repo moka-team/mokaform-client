@@ -8,11 +8,12 @@ import Chip from "@mui/material/Chip";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { surveyList } from "../../../../atoms";
 import defaultImage from "../../../common/default_image.png";
+import { SurveyListActionsContext, SurveyListContext } from "./surveyState";
 
 function SurveyCard({ survey }) {
   return (
@@ -58,10 +59,10 @@ function SurveyCard({ survey }) {
 
 export default function CardContainer() {
   const surveys = useRecoilValue(surveyList);
-
+  const preferenceSurveyList = useContext(SurveyListContext);
   return (
     <Grid container spacing={2}>
-      {surveys.map((survey) => (
+      {preferenceSurveyList.map((survey) => (
         <Grid item key={survey.surveyId} xs={6} sm={6} md={4} lg={2.4} xl={2.4}>
           <Link
             to={`/survey/${survey.sharingKey}`}
