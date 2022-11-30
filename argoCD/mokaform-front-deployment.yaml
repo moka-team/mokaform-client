@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mokaform-argo
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: mokaform-argo
+  template:
+    metadata:
+      labels:
+        app: mokaform-argo
+    spec:
+      containers:
+      - image: tldusdk5/mokaform-front
+        name: mokaform-argo
+        ports:
+        - containerPort: 80
