@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service-argo-test
+spec:
+  selector:
+    app: mokaform-argo
+    tier: frontend
+  type: NodePort
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+--- 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: front-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mokaform-argo
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        app: mokaform-argo
+        tier: frontend
+    spec:
+      containers:
+      - name: mokaform-argo
+        image: tldusdk5/mokaform-front
+        ports:
+        - containerPort: 80
