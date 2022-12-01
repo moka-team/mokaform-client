@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: front-deployment-argo
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: mokaform-argo
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        app: mokaform-argo
+        tier: frontend
+    spec:
+      containers:
+      - name: mokaform-argo
+        image: tldusdk5/mokaform-front:0
+        ports:
+        - containerPort: 80
+        
