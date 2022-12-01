@@ -1,0 +1,42 @@
+pipeline {
+    agent any
+    tools {
+        nodejs "node16"
+        git "Default"
+    }
+    stages {
+        stage('prepare') {
+            steps {
+                git branch: 'main',
+                    credentialsId: 'github_access_token',
+                    url: 'https://github.com/moka-team/mokaform-client'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'ls -al'
+                sh "npm install"
+                sh "CI=false npm run build"
+            }
+        }
+        stage('Create Image') {
+            steps {   
+                echo 'Please...'
+                sshPublisher(publishers: [sshPublisherDesc(configName: 'nginx-server', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '''sudo docker build -t adad05011/mokaform-client .;
+sudo docker push adad05011/mokaform-client''', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '.', remoteDirectorySDF: false, removePrefix: '', sourceFiles: 'build/**')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+            }
+        }
+        stage('K8S Manifest Update') {
+            steps {
+               git branch: 'argoCD',
+                    credentialsId: 'github_access_token',
+                    url: 'https://github.com/moka-team/mokaform-client'
+                
+                sh "sed -i '22a\\####' argoCD/mokaform-front-deployment.yaml"
+                sh "git commit -am 'test'"
+                sh "git remote set-url origin https://SeonDahye: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@github.com/moka-team/mokaform-client.git"
+                sh "git push origin argoCD"
+            }
+        }
+    }
+}
