@@ -31,7 +31,7 @@ export default function Main() {
             <Grid container>
               <>
                 <Grid item xs={10}>
-                  <SubTitleText text="전체 설문 테스트" />
+                  <SubTitleText text="전체 설문 테스트 2" />
                 </Grid>
                 <Grid item xs={2}>
                   <Box textAlign={"right"}>
