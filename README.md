@@ -19,4 +19,3 @@
 ### branch rule
 - `[tag]/[jira ticker number]`
 - 예시: `feat/MOKA-22`
-
