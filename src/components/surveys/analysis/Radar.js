@@ -13,30 +13,39 @@ export default function Radar({ data }) {
   const result = [
     {
       emotion: "감정없음",
+      value: 0,
     },
     {
       emotion: "놀람",
+      value: 0,
     },
     {
       emotion: "두려움",
+      value: 0,
     },
     {
       emotion: "불확실",
+      value: 0,
     },
     {
       emotion: "슬픔",
+      value: 0,
     },
     {
       emotion: "싫음",
+      value: 0,
     },
     {
       emotion: "좋음",
+      value: 0,
     },
     {
       emotion: "지루함",
+      value: 0,
     },
     {
       emotion: "창피함",
+      value: 0,
     },
   ];
   const getResult = async () => {
@@ -54,7 +63,7 @@ export default function Radar({ data }) {
     formatting();
   };
 
-  const formatting = async () => {
+  const formatting = () => {
     for (let i = 0; i < 9; i++) {
       let sum = 0;
       totalResult.forEach((value) => {
@@ -69,6 +78,8 @@ export default function Radar({ data }) {
   }, []);
 
   const [chart, setChart] = useState(result);
+  console.log(chart);
+
   return (
     <Container>
       <ResponsiveRadar
