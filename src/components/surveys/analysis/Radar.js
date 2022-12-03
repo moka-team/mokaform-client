@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ResponsiveRadar } from "@nivo/radar";
 import styled from "styled-components";
 
@@ -55,23 +55,26 @@ export default function Radar({ data }) {
   };
 
   const formatting = async () => {
-    totalResult.forEach(function (value, index) {
-      for (let i = 0; i < result.length; i++) {
-        result[i][index] = value[i].prob;
-      }
-    });
+    for (let i = 0; i < 9; i++) {
+      let sum = 0;
+      totalResult.forEach((value) => {
+        sum += value[i].prob;
+      });
+      result[i]["value"] = sum;
+      setChart(result);
+    }
   };
   useEffect(() => {
     getResult();
-    console.log(result);
   }, []);
+
+  const [chart, setChart] = useState(result);
   return (
     <Container>
       <ResponsiveRadar
-        data={result}
-        keys={["0", "1"]}
+        data={chart}
+        keys={["value"]}
         indexBy="emotion"
-        valueFormat=">-.2f"
         margin={{ top: 70, right: 80, bottom: 40, left: 80 }}
         borderColor={{ from: "color" }}
         gridLabelOffset={36}
