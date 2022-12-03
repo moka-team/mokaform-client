@@ -62,21 +62,11 @@ export default function EssayComponent({ data }) {
   const [next, setNext] = useState(col);
 
   const handleMore = () => [setNext(next + col)];
-  const handleOnClick = async (item) => {
-    const config = {
-      headers: {
-        "x-api-key": "4a395f44b5577975b95f98095d59fd5c",
-        "Content-Type": "application/json",
-      },
-    };
-    const response = await axios.post("/analysis", { msg: item }, config);
 
-    console.log(response);
-  };
   return (
     <Container>
       {data?.slice(0, next)?.map((item) => (
-        <Content onClick={() => handleOnClick(item)}>{item}</Content>
+        <Content>{item}</Content>
       ))}
       <Button onClick={handleMore}>LOAD MORE</Button>
     </Container>
