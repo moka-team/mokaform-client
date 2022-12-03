@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
+import axios from "axios";
 
 const col = 3;
 const Container = styled.div`
@@ -60,11 +61,23 @@ export default function EssayComponent({ data }) {
   const [next, setNext] = useState(col);
 
   const handleMore = () => [setNext(next + col)];
+  const handleOnClick = (item) => {
+    const URL = "https://42d1adfb-5b9c-4cb1-8351-670c4a4c3b25.api.kr-central-1.kakaoi.io/ai/conversation/f54447ad459c4079880862d1b333d9e6"
+    const config = {
+      headers:{
+        "x-api-key":"4a395f44b5577975b95f98095d59fd5c",
+        "Content-Type":"application/json",
+        "Access-Control-Allow-Origin":"*"
+      }
+    }
+      const response =  axios.post(URL, {"msg":item}, config)
 
+      console.log(response)
+  }
   return (
     <Container>
       {data?.slice(0, next)?.map((item) => (
-        <Content>{item}</Content>
+        <Content onClick={()=>handleOnClick(item)}>{item}</Content>
       ))}
       <Button onClick={handleMore}>LOAD MORE</Button>
     </Container>
