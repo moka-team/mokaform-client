@@ -1,5 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
+import axios from "axios";
+import apiClient from "../../../api/client";
 
 const col = 3;
 const Container = styled.div`

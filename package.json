@@ -20,6 +20,7 @@
     "@nivo/bar": "^0.80.0",
     "@nivo/core": "^0.80.0",
     "@nivo/pie": "^0.80.0",
+    "@nivo/radar": "^0.80.0",
     "@reduxjs/toolkit": "^1.8.5",
     "@sentry/react": "^7.17.2",
     "@sentry/tracing": "^7.17.2",
@@ -83,6 +84,5 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
     "prettier": "^2.7.1"
-  },
-  "proxy": "http://api.mokaform.site:8080"
+  }
 }
