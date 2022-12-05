@@ -16,6 +16,7 @@ import dayjs from "dayjs";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import apiClient from "../../../api/client";
 import { SaveBtn, SNavBar } from "../common/styled";
 import { CustomSwitch } from "../create/general/CustomizedSwitches";
 import SelectCategory from "./SelectCategory";
@@ -142,10 +143,12 @@ function NavBar() {
   };
 
   const postSurvey = async () => {
-    alert(JSON.stringify(survey));
+    // alert(JSON.stringify(survey));
 
     try {
       //TODO: 설문 수정 API
+      console.log(JSON.stringify(survey));
+      apiClient.patch("/api/v1/survey", { surveyId: survey.surveyId });
       handleClickSuccessDialogOpen();
     } catch (error) {
       handleClickFailDialogOpen();
@@ -171,7 +174,8 @@ function NavBar() {
   };
 
   const handleSubmit = () => {
-    alert(JSON.stringify(survey));
+    // alert(JSON.stringify(survey));
+    createSurvey();
   };
 
   return (
