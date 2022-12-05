@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { ResponsiveRadar } from "@nivo/radar";
 
@@ -16,29 +16,43 @@ const result = [
   },
   {
     emotion: "놀람",
+    value: 0,
   },
   {
     emotion: "두려움",
+    value: 0,
   },
   {
     emotion: "불확실",
+    value: 0,
   },
   {
     emotion: "슬픔",
+    value: 0,
   },
   {
     emotion: "싫음",
+    value: 0,
   },
   {
     emotion: "좋음",
+    value: 0,
   },
   {
     emotion: "지루함",
+    value: 0,
   },
   {
     emotion: "창피함",
+    value: 0,
   },
 ];
+
+const loop = async (times, callback) => {
+  for (let i = 0; i < times; i++) {
+    await callback(i);
+  }
+};
 
 export default function Radar({ data }) {
   const [chart, setChart] = useState(result);
@@ -54,21 +68,21 @@ export default function Radar({ data }) {
       const res = await axios.post("/analysis", { msg: element }, config);
       totalResult.push(res.data[0].candidates);
     }
-    formatting();
-  };
-  const formatting = () => {
-    for (let i = 0; i < 9; i++) {
+
+    loop(9, (i) => {
       let sum = 0;
-      totalResult.forEach((v) => {
-        sum += v[i].prob;
+      totalResult.forEach((value) => {
+        sum += value[i].prob;
       });
       result[i]["value"] = sum;
-    }
+    });
 
     setChart(result);
   };
 
-  getResult(data);
+  useEffect(() => {
+    getResult(data);
+  }, []);
 
   return (
     <Container>
