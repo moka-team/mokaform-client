@@ -1,89 +1,83 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { ResponsiveRadar } from "@nivo/radar";
+import { useState } from "react";
 
 const Container = styled.div`
   height: 400px;
   width: 400px;
 `;
-
-const totalResult = [];
-const result = [
-  {
-    emotion: "감정없음",
-    value: 0,
-  },
-  {
-    emotion: "놀람",
-    value: 0,
-  },
-  {
-    emotion: "두려움",
-    value: 0,
-  },
-  {
-    emotion: "불확실",
-    value: 0,
-  },
-  {
-    emotion: "슬픔",
-    value: 0,
-  },
-  {
-    emotion: "싫음",
-    value: 0,
-  },
-  {
-    emotion: "좋음",
-    value: 0,
-  },
-  {
-    emotion: "지루함",
-    value: 0,
-  },
-  {
-    emotion: "창피함",
-    value: 0,
-  },
-];
-
 const loop = async (times, callback) => {
   for (let i = 0; i < times; i++) {
     await callback(i);
   }
 };
 
-export default function Radar({ data }) {
-  const [chart, setChart] = useState(result);
-  const getResult = async (data) => {
-    const config = {
-      headers: {
-        "x-api-key": "4a395f44b5577975b95f98095d59fd5c",
-        "Content-Type": "application/json",
-      },
-    };
+const formatting = async (data) => {
+  const totalResult = [];
+  const result = [
+    {
+      emotion: "감정없음",
+    },
+    {
+      emotion: "놀람",
+    },
+    {
+      emotion: "두려움",
+    },
+    {
+      emotion: "불확실",
+    },
+    {
+      emotion: "슬픔",
+    },
+    {
+      emotion: "싫음",
+    },
+    {
+      emotion: "좋음",
+    },
+    {
+      emotion: "지루함",
+    },
+    {
+      emotion: "창피함",
+    },
+  ];
 
-    for await (const element of data) {
-      const res = await axios.post("/analysis", { msg: element }, config);
-      totalResult.push(res.data[0].candidates);
-    }
-
-    loop(9, (i) => {
-      let sum = 0;
-      totalResult.forEach((value) => {
-        sum += value[i].prob;
-      });
-      result[i]["value"] = sum;
-    });
-
-    setChart(result);
+  const config = {
+    headers: {
+      "x-api-key": "4a395f44b5577975b95f98095d59fd5c",
+      "Content-Type": "application/json",
+    },
   };
 
-  useEffect(() => {
-    getResult(data);
-  }, []);
+  for await (const element of data) {
+    const res = await axios.post("/analysis", { msg: element }, config);
+    totalResult.push(res.data[0].candidates);
+  }
 
+  loop(9, (i) => {
+    let sum = 0;
+    totalResult.forEach((value) => {
+      sum += value[i].prob;
+    });
+    result[i]["value"] = sum;
+  });
+
+  return result;
+};
+
+export default function Radar({ data }) {
+  const [chart, setChart] = useState([]);
+  const promise = formatting(data);
+  const getData = () => {
+    promise.then((appData) => {
+      setChart(appData);
+      console.log(chart);
+    });
+  };
+  getData();
   return (
     <Container>
       <ResponsiveRadar
