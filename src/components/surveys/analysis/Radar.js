@@ -1,54 +1,48 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { ResponsiveRadar } from "@nivo/radar";
 import styled from "styled-components";
+import { ResponsiveRadar } from "@nivo/radar";
 
 const Container = styled.div`
   height: 400px;
   width: 400px;
 `;
 
+const totalResult = [];
+const result = [
+  {
+    emotion: "감정없음",
+    value: 0,
+  },
+  {
+    emotion: "놀람",
+  },
+  {
+    emotion: "두려움",
+  },
+  {
+    emotion: "불확실",
+  },
+  {
+    emotion: "슬픔",
+  },
+  {
+    emotion: "싫음",
+  },
+  {
+    emotion: "좋음",
+  },
+  {
+    emotion: "지루함",
+  },
+  {
+    emotion: "창피함",
+  },
+];
+
 export default function Radar({ data }) {
-  const totalResult = [];
-  const result = [
-    {
-      emotion: "감정없음",
-      value: 0,
-    },
-    {
-      emotion: "놀람",
-      value: 0,
-    },
-    {
-      emotion: "두려움",
-      value: 0,
-    },
-    {
-      emotion: "불확실",
-      value: 0,
-    },
-    {
-      emotion: "슬픔",
-      value: 0,
-    },
-    {
-      emotion: "싫음",
-      value: 0,
-    },
-    {
-      emotion: "좋음",
-      value: 0,
-    },
-    {
-      emotion: "지루함",
-      value: 0,
-    },
-    {
-      emotion: "창피함",
-      value: 0,
-    },
-  ];
-  const getResult = async () => {
+  const [chart, setChart] = useState(result);
+  const getResult = async (data) => {
     const config = {
       headers: {
         "x-api-key": "4a395f44b5577975b95f98095d59fd5c",
@@ -62,23 +56,19 @@ export default function Radar({ data }) {
     }
     formatting();
   };
-
   const formatting = () => {
     for (let i = 0; i < 9; i++) {
       let sum = 0;
-      totalResult.forEach((value) => {
-        sum += value[i].prob;
+      totalResult.forEach((v) => {
+        sum += v[i].prob;
       });
       result[i]["value"] = sum;
-      setChart(result);
     }
-  };
-  useEffect(() => {
-    getResult();
-  }, []);
 
-  const [chart, setChart] = useState(result);
-  console.log(chart);
+    setChart(result);
+  };
+
+  getResult(data);
 
   return (
     <Container>
