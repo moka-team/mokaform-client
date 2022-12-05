@@ -1,85 +1,83 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
-import { ResponsiveRadar } from "@nivo/radar";
 import styled from "styled-components";
+import { ResponsiveRadar } from "@nivo/radar";
+import { useState } from "react";
 
 const Container = styled.div`
   height: 400px;
   width: 400px;
 `;
+const loop = async (times, callback) => {
+  for (let i = 0; i < times; i++) {
+    await callback(i);
+  }
+};
 
-export default function Radar({ data }) {
+const formatting = async (data) => {
   const totalResult = [];
   const result = [
     {
       emotion: "감정없음",
-      value: 0,
     },
     {
       emotion: "놀람",
-      value: 0,
     },
     {
       emotion: "두려움",
-      value: 0,
     },
     {
       emotion: "불확실",
-      value: 0,
     },
     {
       emotion: "슬픔",
-      value: 0,
     },
     {
       emotion: "싫음",
-      value: 0,
     },
     {
       emotion: "좋음",
-      value: 0,
     },
     {
       emotion: "지루함",
-      value: 0,
     },
     {
       emotion: "창피함",
-      value: 0,
     },
   ];
-  const getResult = async () => {
-    const config = {
-      headers: {
-        "x-api-key": "4a395f44b5577975b95f98095d59fd5c",
-        "Content-Type": "application/json",
-      },
-    };
 
-    for await (const element of data) {
-      const res = await axios.post("/analysis", { msg: element }, config);
-      totalResult.push(res.data[0].candidates);
-    }
-    formatting();
+  const config = {
+    headers: {
+      "x-api-key": "4a395f44b5577975b95f98095d59fd5c",
+      "Content-Type": "application/json",
+    },
   };
 
-  const formatting = () => {
-    for (let i = 0; i < 9; i++) {
-      let sum = 0;
-      totalResult.forEach((value) => {
-        sum += value[i].prob;
-      });
-      result[i]["value"] = sum;
-      setChart(result);
-    }
+  for await (const element of data) {
+    const res = await axios.post("/analysis", { msg: element }, config);
+    totalResult.push(res.data[0].candidates);
+  }
+
+  loop(9, (i) => {
+    let sum = 0;
+    totalResult.forEach((value) => {
+      sum += value[i].prob;
+    });
+    result[i]["value"] = sum;
+  });
+
+  return result;
+};
+
+export default function Radar({ data }) {
+  const [chart, setChart] = useState([]);
+  const promise = formatting(data);
+  const getData = () => {
+    promise.then((appData) => {
+      setChart(appData);
+      console.log(chart);
+    });
   };
-  useEffect(() => {
-    getResult();
-  }, []);
-
-  const [chart, setChart] = useState(result);
-  console.log(chart);
-
+  getData();
   return (
     <Container>
       <ResponsiveRadar
