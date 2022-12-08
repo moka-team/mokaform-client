@@ -161,7 +161,7 @@ function NavBar() {
     try {
       const response = await apiClient.post("/api/v1/survey", surveyInfo);
       setSharingUrl(
-        "https://mokaform.netlify.app/survey/" + response.data.data.sharingKey
+        "https://mokaform.site/survey/" + response.data.data.sharingKey
       );
       resetCreateSurveyState();
       handleClickSuccessDialogOpen();
