@@ -23,6 +23,17 @@ export default function Withdrawal() {
   const [checked, setChecked] = useState(false);
   const [successDialogOpen, setSuccessDialogOpen] = useState(false);
 
+  const fetchWithdrawal = async () => {
+    try {
+      const res = await apiClient.get("/api/v1/users/withdrawal");
+      setSuccessDialogOpen(true);
+      window.location.replace("/");
+      localStorage.clear();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const fetchProfile = async () => {
     const response = await apiClient.get("/api/v1/users/my");
     setEmail(response.data.data.email);
@@ -34,7 +45,7 @@ export default function Withdrawal() {
 
   const onClickHandler = (event) => {
     console.log(checked);
-    setSuccessDialogOpen(true);
+    fetchWithdrawal();
   };
 
   const handleSuccessDialogClose = () => {
@@ -43,9 +54,6 @@ export default function Withdrawal() {
 
   const handleSuccessDialogConfirmClose = () => {
     setSuccessDialogOpen(false);
-
-    // TODO: 회원 탈퇴 API CALL 추가
-    window.location.replace("/");
   };
 
   useEffect(() => {
