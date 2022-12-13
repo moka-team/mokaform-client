@@ -25,8 +25,8 @@ export default function Withdrawal() {
 
   const fetchWithdrawal = async () => {
     try {
-      const res = await apiClient.get("/api/v1/users/withdrawal");
-      setSuccessDialogOpen(true);
+      const res = await apiClient.post("/api/v1/users/withdrawal");
+      alert("탈퇴가 완료되었습니다!");
       window.location.replace("/");
       localStorage.clear();
     } catch (err) {
